@@ -1,6 +1,4 @@
-## Scripts used in *Nature Neuroscience* **vol**, pages (2017)
-
-Scripts referenced in the above paper, divided by areas
+### Scripts referenced in the above paper, divided by areas
 
 1. Gene Expression
 2. Differential Gene Expression
