@@ -9,13 +9,11 @@ echo bamCompare.sbatch version 1.0.0
 echo ... started running on $(date)
 echo  
 echo
-
 echo
 echo This job is running on 
 /bin/hostname
 echo
 echo
-
 
 # Load Modules, and Run Programs
 module load python-libs/2.7.6-ubuntu
@@ -38,21 +36,6 @@ IGN_DUP=$5
 DEEPDIR=$6
 GENOME=$7
 EXTEND=$8
-
-echo
-echo $PSEUDONUM
-echo $RATIOTYPE
-echo $THREADS
-echo $NORMALIZ
-echo $IGN_DUP
-echo $DEEPDIR
-echo $GENOME
-echo
-
-echo
-echo Primary is $PRIMARY
-echo Secondary is $SECONDARY
-echo Output prefix is $NAME
 
 if [[ "$NORMALIZ" == "normalizeTo1x" ]]
 then
