@@ -15,7 +15,7 @@
 
 
 
-| Description                                   | Genome  | Address     |
+| Description                                   | Genome  | Address to be entered into the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgHubConnect)    |
 | :---                                          | :---:   | :---        |
 | ChIP-seq in adult mouse forebrain             | mm9     | https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/iu1jtcwsudw3v4q/Chd8/ChIPseq/Gompers.ChIP.txt  |
 | RNA-seq in mouse forebrain                    | mm9     | https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/iu1jtcwsudw3v4q/Chd8/RNAseq/Gompers.RNA.txt  |
