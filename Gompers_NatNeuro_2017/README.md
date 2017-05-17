@@ -24,4 +24,3 @@
 | Cotney et al. (2015) ChIP-seq in human brain  | hg19    |   |
 | Sugathan et al. (2014) ChIP-seq in human NPCs | hg19    |   |
 
-
