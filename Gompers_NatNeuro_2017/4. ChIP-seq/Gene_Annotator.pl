@@ -30,7 +30,7 @@ sub genesymbol
 	my $object = $_[0];
 	
 	if (exists $genesymbols{$object})	{	$mygenesymbol = $genesymbols{$object};	}
-	else								{	$mygenesymbol = $object;	}
+	else					{	$mygenesymbol = $object;	}
 	
 	return $mygenesymbol;
 }
@@ -40,7 +40,6 @@ sub genesymbol
 my $newfilename;
 
 my @typelist = ("gappedPeak");
-# my @typelist = ("gappedPeak", "narrowPeak", "broadPeak");
 
 foreach my $type (@typelist)
 {
@@ -60,7 +59,7 @@ foreach my $type (@typelist)
 			next if /^\s*$/;
 			if (/^Chromosome/)
 			{
-				print $out "$_\tPot_Assoc_Prom\tPot_Assoc_Enh\n";
+				print $out "$_\tPAP\tPAE\n";
 				next;
 			}
 		
@@ -82,8 +81,8 @@ foreach my $type (@typelist)
 				if    ($data[5] < 1000)		{	$data[6] = 1; $data[7] = 0;	}
 				elsif ($data[5] < 10000 )	{	$data[6] = 0; $data[7] = 0;	}
 				elsif ($data[5] > 10000 &&
-					   $data[5] < 1000000)	{	$data[6] = 0; $data[7] = 1;	}
-				else						{	$data[6] = 0; $data[7] = 0;	}
+				       $data[5] < 1000000)	{	$data[6] = 0; $data[7] = 1;	}
+				else				{	$data[6] = 0; $data[7] = 0;	}
 			}
 		
 			print $out $data[0];
@@ -121,9 +120,9 @@ foreach my $type (@typelist)
 			{
 				my @header = split /\t/;
 				my $newheader = join("\t", @header[0 .. 6]);
-				$newheader.= "\tPot_Assoc_Prom\tPot_Assoc_Enh\t";
+				$newheader.= "\tPAP\tPAE\t";
 				$newheader.= join("\t", @header[7 .. 9]);
-				$newheader.= "\tPot_Assoc_Prom\tPot_Assoc_Enh";
+				$newheader.= "\tPAP\tPAE";
 				print $out "$newheader\n";
 				next;
 			}
@@ -138,8 +137,8 @@ foreach my $type (@typelist)
 				if    ($data[6] < 1000)		{	$data[10] = 1; $data[11] = 0;	}
 				elsif ($data[6] < 10000 )	{	$data[10] = 0; $data[11] = 0;	}
 				elsif ($data[6] > 10000 &&
-					   $data[6] < 1000000)	{	$data[10] = 0; $data[11] = 1;	}
-				else						{	$data[10] = 0; $data[11] = 0;	}
+				       $data[6] < 1000000)	{	$data[10] = 0; $data[11] = 1;	}
+				else				{	$data[10] = 0; $data[11] = 0;	}
 			}
 		
 			if (defined $data[9])
@@ -147,8 +146,8 @@ foreach my $type (@typelist)
 				if    ($data[9] < 1000)		{	$data[12] = 1; $data[13] = 0;	}
 				elsif ($data[9] < 10000 )	{	$data[12] = 0; $data[13] = 0;	}
 				elsif ($data[9] > 10000 &&
-					   $data[9] < 1000000)	{	$data[12] = 0; $data[13] = 1;	}
-				else						{	$data[12] = 0; $data[13] = 0;	}
+				       $data[9] < 1000000)	{	$data[12] = 0; $data[13] = 1;	}
+				else				{	$data[12] = 0; $data[13] = 0;	}
 			}
 		
 			print $out $data[0];
@@ -255,8 +254,8 @@ foreach my $type (@typelist)
 			if    (abs($data[3]) < 1000)		{	$data[9] = 1; $data[10] = 0;	}
 			elsif (abs($data[3]) < 10000 )		{	$data[9] = 0; $data[10] = 0;	}
 			elsif (abs($data[3]) > 10000 &&
-				   abs($data[3]) < 1000000)		{	$data[9] = 0; $data[10] = 1;	}
-			else								{	$data[9] = 0; $data[10] = 0;	}
+			       abs($data[3]) < 1000000)		{	$data[9] = 0; $data[10] = 1;	}
+			else					{	$data[9] = 0; $data[10] = 0;	}
 		
 			print $out $data[0];
 
