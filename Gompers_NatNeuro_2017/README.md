@@ -16,7 +16,7 @@
 
 | Description                                   | Genome  | Address     |
 | --------------------------------------------- | ------- | ----------- |
-| ChIP-seq in adult mouse forebrain             | mm9     |   |
+| ChIP-seq in adult mouse forebrain             | mm9     | https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/iu1jtcwsudw3v4q/Chd8/ChIPseq/Chd8_internal.txt  |
 | RNA-seq in mouse forebrain                    | mm9     |   |
 | Katayama et al. (2016) ChIP-seq               | mm9     |   |
 | Cotney et al. (2015) ChIP-seq in mouse brain  | mm9     |   |
