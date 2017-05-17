@@ -1,0 +1,25 @@
+Experiment File Column Format
+
+ 1: SampleID = ChIP name —> must be short name (to fit on the plots and graphs)
+
+ 2: Tissue = sample tissue (e.g. BG, Cx, etc)
+
+ 3: Factor = TF or histone name
+
+ 4: Condition = wild type (WT) or knock-out (KO)
+
+ 5: Treatment = development stage
+
+ 6: Replicate = replicate NUMBER
+
+ 7: bamReads = ChIP file path (RELATIVE to the chipqc folder)
+
+ 8: ControlID = Respective control sample name (input or NegCtl) —> must be short 
+                name (to fit on the plots and graphs)
+
+ 9: bamControl = Control file path (RELATIVE to the chipqc folder)
+
+10: Peaks = aligned peak caller’s file path (RELATIVE to the chipqc folder) 
+            (if macs, point to the narrowPeak files)
+
+11: PeakCaller = Peaks file format (bed or macs)
