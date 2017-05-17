@@ -9,7 +9,6 @@ echo hiddenDomains.sbatch version 1.0.0
 echo ... started running on $(date)
 echo  
 echo
-
 echo
 echo This job is running on
 /bin/hostname
@@ -56,8 +55,6 @@ else
 	"${CODE}hiddenDomains" -g $CHRSIZES -b $EXT -p $PVALUE -t $MACS_t \
 						   -o "${HIDDIR}${MACS_o}.b${EXT}.p${PVALUE}"
 fi
-
-
 
 echo  
 echo
