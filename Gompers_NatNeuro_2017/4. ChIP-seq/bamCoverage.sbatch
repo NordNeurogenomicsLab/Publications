@@ -9,7 +9,6 @@ echo bamCoverage.sbatch version 1.0.0
 echo ... started running on $(date)
 echo  
 echo
-
 echo
 echo This job is running on 
 /bin/hostname
@@ -43,22 +42,6 @@ EXT=$5
 IGN_DUP=$6
 NORMALIZ=$7
 GENOME=$8
-
-echo
-echo $BROAD
-echo $NARROW
-echo $DEEPDIR
-echo $THREADS
-echo $EXT
-echo $IGN_DUP
-echo $NORMALIZ
-echo $GENOME
-echo
-
-echo
-echo MACS_c is $MACS_c
-echo MACS_t is $MACS_t
-echo 
 
 if [[ "$NORMALIZ" == "normalizeTo1x" ]]
 then
