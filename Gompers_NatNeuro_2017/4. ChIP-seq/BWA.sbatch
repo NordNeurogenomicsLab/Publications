@@ -28,7 +28,6 @@ echo
 
 INPUT_BWA=$(find $3 -iname $BWA_NAME)
 echo INPUT_BWA is $INPUT_BWA
-# INPUT_BWA=$3$BWA_NAME
 
 module load bwa
 module load samtools/1.3
@@ -57,7 +56,6 @@ then
 	echo  
 	echo   
 	
-# 	bwa aln -t $1 $2 $NEW_INPUT_BWA | bwa samse $2 - $NEW_INPUT_BWA | samtools view -Shu - > $NEW_INPUT_BWA.bam
 	cd "${4}$BWA_NAME"
 	
 	bwa aln -t $1 $2 $NEW_INPUT_BWA | bwa samse $2 - $NEW_INPUT_BWA | samtools view -q $5 -Shu - | \
@@ -68,7 +66,6 @@ then
 	samtools index $NEW_INPUT_BWA.srt.bam
 	echo
 
-	# bamToBed -i $NEW_INPUT_BWA.srt.bam > $NEW_INPUT_BWA.bed
 	echo
 	
 	echo " ... deleting unnecessary files from bwa"
@@ -99,7 +96,6 @@ else
 	
 	OUTPUT_BWA=$4$BWA_NAME
 	 
-# 	bwa aln -t $1 $2 $INPUT_BWA | bwa samse $2 - $INPUT_BWA | samtools view -Shu - > $OUTPUT_BWA.bam
 	cd "${4}$BWA_NAME"
 	
 	bwa aln -t $1 $2 $INPUT_BWA | bwa samse $2 - $INPUT_BWA | samtools view -q $5 -Shu - | \
@@ -135,7 +131,7 @@ sleep 1
 rm -rf "${4}$BWA_NAME"
 
 # changelog
-# 1.3.0	code searches for file to bwa (line 21)
+# 1.3.0	code searches for file to bwa
 # 1.2.1	included minor corrections on file output
 # 1.2.0	enabled selection of raw or trimmed sequences for alignment
 # 1.1.0	introduced quality filtering, adapter trimming and alignment of trimmed sequences 
