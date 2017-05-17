@@ -13,9 +13,7 @@
 
 ### UCSC Genome Browser Track Hubs
 
-.settings-view .setting-description {
-  font-size: 14px;
-}
+
 
 | Description                                   | Genome  | Address     |
 | --------------------------------------------- | ------- | ----------- |
