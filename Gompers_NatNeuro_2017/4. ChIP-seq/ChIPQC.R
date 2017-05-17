@@ -1,4 +1,6 @@
 #!/usr/bin/env Rscript
+# R. Catta-Preta @UC Davis
+
 param = commandArgs(trailingOnly=TRUE)
 setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
 
