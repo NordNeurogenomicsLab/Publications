@@ -9,14 +9,11 @@ echo Homer.sbatch version 1.0.0
 echo ... started running on $(date)
 echo  
 echo 
-
 echo
 echo This job is running on
 /bin/hostname
 echo
 echo
-
-
 
 # Load Modules, and Run Programs
 module load homer/4.7
@@ -39,7 +36,6 @@ allmotiffs="${2}$otp/$allmotiffs"
 
 ANNOT_HOMER=".motif.counts"
 ANNOT_HOMER="${2}$otp/$otp$ANNOT_HOMER"
-
 
 echo  
 echo
