@@ -4,5 +4,5 @@ This pipeline was designed to be executed in a cluster running SLURM as the job 
 Please refer to the License terms present on the root of this ***Publication*** folder.
 
 
-                                                                            Rinaldo Catta-Preta @ UC Davis, '2017-05-16'
+                                                                            
                                                                             
