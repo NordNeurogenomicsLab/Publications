@@ -9,13 +9,11 @@ echo MACS_sple.sbatch version 1.4.0
 echo ... started running on $(date)
 echo  
 echo
-
 echo
 echo This job is running on
 /bin/hostname
 echo
 echo
-
 
 # Load Modules, and Run Programs
 module load macs2/2.1.0.20140616
@@ -45,7 +43,6 @@ else
 	FORMAT="BAMPE"
 fi
 
-
 echo  
 echo
 echo macs2 name is $MACS_o
@@ -65,7 +62,6 @@ then
 else
 	GENSIZE=$3
 fi
-
 
 # BROAD PEAK CALL
 cd $1
@@ -146,7 +142,6 @@ echo
 echo  ... completed broad peak call on $(date)
 echo  
 echo  
-
 
 cd $2
 
@@ -267,7 +262,6 @@ then
 	echo 
 	echo Completed pdf generation of broad peak files on $(date)
 	echo 
-
 fi
 
 if [ -f $2$MACS_ctrl$nomodelterm$term ];
@@ -277,7 +271,6 @@ then
 	echo 
 	echo Completed pdf generation of broad peak files on $(date)
 	echo 
-
 fi
 
 if [ -f $2$MACS_sple$modelterm$term ];
@@ -287,7 +280,6 @@ then
 	echo 
 	echo Completed pdf generation of broad peak files on $(date)
 	echo 
-
 fi
 echo 
 
@@ -298,7 +290,6 @@ then
 	echo 
 	echo Completed pdf generation of broad peak files on $(date)
 	echo 
-
 fi
 echo 
 echo 
@@ -313,7 +304,6 @@ then
 	echo 
 	echo Completed pdf generation of broad peak files on $(date)
 	echo 
-
 fi
 
 if [ -f $1$MACS_ctrl$nomodelterm$term ];
@@ -323,7 +313,6 @@ then
 	echo 
 	echo Completed pdf generation of broad peak files on $(date)
 	echo 
-
 fi
 
 if [ -f $1$MACS_sple$modelterm$term ];
@@ -333,7 +322,6 @@ then
 	echo 
 	echo Completed pdf generation of broad peak files on $(date)
 	echo 
-
 fi
 echo 
 
@@ -344,10 +332,7 @@ then
 	echo 
 	echo Completed pdf generation of broad peak files on $(date)
 	echo 
-
 fi
-echo 
-
 
 echo  
 echo
