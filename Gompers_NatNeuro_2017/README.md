@@ -13,7 +13,7 @@
 
 ### UCSC Genome Browser Track Hubs
 
-
+\documentclass[11pt, a4paper]
 
 | Description                                   | Genome  | Address     |
 | --------------------------------------------- | ------- | ----------- |
