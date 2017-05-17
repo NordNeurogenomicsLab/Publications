@@ -31,9 +31,6 @@ my ($fastqc_run, $fastqc_re_run) = '';
 # BWA variables
 my ($bwa_dir, $bwa_realign, $bwa_threads, $bwa_quality, $bwa_trim, $bwa_align_modsize) = '';
 
-# BayesPeak variables
-my ($bayes_dir, $bayes_run, $bayes_lambda, $bayes_calls) = '';
-
 # MACS2 variables
 my ($macs_dir, $macs_run, $macs_broad_cutoff, $macs_qvalue, $macs_pvalue) = '';
 my ($macs_nolambda, $macs_extsize, $macs_dups) = '';
@@ -91,126 +88,103 @@ while (<$in>)
 	my @temp = split / /;
 	my ($header, $param) = ($temp[1], $temp[2]);
 	
-	if ($header =~ m/Dataset/)								{ $file_list = $param; } 
-	elsif ($header =~ m/Reference_organism/) 				{ $organism = $param; }	
-	elsif ($header =~ m/Genome_version/) 					{ $genome_version = $param; }
-	elsif ($header =~ m/Reference_Genome/) 					{ $genome = $param; }
-	elsif ($header =~ m/Reference_genome_bed_file/) 		{ $bed_genome = $param; }
-	elsif ($header =~ m/Reference_genome_chrom_sizes/) 		{ $chrom_sizes = $param; }
-	elsif ($header =~ m/Refer_genome_chrom_directory/)		{ $genome_dir = $param; }
-	elsif ($header =~ m/Blacklist_file/) 					{ $blacklist_file = $param; }
-	elsif ($header =~ m/Genes_GTF_file/) 					{ $genes_gtf = $param; }
-	elsif ($header =~ m/Genes_BED_file/) 					{ $genes_bed = $param; }
-	elsif ($header =~ m/PeakAnnotator_Directory/) 			{ $peakannot_code = $param; }
+	if ($header =~ m/Dataset/)				{ $file_list = $param; } 
+	elsif ($header =~ m/Reference_organism/) 		{ $organism = $param; }	
+	elsif ($header =~ m/Genome_version/) 			{ $genome_version = $param; }
+	elsif ($header =~ m/Reference_Genome/) 			{ $genome = $param; }
+	elsif ($header =~ m/Reference_genome_bed_file/) 	{ $bed_genome = $param; }
+	elsif ($header =~ m/Reference_genome_chrom_sizes/) 	{ $chrom_sizes = $param; }
+	elsif ($header =~ m/Refer_genome_chrom_directory/)	{ $genome_dir = $param; }
+	elsif ($header =~ m/Blacklist_file/) 			{ $blacklist_file = $param; }
+	elsif ($header =~ m/Genes_GTF_file/) 			{ $genes_gtf = $param; }
+	elsif ($header =~ m/Genes_BED_file/) 			{ $genes_bed = $param; }
+	elsif ($header =~ m/PeakAnnotator_Directory/) 		{ $peakannot_code = $param; }
 	elsif ($header =~ m/Trackhubs_project_code_location/)	{ $trackhub_pcreator = $param; }
-	elsif ($header =~ m/ChIPModule_code_location/)			{ $chipmod_code = $param; }
-	elsif ($header =~ m/hiddenDomains_code/)				{ $hidden_code = $param; }
-	elsif ($header =~ m/Raw_Data_Directory/) 				{ $raw_data_dir = $param; }
-	elsif ($header =~ m/Processed_File_Directory/) 			{ $processed_dir = $param; }
+	elsif ($header =~ m/ChIPModule_code_location/)		{ $chipmod_code = $param; }
+	elsif ($header =~ m/hiddenDomains_code/)		{ $hidden_code = $param; }
+	elsif ($header =~ m/Raw_Data_Directory/) 		{ $raw_data_dir = $param; }
+	elsif ($header =~ m/Processed_File_Directory/) 		{ $processed_dir = $param; }
 	
-	elsif ($header =~ m/BWA_Data_Directory/) 				{ $bwa_dir = $param; }
-	elsif ($header =~ m/Realignment_Required/)				{ $bwa_realign = $param; }
-	elsif ($header =~ m/Trim_read_files/) 					{ $bwa_trim = $param; }
+	elsif ($header =~ m/BWA_Data_Directory/) 		{ $bwa_dir = $param; }
+	elsif ($header =~ m/Realignment_Required/)		{ $bwa_realign = $param; }
+	elsif ($header =~ m/Trim_read_files/) 			{ $bwa_trim = $param; }
 	elsif ($header =~ m/Size_of_each_alignment_module/) 	{ $bwa_align_modsize = $param; }
-	elsif ($header =~ m/Quality_cutoff/) 					{ $bwa_quality = $param; }
+	elsif ($header =~ m/Quality_cutoff/) 			{ $bwa_quality = $param; }
 	elsif ($header =~ m/No_of_threads_used_in_alignment/)	{ $bwa_threads = $param; }
 	
-	elsif ($header =~ m/New_Peak_Calls/) 					{ $new_peak_call = $param; }
-	elsif ($header =~ m/MACS2_Data_Directory/) 				{ $macs_dir = $param; }
-	elsif ($header =~ m/Run_MACS2_in_the_pipeline/) 		{ $macs_run = $param; }
-	elsif ($header =~ m/Broad_peak_calling_cutoff/) 		{ $macs_broad_cutoff = $param; }	
-	elsif ($header =~ m/q-value_cutoff/) 					{ $macs_qvalue = $param; }	
-	elsif ($header =~ m/p-value_cutoff/) 					{ $macs_pvalue = $param; }
-	elsif ($header =~ m/extsize_parameter/) 				{ $macs_extsize = $param; }
+	elsif ($header =~ m/New_Peak_Calls/) 			{ $new_peak_call = $param; }
+	elsif ($header =~ m/MACS2_Data_Directory/) 		{ $macs_dir = $param; }
+	elsif ($header =~ m/Run_MACS2_in_the_pipeline/) 	{ $macs_run = $param; }
+	elsif ($header =~ m/Broad_peak_calling_cutoff/) 	{ $macs_broad_cutoff = $param; }	
+	elsif ($header =~ m/q-value_cutoff/) 			{ $macs_qvalue = $param; }	
+	elsif ($header =~ m/p-value_cutoff/) 			{ $macs_pvalue = $param; }
+	elsif ($header =~ m/extsize_parameter/) 		{ $macs_extsize = $param; }
 	elsif ($header =~ m/use_background_as_local_lambda/) 	{ $macs_nolambda = $param; }
-	elsif ($header =~ m/No_of_dups_to_keep/) 				{ $macs_dups = $param; }	
+	elsif ($header =~ m/No_of_dups_to_keep/) 		{ $macs_dups = $param; }	
 	
-	elsif ($header =~ m/BDGdiff_Data_Directory/)			{ $diff_dir = $param; }
+	elsif ($header =~ m/BDGdiff_Data_Directory/)		{ $diff_dir = $param; }
 	elsif ($header =~ m/Run_MACS2_bdgdiff_in_the_pipeline/)	{ $diff_run = $param; }
 	elsif ($header =~ m/Re-run_bdgdiff_on_called_peaks/)	{ $diff_re_run = $param; }
-	elsif ($header =~ m/logLR_cutoff/)						{ $diff_cutoff = $param; }
-	elsif ($header =~ m/Min_length_of_diff_region/)			{ $diff_minlen = $param; }
-	elsif ($header =~ m/Maximum_gap/)						{ $diff_maxgap = $param; }
-	elsif ($header =~ m/Sequ_depth_cond1/)					{ $diff_depth1 = $param; }
-	elsif ($header =~ m/Sequ_depth_cond2/)					{ $diff_depth2 = $param; }
-	
-	elsif ($header =~ m/Run_BayesPeak_in_the_pipeline/) 	{ $bayes_run = $param; }
-	elsif ($header =~ m/Lambda1_for_overfitting_call/) 		{ $bayes_lambda = $param; }
-	elsif ($header =~ m/Call_thrsh_for_overfitting_call/)	{ $bayes_calls = $param; }
+	elsif ($header =~ m/logLR_cutoff/)			{ $diff_cutoff = $param; }
+	elsif ($header =~ m/Min_length_of_diff_region/)		{ $diff_minlen = $param; }
+	elsif ($header =~ m/Maximum_gap/)			{ $diff_maxgap = $param; }
+	elsif ($header =~ m/Sequ_depth_cond1/)			{ $diff_depth1 = $param; }
+	elsif ($header =~ m/Sequ_depth_cond2/)			{ $diff_depth2 = $param; }
 	
 	elsif ($header =~ m/Run_hiddenDomains_in_the_pipeline/)	{ $hidden_run = $param; }
-	elsif ($header =~ m/hiddenDomains_min_post_probab/)		{ $hidden_pvalue = $param; }
-	elsif ($header =~ m/hiddenDomains_bin_width/)			{ $hidden_ext = $param; }
-	elsif ($header =~ m/hiddenDomains_Data_Directory/)		{ $hidden_dir = $param; }
+	elsif ($header =~ m/hiddenDomains_min_post_probab/)	{ $hidden_pvalue = $param; }
+	elsif ($header =~ m/hiddenDomains_bin_width/)		{ $hidden_ext = $param; }
+	elsif ($header =~ m/hiddenDomains_Data_Directory/)	{ $hidden_dir = $param; }
 	
-	elsif ($header =~ m/Run_FASTQC_in_the_pipeline/) 		{ $fastqc_run = $param; }
-	elsif ($header =~ m/Re-Run_FASTQC/) 					{ $fastqc_re_run = $param; }
+	elsif ($header =~ m/Run_FASTQC_in_the_pipeline/) 	{ $fastqc_run = $param; }
+	elsif ($header =~ m/Re-Run_FASTQC/) 			{ $fastqc_re_run = $param; }
 	
-	elsif ($header =~ m/PeakCaller_file_format/) 			{ $chipqc_pkcaller = $param; }
-	elsif ($header =~ m/ChIPQC_Directory/) 					{ $chipqc_dir = $param; }
-	elsif ($header =~ m/FacetBy_ChIPQC/) 					{ $chipqc_facetby = $param; }
-	elsif ($header =~ m/colourBy/) 							{ $chipqc_colorby = $param; }
+	elsif ($header =~ m/PeakCaller_file_format/) 		{ $chipqc_pkcaller = $param; }
+	elsif ($header =~ m/ChIPQC_Directory/) 			{ $chipqc_dir = $param; }
+	elsif ($header =~ m/FacetBy_ChIPQC/) 			{ $chipqc_facetby = $param; }
+	elsif ($header =~ m/colourBy/) 				{ $chipqc_colorby = $param; }
 	elsif ($header =~ m/No_random_datasets_for_overlap_p/) 	{ $chipqc_overlap_p = $param; }
-	elsif ($header =~ m/Re-run_ChIPQC_on_called_peaks/)		{ $chipqc_re_run = $param; }
+	elsif ($header =~ m/Re-run_ChIPQC_on_called_peaks/)	{ $chipqc_re_run = $param; }
 	
-	elsif ($header =~ m/Run_Bedtools_in_the_pipeline/)		{ $bedtools_run = $param; }
+	elsif ($header =~ m/Run_Bedtools_in_the_pipeline/)	{ $bedtools_run = $param; }
 	elsif ($header =~ m/Re-run_Bedtools_on_called_peaks/)	{ $bedtools_re_run = $param; }
-	elsif ($header =~ m/Run_PeakAnnot_in_the_pipeline/)		{ $peakannot_run = $param; }
+	elsif ($header =~ m/Run_PeakAnnot_in_the_pipeline/)	{ $peakannot_run = $param; }
 	elsif ($header =~ m/Re-run_PeakAnnot_on_called_peaks/)	{ $peakannot_re_run = $param; }
 	
-	elsif ($header =~ m/Run_DeepTools_in_the_pipeline/)		{ $deeptools_run = $param; }
-	elsif ($header =~ m/Re-run_Deeptools/)					{ $deeptools_re_run = $param; }
-	elsif ($header =~ m/DeepTools_Data_Directory/)			{ $deep_dir = $param; }
-	elsif ($header =~ m/Comparisons_to_make/)				{ $deep_comparisons = $param; }
-	elsif ($header =~ m/Pseudocount_value/)					{ $deep_pseudonumber = $param; }
-	elsif ($header =~ m/Ratio_type/)						{ $deep_ratio_type = $param; }
-	elsif ($header =~ m/ignore_Duplicates/)					{ $deep_ign_dup = $param; }
-	elsif ($header =~ m/Normalization_type/)				{ $deep_normal = $param; }
+	elsif ($header =~ m/Run_DeepTools_in_the_pipeline/)	{ $deeptools_run = $param; }
+	elsif ($header =~ m/Re-run_Deeptools/)			{ $deeptools_re_run = $param; }
+	elsif ($header =~ m/DeepTools_Data_Directory/)		{ $deep_dir = $param; }
+	elsif ($header =~ m/Comparisons_to_make/)		{ $deep_comparisons = $param; }
+	elsif ($header =~ m/Pseudocount_value/)			{ $deep_pseudonumber = $param; }
+	elsif ($header =~ m/Ratio_type/)			{ $deep_ratio_type = $param; }
+	elsif ($header =~ m/ignore_Duplicates/)			{ $deep_ign_dup = $param; }
+	elsif ($header =~ m/Normalization_type/)		{ $deep_normal = $param; }
 	
-	elsif ($header =~ m/Run_Homer_in_the_pipeline/) 		{ $homer_run = $param; }
-	elsif ($header =~ m/Homer_Data_Directory/) 				{ $homer_dir = $param; }
-	elsif ($header =~ m/Peak_caller/) 						{ $homer_pk_caller = $param; }
-	elsif ($header =~ m/Repeat_masked_sequences/) 			{ $homer_mask = $param; }
-	elsif ($header =~ m/Region_size_upstream/) 				{ $homer_size_up = $param; }
-	elsif ($header =~ m/Region_size_downstream/) 			{ $homer_size_down = $param; }
-	elsif ($header =~ m/Remove_background_positions/) 		{ $homer_bkgrnd = $param; }
-	elsif ($header =~ m/Look_for_RNA_motiffs/) 				{ $homer_rna = $param; }
+	elsif ($header =~ m/Run_Homer_in_the_pipeline/) 	{ $homer_run = $param; }
+	elsif ($header =~ m/Homer_Data_Directory/) 		{ $homer_dir = $param; }
+	elsif ($header =~ m/Peak_caller/) 			{ $homer_pk_caller = $param; }
+	elsif ($header =~ m/Repeat_masked_sequences/) 		{ $homer_mask = $param; }
+	elsif ($header =~ m/Region_size_upstream/) 		{ $homer_size_up = $param; }
+	elsif ($header =~ m/Region_size_downstream/) 		{ $homer_size_down = $param; }
+	elsif ($header =~ m/Remove_background_positions/) 	{ $homer_bkgrnd = $param; }
+	elsif ($header =~ m/Look_for_RNA_motiffs/) 		{ $homer_rna = $param; }
 	elsif ($header =~ m/File_of_known_motifs(if\ existent)/){ $homer_known = $param; }
-	elsif ($header =~ m/Sequence_normalization/) 			{ $homer_norm = $param; }
-	elsif ($header =~ m/Bin_size_for_histogram/) 			{ $homer_bin = $param; }
-	elsif ($header =~ m/Enrichment_scoring_method/) 		{ $homer_scoring = $param; }
-	elsif ($header =~ m/Re-run_Homer_on_called_peaks/) 		{ $homer_re_run = $param; }
+	elsif ($header =~ m/Sequence_normalization/) 		{ $homer_norm = $param; }
+	elsif ($header =~ m/Bin_size_for_histogram/) 		{ $homer_bin = $param; }
+	elsif ($header =~ m/Enrichment_scoring_method/) 	{ $homer_scoring = $param; }
+	elsif ($header =~ m/Re-run_Homer_on_called_peaks/) 	{ $homer_re_run = $param; }
 	
-	elsif ($header =~ m/Run_ChIPModule_in_the_pipeline/)	{ $chipmod_run = $param; }
-	elsif ($header =~ m/ChIPModule_Data_Directory/)			{ $chipmod_dir = $param; }
-	elsif ($header =~ m/Re-run_ChIPModule_on_called_peaks/)	{ $chipmod_re_run = $param; }
-	elsif ($header =~ m/Motif_PWMs/)						{ $chipmod_PWMs = $param; }
-	elsif ($header =~ m/Min_number_sequences/)				{ $chipmod_seq = $param; }
-	elsif ($header =~ m/ChIPmod_lambda_file/)				{ $chipmod_lambda = $param; }
-	elsif ($header =~ m/Bonferroni_corr_pvalue/)			{ $chipmod_pvalue = $param; }
-	elsif ($header =~ m/Output_format/)						{ $chipmod_format = $param; }
-	elsif ($header =~ m/Detail_motif_combin_file/)			{ $chipmod_detailed = $param; }
+	elsif ($header =~ m/Date_for_extra_analyses/) 		{ $macs_date = $param; }
 	
-	elsif ($header =~ m/Create_track_hubs/)					{ $trackhub_run = $param; }
-	elsif ($header =~ m/Project_name/)						{ $trackhub_proj = $param; }
-	elsif ($header =~ m/Bioshare_or_afs/)					{ $trackhub_bio_afs = $param; }
-	elsif ($header =~ m/Bioshare_url/)						{ $trackhub_bio_url = $param; }
-	elsif ($header =~ m/afs_url/)							{ $trackhub_afs_url = $param; }
-	elsif ($header =~ m/Track_hub_name/)					{ $trackhub_name = $param; }
-	elsif ($header =~ m/Bioshare_or_afs/)					{ $trackhub_bio_afs = $param; }
-	elsif ($header =~ m/Manual_or_auto_scale/)				{ $trackhub_autoScale = $param; }
-	
-	elsif ($header =~ m/Date_for_extra_analyses/) 			{ $macs_date = $param; }
-	
-	elsif ($header =~ m/Amt_memory_chipqc/) 				{ $mem_chipqc = $param; }
-	elsif ($header =~ m/Amt_memory_fastqc/) 				{ $mem_fastqc = $param; }
-	elsif ($header =~ m/Amt_memory_bwa/) 					{ $mem_bwa = $param; }
-	elsif ($header =~ m/Amt_memory_macs/) 					{ $mem_macs = $param; }
-	elsif ($header =~ m/Amt_memory_bedtools/) 				{ $mem_bedtools = $param; }
-	elsif ($header =~ m/GC_partition_fastqc/) 				{ $gcpart_fastq = $param; }
-	elsif ($header =~ m/GC_partition_bwa/) 					{ $gcpart_bwa = $param; }
-	elsif ($header =~ m/GC_partition_macs/) 				{ $gcpart_macs = $param; }
-	elsif ($header =~ m/GC_partition_bedtools/) 			{ $gcpart_bed = $param; }
+	elsif ($header =~ m/Amt_memory_chipqc/) 		{ $mem_chipqc = $param; }
+	elsif ($header =~ m/Amt_memory_fastqc/) 		{ $mem_fastqc = $param; }
+	elsif ($header =~ m/Amt_memory_bwa/) 			{ $mem_bwa = $param; }
+	elsif ($header =~ m/Amt_memory_macs/) 			{ $mem_macs = $param; }
+	elsif ($header =~ m/Amt_memory_bedtools/) 		{ $mem_bedtools = $param; }
+	elsif ($header =~ m/GC_partition_fastqc/) 		{ $gcpart_fastq = $param; }
+	elsif ($header =~ m/GC_partition_bwa/) 			{ $gcpart_bwa = $param; }
+	elsif ($header =~ m/GC_partition_macs/) 		{ $gcpart_macs = $param; }
+	elsif ($header =~ m/GC_partition_bedtools/) 		{ $gcpart_bed = $param; }
 } 
 close $in;
 
@@ -354,8 +328,6 @@ sub update_myqueue
 				if ($slurm_array_id ne '' and $slurm_array_id2 ne '' and $slurm_array_id3 ne '');
 }
 
-
-
 # Create destination directories if they do not exist
 system("mkdir -p $processed_dir") != -1 or die $!;
 
@@ -390,13 +362,13 @@ foreach my $chip (@ChIP_list)
 	my $ChIP_fastqc = $fastqc_dir . $ChIP_bam_name[0] . '_fastqc.html';
 	
 	if ($bwa_trim eq 'yes') { $ChIP_bam = $bwa_dir . $ChIP_bam_name[0] . '_trimmed.fq.gz.srt.bam';}
-	else				{ $ChIP_bam = $bwa_dir . $chip . '.fastq.gz.srt.bam'; }
+	else			{ $ChIP_bam = $bwa_dir . $chip . '.fastq.gz.srt.bam'; }
 	
 	if (! -e $ChIP_bam)	{ push(@ChIP_align_list, $chip); }
-	else				{ push(@ChIP_align_list, $chip) unless ($bwa_realign ne 'yes'); }
+	else			{ push(@ChIP_align_list, $chip) unless ($bwa_realign ne 'yes'); }
 	
 	if (! -e $ChIP_fastqc)	{ push(@ChIP_fastqc_list, $chip); }
-	else					{ push(@ChIP_fastqc_list, $chip) unless ($fastqc_re_run ne 'yes'); }
+	else			{ push(@ChIP_fastqc_list, $chip) unless ($fastqc_re_run ne 'yes'); }
 }
 
 foreach my $chip (@ChIP_PE_list)
@@ -405,7 +377,7 @@ foreach my $chip (@ChIP_PE_list)
 	my $ChIP_fastqc = $fastqc_dir . $ChIP_bam_name[0] . '_fastqc.html';
 
 	if (! -e $ChIP_fastqc)	{ push(@ChIP_fastqc_list, $chip); }
-	else					{ push(@ChIP_fastqc_list, $chip) unless ($fastqc_re_run ne 'yes'); }
+	else			{ push(@ChIP_fastqc_list, $chip) unless ($fastqc_re_run ne 'yes'); }
 }
 	
 foreach my $chip (@ChIP_R2_list)
@@ -415,7 +387,7 @@ foreach my $chip (@ChIP_R2_list)
 	my $ChIP_fastqc = $fastqc_dir . $ChIP_bam_name[0] . '_fastqc.html';
 	
 	if (! -e $ChIP_fastqc)	{ push(@ChIP_fastqc_list, $chip); }
-	else					{ push(@ChIP_fastqc_list, $chip) unless ($fastqc_re_run ne 'yes'); }
+	else			{ push(@ChIP_fastqc_list, $chip) unless ($fastqc_re_run ne 'yes'); }
 }
 	
 foreach my $PE_target (keys %ChIP_seq)
@@ -427,10 +399,10 @@ foreach my $PE_target (keys %ChIP_seq)
 		if (grep {$_ eq $fastq} @ChIP_PE_list)
 		{
 			if ($bwa_trim eq 'yes') { $ChIP_bam = $bwa_dir . $ChIP_seq{$PE_target}{$fastq}{PE_trim};}
-			else				{ $ChIP_bam = $bwa_dir . $ChIP_seq{$PE_target}{$fastq}{PE_notrim}; }
+			else			{ $ChIP_bam = $bwa_dir . $ChIP_seq{$PE_target}{$fastq}{PE_notrim}; }
 			
 			if (! -e $ChIP_bam)	{ push(@ChIP_PE_align_list, $fastq); }
-			else				{ push(@ChIP_PE_align_list, $fastq) unless ($bwa_realign ne 'yes'); }
+			else			{ push(@ChIP_PE_align_list, $fastq) unless ($bwa_realign ne 'yes'); }
 		}
 	}
 }
@@ -442,7 +414,7 @@ my $no_align_PE_chips = scalar(@ChIP_PE_align_list) - 1;
 my $low_threads;
 
 if ($bwa_threads > 2)	{ $low_threads = int($bwa_threads / 2); }
-else				{ $low_threads = $bwa_threads; }
+else			{ $low_threads = $bwa_threads; }
 
 my $fastqc_to_run = @ChIP_fastqc_list;
 $fastqc_to_run = 0 if ($fastqc_run ne 'yes');
@@ -493,7 +465,6 @@ if ($no_align_chips >= 0)
 		
 		$pre_param = "--array=0-$remaining --partition=$gcpart_bwa --cpus-per-task=$bwa_threads";
 		$pre_param.= " --mem=$mem_bwa -o $logbwaout -e $logbwaout";
-# 		$pre_param.= " --exclusive";
 		$pre_param.= " --dependency=afterok:$myqueue" if ($myqueue ne '');
 		
 		$pos_param = "$bwa_threads $genome $raw_data_dir $bwa_dir $bwa_quality $bwa_trim $fastqc_dir ";
@@ -653,7 +624,6 @@ foreach my $target (keys %ChIP_seq)
 			push @macs_list, 'null';
 			push @macs_list, 'null';
 		}
-		
 	}
 	
 	# Append pair-ended list to the single-ended one
@@ -771,10 +741,8 @@ my $new_narrow_dir;
 my $new_broad_dir;
 
 # Using deeptools and hiddenDomains
-
 $deep_dir = $processed_dir . "deeptools/" unless (defined $deep_dir);
 system("mkdir -p $deep_dir") != -1 or die $!; 
-
 $hidden_dir = $processed_dir . "hiddenDomains/" unless (defined $hidden_dir);
 system("mkdir -p $hidden_dir") != -1 or die $!; 
 
@@ -782,13 +750,10 @@ system("mkdir -p $hidden_dir") != -1 or die $!;
 my $chosen_sample;
 my @compare_list;
 my @compare_labels;
-
 my @complete_ChIP;
 push @complete_ChIP, @ChIP_list;
 # push @complete_ChIP, @ChIP_R2_list;
 my @compare_param = split /,/, $deep_comparisons;
-
-
 @compare_param = sort {$b <=> $a} @compare_param;
 print "\ncomparisons:\n", Dumper(@compare_param);
 
@@ -815,7 +780,6 @@ COMPLIST: for my $comptype (@compare_param)
 				push @compare_list, $name;
 			}
 		}
-		
 		my @prefixes;
 		
 		for (my $i = 0; $i < @macs_list; $i+= 5)
@@ -841,7 +805,6 @@ COMPLIST: for my $comptype (@compare_param)
 				}
 			}
 		}
-		
 		last COMPLIST;
 	}
 	elsif ($comptype eq 1)
@@ -878,7 +841,6 @@ COMPLIST: for my $comptype (@compare_param)
 	elsif ($comptype =~ /^3\([\S*\+]{6}\S*\)$/)
 	{
 		chop($comptype);
-
 		my @chosen_sample = split /3\(/, $comptype;
 		@chosen_sample = split /\+/, $chosen_sample[1];
 		
@@ -888,7 +850,7 @@ COMPLIST: for my $comptype (@compare_param)
 			{
 				if ( ($ChIP_seq{$target}{$fastq}{experiment} eq $chosen_sample[0]) and 
 					 ($ChIP_seq{$target}{$fastq}{factor} 	 eq $chosen_sample[1]) and
-					 ($ChIP_seq{$target}{$fastq}{type} 		 eq $chosen_sample[2]) and
+					 ($ChIP_seq{$target}{$fastq}{type} 	 eq $chosen_sample[2]) and
 					 ($ChIP_seq{$target}{$fastq}{tissue} 	 eq $chosen_sample[3]) and
 					 ($ChIP_seq{$target}{$fastq}{condition}  eq $chosen_sample[4]) and
 					 ($ChIP_seq{$target}{$fastq}{treatment}  eq $chosen_sample[5]) and
@@ -917,7 +879,7 @@ COMPLIST: for my $comptype (@compare_param)
 my @ratios = split /\,/, $deep_ratio_type;
 
 if ($organism eq 'hs')	{ $genome_version = 'hg' . $genome_version; }
-else					{ $genome_version = $organism . $genome_version; }
+else			{ $genome_version = $organism . $genome_version; }
 
 if ($deeptools_run eq 'yes' or $hidden_run eq 'yes')
 {
@@ -949,15 +911,13 @@ if ($deeptools_run eq 'yes' or $hidden_run eq 'yes')
 	# currently, it works only for single-ended reads
 	
 	if ($deep_ign_dup eq 'yes')	{ $deep_ign_dup = '--ignoreDuplicates' }
-	else 						{ $deep_ign_dup = 'no' }
+	else 				{ $deep_ign_dup = 'no' }
 	
 	my @normalizations = split /\,/, $deep_normal;
 	
 	$logfile_dir = $deep_dir . "logfiles/";
 	system("mkdir -p $logfile_dir") != -1 or die $!;
-	
 	$logdeept = $logfile_dir . "deeptools_%A_%a.out";
-
 	$pre_param = "--array=0-$no_macs --partition=$gcpart_bwa --mem=$mem_macs ";
 	$pre_param.= "-o $logdeept -e $logdeept";
 	$pre_param.= " --dependency=afterok:$myqueue" if (defined $myqueue and $myqueue ne '');
@@ -979,7 +939,6 @@ if ($deeptools_run eq 'yes' or $hidden_run eq 'yes')
 	}
 }
 
-
 # Perform Peak Annotation (PeakAnnotation)
 if ($peakannot_run eq 'yes')
 {
@@ -998,7 +957,7 @@ if ($peakannot_run eq 'yes')
 		system("mkdir -p $peakannot_dir") != -1 or die $!; 
 
 		if ($myqueue =~ /$slurm_array_id/) 	{ $pre_param.= " --dependency=afterok" . ':' . "$myqueue"; }
-		else								{ $pre_param.= " --dependency=afterok" . ':' . "$myqueue" . ':' . "$slurm_array_id"; }
+		else					{ $pre_param.= " --dependency=afterok" . ':' . "$myqueue" . ':' . "$slurm_array_id"; }
 		
 		$new_narrow_dir = $narrow_dir;
 		$new_broad_dir = $broad_dir;
@@ -1012,7 +971,7 @@ if ($peakannot_run eq 'yes')
 	}
 	
 	$pos_param = "$peakannot_code $peakannot_dir $new_narrow_dir $genes_bed $chipqc_overlap_p ";
-	$pos_param.= "$new_broad_dir $bayes_dir $homer_pk_caller";
+	$pos_param.= "$new_broad_dir $homer_pk_caller";
 
 	if ($peakannot_re_run eq 'yes' or $myqueue ne '')
 	{
@@ -1032,7 +991,6 @@ my %factors = ();
 my $factorfile;
 my $number = 0;
 my $newqueue = '';
-
 $chipqc_dir = $processed_dir . "chipqc/" unless (defined $chipqc_dir);
 
 sub generate_chipqc_table
@@ -1076,11 +1034,10 @@ sub generate_chipqc_table
 					next if ($ChIP_seq{$target}{$ctrlchip}{replicate} 	ne $ChIP_seq{$target}{$chip}{replicate});
 					
 					my $extension;
-					$extension = '.no_model_peaks.narrowPeak' 	if ($chipqc_pkcaller eq 'narrow');
-					$extension = '.no_model_peaks.xls' 			if ($chipqc_pkcaller eq 'macs');
-					$extension = '.bayesPeaks' 		 			if ($chipqc_pkcaller eq 'bayes');
-					$extension = '.bed' 			 			if ($chipqc_pkcaller eq 'bed');
-					$extension = '.txt' 			 			if ($chipqc_pkcaller eq 'raw');
+					$extension = '.no_model_peaks.narrowPeak' if ($chipqc_pkcaller eq 'narrow');
+					$extension = '.no_model_peaks.xls' 	  if ($chipqc_pkcaller eq 'macs');
+					$extension = '.bed' 			  if ($chipqc_pkcaller eq 'bed');
+					$extension = '.txt' 			  if ($chipqc_pkcaller eq 'raw');
 					
 					my $Peaks;
 					$Peaks = "$ChIP_seq{$target}{$chip}{i_macs}" 
@@ -1089,12 +1046,6 @@ sub generate_chipqc_table
 							 if ($ChIP_seq{$target}{$ctrlchip}{type} eq 'NegCtl');
 					
 					my @temp_peaks = split /\//, $Peaks;
-					$Peaks = $bayes_dir . $temp_peaks[-1] if ($chipqc_pkcaller eq 'bayes');
-					
-					if ($chipqc_re_run eq 'yes' or ! defined $myqueue)
-					{
-						$Peaks = $new_narrow_dir . $temp_peaks[-1] if ($chipqc_pkcaller ne 'bayes');
-					}
 					
 					print $out "$ChIP_seq{$target}{$chip}{sampleID}\t";
 					print $out "$ChIP_seq{$target}{$chip}{tissue}\t"; 
@@ -1109,7 +1060,6 @@ sub generate_chipqc_table
 					print $out "$bwa_dir$ChIP_seq{$target}{$ctrlchip}{PE_notrim}\t" if ($bwa_trim ne 'yes');
 					print $out "$Peaks$extension\t";
 					print $out "$chipqc_pkcaller\n";
-
 					$number += 1;
 				}
 			}
@@ -1130,14 +1080,13 @@ sub generate_chipqc_table
 					next if ($ChIP_seq{$target}{$ctrlchip}{condition} 	ne $ChIP_seq{$target}{$chip}{condition});
 					next if ($ChIP_seq{$target}{$ctrlchip}{treatment} 	ne $ChIP_seq{$target}{$chip}{treatment});
 					next if ($ChIP_seq{$target}{$ctrlchip}{replicate} 	ne $ChIP_seq{$target}{$chip}{replicate});
-					next if ($ChIP_seq{$target}{$ctrlchip}{pair_ended}  ne $ChIP_seq{$target}{$chip}{pair_ended});
+					next if ($ChIP_seq{$target}{$ctrlchip}{pair_ended}  	ne $ChIP_seq{$target}{$chip}{pair_ended});
 					
 					my $extension;
-					$extension = '.no_model_peaks.narrowPeak' 	if ($chipqc_pkcaller eq 'narrow');
-					$extension = '.no_model_peaks.xls' 			if ($chipqc_pkcaller eq 'macs');
-					$extension = '.bayesPeaks' 		 			if ($chipqc_pkcaller eq 'bayes');
-					$extension = '.bed' 			 			if ($chipqc_pkcaller eq 'bed');
-					$extension = '.txt' 			 			if ($chipqc_pkcaller eq 'raw');
+					$extension = '.no_model_peaks.narrowPeak' if ($chipqc_pkcaller eq 'narrow');
+					$extension = '.no_model_peaks.xls' 	  if ($chipqc_pkcaller eq 'macs');
+					$extension = '.bed' 			  if ($chipqc_pkcaller eq 'bed');
+					$extension = '.txt' 			  if ($chipqc_pkcaller eq 'raw');
 					
 					my $Peaks;
 					$Peaks = "$ChIP_seq{$target}{$chip}{i_macs}" 
@@ -1146,13 +1095,7 @@ sub generate_chipqc_table
 							 if ($ChIP_seq{$target}{$ctrlchip}{type} eq 'NegCtl');
 					
 					my @temp_peaks = split /\//, $Peaks;
-					$Peaks = $bayes_dir . $temp_peaks[-1] if ($chipqc_pkcaller eq 'bayes');
 					
-					if ($chipqc_re_run eq 'yes' or ! defined $myqueue)
-					{
-						$Peaks = $new_narrow_dir . $temp_peaks[-1] if ($chipqc_pkcaller ne 'bayes');
-					}
-
 					print $out "$ChIP_seq{$target}{$chip}{sampleID}\t";
 					print $out "$ChIP_seq{$target}{$chip}{tissue}\t"; 
 					print $out "$ChIP_seq{$target}{$chip}{factor}\t";
@@ -1166,7 +1109,6 @@ sub generate_chipqc_table
 					print $out "$bwa_dir$ctrlchip\t" if ($bwa_trim ne 'yes');
 					print $out "$Peaks$extension\t";
 					print $out "$chipqc_pkcaller\n";
-
 					$number += 1;
 				}
 			}
@@ -1199,7 +1141,6 @@ for my $target (keys %ChIP_seq)
 $logfile_dir = $chipqc_dir . "logfiles/";
 system("mkdir -p $logfile_dir") != -1 or die $!;
 my $logchipqcout = $logfile_dir . "ChIPQC_%J.out";
-
 $number = 12 if ($number > 12);
 $number = 4  if ($number < 4);
 
@@ -1248,7 +1189,7 @@ EXIT_IF: {
 		}
 
 		# Generate ChIPQC report for data set
-		if (@factors > 0)    #<<<<<<<< originally 1
+		if (@factors > 0)    
 		{
 			generate_chipqc_table('Input', $chipqc_project, 'project');
 			$pos_param = "$factorfile $chipqc_dir_popped $blacklist_file $genome_version $bwa_quality $chipqc_facetby $chipqc_colorby $bwa_threads";
@@ -1278,26 +1219,22 @@ if ($homer_run eq 'yes')
 	my $homer_file_type;
 	my $h_file_type;
 
-	if ($homer_pk_caller eq 'MACS2') 			{ $homer_file_type = '.no_model_peaks.narrowPeak'; }
-	elsif ($homer_pk_caller eq 'BayesPeak') 	{ $homer_file_type = '.bayesPeaks.bed'; }
-	elsif ($homer_pk_caller eq 'BOTH')			{ $homer_file_type = '.no_model_peaks.narrowPeak';
-												  $h_file_type 	   = '.bayesPeaks.bed'; }
-	else { die "Peak caller options for Homer Motif Analysis are MACS2 or BayesPeak or BOTH\n\n" }
+	if ($homer_pk_caller eq 'MACS2') { $homer_file_type = '.no_model_peaks.narrowPeak'; }
 	
 	if ($homer_mask eq 'yes')	{ $homer_mask = '-mask'; }
-	else						{ $homer_mask = 'void'; }
+	else				{ $homer_mask = 'void'; }
 	
 	if ($homer_bkgrnd eq 'yes')	{ $homer_bkgrnd = '-bg'; }
-	else						{ $homer_bkgrnd = 'void'; }
+	else				{ $homer_bkgrnd = 'void'; }
 	
 	if ($homer_rna eq 'yes')	{ $homer_rna = '-rna'; }
-	else						{ $homer_rna = 'void'; }
+	else				{ $homer_rna = 'void'; }
 	
 	if (defined $homer_known)	{ $homer_known = '-mknown ' . "$homer_known"; }
-	else						{ $homer_known = 'void'; }
+	else				{ $homer_known = 'void'; }
 	
 	if (defined $homer_norm)	{ $homer_norm = '-' . "$homer_norm"; }
-	else						{ $homer_norm = '-gc'; }
+	else				{ $homer_norm = '-gc'; }
 	
 	$pre_param = "--array=0-$no_macs --partition=$gcpart_bed ";
 	$pre_param.= "--cpus-per-task=$bwa_threads --mem=$mem_bwa -o $loghomer -e $loghomer";
@@ -1320,8 +1257,7 @@ if ($homer_run eq 'yes')
 	$h_file_type = 'null' unless (defined $h_file_type);
 	$pos_param = "$genome $homer_dir $homer_file_type $homer_size_up $homer_size_down ";
 	$pos_param.= "$homer_bkgrnd $homer_mask $homer_rna $homer_known $homer_norm ";
-	$pos_param.= "$bwa_threads $new_narrow_dir $homer_scoring $h_file_type $bayes_dir";
-	
+	$pos_param.= "$bwa_threads $new_narrow_dir $homer_scoring $h_file_type ";
 
 	if ($homer_re_run eq 'yes' or $myqueue ne '')
 	{
@@ -1340,10 +1276,8 @@ if ($homer_run eq 'yes')
 }
 else { print "No Homer motif analysis selected\n"; }
 
-
 ## Differential peak calling
 # Using MACS2 bdgdiff
-
 if ($diff_run eq 'yes')
 {
 	$diff_dir = $processed_dir . "diffcall/" unless (defined $diff_dir);
@@ -1369,11 +1303,9 @@ if ($diff_run eq 'yes')
 		$new_narrow_dir = $macs_dir . 'narrow/' . $macs_date . '/';
 	}
 
-
 	$pos_param = "$new_broad_dir $macs_extsize $diff_dir $mem_bwa $diff_cutoff $diff_minlen";
 	$pos_param.= " $diff_maxgap $diff_depth1 $diff_depth2 $logfile_dir $controls $new_narrow_dir";
 
 	$slurm_array_id = submit_slurm_job("MACS_diff.sbatch", $pre_param, $pos_param, @macs_list);
 	update_myqueue;
 }
-
