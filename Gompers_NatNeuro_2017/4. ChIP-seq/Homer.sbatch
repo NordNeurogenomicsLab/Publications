@@ -9,14 +9,11 @@ echo Homer.sbatch version 1.0.0
 echo ... started running on $(date)
 echo  
 echo  
-
 echo
 echo This job is running on
 /bin/hostname
 echo
 echo
-
-
 
 # Load Modules, and Run Programs
 module load homer/4.7
@@ -99,7 +96,6 @@ else
 		SIZE_ARG="$PREFIX$SIZE_ARG -$4,$5"
 	fi
 fi
-
 
 # Perform motif discovery on peak file
 findMotifsGenome.pl $homerfile $1 $OUTDIR $SIZE_ARG $BKGRND $MASK $RNA $NORM $SCORING ${10} -p ${11}
