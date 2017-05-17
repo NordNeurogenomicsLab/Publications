@@ -112,16 +112,6 @@ then
 			macs2 callpeak -t $MACS_t -c $MACS_c -n "$MACS_o$modelterm" -f $FORMAT -g $GENSIZE \
 				--call-summits --bdg -p $6 --outdir $2 
 			echo
-		
-			# Testing the --cutoff-analysis setting
-	# 		srun --mem=$MEM -p gc128,gc256,gc512 -o "$LOG$MACS_o$nomodelterm"_N%j.out -e "$LOG$MACS_o$nomodelterm"_N%j.out \
-	# 		macs2 callpeak -t $MACS_t -c $MACS_c -n "$MACS_o$nomodelterm".cutoff -f $FORMAT -g $GENSIZE \
-	# 			--bdg --cutoff-analysis $7 --nomodel --extsize=$8 --outdir $2
-	# 			
-	# 		srun --mem=$MEM -p gc128,gc256,gc512 -o "$LOG$MACS_o$modelterm"_N%j.out -e "$LOG$MACS_o$modelterm"_N%j.out \
-	# 		macs2 callpeak -t $MACS_t -c $MACS_c -n "$MACS_o$modelterm".cutoff -f $FORMAT -g $GENSIZE \
-	# 			--bdg --cutoff-analysis --outdir $2
-		
 		else
 			macs2 callpeak -t $MACS_t -c $MACS_c -n "$MACS_o$nomodelterm" -f $FORMAT -g $GENSIZE \
 				--call-summits --bdg -q $5 $7 --nomodel --extsize=$8 --outdir $2 
@@ -130,16 +120,6 @@ then
 			macs2 callpeak -t $MACS_t -c $MACS_c -n "$MACS_o$modelterm" -f $FORMAT -g $GENSIZE \
 				--call-summits --bdg -q $5 --outdir $2 
 			echo
-		
-			# Testing the --cutoff-analysis setting
-	# 		srun --mem=$MEM -p gc128,gc256,gc512 -o "$LOG$MACS_o$nomodelterm"_N%j.out -e "$LOG$MACS_o$nomodelterm"_N%j.out \
-	# 		macs2 callpeak -t $MACS_t -c $MACS_c -n "$MACS_o$nomodelterm".cutoff -f $FORMAT -g $GENSIZE \
-	# 			--bdg --cutoff-analysis $7 --nomodel --extsize=$8 --outdir $2
-	# 			
-	# 		srun --mem=$MEM -p gc128,gc256,gc512 -o "$LOG$MACS_o$modelterm"_N%j.out -e "$LOG$MACS_o$modelterm"_N%j.out \
-	# 		macs2 callpeak -t $MACS_t -c $MACS_c -n "$MACS_o$modelterm".cutoff -f $FORMAT -g $GENSIZE \
-	# 			--bdg --cutoff-analysis --outdir $2
-		
 		fi
 	else
 		if [[ $PVALUE -eq 1 ]];
@@ -154,15 +134,11 @@ then
 		fi
 	fi	
 
-# 	wait 
-
 	echo  
-
 	echo  
 	echo  ... completed broad peak call on $(date)
 	echo  
 	echo  
-
 	echo  
 	echo  ... completed narrow peak call on $(date)
 
@@ -174,7 +150,6 @@ then
 		echo 
 		echo Completed pdf generation of narrow peak files on $(date)
 		echo 
-
 	fi
 
 	if [ -f $2$MACS_o$modelterm$term ];
@@ -184,7 +159,6 @@ then
 		echo 
 		echo Completed pdf generation of narrow peak files on $(date)
 		echo 
-
 	fi
 
 	cd $1
@@ -196,7 +170,6 @@ then
 		echo 
 		echo Completed pdf generation of broad peak files on $(date)
 		echo 
-
 	fi
 
 	if [ -f $1$MACS_o$modelterm$term ];
@@ -206,10 +179,8 @@ then
 		echo 
 		echo Completed pdf generation of broad peak files on $(date)
 		echo 
-
 	fi
 
-	wait
 fi
 echo  
 echo
