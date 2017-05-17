@@ -19,3 +19,12 @@
 | Cotney et al. (2015) ChIP-seq in mouse brain  | mm9     |   |
 | Cotney et al. (2015) ChIP-seq in human brain  | hg19    |   |
 | Sugathan et al. (2014) ChIP-seq in human NPCs | hg19    |   |
+
+
+\begin{center}
+\begin{tabular}{ c c c }
+ cell1 & cell2 & cell3 \\ 
+ cell4 & cell5 & cell6 \\  
+ cell7 & cell8 & cell9    
+\end{tabular}
+\end{center}
