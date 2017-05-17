@@ -6,7 +6,7 @@ print("This job is running on ")
 comput <- system("/bin/hostname")
 
 ## Load libraries
-.libPaths( c( .libPaths(), "/share/nordlab/libraries/R/lib") )
+.libPaths( c("/share/nordlab/libraries/R/lib") )
 library(ChIPQC)
 library(BiocParallel)
 
