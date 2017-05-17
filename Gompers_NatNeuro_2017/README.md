@@ -13,8 +13,7 @@
 
 ### UCSC Genome Browser Track Hubs
 
-\documentclass[11pt, a4paper]{article}
-\begin{document}
+\fontsize{10pt}
 
 | Description                                   | Genome  | Address     |
 | --------------------------------------------- | ------- | ----------- |
@@ -26,4 +25,3 @@
 | Sugathan et al. (2014) ChIP-seq in human NPCs | hg19    |   |
 
 
-\end{document}
