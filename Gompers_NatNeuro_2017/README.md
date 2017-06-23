@@ -1,6 +1,6 @@
 ### Scripts referenced in the above paper, divided by areas
 
-1. Differential Gene Expression
+1. [Differential Gene Expression](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Gompers_NatNeuro_2017/1.%20Differential%20Gene%20Expression)
 2. Gene Network Analysis
 3. ChIP-seq
 4. Isoform Analysis
