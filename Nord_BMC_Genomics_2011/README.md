@@ -2,7 +2,7 @@
 A targeted-sequencing CNV Calling Script written in R
 <br/>Authors: Alex S. Nord, Alex M. Mawla 2011-2015
 
-## Note: We are no longer updating these scripts.  While we are happy to provide guidance and support if you are interested in using or adapting, please note that we have not performed testing to verify compatibility with updates to R and relevant packages.
+### Note: We are no longer updating these scripts.  While we are happy to provide guidance and support if you are interested in using or adapting, please note that we have not performed testing to verify compatibility with updates to R and relevant packages.
 
 This file contains information for running and interpreting results from depth of coverage based CNV calling as described in Nord et al., 2011 (Pubmed ID: 21486468).  All the R scripts described are as described in the manuscript, however, no guarantees are made as to their use on other coverage data. Any questions can be sent to asnord@ucdavis.edu if you need using these scripts. 
 
