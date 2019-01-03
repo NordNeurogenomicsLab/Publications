@@ -12,6 +12,7 @@
 
 ### UCSC Genome Browser Track Hubs
 
+Click on the links below to automatically open the track hub on the UCSC Genome Browser (Please note that by clicking on the links you will load the tracks, but will not unload any loaded tracks)
 
 
 | Description                                   | Genome  | Address in the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgHubConnect) URL Track Hub page   |
