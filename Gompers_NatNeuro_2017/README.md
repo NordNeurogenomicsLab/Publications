@@ -17,7 +17,7 @@
 | Description                                   | Genome  | Address to be copied and pasted into the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgHubConnect) URL Track Hub page   |
 | :---                                          | :---:   | :---        |
 | ChIP-seq in adult mouse forebrain             | mm9     | https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/iu1jtcwsudw3v4q/Chd8/ChIPseq/Gompers.ChIP.txt  |
-| ChIP-seq in adult mouse forebrain             | mm9     | http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&hubUrl=https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/iu1jtcwsudw3v4q/Chd8/ChIPseq/Gompers.ChIP.txt  |
+| ChIP-seq in adult mouse forebrain             | mm9     | http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&hubUrl=https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/iu1jtcwsudw3v4q/Chd8/ChIPseq/Gompers.ChIP.txt  |
 | RNA-seq in mouse forebrain                    | mm9     | https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/iu1jtcwsudw3v4q/Chd8/RNAseq/Gompers.RNA.txt  |
 | Katayama et al. (2016) ChIP-seq               | mm9     | https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/iu1jtcwsudw3v4q/Chd8_external/katayama/Katayama.txt  |
 | Cotney et al. (2015) ChIP-seq in mouse brain  | mm9     | https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/iu1jtcwsudw3v4q/Chd8_external/cotney/Cotney.txt  |
