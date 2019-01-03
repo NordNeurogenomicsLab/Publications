@@ -1,4 +1,4 @@
-# Scripts and used in published papers (and UCSC Track Hubs)
+# Scripts used in published papers (and UCSC Track Hubs)
 
 [**Wade_Frontiers_2019**]()
 
