@@ -1,6 +1,6 @@
 # Scripts used in published papers (and UCSC Track Hubs)
 
-[**Wade_Frontiers_2019**]()
+[**Wade_FrontMolNeurosci_2019**]()
 
 [**Darbandi_Neuron_2018**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Darbandi_Cell_2018)
 
