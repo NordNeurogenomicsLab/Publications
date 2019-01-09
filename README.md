@@ -1,4 +1,4 @@
-# Scripts and used in published papers (and UCSC Track Hubs)
+# Scripts used in published papers (and UCSC Track Hubs)
 
 [**Lindtner_Cell_2019**]()
 
