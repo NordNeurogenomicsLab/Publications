@@ -34,7 +34,7 @@
 | Ceballos-Chávez et al. 2015                   | hg19    | [https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/amzw8x9rv4jvbf6/Chd8_MiniRev_Chavez.txt](http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&hubUrl=https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/amzw8x9rv4jvbf6/Chd8_MiniRev_Chavez.txt)  |
 | Cotney et al. 2015                            | hg19    | [https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/amzw8x9rv4jvbf6/Chd8_MiniRev_Cotney_human.txt](http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&hubUrl=https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/amzw8x9rv4jvbf6/Chd8_MiniRev_Cotney_human.txt)  |
 | Sugathan et al. 2014                          | hg19    | [https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/amzw8x9rv4jvbf6/Chd8_MiniRev_Sugathan.txt](http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&hubUrl=https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/amzw8x9rv4jvbf6/Chd8_MiniRev_Sugathan.txt)  |
-| Zhao et al. 2018                              | hg19    | [https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/amzw8x9rv4jvbf6/Chd8_MiniRev_Zhao_2018.txt](http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&hubUrl=https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/amzw8x9rv4jvbf6/Chd8_MiniRev_Zhao_2018.txt)  |
+| Zhao et al. 2018                              | rn5       | [https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/amzw8x9rv4jvbf6/Chd8_MiniRev_Zhao_2018.txt](http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&hubUrl=https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/amzw8x9rv4jvbf6/Chd8_MiniRev_Zhao_2018.txt)  |
 
 
 
