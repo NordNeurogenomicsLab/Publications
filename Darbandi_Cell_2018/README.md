@@ -1,4 +1,6 @@
-Publication: https://www.cell.com/neuron/pdf/S0896-6273(18)30829-8.pdf
+### Published paper
+
+[Siavash Fazel Darbandi, Sarah E. Robinson Schwartz, Qihao Qi, Rinaldo Catta-Preta, Emily Lin-Ling Pai, Jeffrey D. Mandell, Amanda Everitt, Anna Rubin, Rebecca A. Krasnoff, Sol Katzman, David Tastad, Alex S. Nord, A. Jeremy Willsey, Bin Chen, Matthew W. State, Vikaas S. Sohal, John L.R. Rubenstein (2018). Neonatal Tbr1 Dosage Controls Cortical Layer 6 Connectivity, *Neuron*, 100(4), 831-845.](https://doi.org/10.1016/j.neuron.2018.09.027)
 
 #
 
