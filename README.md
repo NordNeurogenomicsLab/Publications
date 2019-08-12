@@ -1,6 +1,6 @@
 # Scripts used in published papers (and UCSC Track Hubs)
 
-[**Lindtner_Cell_2019**]()
+[**Lindtner_Cell_2019**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Lindtner_Cell_2019)
 
 [**Wade_Frontiers_2019**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Wade_FrontMolNeurosci_2019)
 
