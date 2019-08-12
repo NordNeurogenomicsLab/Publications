@@ -1,3 +1,9 @@
+### Published paper
+
+[Gompers AL, Su-Feher L, Ellegood J, Copping NA, Riyadh MA, Stradleigh TW, Pride MC, Schaffler MD, Wade AA, Catta-Preta R, Zdilar I, Louis S, Kaushik G, Mannion BJ, Plajzer-Frick I, Afzal V, Visel A, Pennacchio LA, Dickel DE, Lerch JP, Crawley JN, Zarbalis KS, Silverman JL, Nord AS (2017). Germline Chd8 haploinsufficiency alters brain development in mouse. *Nat Neurosci*, 20(8), 1062–1073.](https://www.nature.com/articles/nn.4592)
+
+#
+
 ### Scripts referenced in the above paper, divided by areas
 
 1. [Differential Gene Expression](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Gompers_NatNeuro_2017/1.%20Differential%20Gene%20Expression)
