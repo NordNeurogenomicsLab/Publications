@@ -17,6 +17,6 @@
 
 | Description                                   | Genome  | Address in the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgHubConnect) URL Track Hub page   |
 | :---                                          | :---:   | :---        |
-| ChIP-seq in GEs                               | mm9     | [Click here to access the track hub](http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&hubUrl=https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/h9xruo60jdaz8tf/Dlx_2018.txt)  |
+| ChIP-seq in GEs                               | mm9     | [\Click here to access the track hub](http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm9&hubUrl=https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/h9xruo60jdaz8tf/Dlx_2018.txt)  |
 
 
