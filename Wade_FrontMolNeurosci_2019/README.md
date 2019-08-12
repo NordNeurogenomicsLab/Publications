@@ -1,6 +1,6 @@
 ### Published paper
 
-[**Wade AA, Lim K, Catta-Preta R and Nord AS (2019) Common CHD8 Genomic Targets Contrast With Model-Specific Transcriptional Impacts of CHD8 Haploinsufficiency. Front. Mol. Neurosci. 11:481. doi: 10.3389/fnmol.2018.00481**](https://doi.org/10.3389/fnmol.2018.00481)
+[**Wade AA, Lim K, Catta-Preta R and Nord AS (2019) Common CHD8 Genomic Targets Contrast With Model-Specific Transcriptional Impacts of CHD8 Haploinsufficiency. *Front. Mol. Neurosci.* 11:481. doi: 10.3389/fnmol.2018.00481**](https://doi.org/10.3389/fnmol.2018.00481)
 
 #
 
