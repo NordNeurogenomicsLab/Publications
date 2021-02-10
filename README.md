@@ -1,5 +1,7 @@
 # Scripts used in published papers (and UCSC Track Hubs)
 
+[**Canales_eLIFE_2021**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Canales_eLife_2021)
+
 [**Lindtner_Cell_2019**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Lindtner_Cell_2019)
 
 [**Wade_Frontiers_2019**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Wade_FrontMolNeurosci_2019)
