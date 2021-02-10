@@ -5,7 +5,7 @@
 
 #
 
-### Scripts referenced in the above paper, divided by areas
+### Markdown scripts referenced in the above paper, divided by areas
 
 1. [Differential gene expression]()
 2. [WGCNA and Gene Ontology enrichment analysis]()
