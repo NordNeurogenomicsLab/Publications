@@ -1,12 +1,22 @@
 ---
 title: "Differential Gene Expression"
 subtitle: |
-  | Canales et al. 2020 (under review):  
-  | Perturbed embryonic cortical development   
-  | and shift in neurodevelopmental timing following mid-gestational maternal immune activation. 
-  |    
+  [Canales et al. 2020 (under review): A temporal map of maternal immune activation-induced changes reveals a shift in neurodevelopmentiming and perturbed cortical development in mice](https://www.biorxiv.org/content/10.1101/2020.06.13.150359v1) 
+ 
+author: |
+  | Data analysis by:
+  | Karol Cichewicz, kcichewicz@ucdavis.edu
+  | Alexander Nord, asnord@ucdavis.edu, [Lab website](https://nordlab.faculty.ucdavis.edu/)
 
-author: "Data analysis by: Karol Cichewicz and Alexander Nord"
+abstract: |
+  **Background** Environmental insults that activate the maternal immune system are potent primers of developmental neuropathology and maternal immune activation (MIA) has emerged as a risk factor for neurodevelopmental and psychiatric disorders. Animal models of MIA provide an opportunity to identify molecular pathways that initiate disease processes and lead to neuropathology and behavioral deficits in offspring. MIA-induced behaviors are accompanied by anatomical and neurochemical alterations in adult offspring that parallel those seen in affected human populations.
+  
+  **Methods** We performed transcriptional profiling and neuroanatomical characterization in a time course across mouse embryonic cortical development, following MIA via single injection of the viral mimic polyinosinic:polycytidylic acid (polyI:C) at E12.5. Transcriptional changes identified in the cortex of MIA offspring at E17.5 were validated and mapped to cortical neuroanatomy and cell types via protein analysis and immunohistochemistry.
+  
+  **Results** MIA induced strong transcriptomic signatures, including induction of genes associated with hypoxia, immune signaling, and angiogenesis. The acute response identified 6h after the MIA insult was followed by changes in proliferation, neuronal and glial differentiation, and cortical lamination that emerged at E14.5 and peaked at E17.5. Decreased numbers of proliferative cell types in germinal zones and alterations in neuronal and glial cell types across cortical lamina were identified in the MIA-exposed cortex.
+  
+  **Conclusions** MIA-induced transcriptomic signatures in fetal offspring overlap significantly with perturbations identified in neurodevelopmental disorders (NDDs), and provide novel insights into alterations in molecular and developmental timing processes linking MIA and neuropathology, potentially revealing new targets for development of novel approaches for earlier diagnosis and treatment of these disorders.
+  
 output:
   html_document:
     code_folding: hide
@@ -75,7 +85,7 @@ load("./GEO_submission files/exonic.gene.sizes")
 ```
 
 
-# Sample metadata
+# 1. Metadata
 ```{r, fig.width = 7, fig.height = 12}
 
 sample.info_submission <- read.csv("GEO_submission files/Supplementary Table 5, RNA-seq sample metadata_03_02_2021.csv")
@@ -83,13 +93,13 @@ sample.info_submission <- read.csv("GEO_submission files/Supplementary Table 5, 
 datatable(sample.info_submission, 
           rownames = FALSE, 
           filter = list(position = 'top', clear = FALSE, plain = FALSE), 
-          options = list(pageLength = 10, scrollX=T, scrollY=T))
+          options = list(paging = FALSE, scrollX=T, scrollY="200px", searching = FALSE))
 ```
 
 
-# Count data QC
+# 2. Count data quality control
 
-## Identification of sample sex by Xist gene read counts
+## 2.1 Identification of sample sex
 
 A threshold of 1000 counts of Xist gene was used to identify sex
 
@@ -113,14 +123,13 @@ ggplot(Xist_exp, aes(x=sex.by.rna, y=counts, colours=sex.by.rna))+
 
 ```
 
-## RPKM calculation and filtering of genes with very low expression
+## 2.1 Filtering genes with very low expression
 
-```{r}
+```{r, fig.width = 7, fig.height = 3}
 # Calculates RPKM values
 # Gene lengths calculated with lapply
 gene.lengths <- as.numeric(lapply(1:nrow(exp.data), function(x) FUN= as.numeric(exonic.gene.sizes[rownames(exp.data)[x]])))
 
-#
 rpkm.data <- rpkm(exp.data, gene.length=gene.lengths, log=T, prior.count=.25)
 rpkm.data_linear <- rpkm(exp.data, gene.length=gene.lengths, log=F)
 rpkm.data_linear_all <- rpkm.data_linear
@@ -218,7 +227,7 @@ rpkm.data_linear <- rpkm(exp.data, gene.length=gene.lengths, log=F)
 ```
 
 
-## PCA plots
+## 2.2 PCA plots
 
 ```{r, fig.width = 14, fig.height = 5}
 setwd(github_dir)
@@ -236,9 +245,9 @@ grid.arrange(PCA_plot, PCA_plot_sex, ncol = 2)
 
 ```
 
-# Saline vs PolyIC developmental time prediction linear model
+# 3. Developmental time prediction model
 
-```{r}
+```{r, fig.width = 7, fig.height = 5}
 
 # 19.5 was used as a numerical representation of the P0 time point.
 
@@ -360,7 +369,7 @@ Fig_4c
 
 ```
 
-## Statistical analysis of the developmental timing prediction
+## 3.1 Statistical analysis
 ```{r}
 #Nicer dataframe
 predicted.dpc.df <- data.frame("Real_DPC"=c(12.5, 14.5, 17.5, 19.5), "Predicted_Saline_Mean_DPC"= dpc.predict.mean.saline, "Predicted_Saline_SD_DPC"=dpc.predict.sd.saline, "Predicted_PolyIC_Mean_DPC"= dpc.predict.mean.polyic, "Predicted_PolyIC_SD_DPC"=dpc.predict.sd.polyic)
@@ -388,7 +397,7 @@ knitr::kable(predicted_DPC_df_nice)
 
 ```
 
-# Differential gene expression
+# 4. Differential gene expression
 
 ```{r}
 
@@ -438,7 +447,7 @@ E19.5_GLM <- single_timepoint_glm_function(19.5)
 
 ```
 
-## Numbers of DE genes
+## 4.1 Numbers of DE genes
 
 ```{r, fig.width = 9, fig.height = 6}
 
@@ -508,13 +517,13 @@ Fig1f
 
 ```
 
-## Volcano plots
+## 4.2 Interactive volcano plots and DE tables
 
-```{r, cache = FALSE}
-
+```{r}
 volcano_plot_text_2 <- function(x, title) {
 
-#This is nicely dealing with datasets with missing cathegories.
+x <- dplyr::filter(x, PValue <0.05)
+  
 test <- ifelse(x$PValue, "Non significant")
 test <- ifelse(x$logFC > 0 & x$PValue <0.05, "PValue < 0.05 & logFC > 0", test)
 test <- ifelse(x$logFC < 0 & x$PValue <0.05, "PValue < 0.05 & logFC < 0", test)
@@ -570,7 +579,8 @@ ggplotly(p) %>%
 
 volcano_plot_text_3 <- function(x, title) {
 
-#This is nicely dealing with datasets with missing cathegories.
+x <- dplyr::filter(x, PValue <0.05)
+  
 test <- ifelse(x$PValue, "Non significant")
 test <- ifelse(x$logFC > 0 & x$PValue <0.05, "PValue < 0.05 & logFC > 0", test)
 test <- ifelse(x$logFC < 0 & x$PValue <0.05, "PValue < 0.05 & logFC < 0", test)
@@ -619,6 +629,7 @@ p <- ggplot(plotDat, aes(x = logFC, y=log10_PValue, fill=Group, col = Group)) +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())
 
+
 ggplotly(p) %>%
   layout(legend = list(
       orientation = "v",
@@ -632,10 +643,9 @@ ggplotly(p) %>%
 
 ```
 
-### E12.5
+### 4.2.1 E12.5
 
 ```{r, fig.width = 12, fig.height = 6}
-
 p <- volcano_plot_text_3(E12.5_GLM, "E12.5")
 p
 
@@ -646,7 +656,7 @@ datatable(E12.5_GLM, rownames = FALSE, filter="top", options = list(pageLength =
 ```
 
 
-### E14.5
+### 4.2.2 E14.5
 
 ```{r, fig.width = 12, fig.height = 6}
 
@@ -659,7 +669,7 @@ p
 datatable(E14.5_GLM, rownames = FALSE, filter="top", options = list(pageLength = 15, scrollX=T))
 ```
 
-### E17.5
+### 4.2.3 E17.5
 
 ```{r, fig.width = 12, fig.height = 6}
 
@@ -672,7 +682,7 @@ p
 datatable(E17.5_GLM, rownames = FALSE, filter="top", options = list(pageLength = 15, scrollX=T))
 ```
 
-### P0
+### 4.2.4  P0
 
 ```{r, fig.width = 12, fig.height = 6}
 
@@ -687,7 +697,7 @@ datatable(E19.5_GLM, rownames = FALSE, filter="top", options = list(pageLength =
 
 
 
-## Heatmap of DE genes
+## 4.3 Heatmap of DE genes
 
 Figure 1d
 
@@ -763,7 +773,7 @@ Fig_1d
 
 
 
-# SFARI gene enrichment among DE genes
+# 5. SFARI gene enrichment among DE genes
 
 ```{r, fig.width = 8, fig.height = 8}
 SFARI_genes <- read.csv("./GEO_submission files/SFARI-Gene_genes_01-15-2019release_02-26-2019export.csv")
@@ -1041,10 +1051,10 @@ Fig1g
 
 ```
 
-## SFARI genes enrichment statistical tests
+## 5.1 SFARI genes enrichment statistical tests
 
-### Permutation test
-```{r, cache=FALSE}
+### 5.1.1 Permutation test
+```{r, fig.width = 8, fig.height = 8}
 
 ##### Permutation test per GOmpers et al. #####
 # Code adopted from Alex's analysis
@@ -1078,7 +1088,15 @@ geneset.perm.test <- function(binary.score.reference, binary.score.test, iterati
   prop <- sum(binary.score.test)/length(binary.score.test)
   bg <- length(binary.score.reference)
   
-  hist(count.criteria, col="gray", xlab="Count", ylab="Frequency", main=paste(plot.name, " \ncount=", sum(binary.score.test), " of ",  length(binary.score.test), "; p-value=", format(p, scientific = T, digits = 2), "; FE=", format(e, scientific = F, digits = 2), "; Prop=", format(prop, scientific = F, digits = 2), "; n(bg)=", bg, sep=""), xlim=c(x.min,x.max), cex=.75)
+  hist(count.criteria, col="gray", xlab="Count", ylab="Frequency", 
+       
+       main=paste(plot.name, " \ncount=", sum(binary.score.test), " of ",  length(binary.score.test), "; p-value=", format(p, scientific = T, digits = 2), sep=""),
+       
+       xlim=c(x.min,x.max), cex=.5)
+  
+ # Original title with more parameters
+#main=paste(plot.name, " \ncount=", sum(binary.score.test), " of ",  #length(binary.score.test), "; p-value=", format(p, scientific = T, digits = #2), "; FE=", format(e, scientific = F, digits = 2), "; Prop=", format(prop, #scientific = F, digits = 2), "; n(bg)=", bg, sep=""),
+  
   
   abline(v=sum(binary.score.test), lwd=3, col="red")
   #return(list(count.criteria,z,p,e,prop,bg,sum(binary.score.test)))
@@ -1088,15 +1106,18 @@ geneset.perm.test(binary.score.reference, binary.score.test, 100000, plot.name)
 
 }
 
-par(mfrow=c(2,2))
 
-perm_E12.5 <- permutation_test(E12.5_GLM_SFARI_cat, "E12.5")
-perm_E14.5 <- permutation_test(E14.5_GLM_SFARI_cat, "E14.5")
-perm_E17.5 <- permutation_test(E17.5_GLM_SFARI_cat, "E17.5")
-perm_P0 <- permutation_test(E19.5_GLM_SFARI_cat, "P0")
+par(mfrow=c(2,2), mai=c(0.9,0.9,0.9,0.9))
+
+permutation_test(E12.5_GLM_SFARI_cat, "E12.5")
+permutation_test(E14.5_GLM_SFARI_cat, "E14.5")
+permutation_test(E17.5_GLM_SFARI_cat, "E17.5")
+permutation_test(E19.5_GLM_SFARI_cat, "P0")
+
+
 ```
 
-### Permutation and hypergeometric test P value table  
+### 5.1.2 Hypergeometric test
 ```{r, fig.width = 4, fig.height = 6}
 
 #Hypergeometric test
@@ -1120,19 +1141,30 @@ hyper_E14.5 <- SFARI_genes_hypergeometric_test(E14.5_GLM_SFARI_cat)
 hyper_E17.5 <- SFARI_genes_hypergeometric_test(E17.5_GLM_SFARI_cat)
 hyper_P0 <- SFARI_genes_hypergeometric_test(E19.5_GLM_SFARI_cat)
 
+df_p_values <-  data.frame("Age" = c("E12.5", "E14.5", "E17.5", "P0"), 
+           "Permutation test P" = c("0.54", "0.87", "7.6e-06", "0.23"), 
+           "Hypergeometric test P" = c(
+             format(hyper_E12.5, scientific = F, digits = 2),
+             format(hyper_E14.5, scientific = F, digits = 2),
+             format(hyper_E17.5, scientific = T, digits = 2),
+             format(hyper_P0, scientific = F, digits = 2)
+                                       ))
 
-knitr::kable(data.frame("Age" = c("E12.5", "E14.5", "E17.5", "P0"), 
-           "Permutation test P" = c("5.4e-0.1", "8.7e-01", "7.6e-06", "2.3e-01"), 
-           "Hypergeometric test P" = c(hyper_E12.5, hyper_E14.5, hyper_E17.5, hyper_P0)))
+colnames(df_p_values) <- c("Age", "Permutation test P", "Hypergeometric test P")
 
+#df_p_values
+
+knitr::kable(df_p_values,
+           format = "html", table.attr = "style='width:40%;'", align = "l", position = "left") %>% 
+  kableExtra::kable_styling(position = "left")
 
 ```
 
 
 
-# Individual gene expression trajectories
+# 6. Individual gene expression trajectories
 
-```{r, error=FALSE, warning=FALSE, message=FALSE, echo=TRUE, dev='png', dpi=72, cache=TRUE}
+```{r, error=FALSE, warning=FALSE, message=FALSE, echo=TRUE, dev='png', dpi=72}
 
 ###
 # x is a gene name
@@ -1168,7 +1200,7 @@ ggplot(rpkm_test_w_info, aes(x = DPC, y= RPKM, colour=Condition))+
 
 ```
 
-## Fig. 3d
+## 6.1 Fig. 3d
 ```{r, fig.width = 7, fig.height = 6}
 
 genes <- c("Vegfa", "Flt1", "Pdk1", "Ldha", "Bnip3", "Il20rb") 
@@ -1181,7 +1213,7 @@ marrangeGrob(pl, nrow=2, ncol=3, top = "",
 
 ```
 
-## Fig. 4a
+## 6.2 Fig. 4a
 ```{r, fig.width = 7, fig.height = 12}
 
 genes <- c("Mki67", "Eomes", "Pax6", "Sox9", "Tbr1", "Bcl11b", "Satb2", "Cux1")
@@ -1197,7 +1229,7 @@ marrangeGrob(pl, nrow=4, ncol=2, top = "",
 
 ```
 
-## Fig. 6q
+## 6.3 Fig. 6q
 ```{r, fig.width = 7, fig.height = 6}
 
 genes <- c("Gfap", "Olig2", "Dlx2", "Gad1") 
@@ -1209,7 +1241,7 @@ marrangeGrob(pl, nrow=2, ncol=3, top = "",
 
 ```
 
-## Fig. 7d
+## 6.4 Fig. 7d
 
 ```{r, fig.width = 7, fig.height = 6}
 
