@@ -7,5 +7,5 @@
 
 ### Markdown scripts referenced in the above paper, divided by areas
 
-1. [Differential gene expression](https://github.com/NordNeurogenomicsLab/Publications/blob/master/Canales_eLife_2021/1.%20Differential%20Gene%20Expression/index.html)
+1. [Differential gene expression](https://nordneurogenomicslab.github.io/Canales_eLIFE_2021_DE/)
 2. [WGCNA and Gene Ontology enrichment analysis]()
