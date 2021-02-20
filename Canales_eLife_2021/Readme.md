@@ -8,5 +8,5 @@
 ### Markdown scripts referenced in the above paper, divided by areas
 
 1. [Differential gene expression](https://nordneurogenomicslab.github.io/Canales_eLIFE_2021_DE/)     
-1.1. [Mini MIA gene viewer](https://nordlab.shinyapps.io/MIA_RPKM_plots/) 
+1.1. [Mini MIA gene viewer Shiny app](https://nordlab.shinyapps.io/MIA_RPKM_plots/) 
 3. [WGCNA and Gene Ontology enrichment analysis]()
