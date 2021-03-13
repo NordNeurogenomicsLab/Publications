@@ -5,8 +5,10 @@
 
 #
 
-### Markdown scripts referenced in the above paper, divided by areas
+### R Markdown reports referenced in the manuscript, divided by areas
 
 1. [Differential gene expression](https://nordneurogenomicslab.github.io/Canales_eLIFE_2021_DE/)     
 1.1. [Mini MIA gene viewer Shiny app](https://nordlab.shinyapps.io/MIA_RPKM_plots/) 
 3. [WGCNA and Gene Ontology enrichment analysis - WGCNA completed, GO coming soon](https://nordneurogenomicslab.github.io/Canales_eLIFE_2021_WGCNA_GO/)
+
+### Links to the analysis repositories
