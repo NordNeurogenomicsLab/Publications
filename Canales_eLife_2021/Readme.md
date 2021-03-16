@@ -1,7 +1,7 @@
 ### Preprint
 
 [Cesar P. Canales*, Myka L. Estes*, Karol Cichewicz*, Kartik Angara, John Paul Aboubechara, Scott Cameron, Kathryn Prendergast, Linda Su-Feher, Iva Zdilar, Ellie J. Kreun, Emma C. Connolly, Jin M. Seo, Jack B. Goon, Kathleen Farrelly, Tyler Stradleigh, Deborah van der List, Lori Haapanen, Judy Van de Water, Daniel Vogt, A. Kimberley McAllister, Alex S. Nord (2021).
- **A temporal map of maternal immune activation-induced changes reveals a shift in neurodevelopmental timing and perturbed cortical development in mice,](https://elifesciences.org/articles/60100)
+ **A temporal map of maternal immune activation-induced changes reveals a shift in neurodevelopmental timing and perturbed cortical development in mice,](https://elifesciences.org/articles/60100)**
 
 #
 
