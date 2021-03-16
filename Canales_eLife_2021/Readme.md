@@ -4,7 +4,7 @@
  **A temporal map of maternal immune activation-induced changes reveals a shift in neurodevelopmental timing and perturbed cortical development in mice.**](https://elifesciences.org/articles/60100)
 
 
-### R Markdown html reports referenced in the manuscript
+### R Markdown html analysis reports referenced in the manuscript
 
 1. [Differential gene expression](https://nordneurogenomicslab.github.io/Canales_eLIFE_2021_DE/)     
 1.1. [Mini MIA gene viewer Shiny app](https://nordlab.shinyapps.io/MIA_RPKM_plots/) 
