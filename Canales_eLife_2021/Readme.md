@@ -12,6 +12,6 @@
 3. [WGCNA and Gene Ontology enrichment analysis](https://nordneurogenomicslab.github.io/Canales_eLIFE_2021_WGCNA_GO/)
 
 ### Links to the analysis repositories
-1. [Differential gene expression](https://github.com/NordNeurogenomicsLab/Canales_eLIFE_2021_DE/)
-1.1. [Mini MIA gene viewer Shiny app](https://github.com/NordNeurogenomicsLab/Mini-MIA-gene-viewer) 
-3. [WGCNA and Gene Ontology enrichment analysis](https://github.com/NordNeurogenomicsLab/Canales_eLIFE_2021_WGCNA_GO)
+1. [Differential gene expression](https://github.com/NordNeurogenomicsLab/Canales_eLIFE_2021_DE/)    
+1.1. [Mini MIA gene viewer Shiny app](https://github.com/NordNeurogenomicsLab/Mini-MIA-gene-viewer)      
+3. [WGCNA and Gene Ontology enrichment analysis](https://github.com/NordNeurogenomicsLab/Canales_eLIFE_2021_WGCNA_GO)    
