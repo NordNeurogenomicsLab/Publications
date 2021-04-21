@@ -4,10 +4,10 @@
  **Parallel functional testing identifies enhancers active in early postnatal mouse brain.**](https://www.biorxiv.org/content/10.1101/2021.01.15.426772v3)
 
 
-### R Markdown html analysis report referenced in the manuscript
+### R Markdown html analysis reports referenced in the manuscript
 
 1. [MPRA computational analysis](https://nordneurogenomicslab.github.io/STAR408/)     
-
+2. [miniMPRA - coming soon]
 
 ### Links to the analysis repository
 1. [MPRA computational analysis repository](https://github.com/NordNeurogenomicsLab/STAR408)    
