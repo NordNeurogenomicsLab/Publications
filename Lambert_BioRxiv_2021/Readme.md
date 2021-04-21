@@ -10,5 +10,5 @@
 
 
 ### Links to the analysis repositories
-1. [MPRA computational analysis](https://github.com/NordNeurogenomicsLab/STAR408)    
+1. [MPRA computational analysis repository](https://github.com/NordNeurogenomicsLab/STAR408)    
 
