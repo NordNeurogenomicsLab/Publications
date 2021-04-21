@@ -9,6 +9,6 @@
 1. [MPRA computational analysis](https://nordneurogenomicslab.github.io/STAR408/)     
 
 
-### Links to the analysis repositories
+### Links to the analysis repository
 1. [MPRA computational analysis repository](https://github.com/NordNeurogenomicsLab/STAR408)    
 
