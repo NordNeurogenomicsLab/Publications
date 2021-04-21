@@ -1,4 +1,4 @@
-# Scripts used in published papers (and UCSC Track Hubs)
+# Analysis reports, scripts, and UCSC Track Hubs, used in published papers:
 
 [**Lambert_BioRxiv_2021**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Lambert_BioRxiv_2021)
 
