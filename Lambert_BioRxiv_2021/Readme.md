@@ -7,8 +7,9 @@
 ### R Markdown html analysis reports referenced in the manuscript
 
 1. [MPRA computational analysis](https://nordneurogenomicslab.github.io/STAR408/)     
-2. [miniMPRA - coming soon]
+2. [miniMPRA](https://nordneurogenomicslab.github.io/miniMPRA/)
 
 ### Links to the analysis repository
-1. [MPRA computational analysis repository](https://github.com/NordNeurogenomicsLab/STAR408)    
+1. [MPRA computational repository](https://github.com/NordNeurogenomicsLab/STAR408)
+2. [miniMPRA repository](https://github.com/NordNeurogenomicsLab/miniMPRA)   
 
