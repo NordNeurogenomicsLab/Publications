@@ -21,7 +21,7 @@ Docker images are based on the rocker/tidyverse image, running R 4.1.0.
 All required packages are preinstalled, and files are included in the images.        
 These Docker images launch RStudio in a web browser.      
 
-#### Launch Docker containers from a terminal:
+#### How to launch Docker containers from a terminal:
 1. docker run -d --rm --name STAR408 -p 8787:8787 kcbio/lambert_elife_2021_star408:final_Rmd
 2. docker run -d --rm --name miniMPRA -p 8787:8787 kcbio/mini_mpra:final_image
 
