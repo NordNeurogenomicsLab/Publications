@@ -1,5 +1,7 @@
 # Analysis reports, scripts, and UCSC Track Hubs, used in published papers:
 
+[**Lambert_eLIFE_2021**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Lambert_eLIFE_2021)
+
 [**Catta-Preta_NeurotraumaRep_2021**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Catta-Preta_NeurotraumaRep_2021)
 
 [**Lambert_BioRxiv_2021**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Lambert_BioRxiv_2021)
