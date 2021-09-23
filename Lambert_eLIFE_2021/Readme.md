@@ -27,4 +27,5 @@ These Docker images launch RStudio in a web browser.
 
 Go to http://localhost:8787/ in your web browser.       
 If required, use the default username/password rstudio/rstudio.      
-Specify -p 8788:8787 if you want to run both images concurrently.       
+Specify -p 8788:8787 if you want to run both images concurrently.
+You may need to "Switch to Linux containers" in Docker Desktop.
