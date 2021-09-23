@@ -26,5 +26,5 @@ These Docker images launch RStudio in a web browser.
 2. docker run -d --rm --name miniMPRA -p 8787:8787 kcbio/mini_mpra:final_image
 
 Go to http://localhost:8787/ in your web browser.       
-If required, use the default password/username rstudio/rstudio.      
+If required, use the default username/password rstudio/rstudio.      
 Specify -p 8788:8787 if you want to run both images concurrently.       
