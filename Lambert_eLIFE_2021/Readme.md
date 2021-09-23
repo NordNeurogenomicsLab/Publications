@@ -13,7 +13,7 @@
 1. [STAR408 MPRA repository](https://github.com/NordNeurogenomicsLab/STAR408)
 2. [miniMPRA repository](https://github.com/NordNeurogenomicsLab/miniMPRA)   
 
-### Docker image repositories
+### DockerHub image repositories
 1. [STAR408 MPRA analysis image](https://hub.docker.com/repository/docker/kcbio/lambert_elife_2021_star408)
 2. [miniMPRA analysis image](https://hub.docker.com/repository/docker/kcbio/mini_mpra)
 
