@@ -4,16 +4,16 @@
  **Parallel functional testing identifies enhancers active in early postnatal mouse brain.**](https://www.biorxiv.org/content/10.1101/2021.01.15.426772v3)
 
 
-### R Markdown html analysis reports referenced in the manuscript
+### R Markdown HTML analysis reports
 
 1. [MPRA](https://nordneurogenomicslab.github.io/STAR408/)     
 2. [miniMPRA](https://nordneurogenomicslab.github.io/miniMPRA/)
 
-### Links to the analysis repository
+### Analysis repositories
 1. [MPRA repository](https://github.com/NordNeurogenomicsLab/STAR408)
 2. [miniMPRA repository](https://github.com/NordNeurogenomicsLab/miniMPRA)   
 
-### Links to the analysis Docker image repositories
+### Docker image analysis and environment repositories
 1. [The major MPRA analysis image](https://hub.docker.com/repository/docker/kcbio/lambert_elife_2021_star408)
 2. [miniMPRA analysis image](https://hub.docker.com/repository/docker/kcbio/mini_mpra)
 
@@ -23,5 +23,5 @@ Docker images are based on the rocker/tidyverse image, running R 4.1.0. All nece
 1. docker run -d --rm --name STAR408 -p 8787:8787 kcbio/lambert_elife_2021_star408:final_Rmd
 2. docker run -d --rm --name miniMPRA -p 8787:8787 kcbio/mini_mpra:final_image
 
-Go to http://localhost:8787/ in your webbrowser
+Go to http://localhost:8787/ in your web browser
 Specify -p 8788:8787 if you want to run both images concurrently. 
