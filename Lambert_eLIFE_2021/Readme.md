@@ -6,8 +6,8 @@
 
 ### R Markdown HTML analysis reports
 
-1. [STAR408 MPRA](https://nordneurogenomicslab.github.io/STAR408/)     
-2. [miniMPRA](https://nordneurogenomicslab.github.io/miniMPRA/)
+1. [STAR408 MPRA Rmd](https://nordneurogenomicslab.github.io/STAR408/)     
+2. [miniMPRA Rmd](https://nordneurogenomicslab.github.io/miniMPRA/)
 
 ### Analysis repositories
 1. [STAR408 MPRA repository](https://github.com/NordNeurogenomicsLab/STAR408)
