@@ -25,6 +25,6 @@ These Docker images launch RStudio in a web browser.
 1. docker run -d --rm --name STAR408 -p 8787:8787 kcbio/lambert_elife_2021_star408:final_Rmd
 2. docker run -d --rm --name miniMPRA -p 8787:8787 kcbio/mini_mpra:final_image
 
-Go to http://localhost:8787/ in your web browser. 
-If required, use the default password/username rstudio/rstudio.
-Specify -p 8788:8787 if you want to run both images concurrently. 
+Go to http://localhost:8787/ in your web browser.       
+If required, use the default password/username rstudio/rstudio.      
+Specify -p 8788:8787 if you want to run both images concurrently.       
