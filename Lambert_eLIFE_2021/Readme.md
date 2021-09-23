@@ -17,7 +17,7 @@
 1. [STAR408 MPRA analysis image](https://hub.docker.com/repository/docker/kcbio/lambert_elife_2021_star408)
 2. [miniMPRA analysis image](https://hub.docker.com/repository/docker/kcbio/mini_mpra)
 
-Docker images are based on the rocker/tidyverse image, running R 4.1.0 under Ubuntu 20.04.2.      
+Docker images are based on the rocker/tidyverse image, running R 4.1.0 under Ubuntu 20.04.2 LTS.      
 All required packages are preinstalled, and files are included in the images.        
 These Docker images launch RStudio in a web browser.      
 
