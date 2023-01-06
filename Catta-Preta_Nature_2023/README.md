@@ -10,6 +10,6 @@
 
 | Description                                   | Genome  | Address in the [UCSC Genome Browser](https://genome.ucsc.edu/cgi-bin/hgHubConnect) URL Track Hub page   |
 | :---                                          | :---:   | :---        |
-| ChIP-seq and PLAC-seq                             | mm10    | [*Click here to access the track hub*](https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/i0bzlowx1b7v56j/COMB00.txt)  |
+| ChIP-seq and PLAC-seq                             | mm10    | [*Click here to access the track hub*](http://genome.ucsc.edu/cgi-bin/hgTracks?db=mm10&hubUrl=https://bioshare.bioinformatics.ucdavis.edu/bioshare/download/i0bzlowx1b7v56j/COMB00.txt)  |
 
 
