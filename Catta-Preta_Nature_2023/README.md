@@ -1,6 +1,6 @@
 ### Published paper
 
-[Rinaldo Catta-Preta, Susan Lindtner, Athena Ypsilanti, James Price, Yin Shen, Armen Abnousi, Linda Su-Feher, Yurong Wang, Ivan Juric, Ian R. Jones, Jennifer A. Akiyama, Ming Hu, Yin Shen, Axel Visel, Len A. Pennacchio, Diane Dickel, John L R Rubenstein, Alex S Nord (2023). Cis-Trans Regulatory Interactions Encode Regulons in GABAergic Neurogenesis](https://doi.org/)
+[Rinaldo Catta-Preta, Susan Lindtner, Athena Ypsilanti, James Price, Yin Shen, Armen Abnousi, Linda Su-Feher, Yurong Wang, Ivan Juric, Ian R. Jones, Jennifer A. Akiyama, Ming Hu, Yin Shen, Axel Visel, Len A. Pennacchio, Diane Dickel, John L R Rubenstein, Alex S Nord (2023). Cis-Trans Regulatory Interactions Encode Regulons in GABAergic Neurogenesis](https://doi.org/TBD)
 
 #
 
