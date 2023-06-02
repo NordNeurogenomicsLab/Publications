@@ -1,7 +1,7 @@
 ### Published paper
 
 [Rinaldo Catta-Preta, Susan Lindtner, Athena Ypsilanti, James Price, Yin Shen, Armen Abnousi, Linda Su-Feher, Yurong Wang, Ivan Juric, Ian R. Jones, Jennifer A. Akiyama, Ming Hu, Yin Shen, Axel Visel, Len A. Pennacchio, Diane Dickel, John L R Rubenstein, Alex S Nord (2023). 
-**Exceptional cis-trans interactions are a hallmark of deeply conserved developmental brain enhancers.** ](https://doi.org/)
+**Combinatorial transcription factor binding modularizes cis-regulatory wiring of GABAergic neurogenesis** ](https://doi.org/)
 
 #
 
