@@ -4,9 +4,8 @@
  **Complimentary vertebrate Wac models exhibit phenotypes relevant to DeSanto-Shinawi Syndrome.**](https://)
 
 
-### R Markdown analysis reports referenced in the manuscript
+### R Markdown analysis report
+1. [Analysis report](https://nordneurogenomicslab.github.io/WAC_bulk_RNAseq/)     
 
-1. [Differential gene expression](https://nordneurogenomicslab.github.io/WAC_bulk_RNAseq/)     
-
-### Links to the analysis repositories
-1. [Differential gene expression](https://github.com/NordNeurogenomicsLab/Canales_eLIFE_2021_DE/)    
+### Link to the analysis repository: 
+1. [Repository](https://github.com/NordNeurogenomicsLab/WAC_bulk_RNAseq/tree/main)    
