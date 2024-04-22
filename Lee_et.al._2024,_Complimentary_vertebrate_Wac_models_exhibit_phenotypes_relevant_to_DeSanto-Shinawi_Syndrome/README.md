@@ -7,4 +7,4 @@
 
 ### 2. [Analysis repository](https://github.com/NordNeurogenomicsLab/WAC_bulk_RNAseq/tree/main) 
 
-### 3. Data GEO accession number: [GSE264597](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264597)
+### 3. [Data GEO accession number: GSE264597](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264597)
