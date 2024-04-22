@@ -5,4 +5,6 @@
 
 ### 1. [R Markdown analysis report](https://nordneurogenomicslab.github.io/WAC_bulk_RNAseq/)     
 
-### 2. [Analysis repository](https://github.com/NordNeurogenomicsLab/WAC_bulk_RNAseq/tree/main)    
+### 2. [Analysis repository](https://github.com/NordNeurogenomicsLab/WAC_bulk_RNAseq/tree/main) 
+
+### 3. Data GEO accession number: [GSE264597](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE264597)
