@@ -5,4 +5,4 @@
 
 ### 1. [R Markdown analysis report](https://nordneurogenomicslab.github.io/WAC_bulk_RNAseq/)     
 
-### Analysis repository [Link](https://github.com/NordNeurogenomicsLab/WAC_bulk_RNAseq/tree/main)    
+### 2. [Analysis repository](https://github.com/NordNeurogenomicsLab/WAC_bulk_RNAseq/tree/main)    
