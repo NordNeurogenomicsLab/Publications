@@ -7,10 +7,10 @@ Athéna R. Ypsilanti, Eirene Markenscoff-Papadimitriou, Sean Whalen, Karol Ciche
 ### R Markdown GitHub Pages analysis reports:
 
 1. [Kdm6b cKO differential expression analysis](https://nordneurogenomicslab.github.io/Kdm6b_DE/)     
-2. [ncDNVs and gene sets enrichment analysis](https://nordlab.shinyapps.io/Enrichment_analysis/) 
+2. [ncDNVs and gene sets enrichment](https://nordlab.shinyapps.io/Enrichment_analysis/) 
 
 ### Analysis repositories
 1. [Kdm6b cKO differential expression analysis](https://github.com/NordNeurogenomicsLab/Kdm6b_DE/)    
-2. [Mini MIA gene viewer Shiny app](https://github.com/NordNeurogenomicsLab/Enrichment_analysis)      
+2. [ncDNVs and gene sets enrichment](https://github.com/NordNeurogenomicsLab/Enrichment_analysis)      
 
 
