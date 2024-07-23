@@ -12,7 +12,7 @@ Athéna R. Ypsilanti, Eirene Markenscoff-Papadimitriou, Sean Whalen, Karol Ciche
 2. [ncDNVs and gene sets enrichment](https://nordlab.shinyapps.io/Enrichment_analysis/) 
 
 ### Analysis repositories
-1. [Kdm6b cKO differential expression analysis](https://github.com/NordNeurogenomicsLab/Kdm6b_DE/)    
+1. [Kdm6b cKO differential expression analysis](https://github.com/NordNeurogenomicsLab/CortexCode_Kdm6b_DE/tree/main)    
 2. [ncDNVs and gene sets enrichment](https://github.com/NordNeurogenomicsLab/Enrichment_analysis)      
 
 
