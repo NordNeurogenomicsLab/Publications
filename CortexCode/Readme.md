@@ -6,7 +6,7 @@ Athéna R. Ypsilanti, Eirene Markenscoff-Papadimitriou, Sean Whalen, Karol Ciche
 
 ### R Markdown GitHub Pages reports:
 
-1. [Kdm6b cKO differential expression analysis](https://nordneurogenomicslab.github.io/CortexCode_Kdm6b_DE-/)     
+1. [Kdm6b cKO differential expression analysis](https://nordneurogenomicslab.github.io/CortexCode_Kdm6b_DE/)     
 2. [ncDNVs and gene sets enrichment](https://nordlab.shinyapps.io/Enrichment_analysis/) 
 
 ### Analysis repositories
