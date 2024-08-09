@@ -4,5 +4,5 @@
 Janna McLellan, Ana-Maria Iosif, Karol Cichwicz, Cesar Canales, Alexander Nord, Judy Van de Water
 
 ### R Markdown GitHub Pages report:
-### Analysis repository
+### Analysis repository:
 
