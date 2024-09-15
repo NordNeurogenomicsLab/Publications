@@ -1,7 +1,13 @@
 ### Published paper
 
 [Rinaldo Catta-Preta, Susan Lindtner, Athena Ypsilanti, Nicolas Seban, James Price, Armen Abnousi, Linda Su-Feher, Yurong Wang, Karol Cichewicz, Sally A. Boerma, Ivan Juric, Ian R. Jones, Jennifer A. Akiyama, Ming Hu, Yin Shen, Axel Visel, Len A. Pennacchio, Diane Dickel, John L. R. Rubenstein, Alex S. Nord (2024). 
-**Combinatorial transcription factor binding encodes cis-regulatory wiring of mouse forebrain GABAergic neurogenesis**. *Developmental Cell*,  ](https://doi.org/)
+**Combinatorial transcription factor binding encodes cis-regulatory wiring of mouse forebrain GABAergic neurogenesis**.](https://www.biorxiv.org/content/10.1101/2023.06.28.546894v1)
+
+#
+
+### Mouse Developmental Brain Enhancer Atlas
+
+[Enhancer Atlas](https)
 
 #
 
