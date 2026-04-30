@@ -7,7 +7,7 @@ Athéna R. Ypsilanti, Eirene Markenscoff-Papadimitriou, Sean Whalen, Karol Ciche
 
 
 ### R Markdown GitHub Pages reports:
-1. [ATAC, H3K27ac, H3K27me3 WGCNA network generation](https://github.com/NordNeurogenomicsLab/Publications/blob/main/CortexCode/WGCNA_network_generation_w_1kb_peak_merging.Rmd)
+1. [ATAC, H3K27ac, H3K27me3 WGCNA network generation](WGCNA_network_generation_w_1kb_peak_merging.Rmd)
 
 
 
