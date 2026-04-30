@@ -8,7 +8,9 @@ Athéna R. Ypsilanti, Eirene Markenscoff-Papadimitriou, Sean Whalen, Karol Ciche
 
 ### R Markdown GitHub Pages reports:
 1. [ATAC, H3K27ac, H3K27me3 WGCNA network generation](https://github.com/NordNeurogenomicsLab/Publications/blob/main/CortexCode/WGCNA_network_generation_w_1kb_peak_merging.Rmd)
-2. WGCNA_module_classification.Rmd 
+
+
+
 3. [Kdm6b cKO differential expression analysis](https://nordneurogenomicslab.github.io/CortexCode_Kdm6b_DE/)     
 4. [ncDNVs and gene sets enrichment](https://nordneurogenomicslab.github.io/CortexCode_enrichment/) 
 
