@@ -2,7 +2,7 @@
 
 **Persistent cortical excitatory neuron dysregulation in adult Chd8 haploinsufficient mice.**
 
-Cesar P. Canales*1,2,3, Stephanie A. Lozano*1, Nicholas A. Frost6, Karol Cichewicz1, 2, Wellington Amaral3, Nicolas Seban1, Ethan Fenton1, Ayanna Wade1, Nickolas Chu1, Emily Smith1, Cory Ardekani1, Samuel Frank3, Jeffrey Bennett3, Pierre Lavenex4, Aspen Kopley-Smith1, Darlene Rahbarian1, Melissa Corea1, Daniela Perla1, Liam Davis1, Avery Infantas1, Jiyuan Zhu1, Rebecca Ortiz1, Paris Beauregard1,2, Sarah Morse1,  Jacob Baker5, Jingqi Sun5,8, Boxuan Ma5,9, Ju Lu5,8, Vikaas S. Sohal7, David G. Amaral1,2,3, Yi Zuo5, Alex S. Nord1,2,3
+Cesar P. Canales, Stephanie A. Lozano, Nicholas A. Frost, Karol Cichewicz, Wellington Amaral, Nicolas Seban, Ethan Fenton, Ayanna Wade, Nickolas Chu, Emily Smith, Cory Ardekani, Samuel Frank, Jeffrey Bennett, Pierre Lavenex, Aspen Kopley-Smith, Darlene Rahbarian, Melissa Corea, Daniela Perla, Liam Davis, Avery Infantas, Jiyuan Zhu, Rebecca Ortiz, Paris Beauregard, Sarah Morse, Jacob Baker, Jingqi Sun, Boxuan Ma, Ju Lu, Vikaas S. Sohal, David G. Amaral, Yi Zuo, Alex S Nord
 
 ### R Markdown GitHub Pages reports:
 
