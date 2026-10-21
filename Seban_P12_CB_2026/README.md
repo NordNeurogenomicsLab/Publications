@@ -1,10 +1,10 @@
 Manuscript
-<Add Title>
+-- Add Title --
 
-<Add Authors>
+-- Add Authors -- 
 
 R Markdown GitHub Pages reports:
-Analysis code at <link to analysis code (e.g. the rmd in this folder)>
+Analysis code at  -- link to analysis code (e.g. the rmd in this folder) -- 
 Data availability:
-<Modify: e.g. Single-nucleus RNA-seq data, including raw FASTQ files and the integrated Seurat object, are available through GEO accession GSEXXXX.>
+-- e.g. Single-nucleus RNA-seq data, including raw FASTQ files and the integrated Seurat object, are available through GEO accession GSEXXXX. --
 
