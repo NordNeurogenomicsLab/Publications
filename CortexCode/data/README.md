@@ -1,6 +1,6 @@
 # Analysis data
 
-Selected numerical inputs are included in GitHub. [TABLES_ON_GITHUB.csv](TABLES_ON_GITHUB.csv) lists deposited files, sizes and SHA-256 checksums. Larger data files remain excluded from Git.
+All numerical data files are hosted in the [Box data release](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s). [Exact file links, paths and checksums](../config/BOX_RELEASE_FILES.csv). Download its `data/` folder into this directory, retaining all subdirectories.
 
 | Subdirectory | Contents |
 |---|---|
@@ -16,4 +16,4 @@ Selected numerical inputs are included in GitHub. [TABLES_ON_GITHUB.csv](TABLES_
 
 [Exact filenames and input requirements](../INPUTS.md) · [Complete inventory](../config/file_inventory.csv)
 
-Other scientific inputs are in the [public Box release](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s). Copy its `data/` directory here, retaining paths. [Release manifest](../config/BOX_RELEASE_FILES.csv).
+Scientific inputs are in the [public Box release](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s). Copy its `data/` directory here, retaining paths. [Release manifest](../config/BOX_RELEASE_FILES.csv).

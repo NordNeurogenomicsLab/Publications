@@ -1,13 +1,13 @@
 {
   "release": "2026-11-06",
-  "files": 308,
-  "bytes": 5215155950,
+  "files": 436,
+  "bytes": 5263777209,
   "sha256_verified": true,
   "github_commit": "865cfea8769b97da97ead3bb814d20df682b2c61",
   "box_cloud_sync_verified": true,
   "anonymous_download_verified": true,
   "public_link": "https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s",
-  "box_files_verified": 310,
+  "box_files_verified": 438,
   "box_folder_id": "435149805567",
   "box_sha1_verified": true,
   "public_access": "open",
@@ -16,9 +16,13 @@
   "expiry_reported": false,
   "anonymous_download_file": "RELEASE_MANIFEST.csv",
   "anonymous_download_sha256": "1b5308899d917fcb65376761974871d8dff291b722779fd7d4d451ac809f5a78",
-  "file_specific_links": 308,
+  "file_specific_links": 436,
   "anonymous_file_views_tested": [
+    "data/upstream/RNA/sample_metadata.csv",
     "data/upstream/diffbind/sample_metadata.csv",
     "objects/Fig3/exact_V2_cache.rds"
-  ]
+  ],
+  "all_scientific_files_hosted_in_box": true,
+  "initial_anonymous_manifest_download_release_files": 308,
+  "current_release_manifest_sha256": "41ee490208522eea603cf8f3f43068dc74d77b9f6e94fc3867b2de926bbfdf3c"
 }

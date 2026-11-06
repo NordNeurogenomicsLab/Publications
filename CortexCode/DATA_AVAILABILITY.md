@@ -1,6 +1,6 @@
 # Data availability and historical execution details
 
-The [128 compact tables in GitHub](data/TABLES_ON_GITHUB.csv) are supplemented by the [public Box release](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s) containing 308 larger files and saved objects (5.2 GB). These include final plotting CSVs, upstream count tables/catalogs, full GREAT and HOMER inputs, fitted WGCNA networks, integration bundles, compact multiome assays and scoring checkpoints, and saved resampling results. [Release paths and SHA-256 checksums](config/BOX_RELEASE_FILES.csv) are recorded for every file. All cloud copies were verified against the local release; anonymous access and a manifest download were tested on 2026-11-06.
+All **436 scientific files and saved objects (5.3 GB)** are hosted in the [public Box release](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s). GitHub provides the analysis code, documentation and file indexes. The Box release includes final plotting CSVs, upstream count tables/catalogs, full GREAT and HOMER inputs, fitted WGCNA networks, integration bundles, compact multiome assays and scoring checkpoints, and saved resampling results. [Release paths and SHA-256 checksums](config/BOX_RELEASE_FILES.csv) are recorded for every file. All cloud copies were verified against the local release; anonymous access and a manifest download were tested on 2026-11-06.
 
 The original methodological limitations listed below remain applicable. Availability of an archived object does not establish an undocumented historical analysis choice.
 
