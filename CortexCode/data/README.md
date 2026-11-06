@@ -16,4 +16,4 @@ Selected numerical inputs are included in GitHub. [TABLES_ON_GITHUB.csv](TABLES_
 
 [Exact filenames and input requirements](../INPUTS.md) · [Complete inventory](../config/file_inventory.csv)
 
-Files not listed in TABLES_ON_GITHUB.csv still require a separate input archive.
+Other scientific inputs are in the [public Box release](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s). Copy its `data/` directory here, retaining paths. [Release manifest](../config/BOX_RELEASE_FILES.csv).

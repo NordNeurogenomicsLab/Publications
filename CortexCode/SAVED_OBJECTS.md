@@ -1,8 +1,10 @@
 # Saved R objects
 
-This lists **all 57 local RDS/RData/RDA files**, not only those required by routine rendering. Files are external to the Git code release; see [INPUTS.md](INPUTS.md). `readRDS()` loads an RDS object; `load(..., envir=...)` loads named objects from an RData/RDA workspace. Internal object schemas are inspected in the notebooks that consume them.
+This lists **all 57 local RDS/RData/RDA files**, not only those required by routine rendering. These files are available in the [public Box release](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s); retain the relative paths below when copying them into the code directory. See [INPUTS.md](INPUTS.md). `readRDS()` loads an RDS object; `load(..., envir=...)` loads named objects from an RData/RDA workspace. Internal object schemas are inspected in the notebooks that consume them.
 
 Size is decimal MB. “No declared reader” means retained/generated material, not a required input inferred from its filename.
+
+[Release file paths and checksums](config/BOX_RELEASE_FILES.csv).
 
 ## Main checkpoints
 

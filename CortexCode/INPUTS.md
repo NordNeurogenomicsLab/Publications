@@ -1,7 +1,10 @@
 # Input files and execution map
 
 All paths below are relative to `CortexCode/`, the folder containing `run_all.R`.
-The repository includes selected compact plotting tables, histology grids, metadata and original WGCNA count tables. [TABLES_ON_GITHUB.csv](data/TABLES_ON_GITHUB.csv) lists every deposited table with size and SHA-256. Larger matrices and binary objects remain outside Git and require a separate input archive; a fresh clone cannot yet reproduce every panel. The file inventory marks each file's availability.
+The code repository includes [128 compact tables](data/TABLES_ON_GITHUB.csv).
+The remaining **308 files (5.2 GB)** are available in the [public Box release](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s), including the Kdm6b RNA count table, full DiffBind results, WGCNA networks and multiome assay caches. No Box account is required to view or download the release.
+
+Download the Box release, then merge its `data/` and `objects/` directories into `CortexCode/`, alongside the files already in GitHub. Preserve every relative path. [BOX_RELEASE_FILES.csv](config/BOX_RELEASE_FILES.csv) lists the release files, byte sizes and SHA-256 checksums.
 
 ## Locate the biological inputs
 
@@ -31,6 +34,8 @@ The repository includes selected compact plotting tables, histology grids, metad
 - [Expanded per-notebook file list](config/notebook_input_files.csv): individual filenames, byte sizes and purpose.
 - [Complete file inventory](config/file_inventory.csv): every local data/object file, original source where recorded and declared consumers.
 - [Saved R object inventory](SAVED_OBJECTS.md): every RDS/RData/RDA checkpoint, including retained/generated objects that are not directly loaded.
+
+GitHub plus the Box release supplies every file in the local scientific-file inventory. Optional raw BAMs, variants, lift-over chains and the full original Seurat object remain external as noted below. This does not resolve the historical analysis qualifications in DATA_AVAILABILITY.md.
 
 Collection declarations are conservative: a figure's table directory includes
 more tables than any single panel reads. Generated caches are not automatically

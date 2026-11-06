@@ -16,5 +16,7 @@
   "environment_record": "Actual reconstruction plotting session and referenced package-version inventory; not a historical lockfile",
   "scientific_analysis_rerun": false,
   "figure_rerendered": false,
-  "large_input_public_archive_linked": false
+  "large_input_public_archive_linked": true,
+  "public_archive_url": "https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s",
+  "public_archive_files": 308
 }
