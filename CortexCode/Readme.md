@@ -10,8 +10,6 @@ Athéna R. Ypsilanti<sup>†,*</sup>, Eirene Markenscoff-Papadimitriou<sup>†,*
 
 ## Analysis scripts
 
-R Markdown notebooks document the analysis and reproduce computational panels using saved results. Expensive analysis steps are disabled by default.
-
 | Notebook | Contents |
 |---|---|
 | [00_inputs_and_provenance.Rmd](00_inputs_and_provenance.Rmd) | Inputs and provenance |
@@ -27,17 +25,4 @@ R Markdown notebooks document the analysis and reproduce computational panels us
 | [11_additional_manuscript_panels.Rmd](11_additional_manuscript_panels.Rmd) | Additional computational panels |
 | [12_Extended_multiome_heatmaps.Rmd](12_Extended_multiome_heatmaps.Rmd) | Extended Data multiome heatmaps |
 
-Shared functions are in `R/`; supplementary methods notebooks are in `pipeline/`.
-
-## Run
-
-Place the saved `data/` and `objects/` directories alongside the scripts, then run:
-
-```sh
-Rscript setup.R
-Rscript run_all.R
-```
-
-To run one notebook, use its prefix, for example `Rscript run_all.R 03` for Figure 3.
-
-See [Analysis methods](ANALYSIS_METHODS.md) and [Data availability](DATA_AVAILABILITY.md) for input requirements and methodological details.
+Supporting scripts: [R/](R/) and [pipeline/](pipeline/).
