@@ -13,6 +13,22 @@ Figure 5 compares WT and Kdm6b-mutant RNA profiles and histological measurements
 
 Histology measurements are parsed with mouse, section, hemisphere and anatomical region recorded separately. Biological summaries average within mouse before comparing groups; sections are not counted as independent animals. The supplied Figure 5g/h grids contain one WT and one mutant mouse each, so no additional biological replicates or significance tests are inferred. The original Figure 5d GO output is not available in the supplied inputs.
 
+## Inputs and saved objects
+
+Paths are relative to the `CortexCode/` directory. **saved-results** inputs support routine rendering; **optional-rerun** inputs are read only when the corresponding analysis is enabled. Wildcards identify file collections.
+
+| Mode | Input path | Use |
+|---|---|---|
+| saved-results | `data/source_tables/Fig5_KC/*.csv` | Fig5_KC: numerical plotting tables (collection) |
+| saved-results | `data/source_tables/Extended_Fig7_KC/*.csv` | Extended_Fig7_KC: numerical plotting tables (collection) |
+| saved-results | `data/raw_sheets/Fig5_KC/*.csv` | Fig5_KC: original measurement grids |
+| saved-results | `data/raw_sheets/Extended_Fig7_KC/*.csv` | Extended_Fig7_KC: original measurement grids |
+| saved-results | `data/upstream/RNA/sample_metadata.csv` | 15-library biological metadata checked against RPKM rows |
+| optional-rerun | `data/upstream/RNA/*_wt_vs_mut_DE_Litter_Sex_cor.csv` | Original litter/sex-adjusted bulk RNA differential-expression results |
+| optional-rerun | `data/upstream/multiome/*_pseudobulk_counts.csv` | Aggregated multiome counts for optional pseudobulk PCA |
+
+See [input locations](INPUTS.md), [saved R objects](SAVED_OBJECTS.md) and the [complete file inventory](config/file_inventory.csv) for original source names, sizes and availability. These large inputs are not part of the Git checkout.
+
 ```{r setup, include=FALSE}
 source("R/common.R")
 repo_dir <- REPO

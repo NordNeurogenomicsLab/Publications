@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-06",
+  "scope": "Documentation, saved-input discovery, environment capture and preflight checks",
+  "main_notebooks": 12,
+  "pipeline_notebooks": 8,
+  "parsed_R_chunks": 152,
+  "parsed_R_scripts": 11,
+  "local_scientific_data_and_object_files": 436,
+  "saved_RDS_RData_RDA_objects": 57,
+  "saved_result_input_references_checked": 751,
+  "saved_result_input_presence_and_size": "PASS",
+  "missing_and_size_mismatch_detection": "PASS",
+  "notebook_input_sections_and_Markdown_links": "PASS",
+  "recovered_WGCNA_raw_TSVs": "Three files copied from the project WGCNA_input_data directory; SHA-256 matches verified",
+  "optional_missing_object": "data/upstream/multiome/Ctx_dev.clean.rds; only needed to re-extract marker layers; existing saved layers support rendering",
+  "environment_record": "Actual reconstruction plotting session and referenced package-version inventory; not a historical lockfile",
+  "scientific_analysis_rerun": false,
+  "figure_rerendered": false,
+  "large_input_public_archive_linked": false
+}

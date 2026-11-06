@@ -12,6 +12,17 @@ This notebook documents the original `ME3_Exact_Enrichment_Run` implementation. 
 
 The primary analysis compares numbers of regions containing at least one variant under repeated balanced downsampling. It is **not** a shuffled-label permutation test. Native analysis code is in `R/variant_analysis.R`; it is the selected class from the original notebook, with exploratory alternatives and local execution paths omitted. The default render only reads the saved results.
 
+## Inputs and saved objects
+
+Paths are relative to the `CortexCode/` directory. **saved-results** inputs support routine rendering; **optional-rerun** inputs are read only when the corresponding analysis is enabled. Wildcards identify file collections.
+
+| Mode | Input path | Use |
+|---|---|---|
+| saved-results | `data/source_tables/Fig6_KC/6h_Resampling_parameters.csv` | Saved balanced-resampling parameters / statistics |
+| saved-results | `data/source_tables/Fig6_KC/6h_Variant_statistics.csv` | Saved balanced-resampling parameters / statistics |
+
+See [input locations](../INPUTS.md), [saved R objects](../SAVED_OBJECTS.md) and the [complete file inventory](../config/file_inventory.csv) for original source names, sizes and availability. These large inputs are not part of the Git checkout.
+
 ```{r setup, include=FALSE, eval=TRUE}
 if (!exists("params", inherits = FALSE)) {
   params <- list(recompute = FALSE)
@@ -119,5 +130,7 @@ empirical_tail
 ```
 
 ```{r session-info, eval=TRUE}
+source(file.path(repo_dir, "R/input_catalog.R"))
+write_session_info("pipeline_07_variant_enrichment", repo_dir)
 sessionInfo()
 ```

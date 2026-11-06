@@ -1,0 +1,1 @@
+cmd = ${HOMER_ROOT}/Fine_Constitutive_weak_summit_targets.bed mm10 ${HOMER_ROOT}/results/Constitutive_weak_summit -bg ${HOMER_ROOT}/Fine_Constitutive_weak_summit_bg.bed -size given -len 6,8,10,12 -preparsedDir ${HOMER_ROOT}/results/_preparsed -p 16 -basic

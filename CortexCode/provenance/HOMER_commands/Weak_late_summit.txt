@@ -1,0 +1,1 @@
+cmd = ${HOMER_ROOT}/Fine_Weak_late_summit_targets.bed mm10 ${HOMER_ROOT}/results/Weak_late_summit -bg ${HOMER_ROOT}/Fine_Weak_late_summit_bg.bed -size given -len 6,8,10,12 -preparsedDir ${HOMER_ROOT}/results/_preparsed -p 16 -basic

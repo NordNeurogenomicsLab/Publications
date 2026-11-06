@@ -14,6 +14,7 @@ repo_root <- function() {
   }
 }
 REPO <- repo_root()
+source(file.path(REPO, "R/input_catalog.R"))
 suppressPackageStartupMessages(
   {
     library(ggplot2)
@@ -119,6 +120,7 @@ export_panel <- function(
   invisible(p)
 }
 finish_notebook <- function(name) {
+  write_session_info(name, REPO)
   dir.create(
     file.path(REPO, "reports"),
     showWarnings = FALSE

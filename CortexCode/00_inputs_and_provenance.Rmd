@@ -10,6 +10,19 @@ This notebook describes the analysis inputs and validates their schemas and file
 
 `provenance/source_tables.json` records each table, its source and its data definition. Original histology measurement grids retain their complete layout in `data/raw_sheets/`; mouse identifiers distinguish biological samples from sections and hemispheres.
 
+## Inputs and saved objects
+
+Paths are relative to the `CortexCode/` directory. **saved-results** inputs support routine rendering; **optional-rerun** inputs are read only when the corresponding analysis is enabled. Wildcards identify file collections.
+
+| Mode | Input path | Use |
+|---|---|---|
+| saved-results | `provenance/source_tables.json` | Schema and provenance for numerical source tables |
+| saved-results | `provenance/copied_files.json` | Original saved-input copy identities; notebook 00 audits every listed file for presence and size |
+| saved-results | `data/source_tables/**/*.csv` | Complete source-table release validated by notebook 00 |
+| saved-results | `data/raw_sheets/**/*.csv` | Complete original measurement-grid release |
+
+See [input locations](INPUTS.md), [saved R objects](SAVED_OBJECTS.md) and the [complete file inventory](config/file_inventory.csv) for original source names, sizes and availability. These large inputs are not part of the Git checkout.
+
 ```{r setup, include=FALSE}
 source("R/common.R")
 knitr::opts_chunk$set(echo = TRUE,
@@ -75,7 +88,7 @@ manifest <- jsonlite::fromJSON(file.path(REPO, "provenance/copied_files.json"))
 stopifnot(all(file.exists(file.path(REPO, manifest$file))))
 stopifnot(
   all(
-    file.info(file.path(REPO, manifest$file))$size ==
+    file.info(file.path(REPO, manifest$file), extra_cols = FALSE)$size ==
       manifest$bytes
   )
 )

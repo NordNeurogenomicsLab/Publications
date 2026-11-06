@@ -12,6 +12,16 @@ Multimodal integration uses the saved genomic interaction catalog. It contains 1
 
 Developmental signal profiles summarize VZ, SVZ, immature neurons, L6 neurons and L5 neurons. The recorded encoder assigns zero to the lowest signal quantile and levels 1–10 to the remaining signal. This notebook shows that preprocessing code and loads the final program assignments. It does not select among historical PCA/UMAP/clustering alternatives or claim a newly fitted clustering reproduces the saved labels.
 
+## Inputs and saved objects
+
+Paths are relative to the `CortexCode/` directory. **saved-results** inputs support routine rendering; **optional-rerun** inputs are read only when the corresponding analysis is enabled. Wildcards identify file collections.
+
+| Mode | Input path | Use |
+|---|---|---|
+| optional-rerun | `data/upstream/final_tables/Supp_Table_[123]*.csv` | Final interval catalogs for trajectory construction |
+
+See [input locations](../INPUTS.md), [saved R objects](../SAVED_OBJECTS.md) and the [complete file inventory](../config/file_inventory.csv) for original source names, sizes and availability. These large inputs are not part of the Git checkout.
+
 ```{r setup, include=FALSE, eval=TRUE}
 if (!exists("params", inherits = FALSE)) {
   params <- list(recompute = FALSE)
@@ -104,5 +114,7 @@ me3_ordinal <- ordinalize(me3_stage,
 ```
 
 ```{r session-info, eval=TRUE}
+source(file.path(repo_dir, "R/input_catalog.R"))
+write_session_info("pipeline_04_integration_trajectories", repo_dir)
 sessionInfo()
 ```

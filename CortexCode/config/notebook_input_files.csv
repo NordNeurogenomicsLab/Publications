@@ -1,0 +1,877 @@
+Notebook,Mode,Path,Purpose,Bytes
+00_inputs_and_provenance.Rmd,saved-results,provenance/source_tables.json,Schema and provenance for numerical source tables,166205
+00_inputs_and_provenance.Rmd,saved-results,provenance/copied_files.json,Original saved-input copy identities; notebook 00 audits every listed file for presence and size,28027
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/WGCNA/WGCNA_input_data/data_h3k27ac_merged_by_1kb.RData,Metadata-only identity audit of an archived input listed in copied_files.json,2049595
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/WGCNA/WGCNA_input_data/data_h3k27me3_merged_by_1kb.RData,Metadata-only identity audit of an archived input listed in copied_files.json,1957254
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/net_WGCNA_ATAC_sp6.Rds,Metadata-only identity audit of an archived input listed in copied_files.json,2496888
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/net_WGCNA_H3K27ac_merged_by_1kb_sp5.Rds,Metadata-only identity audit of an archived input listed in copied_files.json,2432360
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/net_WGCNA_H3K27me3_merged_by_1kb_sp9.Rds,Metadata-only identity audit of an archived input listed in copied_files.json,2629349
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/final_tables/Ac_FTneg_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv,Metadata-only identity audit of an archived input listed in copied_files.json,8301452
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/final_tables/Ac_FTpos_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv,Metadata-only identity audit of an archived input listed in copied_files.json,8319772
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/final_tables/ATAC_FTneg_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv,Metadata-only identity audit of an archived input listed in copied_files.json,8239013
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/final_tables/ATAC_FTpos_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv,Metadata-only identity audit of an archived input listed in copied_files.json,8907448
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/final_tables/H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv,Metadata-only identity audit of an archived input listed in copied_files.json,7036402
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/final_tables/H3K27Me3_FTpos_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv,Metadata-only identity audit of an archived input listed in copied_files.json,7123743
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/final_tables/Supp_Table_1_ATAC_master.csv,Metadata-only identity audit of an archived input listed in copied_files.json,44041689
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/final_tables/Supp_Table_2_AC_master.csv,Metadata-only identity audit of an archived input listed in copied_files.json,38107394
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/final_tables/Supp_Table_3_ME3_master.csv,Metadata-only identity audit of an archived input listed in copied_files.json,34792808
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/final_tables/Supp_Table_4_WGCNA_interactions_and_Programs.csv,Metadata-only identity audit of an archived input listed in copied_files.json,33451792
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv,Metadata-only identity audit of an archived input listed in copied_files.json,1818944
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv,Metadata-only identity audit of an archived input listed in copied_files.json,1857459
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/Module_renaming_dictionary.csv,Metadata-only identity audit of an archived input listed in copied_files.json,3268
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/network_edges.csv,Metadata-only identity audit of an archived input listed in copied_files.json,1301
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/network_nodes.csv,Metadata-only identity audit of an archived input listed in copied_files.json,565
+00_inputs_and_provenance.Rmd,saved-results,objects/Fig3/exact_V2_cache.rds,Metadata-only identity audit of an archived input listed in copied_files.json,2313956922
+00_inputs_and_provenance.Rmd,saved-results,objects/Fig3/ATAC_scoring.rds,Metadata-only identity audit of an archived input listed in copied_files.json,29412274
+00_inputs_and_provenance.Rmd,saved-results,objects/Fig3/RNA_scoring.rds,Metadata-only identity audit of an archived input listed in copied_files.json,9184735
+00_inputs_and_provenance.Rmd,saved-results,objects/Fig3/reconstruction_results.rds,Metadata-only identity audit of an archived input listed in copied_files.json,48958579
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/multiome/atac_modules.csv,Metadata-only identity audit of an archived input listed in copied_files.json,3882275
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/multiome/RNA_pseudobulk_counts.csv,Metadata-only identity audit of an archived input listed in copied_files.json,1768794
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/multiome/intervals_pseudobulk_counts.csv,Metadata-only identity audit of an archived input listed in copied_files.json,5418687
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/multiome/SCT_cluster_means.csv,Metadata-only identity audit of an archived input listed in copied_files.json,5989876
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/multiome/ATAC_cluster_means.csv,Metadata-only identity audit of an archived input listed in copied_files.json,59180004
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/multiome/embedding_umap_nn.csv,Metadata-only identity audit of an archived input listed in copied_files.json,807089
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/multiome/multiome_cell_metadata.csv,Metadata-only identity audit of an archived input listed in copied_files.json,5925320
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Kdm6b_KO_neg.json,Metadata-only identity audit of an archived input listed in copied_files.json,582
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Kdm6b_KO_pos.json,Metadata-only identity audit of an archived input listed in copied_files.json,580
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Kdm6b_WT_neg.json,Metadata-only identity audit of an archived input listed in copied_files.json,585
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Kdm6b_WT_pos.json,Metadata-only identity audit of an archived input listed in copied_files.json,583
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E12_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,437
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E12_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,445
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E13_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,359
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E13_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,434
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E15_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,431
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E15_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,522
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Ntsr_P2_C_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,603
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Ntsr_P2_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,356
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Rbp_P2_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,423
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Rbp_P2_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,506
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Svz9Hr_E12_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,364
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Svz9Hr_E12_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,364
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E10_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,436
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E10_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,436
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E11_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,430
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E11_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,430
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E12_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,356
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E12_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,356
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E13_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,535
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E13_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,446
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Kdm6b_KO_neg.json,Metadata-only identity audit of an archived input listed in copied_files.json,559
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Kdm6b_KO_pos.json,Metadata-only identity audit of an archived input listed in copied_files.json,557
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Kdm6b_WT_neg.json,Metadata-only identity audit of an archived input listed in copied_files.json,635
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Kdm6b_WT_pos.json,Metadata-only identity audit of an archived input listed in copied_files.json,501
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E12_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,414
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E12_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,414
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E13_C_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,774
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E13_R_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,557
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E15_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,413
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E15_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,413
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Ntsr_P2_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,490
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Rbp_P2_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,410
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Rbp_P2_R_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,544
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Svz9hr_E12_C_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,565
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Svz9hr_E12_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,421
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E10_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,410
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E10_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,410
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E11_C_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,724
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E11_R_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,624
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E12_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,417
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E12_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,417
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E13_R_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,555
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Kdm6b_KO_neg.json,Metadata-only identity audit of an archived input listed in copied_files.json,690
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Kdm6b_KO_pos.json,Metadata-only identity audit of an archived input listed in copied_files.json,500
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Kdm6b_WT_neg.json,Metadata-only identity audit of an archived input listed in copied_files.json,501
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Kdm6b_WT_pos.json,Metadata-only identity audit of an archived input listed in copied_files.json,500
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E12_C_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,550
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E12_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,412
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E13_C_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,561
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E13_R_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,648
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E15_C_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,741
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E15_R_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,735
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Ntsr_P2_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,411
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Ntsr_P2_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,414
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Rbp_P2_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,410
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Svz9hr_E12_C_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,675
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Svz9hr_E12_R_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,562
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E11_C_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,957
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E11_R_reseq.json,Metadata-only identity audit of an archived input listed in copied_files.json,723
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E12_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,415
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E12_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,415
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E13_C.json,Metadata-only identity audit of an archived input listed in copied_files.json,417
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E13_R.json,Metadata-only identity audit of an archived input listed in copied_files.json,417
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_strong_0.5-distal_and_proximal-mm10.bed,Metadata-only identity audit of an archived input listed in copied_files.json,765993
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_strong_0.5-distal_only-mm10.bed,Metadata-only identity audit of an archived input listed in copied_files.json,360472
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_weak_0.5-distal_and_proximal-mm10.bed,Metadata-only identity audit of an archived input listed in copied_files.json,2125121
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_weak_0.5-distal_only-mm10.bed,Metadata-only identity audit of an archived input listed in copied_files.json,1056557
+00_inputs_and_provenance.Rmd,saved-results,objects/variants/Fu_and_Kdm6b_DE_enr.RDS,Metadata-only identity audit of an archived input listed in copied_files.json,8192420
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/RNA/sample_metadata.csv,Metadata-only identity audit of an archived input listed in copied_files.json,1189
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/RNA/featureCounts_final_15samples.txt,Metadata-only identity audit of an archived input listed in copied_files.json,22259151
+00_inputs_and_provenance.Rmd,saved-results,objects/RNA/verified_plotting_inputs.rds,Metadata-only identity audit of an archived input listed in copied_files.json,5123
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv,Metadata-only identity audit of an archived input listed in copied_files.json,6156810
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv,Metadata-only identity audit of an archived input listed in copied_files.json,6470793
+00_inputs_and_provenance.Rmd,saved-results,data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv,Metadata-only identity audit of an archived input listed in copied_files.json,7056494
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1c_AC_TSS.csv,Complete source-table release validated by notebook 00,3037229
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1c_ATAC_TSS.csv,Complete source-table release validated by notebook 00,3025151
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1c_ME3_TSS.csv,Complete source-table release validated by notebook 00,3287368
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1d_AC_widths.csv,Complete source-table release validated by notebook 00,2956674
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1d_ME3_widths.csv,Complete source-table release validated by notebook 00,3189105
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1e_DiffBind_counts.csv,Complete source-table release validated by notebook 00,13025
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1e_Significant_intervals.csv,Complete source-table release validated by notebook 00,20562670
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1f_DiffBind_counts.csv,Complete source-table release validated by notebook 00,7645
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1f_Significant_intervals.csv,Complete source-table release validated by notebook 00,2639836
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1g_DiffBind_counts.csv,Complete source-table release validated by notebook 00,8226
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1g_Significant_intervals.csv,Complete source-table release validated by notebook 00,1342620
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig2_KC/VZ_E12_vs_ImN_E13.csv,Complete source-table release validated by notebook 00,87908
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig2_KC/VZ_E12_vs_L5N_P2.csv,Complete source-table release validated by notebook 00,86911
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig2_KC/VZ_E12_vs_L6N_P2.csv,Complete source-table release validated by notebook 00,98231
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig2_KC/VZ_E12_vs_SVZ_E12.csv,Complete source-table release validated by notebook 00,87332
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig4_KC/4c_GENOA_distal_counts.csv,Complete source-table release validated by notebook 00,1872
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5a_Per_cell_QC.csv,Complete source-table release validated by notebook 00,727792
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5b_RNA_marker_expression.csv,Complete source-table release validated by notebook 00,1883872
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5c_Bulk_median_CPM.csv,Complete source-table release validated by notebook 00,3056
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5d_ATAC_cluster_means.csv,Complete source-table release validated by notebook 00,8840471
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5g_Marker_results.csv,Complete source-table release validated by notebook 00,288868
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_PCA_coordinates.csv,Complete source-table release validated by notebook 00,5361
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_selected_counts.csv,Complete source-table release validated by notebook 00,32031
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_variance.csv,Complete source-table release validated by notebook 00,360
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_VST_inputs.csv,Complete source-table release validated by notebook 00,139009
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5i_Marker_results.csv,Complete source-table release validated by notebook 00,2815481
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_PCA_coordinates.csv,Complete source-table release validated by notebook 00,5471
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_selected_counts.csv,Complete source-table release validated by notebook 00,40102
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_variance.csv,Complete source-table release validated by notebook 00,369
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_VST_inputs.csv,Complete source-table release validated by notebook 00,147666
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5k_Marker_results.csv,Complete source-table release validated by notebook 00,2943893
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_DA_module_proportions.csv,Complete source-table release validated by notebook 00,9191
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_Positive_DA_module_proportions.csv,Complete source-table release validated by notebook 00,9191
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_Significant_DA_intervals.csv,Complete source-table release validated by notebook 00,15803976
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6a_TMK3_ATAC_link_membership.csv,Complete source-table release validated by notebook 00,317811
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6a_TMK3_linked_ATAC_means.csv,Complete source-table release validated by notebook 00,808440
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6c_1a_Quantized_rows.csv,Complete source-table release validated by notebook 00,674099
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6c_2a_Quantized_rows.csv,Complete source-table release validated by notebook 00,758574
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6c_2b_Quantized_rows.csv,Complete source-table release validated by notebook 00,523932
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/7ab_Cluster_RNA_summary.csv,Complete source-table release validated by notebook 00,2966
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/7ab_Per_cell_RNA_expression.csv,Complete source-table release validated by notebook 00,1224379
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/7cde_jk_RPKM.csv,Complete source-table release validated by notebook 00,31436
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_ac_FTneg.csv,Complete source-table release validated by notebook 00,6656314
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_ac_FTpos.csv,Complete source-table release validated by notebook 00,6632204
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_atac_FTneg.csv,Complete source-table release validated by notebook 00,6519004
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_atac_FTpos.csv,Complete source-table release validated by notebook 00,7230371
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_me3_FTneg.csv,Complete source-table release validated by notebook 00,5538736
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_me3_FTpos.csv,Complete source-table release validated by notebook 00,5763547
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8f_Overlap_counts.csv,Complete source-table release validated by notebook 00,144
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8f_Overlap_pairs.csv,Complete source-table release validated by notebook 00,8768
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8g_GO_all_terms.csv,Complete source-table release validated by notebook 00,3262389
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8g_GO_plotted.csv,Complete source-table release validated by notebook 00,377
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8h_Module_enrichment.csv,Complete source-table release validated by notebook 00,2663
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8h_Selected_membership.csv,Complete source-table release validated by notebook 00,185437
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8i_Variant_intersection.csv,Complete source-table release validated by notebook 00,204
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/1c1.csv,Complete source-table release validated by notebook 00,2787361
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/c1_Module_counts.csv,Complete source-table release validated by notebook 00,441
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/c2_constitutive_heatmap.csv,Complete source-table release validated by notebook 00,2882
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/c2_dynamic_heatmap.csv,Complete source-table release validated by notebook 00,5877
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/c2_Median_signal.csv,Complete source-table release validated by notebook 00,8146
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/c2_Saved_zscore_matrix.csv,Complete source-table release validated by notebook 00,8529
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/c3_Module_summaries.csv,Complete source-table release validated by notebook 00,1956
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/c3_Peak_annotations.csv,Complete source-table release validated by notebook 00,5461634
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/d1_Module_counts.csv,Complete source-table release validated by notebook 00,616
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/d2_Median_signal.csv,Complete source-table release validated by notebook 00,9639
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/d3_Module_summaries.csv,Complete source-table release validated by notebook 00,3095
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/d3_Peak_annotations.csv,Complete source-table release validated by notebook 00,6146508
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/e1_Module_counts.csv,Complete source-table release validated by notebook 00,753
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/e2_Median_signal.csv,Complete source-table release validated by notebook 00,10798
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/e3_Module_summaries.csv,Complete source-table release validated by notebook 00,3660
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig1_KC/e3_Peak_annotations.csv,Complete source-table release validated by notebook 00,6074939
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2a_GO_plot_matrix.csv,Complete source-table release validated by notebook 00,1581
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2a_GO_statistics.csv,Complete source-table release validated by notebook 00,19639
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2b_GO_plot_matrix.csv,Complete source-table release validated by notebook 00,1537
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2b_GO_statistics.csv,Complete source-table release validated by notebook 00,29264
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2c_GO_plot_matrix.csv,Complete source-table release validated by notebook 00,1654
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2c_GO_statistics.csv,Complete source-table release validated by notebook 00,39997
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2d_VISTA_counts.csv,Complete source-table release validated by notebook 00,369
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2d_VISTA_tests.csv,Complete source-table release validated by notebook 00,330
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2dprime_VISTA_counts.csv,Complete source-table release validated by notebook 00,638
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2dprime_VISTA_tests.csv,Complete source-table release validated by notebook 00,324
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2g_Consensus_membership.csv,Complete source-table release validated by notebook 00,2106
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2g_Curated_plot_scores.csv,Complete source-table release validated by notebook 00,2533
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2g_HOMER_enrichment.csv,Complete source-table release validated by notebook 00,91343
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2g_Module_key.csv,Complete source-table release validated by notebook 00,332
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2g_Selected_motif_annotations.csv,Complete source-table release validated by notebook 00,5465
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig2_KC/2g_Uncapped_group_statistics.csv,Complete source-table release validated by notebook 00,15939
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3_Analysis_parameters.csv,Complete source-table release validated by notebook 00,1075
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3_Module_key.csv,Complete source-table release validated by notebook 00,896
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3_Module_peak_membership.csv,Complete source-table release validated by notebook 00,3414533
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3a_Cell_data.csv,Complete source-table release validated by notebook 00,1255683
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3b_Dotplot_values.csv,Complete source-table release validated by notebook 00,41793
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3bc_Cell_module_scores.csv,Complete source-table release validated by notebook 00,5635881
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3c_Plot_values.csv,Complete source-table release validated by notebook 00,1764330
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Cell_module_scores.csv,Complete source-table release validated by notebook 00,5129453
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Gene_cluster_means.csv,Complete source-table release validated by notebook 00,1024642
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Heatmap_values.csv,Complete source-table release validated by notebook 00,4939953
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Module_gene_sets.csv,Complete source-table release validated by notebook 00,146036
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Scaling_parameters.csv,Complete source-table release validated by notebook 00,1214
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Selected_links.csv,Complete source-table release validated by notebook 00,877459
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig3_KC/3ef_Cell_accessibility.csv,Complete source-table release validated by notebook 00,1134679
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig4_KC/4a_Interaction_counts.csv,Complete source-table release validated by notebook 00,343
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig4_KC/4b_A1.csv,Complete source-table release validated by notebook 00,1139
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig4_KC/4c_Ac7.csv,Complete source-table release validated by notebook 00,936
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig4_KC/4d_TM3.csv,Complete source-table release validated by notebook 00,911
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig4_KC/4f_Program_counts.csv,Complete source-table release validated by notebook 00,1272
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig4_KC/4f_Quantized_trajectories.csv,Complete source-table release validated by notebook 00,56047
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig5_KC/5c_nonVZ_RNA_DE.csv,Complete source-table release validated by notebook 00,2407565
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig5_KC/5c_VZ_RNA_DE.csv,Complete source-table release validated by notebook 00,2465514
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6bo_Biological_sample_sizes.csv,Complete source-table release validated by notebook 00,3202
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6bprime_RPKM.csv,Complete source-table release validated by notebook 00,5949
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6c_ME3_FTneg.csv,Complete source-table release validated by notebook 00,5538736
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6c_ME3_FTpos.csv,Complete source-table release validated by notebook 00,5763547
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6d_GO_all_terms.csv,Complete source-table release validated by notebook 00,3338131
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6d_GO_plotted.csv,Complete source-table release validated by notebook 00,360
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Module_enrichment.csv,Complete source-table release validated by notebook 00,4416
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Selected_membership.csv,Complete source-table release validated by notebook 00,412808
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Counting_units.csv,Complete source-table release validated by notebook 00,112
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Gene_peak_counts.csv,Complete source-table release validated by notebook 00,263
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Gene_peak_membership.csv,Complete source-table release validated by notebook 00,181084
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6g_nonVZ_Null_overlaps.csv,Complete source-table release validated by notebook 00,88918
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6g_nonVZ_Statistics.csv,Complete source-table release validated by notebook 00,236
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6g_VZ_Null_overlaps.csv,Complete source-table release validated by notebook 00,88740
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6g_VZ_Statistics.csv,Complete source-table release validated by notebook 00,230
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6h_case_Variant_overlaps.csv,Complete source-table release validated by notebook 00,38645
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6h_control_Variant_overlaps.csv,Complete source-table release validated by notebook 00,19210
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6h_ME3_regions.csv,Complete source-table release validated by notebook 00,273862
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Per_region_counts.csv,Complete source-table release validated by notebook 00,92124
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Resampling_parameters.csv,Complete source-table release validated by notebook 00,594
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_null_replicates.csv,Complete source-table release validated by notebook 00,51434
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_plot_summary.csv,Complete source-table release validated by notebook 00,344
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_statistics.csv,Complete source-table release validated by notebook 00,548
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/Fig6_KC/6o_RPKM.csv,Complete source-table release validated by notebook 00,17232
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Extended_Fig2_KC/VZ_E12_vs_ImN_E13.csv,Complete original measurement-grid release,58179
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Extended_Fig2_KC/VZ_E12_vs_L5N_P2.csv,Complete original measurement-grid release,57656
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Extended_Fig2_KC/VZ_E12_vs_L6N_P2.csv,Complete original measurement-grid release,68356
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Extended_Fig2_KC/VZ_E12_vs_SVZ_E12.csv,Complete original measurement-grid release,57872
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Extended_Fig7_KC/Ext_7j_Tle4_thickness.csv,Complete original measurement-grid release,2349
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Extended_Fig7_KC/Ext_7kTbr1_thickness.csv,Complete original measurement-grid release,2625
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Extended_Fig9_KC/9f_Tbr1_Nkx2-1.csv,Complete original measurement-grid release,1247
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Fig5_KC/5e_TLE4_E14.csv,Complete original measurement-grid release,3453
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Fig5_KC/5f_Tbr1_E14.csv,Complete original measurement-grid release,1211
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Fig5_KC/5g_Tbr1_P10.csv,Complete original measurement-grid release,375
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Fig5_KC/5h_Bcl11b_P10.csv,Complete original measurement-grid release,375
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Fig5_KC/5i_Fezf2_P10.csv,Complete original measurement-grid release,980
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/Fig7_KC/7k_l_Tbr1_416Del.csv,Complete original measurement-grid release,1354
+01_WGCNA_checkpoints.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/net_WGCNA_ATAC_sp6.Rds,"Three fitted ATAC, H3K27ac and H3K27me3 networks",2496888
+01_WGCNA_checkpoints.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/net_WGCNA_H3K27ac_merged_by_1kb_sp5.Rds,"Three fitted ATAC, H3K27ac and H3K27me3 networks",2432360
+01_WGCNA_checkpoints.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/net_WGCNA_H3K27me3_merged_by_1kb_sp9.Rds,"Three fitted ATAC, H3K27ac and H3K27me3 networks",2629349
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv,ATAC raw peak-by-sample counts,6156810
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv,H3K27ac raw peak-by-sample counts,6470793
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv,H3K27me3 raw peak-by-sample counts,7056494
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_1_ATAC_master.csv,"Final ATAC, AC and ME3 catalogs for refinement",44041689
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_2_AC_master.csv,"Final ATAC, AC and ME3 catalogs for refinement",38107394
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_3_ME3_master.csv,"Final ATAC, AC and ME3 catalogs for refinement",34792808
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/Module_renaming_dictionary.csv,Biological module to manuscript-label mapping,3268
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/1c1.csv,Fig1_KC: numerical plotting tables (collection),2787361
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/c1_Module_counts.csv,Fig1_KC: numerical plotting tables (collection),441
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/c2_constitutive_heatmap.csv,Fig1_KC: numerical plotting tables (collection),2882
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/c2_dynamic_heatmap.csv,Fig1_KC: numerical plotting tables (collection),5877
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/c2_Median_signal.csv,Fig1_KC: numerical plotting tables (collection),8146
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/c2_Saved_zscore_matrix.csv,Fig1_KC: numerical plotting tables (collection),8529
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/c3_Module_summaries.csv,Fig1_KC: numerical plotting tables (collection),1956
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/c3_Peak_annotations.csv,Fig1_KC: numerical plotting tables (collection),5461634
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/d1_Module_counts.csv,Fig1_KC: numerical plotting tables (collection),616
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/d2_Median_signal.csv,Fig1_KC: numerical plotting tables (collection),9639
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/d3_Module_summaries.csv,Fig1_KC: numerical plotting tables (collection),3095
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/d3_Peak_annotations.csv,Fig1_KC: numerical plotting tables (collection),6146508
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/e1_Module_counts.csv,Fig1_KC: numerical plotting tables (collection),753
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/e2_Median_signal.csv,Fig1_KC: numerical plotting tables (collection),10798
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/e3_Module_summaries.csv,Fig1_KC: numerical plotting tables (collection),3660
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/e3_Peak_annotations.csv,Fig1_KC: numerical plotting tables (collection),6074939
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2a_GO_plot_matrix.csv,Fig2_KC: numerical plotting tables (collection),1581
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2a_GO_statistics.csv,Fig2_KC: numerical plotting tables (collection),19639
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2b_GO_plot_matrix.csv,Fig2_KC: numerical plotting tables (collection),1537
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2b_GO_statistics.csv,Fig2_KC: numerical plotting tables (collection),29264
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2c_GO_plot_matrix.csv,Fig2_KC: numerical plotting tables (collection),1654
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2c_GO_statistics.csv,Fig2_KC: numerical plotting tables (collection),39997
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2d_VISTA_counts.csv,Fig2_KC: numerical plotting tables (collection),369
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2d_VISTA_tests.csv,Fig2_KC: numerical plotting tables (collection),330
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2dprime_VISTA_counts.csv,Fig2_KC: numerical plotting tables (collection),638
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2dprime_VISTA_tests.csv,Fig2_KC: numerical plotting tables (collection),324
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2g_Consensus_membership.csv,Fig2_KC: numerical plotting tables (collection),2106
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2g_Curated_plot_scores.csv,Fig2_KC: numerical plotting tables (collection),2533
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2g_HOMER_enrichment.csv,Fig2_KC: numerical plotting tables (collection),91343
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2g_Module_key.csv,Fig2_KC: numerical plotting tables (collection),332
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2g_Selected_motif_annotations.csv,Fig2_KC: numerical plotting tables (collection),5465
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/2g_Uncapped_group_statistics.csv,Fig2_KC: numerical plotting tables (collection),15939
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1c_AC_TSS.csv,Extended_Fig1_KC: numerical plotting tables (collection),3037229
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1c_ATAC_TSS.csv,Extended_Fig1_KC: numerical plotting tables (collection),3025151
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1c_ME3_TSS.csv,Extended_Fig1_KC: numerical plotting tables (collection),3287368
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1d_AC_widths.csv,Extended_Fig1_KC: numerical plotting tables (collection),2956674
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1d_ME3_widths.csv,Extended_Fig1_KC: numerical plotting tables (collection),3189105
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1e_DiffBind_counts.csv,Extended_Fig1_KC: numerical plotting tables (collection),13025
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1e_Significant_intervals.csv,Extended_Fig1_KC: numerical plotting tables (collection),20562670
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1f_DiffBind_counts.csv,Extended_Fig1_KC: numerical plotting tables (collection),7645
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1f_Significant_intervals.csv,Extended_Fig1_KC: numerical plotting tables (collection),2639836
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1g_DiffBind_counts.csv,Extended_Fig1_KC: numerical plotting tables (collection),8226
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1g_Significant_intervals.csv,Extended_Fig1_KC: numerical plotting tables (collection),1342620
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig2_KC/VZ_E12_vs_ImN_E13.csv,Extended_Fig2_KC: numerical plotting tables (collection),87908
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig2_KC/VZ_E12_vs_L5N_P2.csv,Extended_Fig2_KC: numerical plotting tables (collection),86911
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig2_KC/VZ_E12_vs_L6N_P2.csv,Extended_Fig2_KC: numerical plotting tables (collection),98231
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig2_KC/VZ_E12_vs_SVZ_E12.csv,Extended_Fig2_KC: numerical plotting tables (collection),87332
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig4_KC/4c_GENOA_distal_counts.csv,Extended_Fig4_KC: numerical plotting tables (collection),1872
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_1_ATAC_master.csv,Module interval catalogs for GO and motifs,44041689
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_2_AC_master.csv,Module interval catalogs for GO and motifs,38107394
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_3_ME3_master.csv,Module interval catalogs for GO and motifs,34792808
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/enrichment/AC_FineClusters_rGREAT_GO.csv,Original full GREAT GO results,59157052
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/enrichment/ATAC_FineClusters_rGREAT_GO.csv,Original full GREAT GO results,47908070
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/enrichment/ME3_FineClusters_rGREAT_GO.csv,Original full GREAT GO results,69835809
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/black_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48342
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/blue_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48996
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/brown_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48981
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/Constitutive_strong_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48793
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/Constitutive_weak_summit/knownResults.txt,Saved HOMER known-motif enrichment results,49052
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/cyan_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48393
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/green_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48726
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/greenyellow_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48139
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/grey_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48496
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/lightcyan_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48136
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/magenta_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48477
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/midnightblue_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48402
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/P2_specific_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48817
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/pink_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48370
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/purple_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48431
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/red_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48685
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/salmon_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48474
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/tan_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48463
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/turquoise_summit/knownResults.txt,Saved HOMER known-motif enrichment results,49310
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/Weak_late_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48946
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/Weak_middle_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48420
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/yellow_summit/knownResults.txt,Saved HOMER known-motif enrichment results,48673
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_black_summit_bg.bed,HOMER target and background BED collections,3446490
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_black_summit_targets.bed,HOMER target and background BED collections,52986
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_blue_summit_bg.bed,HOMER target and background BED collections,3053928
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_blue_summit_targets.bed,HOMER target and background BED collections,445548
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_brown_summit_bg.bed,HOMER target and background BED collections,3305294
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_brown_summit_targets.bed,HOMER target and background BED collections,194182
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_Constitutive_strong_summit_bg.bed,HOMER target and background BED collections,3217520
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_Constitutive_strong_summit_targets.bed,HOMER target and background BED collections,281956
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_Constitutive_weak_summit_bg.bed,HOMER target and background BED collections,2974968
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_Constitutive_weak_summit_targets.bed,HOMER target and background BED collections,524508
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_cyan_summit_bg.bed,HOMER target and background BED collections,3485284
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_cyan_summit_targets.bed,HOMER target and background BED collections,14192
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_green_summit_bg.bed,HOMER target and background BED collections,3441798
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_green_summit_targets.bed,HOMER target and background BED collections,57678
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_greenyellow_summit_bg.bed,HOMER target and background BED collections,3475528
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_greenyellow_summit_targets.bed,HOMER target and background BED collections,23948
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_grey_summit_bg.bed,HOMER target and background BED collections,3438252
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_grey_summit_targets.bed,HOMER target and background BED collections,61224
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_lightcyan_summit_bg.bed,HOMER target and background BED collections,3489324
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_lightcyan_summit_targets.bed,HOMER target and background BED collections,10152
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_magenta_summit_bg.bed,HOMER target and background BED collections,3460440
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_magenta_summit_targets.bed,HOMER target and background BED collections,39036
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_midnightblue_summit_bg.bed,HOMER target and background BED collections,3487242
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_midnightblue_summit_targets.bed,HOMER target and background BED collections,12234
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_P2_specific_summit_bg.bed,HOMER target and background BED collections,3250432
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_P2_specific_summit_targets.bed,HOMER target and background BED collections,249044
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_pink_summit_bg.bed,HOMER target and background BED collections,3452956
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_pink_summit_targets.bed,HOMER target and background BED collections,46520
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_purple_summit_bg.bed,HOMER target and background BED collections,3471020
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_purple_summit_targets.bed,HOMER target and background BED collections,28456
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_red_summit_bg.bed,HOMER target and background BED collections,3441990
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_red_summit_targets.bed,HOMER target and background BED collections,57486
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_salmon_summit_bg.bed,HOMER target and background BED collections,3482722
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_salmon_summit_targets.bed,HOMER target and background BED collections,16754
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_tan_summit_bg.bed,HOMER target and background BED collections,3479252
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_tan_summit_targets.bed,HOMER target and background BED collections,20224
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_turquoise_summit_bg.bed,HOMER target and background BED collections,2483718
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_turquoise_summit_targets.bed,HOMER target and background BED collections,1015758
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_Weak_late_summit_bg.bed,HOMER target and background BED collections,3237264
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_Weak_late_summit_targets.bed,HOMER target and background BED collections,262212
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_Weak_middle_summit_bg.bed,HOMER target and background BED collections,3482270
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_Weak_middle_summit_targets.bed,HOMER target and background BED collections,17206
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_yellow_summit_bg.bed,HOMER target and background BED collections,3431304
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Fine_yellow_summit_targets.bed,HOMER target and background BED collections,68172
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/Global_randomBG_summit_GCmatched.bed,HOMER target and background BED collections,25720574
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3_Analysis_parameters.csv,Fig3_KC: numerical plotting tables (collection),1075
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3_Module_key.csv,Fig3_KC: numerical plotting tables (collection),896
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3_Module_peak_membership.csv,Fig3_KC: numerical plotting tables (collection),3414533
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3a_Cell_data.csv,Fig3_KC: numerical plotting tables (collection),1255683
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3b_Dotplot_values.csv,Fig3_KC: numerical plotting tables (collection),41793
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3bc_Cell_module_scores.csv,Fig3_KC: numerical plotting tables (collection),5635881
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3c_Plot_values.csv,Fig3_KC: numerical plotting tables (collection),1764330
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Cell_module_scores.csv,Fig3_KC: numerical plotting tables (collection),5129453
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Gene_cluster_means.csv,Fig3_KC: numerical plotting tables (collection),1024642
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Heatmap_values.csv,Fig3_KC: numerical plotting tables (collection),4939953
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Module_gene_sets.csv,Fig3_KC: numerical plotting tables (collection),146036
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Scaling_parameters.csv,Fig3_KC: numerical plotting tables (collection),1214
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Selected_links.csv,Fig3_KC: numerical plotting tables (collection),877459
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/3ef_Cell_accessibility.csv,Fig3_KC: numerical plotting tables (collection),1134679
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5a_Per_cell_QC.csv,Extended_Fig5_KC: numerical plotting tables (collection),727792
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5b_RNA_marker_expression.csv,Extended_Fig5_KC: numerical plotting tables (collection),1883872
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5c_Bulk_median_CPM.csv,Extended_Fig5_KC: numerical plotting tables (collection),3056
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5d_ATAC_cluster_means.csv,Extended_Fig5_KC: numerical plotting tables (collection),8840471
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5g_Marker_results.csv,Extended_Fig5_KC: numerical plotting tables (collection),288868
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_PCA_coordinates.csv,Extended_Fig5_KC: numerical plotting tables (collection),5361
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_selected_counts.csv,Extended_Fig5_KC: numerical plotting tables (collection),32031
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_variance.csv,Extended_Fig5_KC: numerical plotting tables (collection),360
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_VST_inputs.csv,Extended_Fig5_KC: numerical plotting tables (collection),139009
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5i_Marker_results.csv,Extended_Fig5_KC: numerical plotting tables (collection),2815481
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_PCA_coordinates.csv,Extended_Fig5_KC: numerical plotting tables (collection),5471
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_selected_counts.csv,Extended_Fig5_KC: numerical plotting tables (collection),40102
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_variance.csv,Extended_Fig5_KC: numerical plotting tables (collection),369
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_VST_inputs.csv,Extended_Fig5_KC: numerical plotting tables (collection),147666
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5k_Marker_results.csv,Extended_Fig5_KC: numerical plotting tables (collection),2943893
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_DA_module_proportions.csv,Extended_Fig5_KC: numerical plotting tables (collection),9191
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_Positive_DA_module_proportions.csv,Extended_Fig5_KC: numerical plotting tables (collection),9191
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_Significant_DA_intervals.csv,Extended_Fig5_KC: numerical plotting tables (collection),15803976
+03_Figure_3_multiome.Rmd,saved-results,data/upstream/multiome/atac_modules.csv,Original interval-to-module assignments; used by panel 5l,3882275
+03_Figure_3_multiome.Rmd,saved-results,data/upstream/multiome/Hes1_Tbr1_RNA_cells.csv,Per-cell Hes1/Tbr1 expression for RNA violins,649227
+03_Figure_3_multiome.Rmd,saved-results,provenance/Extended5l_module_palette.csv,Native panel 5l module order and colors,373
+03_Figure_3_multiome.Rmd,optional-rerun,objects/Fig3/exact_V2_cache.rds,"Stored normalized SCT and interval layers, metadata, links and embeddings",2313956922
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Fig4_KC/4a_Interaction_counts.csv,Fig4_KC: numerical plotting tables (collection),343
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Fig4_KC/4b_A1.csv,Fig4_KC: numerical plotting tables (collection),1139
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Fig4_KC/4c_Ac7.csv,Fig4_KC: numerical plotting tables (collection),936
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Fig4_KC/4d_TM3.csv,Fig4_KC: numerical plotting tables (collection),911
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Fig4_KC/4f_Program_counts.csv,Fig4_KC: numerical plotting tables (collection),1272
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Fig4_KC/4f_Quantized_trajectories.csv,Fig4_KC: numerical plotting tables (collection),56047
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6a_TMK3_ATAC_link_membership.csv,Extended_Fig6_KC: numerical plotting tables (collection),317811
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6a_TMK3_linked_ATAC_means.csv,Extended_Fig6_KC: numerical plotting tables (collection),808440
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6c_1a_Quantized_rows.csv,Extended_Fig6_KC: numerical plotting tables (collection),674099
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6c_2a_Quantized_rows.csv,Extended_Fig6_KC: numerical plotting tables (collection),758574
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6c_2b_Quantized_rows.csv,Extended_Fig6_KC: numerical plotting tables (collection),523932
+04_Figure_4_integration.Rmd,saved-results,objects/integration/umap_reclustering_bundles.RData,Saved linked-interval embeddings and cluster assignments; loaded by program_summary_saved.R,570998324
+04_Figure_4_integration.Rmd,saved-results,data/upstream/integration/all_overlaps_total_aug_with_Programs.csv,Final linked-interval catalog and developmental program assignments,34110824
+04_Figure_4_integration.Rmd,saved-results,data/upstream/Module_renaming_dictionary.csv,Canonical module labels,3268
+04_Figure_4_integration.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_1_ATAC_master.csv,Master interval catalogs for optional overlap construction,44041689
+04_Figure_4_integration.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_2_AC_master.csv,Master interval catalogs for optional overlap construction,38107394
+04_Figure_4_integration.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_3_ME3_master.csv,Master interval catalogs for optional overlap construction,34792808
+05_Figure_5_RNA_histology.Rmd,saved-results,data/source_tables/Fig5_KC/5c_nonVZ_RNA_DE.csv,Fig5_KC: numerical plotting tables (collection),2407565
+05_Figure_5_RNA_histology.Rmd,saved-results,data/source_tables/Fig5_KC/5c_VZ_RNA_DE.csv,Fig5_KC: numerical plotting tables (collection),2465514
+05_Figure_5_RNA_histology.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/7ab_Cluster_RNA_summary.csv,Extended_Fig7_KC: numerical plotting tables (collection),2966
+05_Figure_5_RNA_histology.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/7ab_Per_cell_RNA_expression.csv,Extended_Fig7_KC: numerical plotting tables (collection),1224379
+05_Figure_5_RNA_histology.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/7cde_jk_RPKM.csv,Extended_Fig7_KC: numerical plotting tables (collection),31436
+05_Figure_5_RNA_histology.Rmd,saved-results,data/raw_sheets/Fig5_KC/5e_TLE4_E14.csv,Fig5_KC: original measurement grids,3453
+05_Figure_5_RNA_histology.Rmd,saved-results,data/raw_sheets/Fig5_KC/5f_Tbr1_E14.csv,Fig5_KC: original measurement grids,1211
+05_Figure_5_RNA_histology.Rmd,saved-results,data/raw_sheets/Fig5_KC/5g_Tbr1_P10.csv,Fig5_KC: original measurement grids,375
+05_Figure_5_RNA_histology.Rmd,saved-results,data/raw_sheets/Fig5_KC/5h_Bcl11b_P10.csv,Fig5_KC: original measurement grids,375
+05_Figure_5_RNA_histology.Rmd,saved-results,data/raw_sheets/Fig5_KC/5i_Fezf2_P10.csv,Fig5_KC: original measurement grids,980
+05_Figure_5_RNA_histology.Rmd,saved-results,data/raw_sheets/Extended_Fig7_KC/Ext_7j_Tle4_thickness.csv,Extended_Fig7_KC: original measurement grids,2349
+05_Figure_5_RNA_histology.Rmd,saved-results,data/raw_sheets/Extended_Fig7_KC/Ext_7kTbr1_thickness.csv,Extended_Fig7_KC: original measurement grids,2625
+05_Figure_5_RNA_histology.Rmd,saved-results,data/upstream/RNA/sample_metadata.csv,15-library biological metadata checked against RPKM rows,1189
+05_Figure_5_RNA_histology.Rmd,optional-rerun,data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv,Original litter/sex-adjusted bulk RNA differential-expression results,1818944
+05_Figure_5_RNA_histology.Rmd,optional-rerun,data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv,Original litter/sex-adjusted bulk RNA differential-expression results,1857459
+05_Figure_5_RNA_histology.Rmd,optional-rerun,data/upstream/multiome/intervals_pseudobulk_counts.csv,Aggregated multiome counts for optional pseudobulk PCA,5418687
+05_Figure_5_RNA_histology.Rmd,optional-rerun,data/upstream/multiome/RNA_pseudobulk_counts.csv,Aggregated multiome counts for optional pseudobulk PCA,1768794
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6bo_Biological_sample_sizes.csv,Fig6_KC: numerical plotting tables (collection),3202
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6bprime_RPKM.csv,Fig6_KC: numerical plotting tables (collection),5949
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6c_ME3_FTneg.csv,Fig6_KC: numerical plotting tables (collection),5538736
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6c_ME3_FTpos.csv,Fig6_KC: numerical plotting tables (collection),5763547
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6d_GO_all_terms.csv,Fig6_KC: numerical plotting tables (collection),3338131
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6d_GO_plotted.csv,Fig6_KC: numerical plotting tables (collection),360
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Module_enrichment.csv,Fig6_KC: numerical plotting tables (collection),4416
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Selected_membership.csv,Fig6_KC: numerical plotting tables (collection),412808
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Counting_units.csv,Fig6_KC: numerical plotting tables (collection),112
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Gene_peak_counts.csv,Fig6_KC: numerical plotting tables (collection),263
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Gene_peak_membership.csv,Fig6_KC: numerical plotting tables (collection),181084
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6g_nonVZ_Null_overlaps.csv,Fig6_KC: numerical plotting tables (collection),88918
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6g_nonVZ_Statistics.csv,Fig6_KC: numerical plotting tables (collection),236
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6g_VZ_Null_overlaps.csv,Fig6_KC: numerical plotting tables (collection),88740
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6g_VZ_Statistics.csv,Fig6_KC: numerical plotting tables (collection),230
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_case_Variant_overlaps.csv,Fig6_KC: numerical plotting tables (collection),38645
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_control_Variant_overlaps.csv,Fig6_KC: numerical plotting tables (collection),19210
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_ME3_regions.csv,Fig6_KC: numerical plotting tables (collection),273862
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Per_region_counts.csv,Fig6_KC: numerical plotting tables (collection),92124
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Resampling_parameters.csv,Fig6_KC: numerical plotting tables (collection),594
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_null_replicates.csv,Fig6_KC: numerical plotting tables (collection),51434
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_plot_summary.csv,Fig6_KC: numerical plotting tables (collection),344
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_statistics.csv,Fig6_KC: numerical plotting tables (collection),548
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/6o_RPKM.csv,Fig6_KC: numerical plotting tables (collection),17232
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_ac_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),6656314
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_ac_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),6632204
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_atac_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),6519004
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_atac_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),7230371
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_me3_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),5538736
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_me3_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),5763547
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8f_Overlap_counts.csv,Extended_Fig8_KC: numerical plotting tables (collection),144
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8f_Overlap_pairs.csv,Extended_Fig8_KC: numerical plotting tables (collection),8768
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8g_GO_all_terms.csv,Extended_Fig8_KC: numerical plotting tables (collection),3262389
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8g_GO_plotted.csv,Extended_Fig8_KC: numerical plotting tables (collection),377
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8h_Module_enrichment.csv,Extended_Fig8_KC: numerical plotting tables (collection),2663
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8h_Selected_membership.csv,Extended_Fig8_KC: numerical plotting tables (collection),185437
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8i_Variant_intersection.csv,Extended_Fig8_KC: numerical plotting tables (collection),204
+06_Figure_6_epigenomics.Rmd,saved-results,data/upstream/RNA/sample_metadata.csv,"Bulk RNA library, litter, genotype, sex and FlashTag assignments",1189
+06_Figure_6_epigenomics.Rmd,optional-rerun,data/upstream/diffbind/sample_metadata.csv,DiffBind sample sheet and BAM basenames,9993
+06_Figure_6_epigenomics.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_1_ATAC_master.csv,Master peak sets for optional DiffBind recounting,44041689
+06_Figure_6_epigenomics.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_2_AC_master.csv,Master peak sets for optional DiffBind recounting,38107394
+06_Figure_6_epigenomics.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_3_ME3_master.csv,Master peak sets for optional DiffBind recounting,34792808
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6bo_Biological_sample_sizes.csv,Fig6_KC: numerical plotting tables (collection),3202
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6bprime_RPKM.csv,Fig6_KC: numerical plotting tables (collection),5949
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6c_ME3_FTneg.csv,Fig6_KC: numerical plotting tables (collection),5538736
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6c_ME3_FTpos.csv,Fig6_KC: numerical plotting tables (collection),5763547
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6d_GO_all_terms.csv,Fig6_KC: numerical plotting tables (collection),3338131
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6d_GO_plotted.csv,Fig6_KC: numerical plotting tables (collection),360
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Module_enrichment.csv,Fig6_KC: numerical plotting tables (collection),4416
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Selected_membership.csv,Fig6_KC: numerical plotting tables (collection),412808
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Counting_units.csv,Fig6_KC: numerical plotting tables (collection),112
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Gene_peak_counts.csv,Fig6_KC: numerical plotting tables (collection),263
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Gene_peak_membership.csv,Fig6_KC: numerical plotting tables (collection),181084
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6g_nonVZ_Null_overlaps.csv,Fig6_KC: numerical plotting tables (collection),88918
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6g_nonVZ_Statistics.csv,Fig6_KC: numerical plotting tables (collection),236
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6g_VZ_Null_overlaps.csv,Fig6_KC: numerical plotting tables (collection),88740
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6g_VZ_Statistics.csv,Fig6_KC: numerical plotting tables (collection),230
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6h_case_Variant_overlaps.csv,Fig6_KC: numerical plotting tables (collection),38645
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6h_control_Variant_overlaps.csv,Fig6_KC: numerical plotting tables (collection),19210
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6h_ME3_regions.csv,Fig6_KC: numerical plotting tables (collection),273862
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Per_region_counts.csv,Fig6_KC: numerical plotting tables (collection),92124
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Resampling_parameters.csv,Fig6_KC: numerical plotting tables (collection),594
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_null_replicates.csv,Fig6_KC: numerical plotting tables (collection),51434
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_plot_summary.csv,Fig6_KC: numerical plotting tables (collection),344
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_statistics.csv,Fig6_KC: numerical plotting tables (collection),548
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/6o_RPKM.csv,Fig6_KC: numerical plotting tables (collection),17232
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_ac_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),6656314
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_ac_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),6632204
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_atac_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),6519004
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_atac_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),7230371
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_me3_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),5538736
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_me3_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),5763547
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8f_Overlap_counts.csv,Extended_Fig8_KC: numerical plotting tables (collection),144
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8f_Overlap_pairs.csv,Extended_Fig8_KC: numerical plotting tables (collection),8768
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8g_GO_all_terms.csv,Extended_Fig8_KC: numerical plotting tables (collection),3262389
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8g_GO_plotted.csv,Extended_Fig8_KC: numerical plotting tables (collection),377
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8h_Module_enrichment.csv,Extended_Fig8_KC: numerical plotting tables (collection),2663
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8h_Selected_membership.csv,Extended_Fig8_KC: numerical plotting tables (collection),185437
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8i_Variant_intersection.csv,Extended_Fig8_KC: numerical plotting tables (collection),204
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/variants/NIHMS1844621-supplement-Supplementary_Table.xlsx,"Fu ASD gene sets, sheet 11",16750972
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv,Original RNA statistics for gene-set nulls,1818944
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv,Original RNA statistics for gene-set nulls,1857459
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/final_tables/H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv,Original nonVZ ME3 differential peak results,7036402
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_1_ATAC_master.csv,ATAC interval catalog for variant restriction,44041689
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_strong_0.5-distal_and_proximal-mm10.bed,GENOA source region collections; selected filename is explicit in notebook,765993
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_strong_0.5-distal_only-mm10.bed,GENOA source region collections; selected filename is explicit in notebook,360472
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_weak_0.5-distal_and_proximal-mm10.bed,GENOA source region collections; selected filename is explicit in notebook,2125121
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_weak_0.5-distal_only-mm10.bed,GENOA source region collections; selected filename is explicit in notebook,1056557
+08_Figure_7_enhancer_histology.Rmd,saved-results,data/raw_sheets/Fig7_KC/7k_l_Tbr1_416Del.csv,Fig7_KC: original measurement grids,1354
+08_Figure_7_enhancer_histology.Rmd,saved-results,data/raw_sheets/Extended_Fig9_KC/9f_Tbr1_Nkx2-1.csv,Extended_Fig9_KC: original measurement grids,1247
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/1c1.csv,Fig1_KC: numerical plotting tables (collection),2787361
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/c1_Module_counts.csv,Fig1_KC: numerical plotting tables (collection),441
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/c2_constitutive_heatmap.csv,Fig1_KC: numerical plotting tables (collection),2882
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/c2_dynamic_heatmap.csv,Fig1_KC: numerical plotting tables (collection),5877
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/c2_Median_signal.csv,Fig1_KC: numerical plotting tables (collection),8146
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/c2_Saved_zscore_matrix.csv,Fig1_KC: numerical plotting tables (collection),8529
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/c3_Module_summaries.csv,Fig1_KC: numerical plotting tables (collection),1956
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/c3_Peak_annotations.csv,Fig1_KC: numerical plotting tables (collection),5461634
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/d1_Module_counts.csv,Fig1_KC: numerical plotting tables (collection),616
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/d2_Median_signal.csv,Fig1_KC: numerical plotting tables (collection),9639
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/d3_Module_summaries.csv,Fig1_KC: numerical plotting tables (collection),3095
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/d3_Peak_annotations.csv,Fig1_KC: numerical plotting tables (collection),6146508
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/e1_Module_counts.csv,Fig1_KC: numerical plotting tables (collection),753
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/e2_Median_signal.csv,Fig1_KC: numerical plotting tables (collection),10798
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/e3_Module_summaries.csv,Fig1_KC: numerical plotting tables (collection),3660
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/e3_Peak_annotations.csv,Fig1_KC: numerical plotting tables (collection),6074939
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3_Analysis_parameters.csv,Fig3_KC: numerical plotting tables (collection),1075
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3_Module_key.csv,Fig3_KC: numerical plotting tables (collection),896
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3_Module_peak_membership.csv,Fig3_KC: numerical plotting tables (collection),3414533
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3a_Cell_data.csv,Fig3_KC: numerical plotting tables (collection),1255683
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3b_Dotplot_values.csv,Fig3_KC: numerical plotting tables (collection),41793
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3bc_Cell_module_scores.csv,Fig3_KC: numerical plotting tables (collection),5635881
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3c_Plot_values.csv,Fig3_KC: numerical plotting tables (collection),1764330
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Cell_module_scores.csv,Fig3_KC: numerical plotting tables (collection),5129453
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Gene_cluster_means.csv,Fig3_KC: numerical plotting tables (collection),1024642
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Heatmap_values.csv,Fig3_KC: numerical plotting tables (collection),4939953
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Module_gene_sets.csv,Fig3_KC: numerical plotting tables (collection),146036
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Scaling_parameters.csv,Fig3_KC: numerical plotting tables (collection),1214
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3d_Selected_links.csv,Fig3_KC: numerical plotting tables (collection),877459
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/3ef_Cell_accessibility.csv,Fig3_KC: numerical plotting tables (collection),1134679
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig4_KC/4a_Interaction_counts.csv,Fig4_KC: numerical plotting tables (collection),343
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig4_KC/4b_A1.csv,Fig4_KC: numerical plotting tables (collection),1139
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig4_KC/4c_Ac7.csv,Fig4_KC: numerical plotting tables (collection),936
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig4_KC/4d_TM3.csv,Fig4_KC: numerical plotting tables (collection),911
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig4_KC/4f_Program_counts.csv,Fig4_KC: numerical plotting tables (collection),1272
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig4_KC/4f_Quantized_trajectories.csv,Fig4_KC: numerical plotting tables (collection),56047
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6bo_Biological_sample_sizes.csv,Fig6_KC: numerical plotting tables (collection),3202
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6bprime_RPKM.csv,Fig6_KC: numerical plotting tables (collection),5949
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6c_ME3_FTneg.csv,Fig6_KC: numerical plotting tables (collection),5538736
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6c_ME3_FTpos.csv,Fig6_KC: numerical plotting tables (collection),5763547
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6d_GO_all_terms.csv,Fig6_KC: numerical plotting tables (collection),3338131
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6d_GO_plotted.csv,Fig6_KC: numerical plotting tables (collection),360
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Module_enrichment.csv,Fig6_KC: numerical plotting tables (collection),4416
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Selected_membership.csv,Fig6_KC: numerical plotting tables (collection),412808
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Counting_units.csv,Fig6_KC: numerical plotting tables (collection),112
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Gene_peak_counts.csv,Fig6_KC: numerical plotting tables (collection),263
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Gene_peak_membership.csv,Fig6_KC: numerical plotting tables (collection),181084
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6g_nonVZ_Null_overlaps.csv,Fig6_KC: numerical plotting tables (collection),88918
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6g_nonVZ_Statistics.csv,Fig6_KC: numerical plotting tables (collection),236
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6g_VZ_Null_overlaps.csv,Fig6_KC: numerical plotting tables (collection),88740
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6g_VZ_Statistics.csv,Fig6_KC: numerical plotting tables (collection),230
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_case_Variant_overlaps.csv,Fig6_KC: numerical plotting tables (collection),38645
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_control_Variant_overlaps.csv,Fig6_KC: numerical plotting tables (collection),19210
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_ME3_regions.csv,Fig6_KC: numerical plotting tables (collection),273862
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Per_region_counts.csv,Fig6_KC: numerical plotting tables (collection),92124
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Resampling_parameters.csv,Fig6_KC: numerical plotting tables (collection),594
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_null_replicates.csv,Fig6_KC: numerical plotting tables (collection),51434
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_plot_summary.csv,Fig6_KC: numerical plotting tables (collection),344
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_statistics.csv,Fig6_KC: numerical plotting tables (collection),548
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/6o_RPKM.csv,Fig6_KC: numerical plotting tables (collection),17232
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5a_Per_cell_QC.csv,Extended_Fig5_KC: numerical plotting tables (collection),727792
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5b_RNA_marker_expression.csv,Extended_Fig5_KC: numerical plotting tables (collection),1883872
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5c_Bulk_median_CPM.csv,Extended_Fig5_KC: numerical plotting tables (collection),3056
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5d_ATAC_cluster_means.csv,Extended_Fig5_KC: numerical plotting tables (collection),8840471
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5g_Marker_results.csv,Extended_Fig5_KC: numerical plotting tables (collection),288868
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_PCA_coordinates.csv,Extended_Fig5_KC: numerical plotting tables (collection),5361
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_selected_counts.csv,Extended_Fig5_KC: numerical plotting tables (collection),32031
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_variance.csv,Extended_Fig5_KC: numerical plotting tables (collection),360
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_VST_inputs.csv,Extended_Fig5_KC: numerical plotting tables (collection),139009
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5i_Marker_results.csv,Extended_Fig5_KC: numerical plotting tables (collection),2815481
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_PCA_coordinates.csv,Extended_Fig5_KC: numerical plotting tables (collection),5471
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_selected_counts.csv,Extended_Fig5_KC: numerical plotting tables (collection),40102
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_variance.csv,Extended_Fig5_KC: numerical plotting tables (collection),369
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_VST_inputs.csv,Extended_Fig5_KC: numerical plotting tables (collection),147666
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5k_Marker_results.csv,Extended_Fig5_KC: numerical plotting tables (collection),2943893
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_DA_module_proportions.csv,Extended_Fig5_KC: numerical plotting tables (collection),9191
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_Positive_DA_module_proportions.csv,Extended_Fig5_KC: numerical plotting tables (collection),9191
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_Significant_DA_intervals.csv,Extended_Fig5_KC: numerical plotting tables (collection),15803976
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_ac_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),6656314
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_ac_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),6632204
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_atac_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),6519004
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_atac_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),7230371
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_me3_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),5538736
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_me3_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),5763547
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8f_Overlap_counts.csv,Extended_Fig8_KC: numerical plotting tables (collection),144
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8f_Overlap_pairs.csv,Extended_Fig8_KC: numerical plotting tables (collection),8768
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8g_GO_all_terms.csv,Extended_Fig8_KC: numerical plotting tables (collection),3262389
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8g_GO_plotted.csv,Extended_Fig8_KC: numerical plotting tables (collection),377
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8h_Module_enrichment.csv,Extended_Fig8_KC: numerical plotting tables (collection),2663
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8h_Selected_membership.csv,Extended_Fig8_KC: numerical plotting tables (collection),185437
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8i_Variant_intersection.csv,Extended_Fig8_KC: numerical plotting tables (collection),204
+09_manuscript_graphics.Rmd,saved-results,provenance/plot_checkpoints.json,Exact saved PDF/PNG checkpoint paths and source identities,14336
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Chord_ATAC_turquoise_AC-ME3_mod-ge-1000_links-ge-200.pdf,Archived author vector/raster panel exports (not RDS),57409
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Chord_ATAC_turquoise_AC-ME3_mod-ge-1000_links-ge-200.png,Archived author vector/raster panel exports (not RDS),243534
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Chord_condition_AC_blue_ATAC-ME3_mod-ge-5_links-ge-200.pdf,Archived author vector/raster panel exports (not RDS),36464
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Chord_condition_AC_blue_ATAC-ME3_mod-ge-5_links-ge-200.png,Archived author vector/raster panel exports (not RDS),145290
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Chord_condition_AC_yellow_ATAC-ME3_mod-ge-5_links-ge-200.pdf,Archived author vector/raster panel exports (not RDS),26786
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Chord_condition_AC_yellow_ATAC-ME3_mod-ge-5_links-ge-200.png,Archived author vector/raster panel exports (not RDS),76680
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Chord_condition_ME3_red_ATAC-AC_mod-ge-5_links-ge-50.pdf,Archived author vector/raster panel exports (not RDS),48641
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Chord_condition_ME3_red_ATAC-AC_mod-ge-5_links-ge-50.png,Archived author vector/raster panel exports (not RDS),202624
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Ext_Data_Fig_6_Selected_bundle_UMAPs_no_legend.pdf,Archived author vector/raster panel exports (not RDS),5341740
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Ext_Data_Fig_6_Selected_bundle_UMAPs_no_legend.png,Archived author vector/raster panel exports (not RDS),1976775
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig.2_Supplement_dist_to_TSS_ridge_plots.pdf,Archived author vector/raster panel exports (not RDS),277644
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig.2_Supplement_dist_to_TSS_ridge_plots.png,Archived author vector/raster panel exports (not RDS),322114
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_AC_median_phastCons_mean_by_module.pdf,Archived author vector/raster panel exports (not RDS),5578
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_AC_median_phastCons_mean_by_module.png,Archived author vector/raster panel exports (not RDS),77240
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_AC_Modules_heatmap_noOther.pdf,Archived author vector/raster panel exports (not RDS),9953
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_AC_Modules_heatmap_noOther.png,Archived author vector/raster panel exports (not RDS),135072
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_AC_prox_dist_proportions.pdf,Archived author vector/raster panel exports (not RDS),6175
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_AC_prox_dist_proportions.png,Archived author vector/raster panel exports (not RDS),110804
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_ATAC_median_phastCons_mean_by_module.pdf,Archived author vector/raster panel exports (not RDS),5437
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_ATAC_median_phastCons_mean_by_module.png,Archived author vector/raster panel exports (not RDS),74320
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_ATAC_prox_dist_proportions.pdf,Archived author vector/raster panel exports (not RDS),5999
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_ATAC_prox_dist_proportions.png,Archived author vector/raster panel exports (not RDS),111500
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_ME3_Curated_modules_heatmap.pdf,Archived author vector/raster panel exports (not RDS),9710
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_ME3_Curated_modules_heatmap.png,Archived author vector/raster panel exports (not RDS),173023
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_ME3_median_phastCons_mean_by_module.pdf,Archived author vector/raster panel exports (not RDS),5557
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_ME3_median_phastCons_mean_by_module.png,Archived author vector/raster panel exports (not RDS),81465
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_ME3_prox_dist_proportions.pdf,Archived author vector/raster panel exports (not RDS),6148
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_ME3_prox_dist_proportions.png,Archived author vector/raster panel exports (not RDS),117094
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_Supp_AC_peak_width.pdf,Archived author vector/raster panel exports (not RDS),76339
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_Supp_AC_peak_width.png,Archived author vector/raster panel exports (not RDS),342305
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_Supp_ME3_peak_width_v2.pdf,Archived author vector/raster panel exports (not RDS),103866
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig1_Supp_ME3_peak_width_v2.png,Archived author vector/raster panel exports (not RDS),313492
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig2_AC_GO_heatmap_Athena_curated_terms.pdf,Archived author vector/raster panel exports (not RDS),7946
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig2_AC_GO_heatmap_Athena_curated_terms.png,Archived author vector/raster panel exports (not RDS),221994
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig2_ATAC_GO_heatmap_Athena_curated_terms.pdf,Archived author vector/raster panel exports (not RDS),8105
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig2_ATAC_GO_heatmap_Athena_curated_terms.png,Archived author vector/raster panel exports (not RDS),194561
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig2_GENOA_enhancers_in_distal_ATAC_peaks.pdf,Archived author vector/raster panel exports (not RDS),5978
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig2_GENOA_enhancers_in_distal_ATAC_peaks.png,Archived author vector/raster panel exports (not RDS),130030
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig2_HOMER_Motif_Enrichment_LogPvalues_collapsed_curated_motifs_short.pdf,Archived author vector/raster panel exports (not RDS),17084
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig2_HOMER_Motif_Enrichment_LogPvalues_collapsed_curated_motifs_short.png,Archived author vector/raster panel exports (not RDS),233151
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig2_ME3_GO_heatmap_Athena_curated_terms.pdf,Archived author vector/raster panel exports (not RDS),7888
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig2_ME3_GO_heatmap_Athena_curated_terms.png,Archived author vector/raster panel exports (not RDS),235945
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig4a_treemap_correct_Interconnection_types_w_singletons.pdf,Archived author vector/raster panel exports (not RDS),4589
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig4a_treemap_correct_Interconnection_types_w_singletons.png,Archived author vector/raster panel exports (not RDS),131299
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig6_Supp_euler_ATAC_vs_ME3_limited_overlap_diffbind_expand_bed_5000.pdf,Archived author vector/raster panel exports (not RDS),7612
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig6_Supp_euler_ATAC_vs_ME3_limited_overlap_diffbind_expand_bed_5000.png,Archived author vector/raster panel exports (not RDS),123748
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig6_treemap_H3K27me3_module_treemap.pdf,Archived author vector/raster panel exports (not RDS),7374
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig6_treemap_H3K27me3_module_treemap.png,Archived author vector/raster panel exports (not RDS),195026
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig6F_ATAC_module_treemap.pdf,Archived author vector/raster panel exports (not RDS),6914
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig6F_ATAC_module_treemap.png,Archived author vector/raster panel exports (not RDS),184429
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig_4h_program_summary_Athena_edits.pdf,Archived author vector/raster panel exports (not RDS),56885
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/Fig_4h_program_summary_Athena_edits.png,Archived author vector/raster panel exports (not RDS),252043
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/threeway_clusters_1a_linked_quantized_ComplexHeatmap.pdf,Archived author vector/raster panel exports (not RDS),167747
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/threeway_clusters_1a_linked_quantized_ComplexHeatmap.png,Archived author vector/raster panel exports (not RDS),271829
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/threeway_clusters_2a_linked_quantized_ComplexHeatmap.pdf,Archived author vector/raster panel exports (not RDS),193358
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/threeway_clusters_2a_linked_quantized_ComplexHeatmap.png,Archived author vector/raster panel exports (not RDS),206669
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/threeway_clusters_2b_linked_quantized_ComplexHeatmap.pdf,Archived author vector/raster panel exports (not RDS),144759
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/threeway_clusters_2b_linked_quantized_ComplexHeatmap.png,Archived author vector/raster panel exports (not RDS),245139
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6bo_Biological_sample_sizes.csv,Fig6_KC: numerical plotting tables (collection),3202
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6bprime_RPKM.csv,Fig6_KC: numerical plotting tables (collection),5949
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6c_ME3_FTneg.csv,Fig6_KC: numerical plotting tables (collection),5538736
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6c_ME3_FTpos.csv,Fig6_KC: numerical plotting tables (collection),5763547
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6d_GO_all_terms.csv,Fig6_KC: numerical plotting tables (collection),3338131
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6d_GO_plotted.csv,Fig6_KC: numerical plotting tables (collection),360
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Module_enrichment.csv,Fig6_KC: numerical plotting tables (collection),4416
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Selected_membership.csv,Fig6_KC: numerical plotting tables (collection),412808
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Counting_units.csv,Fig6_KC: numerical plotting tables (collection),112
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Gene_peak_counts.csv,Fig6_KC: numerical plotting tables (collection),263
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6f_Gene_peak_membership.csv,Fig6_KC: numerical plotting tables (collection),181084
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6g_nonVZ_Null_overlaps.csv,Fig6_KC: numerical plotting tables (collection),88918
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6g_nonVZ_Statistics.csv,Fig6_KC: numerical plotting tables (collection),236
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6g_VZ_Null_overlaps.csv,Fig6_KC: numerical plotting tables (collection),88740
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6g_VZ_Statistics.csv,Fig6_KC: numerical plotting tables (collection),230
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6h_case_Variant_overlaps.csv,Fig6_KC: numerical plotting tables (collection),38645
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6h_control_Variant_overlaps.csv,Fig6_KC: numerical plotting tables (collection),19210
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6h_ME3_regions.csv,Fig6_KC: numerical plotting tables (collection),273862
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Per_region_counts.csv,Fig6_KC: numerical plotting tables (collection),92124
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Resampling_parameters.csv,Fig6_KC: numerical plotting tables (collection),594
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_null_replicates.csv,Fig6_KC: numerical plotting tables (collection),51434
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_plot_summary.csv,Fig6_KC: numerical plotting tables (collection),344
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_statistics.csv,Fig6_KC: numerical plotting tables (collection),548
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/6o_RPKM.csv,Fig6_KC: numerical plotting tables (collection),17232
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1c_AC_TSS.csv,Extended_Fig1_KC: numerical plotting tables (collection),3037229
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1c_ATAC_TSS.csv,Extended_Fig1_KC: numerical plotting tables (collection),3025151
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1c_ME3_TSS.csv,Extended_Fig1_KC: numerical plotting tables (collection),3287368
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1d_AC_widths.csv,Extended_Fig1_KC: numerical plotting tables (collection),2956674
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1d_ME3_widths.csv,Extended_Fig1_KC: numerical plotting tables (collection),3189105
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1e_DiffBind_counts.csv,Extended_Fig1_KC: numerical plotting tables (collection),13025
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1e_Significant_intervals.csv,Extended_Fig1_KC: numerical plotting tables (collection),20562670
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1f_DiffBind_counts.csv,Extended_Fig1_KC: numerical plotting tables (collection),7645
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1f_Significant_intervals.csv,Extended_Fig1_KC: numerical plotting tables (collection),2639836
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1g_DiffBind_counts.csv,Extended_Fig1_KC: numerical plotting tables (collection),8226
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/1g_Significant_intervals.csv,Extended_Fig1_KC: numerical plotting tables (collection),1342620
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/7ab_Cluster_RNA_summary.csv,Extended_Fig7_KC: numerical plotting tables (collection),2966
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/7ab_Per_cell_RNA_expression.csv,Extended_Fig7_KC: numerical plotting tables (collection),1224379
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/7cde_jk_RPKM.csv,Extended_Fig7_KC: numerical plotting tables (collection),31436
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_ac_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),6656314
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_ac_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),6632204
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_atac_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),6519004
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_atac_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),7230371
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_me3_FTneg.csv,Extended_Fig8_KC: numerical plotting tables (collection),5538736
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8e_me3_FTpos.csv,Extended_Fig8_KC: numerical plotting tables (collection),5763547
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8f_Overlap_counts.csv,Extended_Fig8_KC: numerical plotting tables (collection),144
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8f_Overlap_pairs.csv,Extended_Fig8_KC: numerical plotting tables (collection),8768
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8g_GO_all_terms.csv,Extended_Fig8_KC: numerical plotting tables (collection),3262389
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8g_GO_plotted.csv,Extended_Fig8_KC: numerical plotting tables (collection),377
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8h_Module_enrichment.csv,Extended_Fig8_KC: numerical plotting tables (collection),2663
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8h_Selected_membership.csv,Extended_Fig8_KC: numerical plotting tables (collection),185437
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/8i_Variant_intersection.csv,Extended_Fig8_KC: numerical plotting tables (collection),204
+10_additional_manuscript_panels.Rmd,saved-results,data/upstream/RNA/sample_metadata.csv,Bulk RNA metadata for population-specific expression plots,1189
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5a_Per_cell_QC.csv,Extended_Fig5_KC: numerical plotting tables (collection),727792
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5b_RNA_marker_expression.csv,Extended_Fig5_KC: numerical plotting tables (collection),1883872
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5c_Bulk_median_CPM.csv,Extended_Fig5_KC: numerical plotting tables (collection),3056
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5d_ATAC_cluster_means.csv,Extended_Fig5_KC: numerical plotting tables (collection),8840471
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5g_Marker_results.csv,Extended_Fig5_KC: numerical plotting tables (collection),288868
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_PCA_coordinates.csv,Extended_Fig5_KC: numerical plotting tables (collection),5361
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_selected_counts.csv,Extended_Fig5_KC: numerical plotting tables (collection),32031
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_variance.csv,Extended_Fig5_KC: numerical plotting tables (collection),360
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5h_VST_inputs.csv,Extended_Fig5_KC: numerical plotting tables (collection),139009
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5i_Marker_results.csv,Extended_Fig5_KC: numerical plotting tables (collection),2815481
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_PCA_coordinates.csv,Extended_Fig5_KC: numerical plotting tables (collection),5471
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_selected_counts.csv,Extended_Fig5_KC: numerical plotting tables (collection),40102
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_variance.csv,Extended_Fig5_KC: numerical plotting tables (collection),369
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5j_VST_inputs.csv,Extended_Fig5_KC: numerical plotting tables (collection),147666
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5k_Marker_results.csv,Extended_Fig5_KC: numerical plotting tables (collection),2943893
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_DA_module_proportions.csv,Extended_Fig5_KC: numerical plotting tables (collection),9191
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_Positive_DA_module_proportions.csv,Extended_Fig5_KC: numerical plotting tables (collection),9191
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/5l_Significant_DA_intervals.csv,Extended_Fig5_KC: numerical plotting tables (collection),15803976
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6a_TMK3_ATAC_link_membership.csv,Extended_Fig6_KC: numerical plotting tables (collection),317811
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6a_TMK3_linked_ATAC_means.csv,Extended_Fig6_KC: numerical plotting tables (collection),808440
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6c_1a_Quantized_rows.csv,Extended_Fig6_KC: numerical plotting tables (collection),674099
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6c_2a_Quantized_rows.csv,Extended_Fig6_KC: numerical plotting tables (collection),758574
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/6c_2b_Quantized_rows.csv,Extended_Fig6_KC: numerical plotting tables (collection),523932
+11_Extended_multiome_heatmaps.Rmd,saved-results,objects/multiome/extended5_linked_scores.rds,"Stored AC/ME3 linked-gene scores, controls, metadata and scaling",10111343
+11_Extended_multiome_heatmaps.Rmd,saved-results,objects/multiome/marker_heatmap_inputs.rds,Stored SCT scaled expression and interval/peak assay layers,1173281007
+11_Extended_multiome_heatmaps.Rmd,optional-rerun,objects/Fig3/exact_V2_cache.rds,Compact multiome assay cache for optional linked-score reconstruction,2313956922
+11_Extended_multiome_heatmaps.Rmd,optional-rerun,data/upstream/multiome/AC.linked_peaks.csv,AC peak-to-gene links for optional score reconstruction,1420863
+11_Extended_multiome_heatmaps.Rmd,optional-rerun,data/upstream/multiome/ME3.linked_peaks.csv,ME3 peak-to-gene links for optional score reconstruction,502924
+11_Extended_multiome_heatmaps.Rmd,optional-rerun,data/upstream/multiome/Ctx_dev.clean.rds,Original full Seurat object; optional CORTEX_MULTIOME_OBJECT override,
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Kdm6b_KO_neg.json,Original assay processing records,582
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Kdm6b_KO_pos.json,Original assay processing records,580
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Kdm6b_WT_neg.json,Original assay processing records,585
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Kdm6b_WT_pos.json,Original assay processing records,583
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E12_C.json,Original assay processing records,437
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E12_R.json,Original assay processing records,445
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E13_C.json,Original assay processing records,359
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E13_R.json,Original assay processing records,434
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E15_C.json,Original assay processing records,431
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Nex_E15_R.json,Original assay processing records,522
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Ntsr_P2_C_reseq.json,Original assay processing records,603
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Ntsr_P2_R.json,Original assay processing records,356
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Rbp_P2_C.json,Original assay processing records,423
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Rbp_P2_R.json,Original assay processing records,506
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Svz9Hr_E12_C.json,Original assay processing records,364
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Svz9Hr_E12_R.json,Original assay processing records,364
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E10_C.json,Original assay processing records,436
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E10_R.json,Original assay processing records,436
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E11_C.json,Original assay processing records,430
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E11_R.json,Original assay processing records,430
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E12_C.json,Original assay processing records,356
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E12_R.json,Original assay processing records,356
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E13_C.json,Original assay processing records,535
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Atac_Vz_E13_R.json,Original assay processing records,446
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Kdm6b_KO_neg.json,Original assay processing records,559
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Kdm6b_KO_pos.json,Original assay processing records,557
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Kdm6b_WT_neg.json,Original assay processing records,635
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Kdm6b_WT_pos.json,Original assay processing records,501
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E12_C.json,Original assay processing records,414
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E12_R.json,Original assay processing records,414
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E13_C_reseq.json,Original assay processing records,774
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E13_R_reseq.json,Original assay processing records,557
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E15_C.json,Original assay processing records,413
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Nex_E15_R.json,Original assay processing records,413
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Ntsr_P2_C.json,Original assay processing records,490
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Rbp_P2_C.json,Original assay processing records,410
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Rbp_P2_R_reseq.json,Original assay processing records,544
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Svz9hr_E12_C_reseq.json,Original assay processing records,565
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Svz9hr_E12_R.json,Original assay processing records,421
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E10_C.json,Original assay processing records,410
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E10_R.json,Original assay processing records,410
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E11_C_reseq.json,Original assay processing records,724
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E11_R_reseq.json,Original assay processing records,624
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E12_C.json,Original assay processing records,417
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E12_R.json,Original assay processing records,417
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Hac_Vz_E13_R_reseq.json,Original assay processing records,555
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Kdm6b_KO_neg.json,Original assay processing records,690
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Kdm6b_KO_pos.json,Original assay processing records,500
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Kdm6b_WT_neg.json,Original assay processing records,501
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Kdm6b_WT_pos.json,Original assay processing records,500
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E12_C_reseq.json,Original assay processing records,550
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E12_R.json,Original assay processing records,412
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E13_C_reseq.json,Original assay processing records,561
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E13_R_reseq.json,Original assay processing records,648
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E15_C_reseq.json,Original assay processing records,741
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Nex_E15_R_reseq.json,Original assay processing records,735
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Ntsr_P2_C.json,Original assay processing records,411
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Ntsr_P2_R.json,Original assay processing records,414
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Rbp_P2_R.json,Original assay processing records,410
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Svz9hr_E12_C_reseq.json,Original assay processing records,675
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Svz9hr_E12_R_reseq.json,Original assay processing records,562
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E11_C_reseq.json,Original assay processing records,957
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E11_R_reseq.json,Original assay processing records,723
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E12_C.json,Original assay processing records,415
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E12_R.json,Original assay processing records,415
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E13_C.json,Original assay processing records,417
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/Htk_Vz_E13_R.json,Original assay processing records,417
+pipeline/01_WGCNA_network_generation.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/net_WGCNA_ATAC_sp6.Rds,"Three fitted ATAC, H3K27ac and H3K27me3 networks",2496888
+pipeline/01_WGCNA_network_generation.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/net_WGCNA_H3K27ac_merged_by_1kb_sp5.Rds,"Three fitted ATAC, H3K27ac and H3K27me3 networks",2432360
+pipeline/01_WGCNA_network_generation.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/net_WGCNA_H3K27me3_merged_by_1kb_sp9.Rds,"Three fitted ATAC, H3K27ac and H3K27me3 networks",2629349
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv,ATAC raw peak-by-sample counts,6156810
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv,H3K27ac raw peak-by-sample counts,6470793
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv,H3K27me3 raw peak-by-sample counts,7056494
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_1_ATAC_master.csv,"Final ATAC, AC and ME3 catalogs for refinement",44041689
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_2_AC_master.csv,"Final ATAC, AC and ME3 catalogs for refinement",38107394
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_3_ME3_master.csv,"Final ATAC, AC and ME3 catalogs for refinement",34792808
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/Module_renaming_dictionary.csv,Biological module to manuscript-label mapping,3268
+pipeline/02_module_annotation.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_1_ATAC_master.csv,Final module catalogs,44041689
+pipeline/02_module_annotation.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_2_AC_master.csv,Final module catalogs,38107394
+pipeline/02_module_annotation.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_3_ME3_master.csv,Final module catalogs,34792808
+pipeline/02_module_annotation.Rmd,optional-rerun,data/upstream/Module_renaming_dictionary.csv,Canonical module names,3268
+pipeline/03_multiome_module_scores.Rmd,saved-results,objects/Fig3/ATAC_scoring.rds,"Stored features, controls and module score checkpoints",29412274
+pipeline/03_multiome_module_scores.Rmd,saved-results,objects/Fig3/RNA_scoring.rds,"Stored features, controls and module score checkpoints",9184735
+pipeline/03_multiome_module_scores.Rmd,optional-rerun,objects/Fig3/exact_V2_cache.rds,Normalized multiome layers for optional reconstruction,2313956922
+pipeline/03_multiome_module_scores.Rmd,optional-rerun,data/upstream/multiome/atac_modules.csv,Original module assignments,3882275
+pipeline/04_integration_trajectories.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_1_ATAC_master.csv,Final interval catalogs for trajectory construction,44041689
+pipeline/04_integration_trajectories.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_2_AC_master.csv,Final interval catalogs for trajectory construction,38107394
+pipeline/04_integration_trajectories.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_3_ME3_master.csv,Final interval catalogs for trajectory construction,34792808
+pipeline/05_RNA_and_pseudobulk.Rmd,optional-rerun,data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv,Bulk RNA differential results,1818944
+pipeline/05_RNA_and_pseudobulk.Rmd,optional-rerun,data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv,Bulk RNA differential results,1857459
+pipeline/05_RNA_and_pseudobulk.Rmd,optional-rerun,data/upstream/multiome/intervals_pseudobulk_counts.csv,Multiome pseudobulk counts,5418687
+pipeline/05_RNA_and_pseudobulk.Rmd,optional-rerun,data/upstream/multiome/RNA_pseudobulk_counts.csv,Multiome pseudobulk counts,1768794
+pipeline/06_epigenomic_statistics.Rmd,saved-results,data/upstream/final_tables/H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv,Original nonVZ ME3 differential peak results,7036402
+pipeline/06_epigenomic_statistics.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Module_enrichment.csv,Saved differential chromatin / expression summary,4416
+pipeline/06_epigenomic_statistics.Rmd,saved-results,data/source_tables/Fig6_KC/6o_RPKM.csv,Saved differential chromatin / expression summary,17232
+pipeline/07_variant_enrichment.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Resampling_parameters.csv,Saved balanced-resampling parameters / statistics,594
+pipeline/07_variant_enrichment.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_statistics.csv,Saved balanced-resampling parameters / statistics,548

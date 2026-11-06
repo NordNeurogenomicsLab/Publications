@@ -1,6 +1,8 @@
 # Local large data and generated products are saved in this delivery but excluded from ordinary Git commits.
-data/
-objects/
+data/*
+!data/README.md
+objects/*
+!objects/README.md
 panels/
 reports/
 Figure_drafts/

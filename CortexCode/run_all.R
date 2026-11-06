@@ -21,6 +21,14 @@ if (!dir.exists("data") || !dir.exists("objects")) stop(
   "The saved-input data release is required. See DATA_AVAILABILITY.md; the GitHub code checkout alone does not include data/ or objects/."
 )
 dir.create("reports", showWarnings = FALSE)
+input_checks <- do.call(rbind, lapply(files, function(file) {
+  check_notebook_inputs(basename(file), root = REPO)
+}))
+write.csv(input_checks, file.path(REPO, "reports/input_check.csv"), row.names = FALSE)
+if (any(input_checks$Status != "OK")) {
+  print(input_checks[input_checks$Status != "OK", c("Notebook", "Path", "Status")])
+  stop("Restore the declared inputs before rendering. See INPUTS.md and reports/input_check.csv.")
+}
 for (f in files) {
   cat("\nRUNNING ", f, "\n")
   flush.console()

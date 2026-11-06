@@ -634,5 +634,23 @@
     "file": "objects/RNA/verified_plotting_inputs.rds",
     "bytes": 5123,
     "sha256": "3e3c65e863dc6fabf8f04e7aa5f46c516eb3174b3e2d2f45d1bc6a64fb77bf7c"
+  },
+  {
+    "source": "WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv",
+    "file": "data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv",
+    "bytes": 6156810,
+    "sha256": "a270d5493ac3bfb5c9abe171ddcffa020e16662af56274121e39cc2b8c62e25a"
+  },
+  {
+    "source": "WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv",
+    "file": "data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv",
+    "bytes": 6470793,
+    "sha256": "00a643082f6668fa3e4592a0c1a4f1dc66176bdc45dd9f1f778b990c208e7e6f"
+  },
+  {
+    "source": "WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv",
+    "file": "data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv",
+    "bytes": 7056494,
+    "sha256": "5669ac137440be63d62c3c6006eb7d81cc42c7cac3490f83ae12d681a3e00b0a"
   }
 ]

@@ -8,6 +8,10 @@ Athéna R. Ypsilanti<sup>†,*</sup>, Eirene Markenscoff-Papadimitriou<sup>†,*
 
 \* Corresponding authors: Athéna R. Ypsilanti, Eirene Markenscoff-Papadimitriou, Alex S. Nord and John Rubenstein.
 
+## Inputs and environment
+
+[Input files and run order](INPUTS.md) · [Saved RDS/RData objects](SAVED_OBJECTS.md) · [R session and package versions](environment/README.md)
+
 ## Figure and analysis notebooks
 
 | Notebook | Contents |

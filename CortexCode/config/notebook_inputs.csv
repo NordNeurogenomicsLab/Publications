@@ -1,0 +1,95 @@
+Notebook,Mode,Path,Purpose,Local_status
+00_inputs_and_provenance.Rmd,saved-results,provenance/source_tables.json,Schema and provenance for numerical source tables,1 file(s) present
+00_inputs_and_provenance.Rmd,saved-results,provenance/copied_files.json,Original saved-input copy identities; notebook 00 audits every listed file for presence and size,1 file(s) present
+00_inputs_and_provenance.Rmd,saved-results,data/source_tables/**/*.csv,Complete source-table release validated by notebook 00,133 file(s) present
+00_inputs_and_provenance.Rmd,saved-results,data/raw_sheets/**/*.csv,Complete original measurement-grid release,13 file(s) present
+01_WGCNA_checkpoints.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/*.Rds,"Three fitted ATAC, H3K27ac and H3K27me3 networks",3 file(s) present
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv,ATAC raw peak-by-sample counts,1 file(s) present
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv,H3K27ac raw peak-by-sample counts,1 file(s) present
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv,H3K27me3 raw peak-by-sample counts,1 file(s) present
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_[123]*.csv,"Final ATAC, AC and ME3 catalogs for refinement",3 file(s) present
+01_WGCNA_checkpoints.Rmd,optional-rerun,data/upstream/Module_renaming_dictionary.csv,Biological module to manuscript-label mapping,1 file(s) present
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig1_KC/*.csv,Fig1_KC: numerical plotting tables (collection),16 file(s) present
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Fig2_KC/*.csv,Fig2_KC: numerical plotting tables (collection),16 file(s) present
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/*.csv,Extended_Fig1_KC: numerical plotting tables (collection),11 file(s) present
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig2_KC/*.csv,Extended_Fig2_KC: numerical plotting tables (collection),4 file(s) present
+02_Figures_1_2_modules.Rmd,saved-results,data/source_tables/Extended_Fig4_KC/*.csv,Extended_Fig4_KC: numerical plotting tables (collection),1 file(s) present
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_[123]*.csv,Module interval catalogs for GO and motifs,3 file(s) present
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/enrichment/*.csv,Original full GREAT GO results,3 file(s) present
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/results/*/knownResults.txt,Saved HOMER known-motif enrichment results,22 file(s) present
+02_Figures_1_2_modules.Rmd,optional-rerun,data/upstream/HOMER/regions/*,HOMER target and background BED collections,45 file(s) present
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Fig3_KC/*.csv,Fig3_KC: numerical plotting tables (collection),14 file(s) present
+03_Figure_3_multiome.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/*.csv,Extended_Fig5_KC: numerical plotting tables (collection),18 file(s) present
+03_Figure_3_multiome.Rmd,saved-results,data/upstream/multiome/atac_modules.csv,Original interval-to-module assignments; used by panel 5l,1 file(s) present
+03_Figure_3_multiome.Rmd,saved-results,data/upstream/multiome/Hes1_Tbr1_RNA_cells.csv,Per-cell Hes1/Tbr1 expression for RNA violins,1 file(s) present
+03_Figure_3_multiome.Rmd,saved-results,provenance/Extended5l_module_palette.csv,Native panel 5l module order and colors,1 file(s) present
+03_Figure_3_multiome.Rmd,optional-rerun,objects/Fig3/exact_V2_cache.rds,"Stored normalized SCT and interval layers, metadata, links and embeddings",1 file(s) present
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Fig4_KC/*.csv,Fig4_KC: numerical plotting tables (collection),6 file(s) present
+04_Figure_4_integration.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/*.csv,Extended_Fig6_KC: numerical plotting tables (collection),5 file(s) present
+04_Figure_4_integration.Rmd,saved-results,objects/integration/umap_reclustering_bundles.RData,Saved linked-interval embeddings and cluster assignments; loaded by program_summary_saved.R,1 file(s) present
+04_Figure_4_integration.Rmd,saved-results,data/upstream/integration/all_overlaps_total_aug_with_Programs.csv,Final linked-interval catalog and developmental program assignments,1 file(s) present
+04_Figure_4_integration.Rmd,saved-results,data/upstream/Module_renaming_dictionary.csv,Canonical module labels,1 file(s) present
+04_Figure_4_integration.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_[123]*.csv,Master interval catalogs for optional overlap construction,3 file(s) present
+05_Figure_5_RNA_histology.Rmd,saved-results,data/source_tables/Fig5_KC/*.csv,Fig5_KC: numerical plotting tables (collection),2 file(s) present
+05_Figure_5_RNA_histology.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/*.csv,Extended_Fig7_KC: numerical plotting tables (collection),3 file(s) present
+05_Figure_5_RNA_histology.Rmd,saved-results,data/raw_sheets/Fig5_KC/*.csv,Fig5_KC: original measurement grids,5 file(s) present
+05_Figure_5_RNA_histology.Rmd,saved-results,data/raw_sheets/Extended_Fig7_KC/*.csv,Extended_Fig7_KC: original measurement grids,2 file(s) present
+05_Figure_5_RNA_histology.Rmd,saved-results,data/upstream/RNA/sample_metadata.csv,15-library biological metadata checked against RPKM rows,1 file(s) present
+05_Figure_5_RNA_histology.Rmd,optional-rerun,data/upstream/RNA/*_wt_vs_mut_DE_Litter_Sex_cor.csv,Original litter/sex-adjusted bulk RNA differential-expression results,2 file(s) present
+05_Figure_5_RNA_histology.Rmd,optional-rerun,data/upstream/multiome/*_pseudobulk_counts.csv,Aggregated multiome counts for optional pseudobulk PCA,2 file(s) present
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Fig6_KC/*.csv,Fig6_KC: numerical plotting tables (collection),24 file(s) present
+06_Figure_6_epigenomics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/*.csv,Extended_Fig8_KC: numerical plotting tables (collection),13 file(s) present
+06_Figure_6_epigenomics.Rmd,saved-results,data/upstream/RNA/sample_metadata.csv,"Bulk RNA library, litter, genotype, sex and FlashTag assignments",1 file(s) present
+06_Figure_6_epigenomics.Rmd,optional-rerun,data/upstream/diffbind/sample_metadata.csv,DiffBind sample sheet and BAM basenames,1 file(s) present
+06_Figure_6_epigenomics.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_[123]*.csv,Master peak sets for optional DiffBind recounting,3 file(s) present
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Fig6_KC/*.csv,Fig6_KC: numerical plotting tables (collection),24 file(s) present
+07_Figure_6_variants.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/*.csv,Extended_Fig8_KC: numerical plotting tables (collection),13 file(s) present
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/variants/NIHMS1844621-supplement-Supplementary_Table.xlsx,"Fu ASD gene sets, sheet 11",1 file(s) present
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/RNA/*_wt_vs_mut_DE_Litter_Sex_cor.csv,Original RNA statistics for gene-set nulls,2 file(s) present
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/final_tables/H3K27Me3_FTneg*.csv,Original nonVZ ME3 differential peak results,1 file(s) present
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_1_ATAC_master.csv,ATAC interval catalog for variant restriction,1 file(s) present
+07_Figure_6_variants.Rmd,optional-rerun,data/upstream/GENOA/*,GENOA source region collections; selected filename is explicit in notebook,4 file(s) present
+08_Figure_7_enhancer_histology.Rmd,saved-results,data/raw_sheets/Fig7_KC/*.csv,Fig7_KC: original measurement grids,1 file(s) present
+08_Figure_7_enhancer_histology.Rmd,saved-results,data/raw_sheets/Extended_Fig9_KC/*.csv,Extended_Fig9_KC: original measurement grids,1 file(s) present
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig1_KC/*.csv,Fig1_KC: numerical plotting tables (collection),16 file(s) present
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig3_KC/*.csv,Fig3_KC: numerical plotting tables (collection),14 file(s) present
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig4_KC/*.csv,Fig4_KC: numerical plotting tables (collection),6 file(s) present
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Fig6_KC/*.csv,Fig6_KC: numerical plotting tables (collection),24 file(s) present
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/*.csv,Extended_Fig5_KC: numerical plotting tables (collection),18 file(s) present
+09_manuscript_graphics.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/*.csv,Extended_Fig8_KC: numerical plotting tables (collection),13 file(s) present
+09_manuscript_graphics.Rmd,saved-results,provenance/plot_checkpoints.json,Exact saved PDF/PNG checkpoint paths and source identities,1 file(s) present
+09_manuscript_graphics.Rmd,saved-results,objects/plot_checkpoints/*,Archived author vector/raster panel exports (not RDS),58 file(s) present
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Fig6_KC/*.csv,Fig6_KC: numerical plotting tables (collection),24 file(s) present
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig1_KC/*.csv,Extended_Fig1_KC: numerical plotting tables (collection),11 file(s) present
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig7_KC/*.csv,Extended_Fig7_KC: numerical plotting tables (collection),3 file(s) present
+10_additional_manuscript_panels.Rmd,saved-results,data/source_tables/Extended_Fig8_KC/*.csv,Extended_Fig8_KC: numerical plotting tables (collection),13 file(s) present
+10_additional_manuscript_panels.Rmd,saved-results,data/upstream/RNA/sample_metadata.csv,Bulk RNA metadata for population-specific expression plots,1 file(s) present
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig5_KC/*.csv,Extended_Fig5_KC: numerical plotting tables (collection),18 file(s) present
+11_Extended_multiome_heatmaps.Rmd,saved-results,data/source_tables/Extended_Fig6_KC/*.csv,Extended_Fig6_KC: numerical plotting tables (collection),5 file(s) present
+11_Extended_multiome_heatmaps.Rmd,saved-results,objects/multiome/extended5_linked_scores.rds,"Stored AC/ME3 linked-gene scores, controls, metadata and scaling",1 file(s) present
+11_Extended_multiome_heatmaps.Rmd,saved-results,objects/multiome/marker_heatmap_inputs.rds,Stored SCT scaled expression and interval/peak assay layers,1 file(s) present
+11_Extended_multiome_heatmaps.Rmd,optional-rerun,objects/Fig3/exact_V2_cache.rds,Compact multiome assay cache for optional linked-score reconstruction,1 file(s) present
+11_Extended_multiome_heatmaps.Rmd,optional-rerun,data/upstream/multiome/AC.linked_peaks.csv,AC peak-to-gene links for optional score reconstruction,1 file(s) present
+11_Extended_multiome_heatmaps.Rmd,optional-rerun,data/upstream/multiome/ME3.linked_peaks.csv,ME3 peak-to-gene links for optional score reconstruction,1 file(s) present
+11_Extended_multiome_heatmaps.Rmd,optional-rerun,data/upstream/multiome/Ctx_dev.clean.rds,Original full Seurat object; optional CORTEX_MULTIOME_OBJECT override,NOT PRESENT in local saved-input release
+pipeline/00_sequencing_inputs.Rmd,saved-results,data/upstream/ENCODE_configs/*.json,Original assay processing records,67 file(s) present
+pipeline/01_WGCNA_network_generation.Rmd,saved-results,data/upstream/WGCNA/WGCNA_objects/*.Rds,"Three fitted ATAC, H3K27ac and H3K27me3 networks",3 file(s) present
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv,ATAC raw peak-by-sample counts,1 file(s) present
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv,H3K27ac raw peak-by-sample counts,1 file(s) present
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv,H3K27me3 raw peak-by-sample counts,1 file(s) present
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_[123]*.csv,"Final ATAC, AC and ME3 catalogs for refinement",3 file(s) present
+pipeline/01_WGCNA_network_generation.Rmd,optional-rerun,data/upstream/Module_renaming_dictionary.csv,Biological module to manuscript-label mapping,1 file(s) present
+pipeline/02_module_annotation.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_[123]*.csv,Final module catalogs,3 file(s) present
+pipeline/02_module_annotation.Rmd,optional-rerun,data/upstream/Module_renaming_dictionary.csv,Canonical module names,1 file(s) present
+pipeline/03_multiome_module_scores.Rmd,saved-results,objects/Fig3/ATAC_scoring.rds,"Stored features, controls and module score checkpoints",1 file(s) present
+pipeline/03_multiome_module_scores.Rmd,saved-results,objects/Fig3/RNA_scoring.rds,"Stored features, controls and module score checkpoints",1 file(s) present
+pipeline/03_multiome_module_scores.Rmd,optional-rerun,objects/Fig3/exact_V2_cache.rds,Normalized multiome layers for optional reconstruction,1 file(s) present
+pipeline/03_multiome_module_scores.Rmd,optional-rerun,data/upstream/multiome/atac_modules.csv,Original module assignments,1 file(s) present
+pipeline/04_integration_trajectories.Rmd,optional-rerun,data/upstream/final_tables/Supp_Table_[123]*.csv,Final interval catalogs for trajectory construction,3 file(s) present
+pipeline/05_RNA_and_pseudobulk.Rmd,optional-rerun,data/upstream/RNA/*_wt_vs_mut_DE_Litter_Sex_cor.csv,Bulk RNA differential results,2 file(s) present
+pipeline/05_RNA_and_pseudobulk.Rmd,optional-rerun,data/upstream/multiome/*_pseudobulk_counts.csv,Multiome pseudobulk counts,2 file(s) present
+pipeline/06_epigenomic_statistics.Rmd,saved-results,data/upstream/final_tables/H3K27Me3_FTneg*.csv,Original nonVZ ME3 differential peak results,1 file(s) present
+pipeline/06_epigenomic_statistics.Rmd,saved-results,data/source_tables/Fig6_KC/6e_Module_enrichment.csv,Saved differential chromatin / expression summary,1 file(s) present
+pipeline/06_epigenomic_statistics.Rmd,saved-results,data/source_tables/Fig6_KC/6o_RPKM.csv,Saved differential chromatin / expression summary,1 file(s) present
+pipeline/07_variant_enrichment.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Resampling_parameters.csv,Saved balanced-resampling parameters / statistics,1 file(s) present
+pipeline/07_variant_enrichment.Rmd,saved-results,data/source_tables/Fig6_KC/6h_Variant_statistics.csv,Saved balanced-resampling parameters / statistics,1 file(s) present

@@ -5,6 +5,20 @@ output: html_document
 
 This notebook groups saved quantitative outputs into display panels. It presents ASD-gene overlap counts, mean RNA expression, original bulk RNA values, differential-chromatin volcanoes, interval counts and the saved integration UMAP export. It does not fit new models or embeddings. Figure-specific counting units and biological sample identities are retained.
 
+## Inputs and saved objects
+
+Paths are relative to the `CortexCode/` directory. **saved-results** inputs support routine rendering; **optional-rerun** inputs are read only when the corresponding analysis is enabled. Wildcards identify file collections.
+
+| Mode | Input path | Use |
+|---|---|---|
+| saved-results | `data/source_tables/Fig6_KC/*.csv` | Fig6_KC: numerical plotting tables (collection) |
+| saved-results | `data/source_tables/Extended_Fig1_KC/*.csv` | Extended_Fig1_KC: numerical plotting tables (collection) |
+| saved-results | `data/source_tables/Extended_Fig7_KC/*.csv` | Extended_Fig7_KC: numerical plotting tables (collection) |
+| saved-results | `data/source_tables/Extended_Fig8_KC/*.csv` | Extended_Fig8_KC: numerical plotting tables (collection) |
+| saved-results | `data/upstream/RNA/sample_metadata.csv` | Bulk RNA metadata for population-specific expression plots |
+
+See [input locations](INPUTS.md), [saved R objects](SAVED_OBJECTS.md) and the [complete file inventory](config/file_inventory.csv) for original source names, sizes and availability. These large inputs are not part of the Git checkout.
+
 ```{r setup, include=FALSE}
 source("R/common.R")
 suppressPackageStartupMessages(library(patchwork))

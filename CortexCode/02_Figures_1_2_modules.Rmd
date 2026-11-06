@@ -14,6 +14,24 @@ Figures 1 and 2 summarize the final module catalogs: interval counts, developmen
 
 Statistical and plotting units are explicit: interval summaries use peaks; VISTA comparisons use the displayed assigned enhancer/module universe; motif matrices use the recorded consensus groups. The notebook reads the original enrichment results rather than rerunning GO or motif tools against potentially changed annotations. Stored display matrices are distinguished from transformations applied for visualization.
 
+## Inputs and saved objects
+
+Paths are relative to the `CortexCode/` directory. **saved-results** inputs support routine rendering; **optional-rerun** inputs are read only when the corresponding analysis is enabled. Wildcards identify file collections.
+
+| Mode | Input path | Use |
+|---|---|---|
+| saved-results | `data/source_tables/Fig1_KC/*.csv` | Fig1_KC: numerical plotting tables (collection) |
+| saved-results | `data/source_tables/Fig2_KC/*.csv` | Fig2_KC: numerical plotting tables (collection) |
+| saved-results | `data/source_tables/Extended_Fig1_KC/*.csv` | Extended_Fig1_KC: numerical plotting tables (collection) |
+| saved-results | `data/source_tables/Extended_Fig2_KC/*.csv` | Extended_Fig2_KC: numerical plotting tables (collection) |
+| saved-results | `data/source_tables/Extended_Fig4_KC/*.csv` | Extended_Fig4_KC: numerical plotting tables (collection) |
+| optional-rerun | `data/upstream/final_tables/Supp_Table_[123]*.csv` | Module interval catalogs for GO and motifs |
+| optional-rerun | `data/upstream/enrichment/*.csv` | Original full GREAT GO results |
+| optional-rerun | `data/upstream/HOMER/results/*/knownResults.txt` | Saved HOMER known-motif enrichment results |
+| optional-rerun | `data/upstream/HOMER/regions/*` | HOMER target and background BED collections |
+
+See [input locations](INPUTS.md), [saved R objects](SAVED_OBJECTS.md) and the [complete file inventory](config/file_inventory.csv) for original source names, sizes and availability. These large inputs are not part of the Git checkout.
+
 ```{r setup, include=FALSE}
 source("R/common.R")
 repo_dir <- REPO

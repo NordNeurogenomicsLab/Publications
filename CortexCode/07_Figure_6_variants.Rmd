@@ -13,6 +13,22 @@ Figure 6g uses the saved ASD-gene overlap null distributions. Figure 6h uses the
 
 The gene-overlap result retains its recorded one-sided normal-tail statistic. The variant result retains its empirical sign tail across 1,000 balanced subsets. Parameters, full native implementation and gene-set resampling code are included below. A default render does not draw new random subsets.
 
+## Inputs and saved objects
+
+Paths are relative to the `CortexCode/` directory. **saved-results** inputs support routine rendering; **optional-rerun** inputs are read only when the corresponding analysis is enabled. Wildcards identify file collections.
+
+| Mode | Input path | Use |
+|---|---|---|
+| saved-results | `data/source_tables/Fig6_KC/*.csv` | Fig6_KC: numerical plotting tables (collection) |
+| saved-results | `data/source_tables/Extended_Fig8_KC/*.csv` | Extended_Fig8_KC: numerical plotting tables (collection) |
+| optional-rerun | `data/upstream/variants/NIHMS1844621-supplement-Supplementary_Table.xlsx` | Fu ASD gene sets, sheet 11 |
+| optional-rerun | `data/upstream/RNA/*_wt_vs_mut_DE_Litter_Sex_cor.csv` | Original RNA statistics for gene-set nulls |
+| optional-rerun | `data/upstream/final_tables/H3K27Me3_FTneg*.csv` | Original nonVZ ME3 differential peak results |
+| optional-rerun | `data/upstream/final_tables/Supp_Table_1_ATAC_master.csv` | ATAC interval catalog for variant restriction |
+| optional-rerun | `data/upstream/GENOA/*` | GENOA source region collections; selected filename is explicit in notebook |
+
+See [input locations](INPUTS.md), [saved R objects](SAVED_OBJECTS.md) and the [complete file inventory](config/file_inventory.csv) for original source names, sizes and availability. These large inputs are not part of the Git checkout.
+
 ```{r setup, include=FALSE}
 source("R/common.R")
 repo_dir <- REPO

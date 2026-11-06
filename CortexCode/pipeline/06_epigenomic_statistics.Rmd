@@ -12,6 +12,18 @@ The final epigenomic input tables are the modality-specific, expand_bed_5000 Dif
 
 Two effect measures are retained: DiffBind `Fold`, and the mutant-minus-control normalized concentration difference used on the volcano x axis. Their different definitions must remain explicit.
 
+## Inputs and saved objects
+
+Paths are relative to the `CortexCode/` directory. **saved-results** inputs support routine rendering; **optional-rerun** inputs are read only when the corresponding analysis is enabled. Wildcards identify file collections.
+
+| Mode | Input path | Use |
+|---|---|---|
+| saved-results | `data/upstream/final_tables/H3K27Me3_FTneg*.csv` | Original nonVZ ME3 differential peak results |
+| saved-results | `data/source_tables/Fig6_KC/6e_Module_enrichment.csv` | Saved differential chromatin / expression summary |
+| saved-results | `data/source_tables/Fig6_KC/6o_RPKM.csv` | Saved differential chromatin / expression summary |
+
+See [input locations](../INPUTS.md), [saved R objects](../SAVED_OBJECTS.md) and the [complete file inventory](../config/file_inventory.csv) for original source names, sizes and availability. These large inputs are not part of the Git checkout.
+
 ```{r setup, include=FALSE, eval=TRUE}
 if (!exists("params", inherits = FALSE)) {
   params <- list(recompute = FALSE)
@@ -105,5 +117,7 @@ stopifnot(
 ```
 
 ```{r session-info, eval=TRUE}
+source(file.path(repo_dir, "R/input_catalog.R"))
+write_session_info("pipeline_06_epigenomic_statistics", repo_dir)
 sessionInfo()
 ```
