@@ -1,8 +1,12 @@
 ## Manuscript
 
- **CortexCode: identification of dynamic enhancers implicated in cortical deep-layer neuron differentiation and autism spectrum disorder (Under Review)**
+**Profiling dynamic epigenetic programs in the developing mouse cortex reveals the role of ASD-associated Kdm6b in deep-layer neuron differentiation.**
 
-Athéna R. Ypsilanti, Eirene Markenscoff-Papadimitriou, Sean Whalen, Karol Cichewicz, Kenneth Lim, Shan Dong, Jada Baldoza, Yurong Wang, Matt Barraza, Fadya Binyameen, Diane Dickel, Len Pennachio, Axel Visel, Stephan J. Sanders, Katherine S. Pollard, Alex S. Nord, John Rubenstein.
+Athéna R. Ypsilanti<sup>†,*</sup>, Eirene Markenscoff-Papadimitriou<sup>†,*</sup>, Karol Cichewicz<sup>†</sup>, Sean Whalen, Nicolas Seban, Ethan Fenton, Kenneth Lim, Shan Dong, Jada Baldoza, Yurong Wang, Matt Barraza, Fadya Binyameen, Diane Dickel, Len A. Pennacchio, Axel Visel, Stephan J. Sanders, Katherine S. Pollard, Alex S. Nord<sup>*</sup>, John Rubenstein<sup>*</sup>
+
+† Contributed equally: Athéna R. Ypsilanti, Eirene Markenscoff-Papadimitriou and Karol Cichewicz.
+
+\* Corresponding authors: Athéna R. Ypsilanti, Eirene Markenscoff-Papadimitriou, Alex S. Nord and John Rubenstein.
 
 # CortexCode analysis and figures
 
@@ -26,7 +30,7 @@ Alternatively, use `Rscript run_all.R 03` to knit Figure 3 alone. `run_all.R` pr
 |---|---|
 | `00_inputs_and_provenance.Rmd` | Input schemas, file identities and plotting-table checkpoints |
 | `01_WGCNA_checkpoints.Rmd` | Count preparation, histone interval merging, CPM, quality masks, soft-threshold diagnostics, complete WGCNA fit settings and hierarchical grey refinement |
-| `02_Figures_1_2_modules.Rmd` | GREAT submission and GO filtering; HOMER BED/background generation and command; motif selection, sequence collapse and curated matrices; Figures 1–2 |
+| `02_Figures_1_2_modules.Rmd` | GREAT submission and GO filtering; HOMER BED/background generation and command; motif selection, sequence collapse and curated matrices; Figures 1â€“2 |
 | `03_Figure_3_multiome.Rmd` | Module pooling, native Seurat scoring and controls, link selection, DotPlot statistics and score scaling; Figure 3 |
 | `04_Figure_4_integration.Rmd` | Expanded interval overlap construction and singletons, stage medians, ordinal encoding, trajectory assignment, complete feature/UMAP/graph-clustering routines, selected settings and manual program definitions |
 | `05_Figure_5_RNA_histology.Rmd` | Explicit mouse topGO implementation and input selection; pseudobulk VST/PCA; saved bulk RNA results and mouse-level histology summaries |
@@ -65,9 +69,9 @@ Large inputs, R objects and generated reports are saved in the local delivery bu
 
 ## Reproduction limits
 
-The original Figure 5d GO output/configuration and original bulk-RNA model-fitting script have not been recovered. The supplied topGO code is an explicit mouse adaptation of the older Neurona implementation; it is not falsely labeled as the recovered Figure 5d run. Two recovered-method differences also need reconciliation: hierarchical grey splitting versus the manuscript's k-means description, and the selected HOMER module-complement background versus the GC-matched global background described in the manuscript. HOMER native −ln(P) values must also be distinguished from −log10(P).
+The original Figure 5d GO output/configuration and original bulk-RNA model-fitting script have not been recovered. The supplied topGO code is an explicit mouse adaptation of the older Neurona implementation; it is not falsely labeled as the recovered Figure 5d run. Two recovered-method differences also need reconciliation: hierarchical grey splitting versus the manuscript's k-means description, and the selected HOMER module-complement background versus the GC-matched global background described in the manuscript. HOMER native âˆ’ln(P) values must also be distinguished from âˆ’log10(P).
 
-Figure 6f uses the available original gene–peak-overlap analysis (484 down / 250 up), whose counting unit differs from the unresolved final-artwork totals (362 / 281). Coverage and display approximations are recorded in `provenance/panel_coverage.csv`. These qualifications do not alter the supplied source statistics.
+Figure 6f uses the available original geneâ€“peak-overlap analysis (484 down / 250 up), whose counting unit differs from the unresolved final-artwork totals (362 / 281). Coverage and display approximations are recorded in `provenance/panel_coverage.csv`. These qualifications do not alter the supplied source statistics.
 
 Figure assembly utilities, comparison slides and development archives are excluded from the public code release. Numerical notebooks export the available computational panels; they do not generate Illustrator schematics, browser screenshots or microscopy images.
 

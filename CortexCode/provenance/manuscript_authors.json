@@ -1,0 +1,37 @@
+{
+  "source_manuscript": "CortexCode_10_30_AY.docx",
+  "source_sha256": "0b4e77d8d86523d0d7a696a03a5cbe3e96a333c2999d8064a4559bdc8646a5e5",
+  "title": "Profiling dynamic epigenetic programs in the developing mouse cortex reveals the role of ASD-associated Kdm6b in deep-layer neuron differentiation.",
+  "authors_in_order": [
+    "Athéna R. Ypsilanti",
+    "Eirene Markenscoff-Papadimitriou",
+    "Karol Cichewicz",
+    "Sean Whalen",
+    "Nicolas Seban",
+    "Ethan Fenton",
+    "Kenneth Lim",
+    "Shan Dong",
+    "Jada Baldoza",
+    "Yurong Wang",
+    "Matt Barraza",
+    "Fadya Binyameen",
+    "Diane Dickel",
+    "Len A. Pennacchio",
+    "Axel Visel",
+    "Stephan J. Sanders",
+    "Katherine S. Pollard",
+    "Alex S. Nord",
+    "John Rubenstein"
+  ],
+  "equal_contributors": [
+    "Athéna R. Ypsilanti",
+    "Eirene Markenscoff-Papadimitriou",
+    "Karol Cichewicz"
+  ],
+  "corresponding_authors": [
+    "Athéna R. Ypsilanti",
+    "Eirene Markenscoff-Papadimitriou",
+    "Alex S. Nord",
+    "John Rubenstein"
+  ]
+}
