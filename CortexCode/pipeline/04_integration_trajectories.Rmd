@@ -1,0 +1,108 @@
+---
+title: "Linked chromatin intervals and developmental trajectories"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  recompute: false
+---
+
+Multimodal integration uses the saved genomic interaction catalog. It contains 157,984 records including singletons; 92,568 have links between assays. An interaction record is not necessarily a unique peak or a unique gene. The overlap type and stable record key are retained explicitly.
+
+Developmental signal profiles summarize VZ, SVZ, immature neurons, L6 neurons and L5 neurons. The recorded encoder assigns zero to the lowest signal quantile and levels 1–10 to the remaining signal. This notebook shows that preprocessing code and loads the final program assignments. It does not select among historical PCA/UMAP/clustering alternatives or claim a newly fitted clustering reproduces the saved labels.
+
+```{r setup, include=FALSE, eval=TRUE}
+if (!exists("params", inherits = FALSE)) {
+  params <- list(recompute = FALSE)
+}
+candidate_roots <- c(".", "..")
+repo_dir <- candidate_roots[vapply(
+  candidate_roots, function(path) file.exists(file.path(path, "R", "common.R")),
+  logical(1)
+)][1]
+stopifnot(!is.na(repo_dir))
+repo_dir <- normalizePath(repo_dir, winslash = "/")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = isTRUE(params$recompute),
+
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE
+)
+```
+
+## Saved interaction and program catalog
+
+The final program labels are read as saved annotations. Singletons remain in the denominator for program percentages.
+
+```{r saved-interaction-and-program-catalog, eval=TRUE}
+interactions <- read.csv(
+  file.path(
+    repo_dir, "data", "upstream", "final_tables", "Supp_Table_4_WGCNA_interactions_and_Programs.csv"
+  ),
+  check.names = FALSE
+)
+stopifnot(
+  nrow(interactions) == 157984
+)
+table(interactions$overlap_type)
+table(interactions$Program, useNA = "ifany")
+```
+
+## Stage medians and ordinal encoding
+
+The helper functions below are selected from the original integration branch. Medians are computed across samples within each developmental stage. ATAC and AC use the 5th-percentile zero cutoff; ME3 uses the 2nd percentile. Remaining values are quantile-binned into ten levels, with the original rank-binning fallback if tied quantile breaks collapse. These ordinal values are not raw CPM/FPKM or WGCNA inputs.
+
+```{r stage-medians-and-ordinal-encoding}
+suppressPackageStartupMessages(
+  {
+    library(dplyr)
+    library(tidyr)
+  }
+)
+source(file.path(repo_dir, "R", "integration_trajectories.R"))
+catalog_dir <- file.path(repo_dir, "data", "upstream", "final_tables")
+atac <- read.csv(
+  file.path(catalog_dir, "Supp_Table_1_ATAC_master.csv"),
+  check.names = FALSE
+)
+ac <- read.csv(
+  file.path(catalog_dir, "Supp_Table_2_AC_master.csv"),
+  check.names = FALSE
+)
+me3 <- read.csv(
+  file.path(catalog_dir, "Supp_Table_3_ME3_master.csv"),
+  check.names = FALSE
+)
+stages <- c("VZ", "SVZ", "ImN", "L6N", "L5N")
+atac_stage <- build_stage_matrix(
+  atac, construct_metadata(atac, "ATAC"),
+  "_cpm"
+)
+ac_stage <- build_stage_matrix(
+  ac, construct_metadata(ac, "AC"),
+  "_fpkm"
+)
+me3_stage <- build_stage_matrix(
+  me3, construct_metadata(me3, "ME3"),
+  "_fpkm"
+)
+atac_ordinal <- ordinalize(atac_stage,
+  stages,
+  zero_q = 0.05,
+  n_levels = 10)
+ac_ordinal <- ordinalize(ac_stage,
+  stages,
+  zero_q = 0.05,
+  n_levels = 10)
+me3_ordinal <- ordinalize(me3_stage,
+  stages,
+  zero_q = 0.02,
+  n_levels = 10)
+```
+
+```{r session-info, eval=TRUE}
+sessionInfo()
+```

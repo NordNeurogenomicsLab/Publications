@@ -1,0 +1,917 @@
+[
+  {
+    "file": "panels/author_versions/integration_ap_ac_me3.pdf",
+    "pages": 1,
+    "bytes": 1069031
+  },
+  {
+    "file": "panels/author_versions/integration_ap_all.pdf",
+    "pages": 1,
+    "bytes": 2218062
+  },
+  {
+    "file": "panels/author_versions/integration_ap_atac_ac.pdf",
+    "pages": 1,
+    "bytes": 1149457
+  },
+  {
+    "file": "panels/author_versions/integration_ap_atac_me3.pdf",
+    "pages": 1,
+    "bytes": 1126043
+  },
+  {
+    "file": "panels/author_versions/integration_plot_ac_me3.pdf",
+    "pages": 1,
+    "bytes": 48382
+  },
+  {
+    "file": "panels/author_versions/integration_plot_atac_ac.pdf",
+    "pages": 1,
+    "bytes": 47513
+  },
+  {
+    "file": "panels/author_versions/integration_plot_atac_me3.pdf",
+    "pages": 1,
+    "bytes": 46861
+  },
+  {
+    "file": "panels/author_versions/integration_plot_three_way.pdf",
+    "pages": 1,
+    "bytes": 32708
+  },
+  {
+    "file": "panels/author_versions/Kdm6b_donut_me3.pdf",
+    "pages": 1,
+    "bytes": 38838
+  },
+  {
+    "file": "panels/author_versions/Kdm6b_gg_atac_go.pdf",
+    "pages": 1,
+    "bytes": 36482
+  },
+  {
+    "file": "panels/author_versions/Kdm6b_gg_bar.pdf",
+    "pages": 1,
+    "bytes": 24097
+  },
+  {
+    "file": "panels/author_versions/Kdm6b_gg_epi_rna.pdf",
+    "pages": 1,
+    "bytes": 67291
+  },
+  {
+    "file": "panels/author_versions/Kdm6b_gg_me3_go.pdf",
+    "pages": 1,
+    "bytes": 35746
+  },
+  {
+    "file": "panels/author_versions/Kdm6b_p_atac.pdf",
+    "pages": 1,
+    "bytes": 84068
+  },
+  {
+    "file": "panels/author_versions/Kdm6b_p_me3.pdf",
+    "pages": 1,
+    "bytes": 56984
+  },
+  {
+    "file": "panels/Ext1/1c_AC_TSS.pdf",
+    "pages": 1,
+    "bytes": 94091
+  },
+  {
+    "file": "panels/Ext1/1c_ATAC_TSS.pdf",
+    "pages": 1,
+    "bytes": 76406
+  },
+  {
+    "file": "panels/Ext1/1c_ME3_TSS.pdf",
+    "pages": 1,
+    "bytes": 114857
+  },
+  {
+    "file": "panels/Ext1/1c_TSS_author_saved.pdf",
+    "pages": 1,
+    "bytes": 277644
+  },
+  {
+    "file": "panels/Ext1/1d_AC_widths.pdf",
+    "pages": 1,
+    "bytes": 19742
+  },
+  {
+    "file": "panels/Ext1/1d_AC_widths_author_saved.pdf",
+    "pages": 1,
+    "bytes": 76339
+  },
+  {
+    "file": "panels/Ext1/1d_ME3_widths.pdf",
+    "pages": 1,
+    "bytes": 20456
+  },
+  {
+    "file": "panels/Ext1/1d_ME3_widths_author_saved.pdf",
+    "pages": 1,
+    "bytes": 103866
+  },
+  {
+    "file": "panels/Ext1/1e_DiffBind_counts.pdf",
+    "pages": 1,
+    "bytes": 23523
+  },
+  {
+    "file": "panels/Ext1/1f_DiffBind_counts.pdf",
+    "pages": 1,
+    "bytes": 23622
+  },
+  {
+    "file": "panels/Ext1/1g_DiffBind_counts.pdf",
+    "pages": 1,
+    "bytes": 24291
+  },
+  {
+    "file": "panels/Ext2/VZ_E12_vs_ImN_E13.pdf",
+    "pages": 1,
+    "bytes": 35475
+  },
+  {
+    "file": "panels/Ext2/VZ_E12_vs_L5N_P2.pdf",
+    "pages": 1,
+    "bytes": 35216
+  },
+  {
+    "file": "panels/Ext2/VZ_E12_vs_L6N_P2.pdf",
+    "pages": 1,
+    "bytes": 36341
+  },
+  {
+    "file": "panels/Ext2/VZ_E12_vs_SVZ_E12.pdf",
+    "pages": 1,
+    "bytes": 35372
+  },
+  {
+    "file": "panels/Ext4/4c_GENOA_author_saved.pdf",
+    "pages": 1,
+    "bytes": 5978
+  },
+  {
+    "file": "panels/Ext4/4c_GENOA_distal.pdf",
+    "pages": 1,
+    "bytes": 22047
+  },
+  {
+    "file": "panels/Ext5/5a_QC.pdf",
+    "pages": 1,
+    "bytes": 65904
+  },
+  {
+    "file": "panels/Ext5/5b_RNA_markers.pdf",
+    "pages": 1,
+    "bytes": 786570
+  },
+  {
+    "file": "panels/Ext5/5c_bulk_medians.pdf",
+    "pages": 1,
+    "bytes": 25017
+  },
+  {
+    "file": "panels/Ext5/5d_ATAC_cluster_means_approximate.pdf",
+    "pages": 1,
+    "bytes": 2178453
+  },
+  {
+    "file": "panels/Ext5/5h_PCA.pdf",
+    "pages": 1,
+    "bytes": 18780
+  },
+  {
+    "file": "panels/Ext5/5j_PCA.pdf",
+    "pages": 1,
+    "bytes": 18800
+  },
+  {
+    "file": "panels/Ext5/5l_DA_modules.pdf",
+    "pages": 1,
+    "bytes": 24084
+  },
+  {
+    "file": "panels/Ext6/6a_TMK3_linked_ATAC_approximate.pdf",
+    "pages": 1,
+    "bytes": 199940
+  },
+  {
+    "file": "panels/Ext6/6b_saved_UMAPs.pdf",
+    "pages": 1,
+    "bytes": 5341740
+  },
+  {
+    "file": "panels/Ext6/6c_1a_author_saved.pdf",
+    "pages": 1,
+    "bytes": 167747
+  },
+  {
+    "file": "panels/Ext6/6c_1a_Quantized_rows.pdf",
+    "pages": 1,
+    "bytes": 209751
+  },
+  {
+    "file": "panels/Ext6/6c_2a_author_saved.pdf",
+    "pages": 1,
+    "bytes": 193358
+  },
+  {
+    "file": "panels/Ext6/6c_2a_Quantized_rows.pdf",
+    "pages": 1,
+    "bytes": 230544
+  },
+  {
+    "file": "panels/Ext6/6c_2b_author_saved.pdf",
+    "pages": 1,
+    "bytes": 144759
+  },
+  {
+    "file": "panels/Ext6/6c_2b_Quantized_rows.pdf",
+    "pages": 1,
+    "bytes": 161117
+  },
+  {
+    "file": "panels/Ext7/7a_Kdm6a_UMAP.pdf",
+    "pages": 1,
+    "bytes": 515365
+  },
+  {
+    "file": "panels/Ext7/7a_Kdm6b_UMAP.pdf",
+    "pages": 1,
+    "bytes": 509784
+  },
+  {
+    "file": "panels/Ext7/7ab_mean_Kdm6a.pdf",
+    "pages": 1,
+    "bytes": 30073
+  },
+  {
+    "file": "panels/Ext7/7ab_mean_Kdm6b.pdf",
+    "pages": 1,
+    "bytes": 30254
+  },
+  {
+    "file": "panels/Ext7/7b_Kdm6a_violin.pdf",
+    "pages": 1,
+    "bytes": 97169
+  },
+  {
+    "file": "panels/Ext7/7b_Kdm6b_violin.pdf",
+    "pages": 1,
+    "bytes": 95042
+  },
+  {
+    "file": "panels/Ext7/7cd_RPKM_Kdm6a.pdf",
+    "pages": 1,
+    "bytes": 27049
+  },
+  {
+    "file": "panels/Ext7/7cd_RPKM_Kdm6b.pdf",
+    "pages": 1,
+    "bytes": 26655
+  },
+  {
+    "file": "panels/Ext7/7cde_jk_RPKM.pdf",
+    "pages": 1,
+    "bytes": 41725
+  },
+  {
+    "file": "panels/Ext7/7e_RPKM_strip.pdf",
+    "pages": 1,
+    "bytes": 40028
+  },
+  {
+    "file": "panels/Ext7/7j_TLE4_thickness.pdf",
+    "pages": 1,
+    "bytes": 20044
+  },
+  {
+    "file": "panels/Ext7/7k_TBR1_layer_thickness.pdf",
+    "pages": 1,
+    "bytes": 21009
+  },
+  {
+    "file": "panels/Ext8/8e_ac_FTneg.pdf",
+    "pages": 1,
+    "bytes": 1499267
+  },
+  {
+    "file": "panels/Ext8/8e_ac_FTpos.pdf",
+    "pages": 1,
+    "bytes": 1502912
+  },
+  {
+    "file": "panels/Ext8/8e_atac_FTneg.pdf",
+    "pages": 1,
+    "bytes": 1623147
+  },
+  {
+    "file": "panels/Ext8/8e_atac_FTpos.pdf",
+    "pages": 1,
+    "bytes": 1552039
+  },
+  {
+    "file": "panels/Ext8/8e_me3_FTneg.pdf",
+    "pages": 1,
+    "bytes": 1318494
+  },
+  {
+    "file": "panels/Ext8/8e_me3_FTpos.pdf",
+    "pages": 1,
+    "bytes": 1318191
+  },
+  {
+    "file": "panels/Ext8/8e_six_volcanoes.pdf",
+    "pages": 1,
+    "bytes": 8604269
+  },
+  {
+    "file": "panels/Ext8/8f_Euler_author_saved.pdf",
+    "pages": 1,
+    "bytes": 7612
+  },
+  {
+    "file": "panels/Ext8/8f_interval_overlap.pdf",
+    "pages": 1,
+    "bytes": 19053
+  },
+  {
+    "file": "panels/Ext8/8g_GO_plotted.pdf",
+    "pages": 1,
+    "bytes": 20420
+  },
+  {
+    "file": "panels/Ext8/8h_Module_enrichment.pdf",
+    "pages": 1,
+    "bytes": 19984
+  },
+  {
+    "file": "panels/Ext8/8h_module_treemap_author_saved.pdf",
+    "pages": 1,
+    "bytes": 6914
+  },
+  {
+    "file": "panels/Ext8/8i_variant_intersection.pdf",
+    "pages": 1,
+    "bytes": 17176
+  },
+  {
+    "file": "panels/Ext9/9f_Tbr1_Nkx2-1.pdf",
+    "pages": 1,
+    "bytes": 24154
+  },
+  {
+    "file": "panels/Fig1/c1_module_counts.pdf",
+    "pages": 1,
+    "bytes": 14703
+  },
+  {
+    "file": "panels/Fig1/c2_constitutive_author_object.pdf",
+    "pages": 1,
+    "bytes": 32620
+  },
+  {
+    "file": "panels/Fig1/c2_constitutive_heatmap_saved.pdf",
+    "pages": 1,
+    "bytes": 26302
+  },
+  {
+    "file": "panels/Fig1/c2_dynamic_author_object.pdf",
+    "pages": 1,
+    "bytes": 34065
+  },
+  {
+    "file": "panels/Fig1/c2_dynamic_heatmap_saved.pdf",
+    "pages": 1,
+    "bytes": 28467
+  },
+  {
+    "file": "panels/Fig1/c2_median_signal.pdf",
+    "pages": 1,
+    "bytes": 25412
+  },
+  {
+    "file": "panels/Fig1/c3_conservation.pdf",
+    "pages": 1,
+    "bytes": 19396
+  },
+  {
+    "file": "panels/Fig1/c3_conservation_author_saved.pdf",
+    "pages": 1,
+    "bytes": 5437
+  },
+  {
+    "file": "panels/Fig1/c3_prox_dist_author_saved.pdf",
+    "pages": 1,
+    "bytes": 5999
+  },
+  {
+    "file": "panels/Fig1/c3_TSS_categories.pdf",
+    "pages": 1,
+    "bytes": 22194
+  },
+  {
+    "file": "panels/Fig1/c_manuscript_stack.pdf",
+    "pages": 1,
+    "bytes": 21419
+  },
+  {
+    "file": "panels/Fig1/d1_module_counts.pdf",
+    "pages": 1,
+    "bytes": 15277
+  },
+  {
+    "file": "panels/Fig1/d2_author_saved.pdf",
+    "pages": 1,
+    "bytes": 9953
+  },
+  {
+    "file": "panels/Fig1/d2_median_signal.pdf",
+    "pages": 1,
+    "bytes": 26029
+  },
+  {
+    "file": "panels/Fig1/d3_conservation.pdf",
+    "pages": 1,
+    "bytes": 20270
+  },
+  {
+    "file": "panels/Fig1/d3_conservation_author_saved.pdf",
+    "pages": 1,
+    "bytes": 5578
+  },
+  {
+    "file": "panels/Fig1/d3_prox_dist_author_saved.pdf",
+    "pages": 1,
+    "bytes": 6175
+  },
+  {
+    "file": "panels/Fig1/d3_TSS_categories.pdf",
+    "pages": 1,
+    "bytes": 22436
+  },
+  {
+    "file": "panels/Fig1/d_manuscript_stack.pdf",
+    "pages": 1,
+    "bytes": 21659
+  },
+  {
+    "file": "panels/Fig1/e1_module_counts.pdf",
+    "pages": 1,
+    "bytes": 15714
+  },
+  {
+    "file": "panels/Fig1/e2_author_saved.pdf",
+    "pages": 1,
+    "bytes": 9710
+  },
+  {
+    "file": "panels/Fig1/e2_median_signal.pdf",
+    "pages": 1,
+    "bytes": 26851
+  },
+  {
+    "file": "panels/Fig1/e3_conservation.pdf",
+    "pages": 1,
+    "bytes": 20365
+  },
+  {
+    "file": "panels/Fig1/e3_conservation_author_saved.pdf",
+    "pages": 1,
+    "bytes": 5557
+  },
+  {
+    "file": "panels/Fig1/e3_prox_dist_author_saved.pdf",
+    "pages": 1,
+    "bytes": 6148
+  },
+  {
+    "file": "panels/Fig1/e3_TSS_categories.pdf",
+    "pages": 1,
+    "bytes": 23216
+  },
+  {
+    "file": "panels/Fig1/e_manuscript_stack.pdf",
+    "pages": 1,
+    "bytes": 23912
+  },
+  {
+    "file": "panels/Fig2/2a_GO_author_object.pdf",
+    "pages": 1,
+    "bytes": 42872
+  },
+  {
+    "file": "panels/Fig2/2a_GO_author_saved.pdf",
+    "pages": 1,
+    "bytes": 8105
+  },
+  {
+    "file": "panels/Fig2/2a_GO_plot_matrix.pdf",
+    "pages": 1,
+    "bytes": 26641
+  },
+  {
+    "file": "panels/Fig2/2b_GO_author_object.pdf",
+    "pages": 1,
+    "bytes": 44442
+  },
+  {
+    "file": "panels/Fig2/2b_GO_author_saved.pdf",
+    "pages": 1,
+    "bytes": 7946
+  },
+  {
+    "file": "panels/Fig2/2b_GO_plot_matrix.pdf",
+    "pages": 1,
+    "bytes": 27717
+  },
+  {
+    "file": "panels/Fig2/2c_GO_author_object.pdf",
+    "pages": 1,
+    "bytes": 39581
+  },
+  {
+    "file": "panels/Fig2/2c_GO_author_saved.pdf",
+    "pages": 1,
+    "bytes": 7888
+  },
+  {
+    "file": "panels/Fig2/2c_GO_plot_matrix.pdf",
+    "pages": 1,
+    "bytes": 25200
+  },
+  {
+    "file": "panels/Fig2/2d_VISTA_counts.pdf",
+    "pages": 1,
+    "bytes": 19603
+  },
+  {
+    "file": "panels/Fig2/2dprime_VISTA_counts.pdf",
+    "pages": 1,
+    "bytes": 19975
+  },
+  {
+    "file": "panels/Fig2/2g_HOMER_author_saved.pdf",
+    "pages": 1,
+    "bytes": 17084
+  },
+  {
+    "file": "panels/Fig2/2g_HOMER_curated.pdf",
+    "pages": 1,
+    "bytes": 28023
+  },
+  {
+    "file": "panels/Fig3/3a_clusters.pdf",
+    "pages": 1,
+    "bytes": 469379
+  },
+  {
+    "file": "panels/Fig3/3a_Eomes.pdf",
+    "pages": 1,
+    "bytes": 473613
+  },
+  {
+    "file": "panels/Fig3/3a_Hes1.pdf",
+    "pages": 1,
+    "bytes": 472265
+  },
+  {
+    "file": "panels/Fig3/3a_marker_strip.pdf",
+    "pages": 1,
+    "bytes": 1336845
+  },
+  {
+    "file": "panels/Fig3/3a_Tbr1.pdf",
+    "pages": 1,
+    "bytes": 469731
+  },
+  {
+    "file": "panels/Fig3/3b_dotplot.pdf",
+    "pages": 1,
+    "bytes": 33904
+  },
+  {
+    "file": "panels/Fig3/3c_A1.pdf",
+    "pages": 1,
+    "bytes": 520440
+  },
+  {
+    "file": "panels/Fig3/3c_A10.pdf",
+    "pages": 1,
+    "bytes": 497726
+  },
+  {
+    "file": "panels/Fig3/3c_A12.pdf",
+    "pages": 1,
+    "bytes": 472743
+  },
+  {
+    "file": "panels/Fig3/3c_A16.pdf",
+    "pages": 1,
+    "bytes": 515440
+  },
+  {
+    "file": "panels/Fig3/3c_A3.pdf",
+    "pages": 1,
+    "bytes": 504854
+  },
+  {
+    "file": "panels/Fig3/3c_A6.pdf",
+    "pages": 1,
+    "bytes": 502885
+  },
+  {
+    "file": "panels/Fig3/3c_six_modules.pdf",
+    "pages": 1,
+    "bytes": 2893852
+  },
+  {
+    "file": "panels/Fig3/3d_linked_gene_scores.pdf",
+    "pages": 1,
+    "bytes": 1343621
+  },
+  {
+    "file": "panels/Fig3/3ef_hs1453_ATAC_TFIDF.pdf",
+    "pages": 1,
+    "bytes": 501072
+  },
+  {
+    "file": "panels/Fig3/3ef_hs416_ATAC_TFIDF.pdf",
+    "pages": 1,
+    "bytes": 507003
+  },
+  {
+    "file": "panels/Fig4/4a_interaction_counts.pdf",
+    "pages": 1,
+    "bytes": 17545
+  },
+  {
+    "file": "panels/Fig4/4a_treemap_author_saved.pdf",
+    "pages": 1,
+    "bytes": 4589
+  },
+  {
+    "file": "panels/Fig4/4a_treemap_manuscript.pdf",
+    "pages": 1,
+    "bytes": 30680
+  },
+  {
+    "file": "panels/Fig4/4b_A1_trajectory.pdf",
+    "pages": 1,
+    "bytes": 15587
+  },
+  {
+    "file": "panels/Fig4/4bprime_chord_author_saved.pdf",
+    "pages": 1,
+    "bytes": 57409
+  },
+  {
+    "file": "panels/Fig4/4c_Ac7_trajectory.pdf",
+    "pages": 1,
+    "bytes": 15574
+  },
+  {
+    "file": "panels/Fig4/4cprime_chord_author_saved.pdf",
+    "pages": 1,
+    "bytes": 36464
+  },
+  {
+    "file": "panels/Fig4/4d_TM3_trajectory.pdf",
+    "pages": 1,
+    "bytes": 14609
+  },
+  {
+    "file": "panels/Fig4/4dprime_chord_author_saved.pdf",
+    "pages": 1,
+    "bytes": 48641
+  },
+  {
+    "file": "panels/Fig4/4f_program_counts.pdf",
+    "pages": 1,
+    "bytes": 25654
+  },
+  {
+    "file": "panels/Fig4/4f_programs_author_saved.pdf",
+    "pages": 1,
+    "bytes": 56885
+  },
+  {
+    "file": "panels/Fig4/4f_quantized_trajectories.pdf",
+    "pages": 1,
+    "bytes": 67071
+  },
+  {
+    "file": "panels/Fig5/5c_nonVZ_RNA_volcano.pdf",
+    "pages": 1,
+    "bytes": 456047
+  },
+  {
+    "file": "panels/Fig5/5c_VZ_RNA_volcano.pdf",
+    "pages": 1,
+    "bytes": 483591
+  },
+  {
+    "file": "panels/Fig5/5e_TLE4_E14.pdf",
+    "pages": 1,
+    "bytes": 20499
+  },
+  {
+    "file": "panels/Fig5/5f_Tbr1_E14.pdf",
+    "pages": 1,
+    "bytes": 20865
+  },
+  {
+    "file": "panels/Fig5/5g_Tbr1_P10.pdf",
+    "pages": 1,
+    "bytes": 20302
+  },
+  {
+    "file": "panels/Fig5/5h_Bcl11b_P10.pdf",
+    "pages": 1,
+    "bytes": 19795
+  },
+  {
+    "file": "panels/Fig5/5i_Fezf2_P10.pdf",
+    "pages": 1,
+    "bytes": 20204
+  },
+  {
+    "file": "panels/Fig6/6bprime_RPKM.pdf",
+    "pages": 1,
+    "bytes": 27926
+  },
+  {
+    "file": "panels/Fig6/6bprime_RPKM_Neurod2_FlashTagNegative.pdf",
+    "pages": 1,
+    "bytes": 22212
+  },
+  {
+    "file": "panels/Fig6/6bprime_RPKM_Neurod2_FlashTagPositive.pdf",
+    "pages": 1,
+    "bytes": 22184
+  },
+  {
+    "file": "panels/Fig6/6bprime_RPKM_Ppp1r1b_FlashTagNegative.pdf",
+    "pages": 1,
+    "bytes": 21311
+  },
+  {
+    "file": "panels/Fig6/6bprime_RPKM_Ppp1r1b_FlashTagPositive.pdf",
+    "pages": 1,
+    "bytes": 20594
+  },
+  {
+    "file": "panels/Fig6/6c_ME3_FTneg.pdf",
+    "pages": 1,
+    "bytes": 1318494
+  },
+  {
+    "file": "panels/Fig6/6c_ME3_FTpos.pdf",
+    "pages": 1,
+    "bytes": 1318191
+  },
+  {
+    "file": "panels/Fig6/6d_GO_plotted.pdf",
+    "pages": 1,
+    "bytes": 19323
+  },
+  {
+    "file": "panels/Fig6/6e_Module_enrichment.pdf",
+    "pages": 1,
+    "bytes": 21610
+  },
+  {
+    "file": "panels/Fig6/6e_module_treemap_author_saved.pdf",
+    "pages": 1,
+    "bytes": 7374
+  },
+  {
+    "file": "panels/Fig6/6f_donut_recovered_analysis.pdf",
+    "pages": 1,
+    "bytes": 22764
+  },
+  {
+    "file": "panels/Fig6/6g_ASD_gene_overlap.pdf",
+    "pages": 1,
+    "bytes": 23208
+  },
+  {
+    "file": "panels/Fig6/6g_nonVZ_ASD_null.pdf",
+    "pages": 1,
+    "bytes": 26109
+  },
+  {
+    "file": "panels/Fig6/6g_VZ_ASD_null.pdf",
+    "pages": 1,
+    "bytes": 25193
+  },
+  {
+    "file": "panels/Fig6/6h_variant_resampling.pdf",
+    "pages": 1,
+    "bytes": 20100
+  },
+  {
+    "file": "panels/Fig6/6h_variant_violin.pdf",
+    "pages": 1,
+    "bytes": 110340
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM.pdf",
+    "pages": 1,
+    "bytes": 35185
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Bcl11b_FlashTagNegative.pdf",
+    "pages": 1,
+    "bytes": 21378
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Bcl11b_FlashTagPositive.pdf",
+    "pages": 1,
+    "bytes": 21115
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Nrxn2_FlashTagNegative.pdf",
+    "pages": 1,
+    "bytes": 21967
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Nrxn2_FlashTagPositive.pdf",
+    "pages": 1,
+    "bytes": 22195
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Shank1_FlashTagNegative.pdf",
+    "pages": 1,
+    "bytes": 21923
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Shank1_FlashTagPositive.pdf",
+    "pages": 1,
+    "bytes": 21868
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Slc17a6_FlashTagNegative.pdf",
+    "pages": 1,
+    "bytes": 22085
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Slc17a6_FlashTagPositive.pdf",
+    "pages": 1,
+    "bytes": 22203
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Tbr1_FlashTagNegative.pdf",
+    "pages": 1,
+    "bytes": 21027
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Tbr1_FlashTagPositive.pdf",
+    "pages": 1,
+    "bytes": 20975
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Wnt7b_FlashTagNegative.pdf",
+    "pages": 1,
+    "bytes": 21668
+  },
+  {
+    "file": "panels/Fig6/6o_RPKM_Wnt7b_FlashTagPositive.pdf",
+    "pages": 1,
+    "bytes": 21628
+  },
+  {
+    "file": "panels/Fig7/7k_Dorsal_CP.pdf",
+    "pages": 1,
+    "bytes": 29910
+  },
+  {
+    "file": "panels/Fig7/7kl_Tbr1_416Del.pdf",
+    "pages": 1,
+    "bytes": 24154
+  },
+  {
+    "file": "panels/Fig7/7l_Dorsomedial_CP.pdf",
+    "pages": 1,
+    "bytes": 30468
+  },
+  {
+    "file": "panels/WGCNA/net_WGCNA_ATAC_sp6_eigengenes.pdf",
+    "pages": 1,
+    "bytes": 28623
+  },
+  {
+    "file": "panels/WGCNA/net_WGCNA_H3K27ac_merged_by_1kb_sp5_eigengenes.pdf",
+    "pages": 1,
+    "bytes": 28992
+  },
+  {
+    "file": "panels/WGCNA/net_WGCNA_H3K27me3_merged_by_1kb_sp9_eigengenes.pdf",
+    "pages": 1,
+    "bytes": 29735
+  }
+]

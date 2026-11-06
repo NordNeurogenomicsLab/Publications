@@ -1,0 +1,88 @@
+---
+title: "RNA differential results and multiome pseudobulk PCA"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  recompute: false
+---
+
+Bulk RNA differential-expression outputs are the original litter/sex-adjusted WT-versus-mutant result tables. They retain the original logFC, LR, PValue and FDR fields. The archived table names and metadata establish the adjustment variables, but the supplied files do not establish every original model-fitting/filtering option; this repository therefore does not invent a new differential-expression fit and present it as the original analysis.
+
+The multiome pseudobulk PCA is a separate analysis. Original counts are aggregated by Cell_Type_3, transformed with DESeq2 VST, and the 500 most variable features are used in an unscaled PCA. The code below records that procedure, with recomputation disabled by default.
+
+```{r setup, include=FALSE, eval=TRUE}
+if (!exists("params", inherits = FALSE)) {
+  params <- list(recompute = FALSE)
+}
+candidate_roots <- c(".", "..")
+repo_dir <- candidate_roots[vapply(
+  candidate_roots, function(path) file.exists(file.path(path, "R", "common.R")),
+  logical(1)
+)][1]
+stopifnot(!is.na(repo_dir))
+repo_dir <- normalizePath(repo_dir, winslash = "/")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = isTRUE(params$recompute),
+
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE
+)
+```
+
+## Original bulk RNA results
+
+Load both cell populations without refitting models. Sample sizes are defined by biological samples, not by genes or single cells.
+
+```{r original-bulk-rna-results, eval=TRUE}
+rna_dir <- file.path(repo_dir, "data", "upstream", "RNA")
+vz_de <- read.csv(file.path(rna_dir, "VZ_wt_vs_mut_DE_Litter_Sex_cor.csv"))
+nonvz_de <- read.csv(file.path(rna_dir, "nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv"))
+head(vz_de[, c("gene_id", "logFC", "LR", "PValue", "FDR")])
+head(nonvz_de[, c("gene_id", "logFC", "LR", "PValue", "FDR")])
+```
+
+## Recorded pseudobulk PCA procedure
+
+The normalization is VST with blind=TRUE, followed by variance ranking and prcomp(center=TRUE, scale.=FALSE). PCA signs are arbitrary; the display notebooks record the sign used for manuscript orientation. Do not run a second transformation on the saved VST plotting matrix.
+
+```{r recorded-pseudobulk-pca-procedure}
+suppressPackageStartupMessages(library(DESeq2))
+pseudobulk_pca <- function(count_file) {
+  counts <- as.matrix(read.csv(count_file,
+    row.names = 1,
+    check.names = FALSE))
+  stopifnot(all(counts == round(counts)))
+  counts <- counts[rowSums(counts) >
+    0, , drop = FALSE]
+
+  sample_data <- data.frame(
+    row.names = colnames(counts),
+    Cluster = colnames(counts)
+  )
+  dataset <- DESeq2::DESeqDataSetFromMatrix(
+    countData = round(counts),
+    colData = sample_data,
+    design = ~1
+  )
+  transformed <- SummarizedExperiment::assay(DESeq2::vst(dataset, blind = TRUE))
+  feature_variance <- apply(transformed, 1, var)
+  selected <- names(sort(feature_variance, decreasing = TRUE))[1:500]
+
+  prcomp(
+    t(transformed[selected, , drop = FALSE]),
+    center = TRUE,
+    scale. = FALSE
+  )
+}
+multiome_dir <- file.path(repo_dir, "data", "upstream", "multiome")
+rna_pca <- pseudobulk_pca(file.path(multiome_dir, "RNA_pseudobulk_counts.csv"))
+atac_pca <- pseudobulk_pca(file.path(multiome_dir, "intervals_pseudobulk_counts.csv"))
+```
+
+```{r session-info, eval=TRUE}
+sessionInfo()
+```

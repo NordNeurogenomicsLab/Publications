@@ -1,0 +1,419 @@
+---
+title: "Figure 1 upstream: WGCNA construction and module refinement"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  run_wgcna: false
+  run_refinement: false
+---
+
+Three saved WGCNA networks describe developmental ATAC, H3K27ac and H3K27me3 profiles. Input preparation, quality filtering, soft-threshold diagnostics, network fitting and grey-module refinement are included below. By default, this notebook loads the saved fits and displays their eigengenes; all fitting flags default to false.
+
+Soft powers were 6, 5 and 9, respectively, with signed networks, bicor correlation, signed TOM, minimum module size 30, merge height 0.25, deepSplit 2 and pamStage FALSE. The saved ATAC network contains 67,435 fitted features; the final annotated ATAC catalog contains 67,518 intervals. Initial network colors, final refined labels and plotting transformations are kept distinct, as documented in `pipeline/02_module_annotation.Rmd`.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+repo_dir <- REPO
+if (!exists("params", inherits = FALSE)) params <- list()
+if (is.null(params$run_wgcna)) params$run_wgcna <- FALSE
+if (is.null(params$run_refinement)) params$run_refinement <- FALSE
+
+knitr::opts_chunk$set(echo = TRUE,
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE)
+```
+
+## Packages and input locations
+
+The analysis starts from the original peak-count tables. Rerun outputs are written separately from the saved input networks.
+
+```{r wgcna-packages-and-input-locations, eval=isTRUE(params$run_wgcna)}
+suppressPackageStartupMessages(
+  {
+    library(WGCNA)
+    library(edgeR)
+    library(GenomicRanges)
+  }
+)
+input_dir <- file.path(repo_dir, "data", "upstream", "WGCNA", "WGCNA_input_data")
+output_dir <- file.path(repo_dir, "objects", "WGCNA", "recomputed")
+dir.create(output_dir,
+  recursive = TRUE,
+  showWarnings = FALSE)
+atac_input <- read.table(
+  file.path(input_dir, "atac_idr_peaks_merged_uniform-mm10.tsv"),
+  header = TRUE
+)
+ac_input <- read.table(
+  file.path(input_dir, "hac_overlap_peaks_merged-mm10.tsv"),
+  header = TRUE
+)
+me3_input <- read.table(
+  file.path(input_dir, "htk_overlap_peaks_merged-mm10.tsv"),
+  header = TRUE
+)
+```
+
+## ATAC count matrix
+
+The original ATAC table has four coordinate/summit columns followed by 20 sample-count columns. ATAC intervals are already uniform; this branch does not apply the additional histone-peak merge.
+
+```{r wgcna-atac-count-matrix, eval=isTRUE(params$run_wgcna)}
+atac_input$ID <- paste(atac_input$chrom, atac_input$start, atac_input$end, sep = "_")
+rownames(atac_input) <- atac_input$ID
+atac_counts <- as.matrix(atac_input[, 5:24])
+storage.mode(atac_counts) <- "numeric"
+```
+
+## Histone intervals within 1 kb
+
+For each histone mark, `reduce(min.gapwidth = 1000)` merges intervals separated by fewer than 1,000 bases. Original peak counts are summed within each merged interval. This is interval consolidation of the existing count table; it does not recall peaks or recount BAM reads. Coordinates are passed to the same GRanges constructor convention used in the source script.
+
+```{r wgcna-histone-intervals-within-1-kb, eval=isTRUE(params$run_wgcna)}
+merge_histone_counts <- function(peak_table) {
+  count_columns <- 4:ncol(peak_table)
+  sample_names <- names(peak_table)[count_columns]
+
+  peak_table[, count_columns] <- lapply(peak_table[, count_columns], as.numeric)
+
+  original_ranges <- GenomicRanges::makeGRangesFromDataFrame(
+    peak_table, seqnames.field = names(peak_table)[1],
+    start.field = names(peak_table)[2],
+    end.field = names(peak_table)[3],
+    keep.extra.columns = TRUE
+  )
+  merged_ranges <- GenomicRanges::reduce(original_ranges, min.gapwidth = 1000)
+
+  original_counts <- as.matrix(peak_table[, count_columns])
+  storage.mode(original_counts) <- "numeric"
+  overlaps <- GenomicRanges::findOverlaps(merged_ranges, original_ranges)
+  source_rows <- split(
+    subjectHits(overlaps),
+    queryHits(overlaps)
+  )
+
+  merged_counts <- matrix(
+    0, nrow = length(merged_ranges),
+    ncol = length(sample_names),
+    dimnames = list(NULL, sample_names)
+  )
+  for (interval in names(source_rows)) {
+    merged_counts[as.integer(interval),
+      ] <- colSums(original_counts[source_rows[[interval]], , drop = FALSE])
+  }
+
+  rownames(merged_counts) <- paste(
+    as.character(seqnames(merged_ranges)),
+    start(merged_ranges),
+    end(merged_ranges),
+    sep = "_"
+  )
+  mcols(merged_ranges) <- as.data.frame(merged_counts)
+
+  list(ranges = merged_ranges,
+    counts = merged_counts)
+}
+ac_merged <- merge_histone_counts(ac_input)
+me3_merged <- merge_histone_counts(me3_input)
+```
+
+## Normalization and quality filtering
+
+The original implementation creates an edgeR DGEList and calls `cpm()` without a separate `calcNormFactors()` step. Thus the WGCNA input is library-size CPM, not log-CPM, FPKM, TMM-adjusted expression or a heatmap z score. Samples form rows and intervals form columns. `goodSamplesGenes()` supplies the retained sample/feature mask. Sample clustering is a diagnostic display; the code does not introduce an additional automatic outlier-removal rule.
+
+```{r wgcna-normalization-and-quality-filtering, eval=isTRUE(params$run_wgcna)}
+prepare_wgcna_input <- function(count_matrix) {
+  dge <- edgeR::DGEList(counts = count_matrix)
+  cpm_matrix <- edgeR::cpm(dge)
+  expression_matrix <- t(cpm_matrix)
+
+  quality <- WGCNA::goodSamplesGenes(expression_matrix, verbose = 3)
+  if (!quality$allOK) {
+    expression_matrix <- expression_matrix[quality$goodSamples, quality$goodGenes,
+      drop = FALSE]
+  }
+
+  list(expression = expression_matrix,
+    quality = quality)
+}
+atac_prepared <- prepare_wgcna_input(atac_counts)
+ac_prepared <- prepare_wgcna_input(ac_merged$counts)
+me3_prepared <- prepare_wgcna_input(me3_merged$counts)
+sample_tree <- hclust(
+  dist(atac_prepared$expression),
+  method = "average"
+)
+plot(sample_tree,
+  main = "ATAC sample clustering",
+  xlab = "",
+  sub = "")
+```
+
+## Soft-threshold diagnostics
+
+The recorded diagnostic call evaluates powers 1–10 and 12–20 in steps of two. It does not override the correlation or network defaults of `pickSoftThreshold()`. Preserve that original diagnostic call rather than implying it used the explicit bicor/signed options of the fitted network. The selected powers below are fixed analysis settings, not reselected automatically during reproduction.
+
+```{r wgcna-soft-threshold-diagnostics, eval=isTRUE(params$run_wgcna)}
+candidate_powers <- c(1:10, seq(12, 20, by = 2))
+atac_soft_threshold <- WGCNA::pickSoftThreshold(atac_prepared$expression,
+  powerVector = candidate_powers,
+  verbose = 5)
+ac_soft_threshold <- WGCNA::pickSoftThreshold(ac_prepared$expression,
+  powerVector = candidate_powers,
+  verbose = 5)
+me3_soft_threshold <- WGCNA::pickSoftThreshold(me3_prepared$expression,
+  powerVector = candidate_powers,
+  verbose = 5)
+```
+
+## Signed network fitting
+
+These are the explicit `blockwiseModules()` settings from the original script. Thread counts are 12, 10 and 12 for ATAC, AC and ME3, respectively. The original calls did not explicitly override the default randomSeed argument; package defaults and the execution environment should therefore be recorded for any new rerun.
+
+```{r wgcna-signed-network-fitting, eval=isTRUE(params$run_wgcna)}
+fit_network <- function(expression_matrix, power, threads) {
+  WGCNA::blockwiseModules(
+    datExpr = as.data.frame(expression_matrix),
+    checkMissingData = TRUE,
+    power = power,
+    networkType = "signed",
+    TOMType = "signed",
+
+    corType = "bicor",
+    minModuleSize = 30,
+    maxBlockSize = 25000,
+    mergeCutHeight = 0.25,
+
+    deepSplit = 2,
+    pamStage = FALSE,
+    reassignThreshold = 1e-10,
+    saveTOMs = FALSE,
+
+    nThreads = threads,
+    verbose = 3
+  )
+}
+net_atac <- fit_network(atac_prepared$expression,
+  power = 6,
+  threads = 12)
+net_ac <- fit_network(ac_prepared$expression,
+  power = 5,
+  threads = 10)
+net_me3 <- fit_network(me3_prepared$expression,
+  power = 9,
+  threads = 12)
+saveRDS(net_atac, file.path(output_dir, "net_WGCNA_ATAC_sp6.Rds"))
+saveRDS(
+  net_ac, file.path(output_dir, "net_WGCNA_H3K27ac_merged_by_1kb_sp5.Rds")
+)
+saveRDS(
+  net_me3, file.path(output_dir, "net_WGCNA_H3K27me3_merged_by_1kb_sp9.Rds")
+)
+```
+
+
+## Grey-module refinement and curated naming
+
+The archived annotation code cuts hierarchical row dendrograms into 14 ATAC, 20 AC and 9 ME3 groups, then applies the manual labels below. This differs from the manuscript wording “k-means”; no k-means fit is substituted here. Cluster-number labels depend on the original input ordering. Final supplied assignments remain authoritative until a deliberate rerun is compared by interval ID. This section reads the original raw ATAC count matrix independently and does not require a new network fit.
+
+```{r grey-module-refinement, eval=isTRUE(params$run_refinement)}
+
+library(edgeR)
+library(pheatmap)
+output_dir <- file.path(REPO, "objects", "WGCNA", "recomputed")
+dir.create(output_dir,
+  recursive = TRUE,
+  showWarnings = FALSE)
+if (!exists("atac_counts")) {
+  raw <- read.table(
+    file.path(
+      REPO, "data", "upstream", "WGCNA", "WGCNA_input_data", "atac_idr_peaks_merged_uniform-mm10.tsv"
+    ),
+    header = TRUE
+  )
+  atac_counts <- as.matrix(raw[, 5:24])
+  storage.mode(atac_counts) <- "numeric"
+  rownames(atac_counts) <- paste(raw$chrom, raw$start, raw$end, sep = "_")
+}
+catalog_dir <- file.path(REPO, "data", "upstream", "final_tables")
+catalogs <- lapply(
+  c(
+    ATAC = "Supp_Table_1_ATAC_master.csv",
+    AC = "Supp_Table_2_AC_master.csv",
+
+    ME3 = "Supp_Table_3_ME3_master.csv"
+  ),
+  function(x) read.csv(
+    file.path(catalog_dir, x),
+    check.names = FALSE
+  )
+)
+
+# ATAC: the source refinement starts from the original raw-count table.  Match
+# initial saved WGCNA assignments by stable interval ID.
+atac_catalog <- catalogs$ATAC
+atac_log_cpm <- edgeR::cpm(
+  edgeR::DGEList(counts = atac_counts),
+  log = TRUE,
+  prior.count = 1
+)
+initial_colors <- setNames(atac_catalog$colors_ATAC_SP6, atac_catalog$ID)
+grey_ids <- intersect(
+  rownames(atac_log_cpm),
+  names(initial_colors)[initial_colors ==
+    "grey" & !is.na(initial_colors)]
+)
+atac_grey_matrix <- atac_log_cpm[grey_ids, , drop = FALSE]
+atac_grey_heatmap <- pheatmap::pheatmap(
+  atac_grey_matrix,
+  cluster_rows = TRUE,
+  cluster_cols = FALSE,
+  cutree_rows = 14,
+
+  show_rownames = FALSE,
+  silent = TRUE
+)
+atac_split <- cutree(
+  as.hclust(atac_grey_heatmap$tree_row),
+  k = 14
+)
+atac_split_names <- c(
+  "P2_specific", "grey", "P2_specific", "Weak_late", "Weak_late", "Constitutive_weak",
+  "RBP_specific", "grey", "Constitutive_strong", "Weak_middle", "grey", "grey",
+  "grey", "grey"
+)
+atac_refinement <- data.frame(
+  ID = names(atac_split),
+  grey_ATAC_resplit = atac_split_names[atac_split]
+)
+
+# Histone grey modules use log2(FPKM + 1), column scaling and complete-linkage
+# Euclidean row clustering (pheatmap defaults).
+refine_histone_grey <- function(catalog, initial_color_column, k, labels) {
+  selected <- catalog[!is.na(catalog[[initial_color_column]]) &
+    catalog[[initial_color_column]] == "grey", , drop = FALSE]
+  values <- as.matrix(
+    selected[, grep("_fpkm$", names(selected)),
+      drop = FALSE]
+  )
+  rownames(values) <- selected$ID
+  values <- log2(values + 1)
+  values <- values[apply(values, 1, sd, na.rm = TRUE) > 0, , drop = FALSE]
+  clustered <- pheatmap::pheatmap(
+    values,
+    scale = "column",
+    cluster_rows = TRUE,
+    cluster_cols = FALSE,
+    cutree_rows = k,
+
+    show_rownames = FALSE,
+    silent = TRUE
+  )
+  split <- cutree(clustered$tree_row, k = k)
+  data.frame(
+    ID = names(split),
+    Refined_label = labels[split]
+  )
+}
+me3_refinement <- refine_histone_grey(
+  catalogs$ME3,
+  "colors_ME3_SP9",
+  k = 9,
+  labels = c(
+    "grey", "Constitutive_medium", "Weak_late", "Constitutive_weak", "Constitutive_strong",
+    "Weak_late", "grey", "grey", "grey"
+  )
+)
+ac_refinement <- refine_histone_grey(
+  catalogs$AC,
+  "colors_AC_SP5",
+  k = 20,
+  labels = c(
+    "Weak_late_VZ", "Grey", "Grey", "Weak_early_VZ", "Weak_early_VZ", "Constitutive_strong_1",
+    "Strong_late_1", "Strong_late_2", "Weak_VZ", "Weak_VZ", "Constitutive_strong_2",
+    "Grey", "Weak_early_VZ", "Grey", "Grey", "Grey", "Grey", "Grey", "Strong_late_2",
+    "Grey"
+  )
+)
+saveRDS(
+  list(ATAC = atac_refinement, AC = ac_refinement, ME3 = me3_refinement),
+
+  file.path(output_dir, "grey_refinement.rds")
+)
+
+# The curated dictionary maps biological labels to manuscript names; it is not
+# another clustering operation.
+module_dictionary <- read.csv(
+  file.path(REPO, "data", "upstream", "Module_renaming_dictionary.csv"),
+  check.names = FALSE
+)
+```
+
+## Checkpoint-based figure export
+
+The sections below use the verified saved results. Rerun outputs above are written separately and do not replace these inputs automatically.
+
+## Load final network objects
+
+No network fitting or recomputation of topological overlap occurs here.
+
+```{r load-final-network-objects-2}
+paths <- list.files(
+  file.path(REPO, "data/upstream/WGCNA/WGCNA_objects"),
+  pattern = "[.]Rds$",
+  full.names = TRUE
+)
+stopifnot(
+  length(paths) == 3
+)
+nets <- setNames(
+  lapply(paths, readRDS),
+  sub("[.]Rds$", "", basename(paths))
+)
+summary <- bind_rows(
+  lapply(
+    names(nets),
+    function(n) {
+      x <- nets[[n]]
+      data.frame(
+        Network = n,
+        Features = length(x$colors),
+
+        Modules = length(unique(x$colors)),
+        Samples = nrow(x$MEs)
+      )
+    }
+  )
+)
+print(summary)
+save_object(nets, "WGCNA/final_networks")
+write.csv(
+  summary, file.path(REPO, "reports/WGCNA_checkpoint_summary.csv"),
+  row.names = FALSE
+)
+```
+
+## Saved module eigengenes
+
+Diagnostic checkpoint heatmaps retain the saved eigengene values; they are not replacements for the manuscript module-median plots.
+
+```{r saved-module-eigengenes-3}
+for (n in names(nets)) {
+  m <- t(as.matrix(nets[[n]]$MEs))
+  export_heatmap(
+    m, paste0("WGCNA/", n, "_eigengenes"),
+    width = 8,
+    height = 6,
+    zscore = TRUE,
+    note = "Saved WGCNA eigengenes, row standardized for display; diagnostic only"
+  )
+}
+```
+
+```{r session-info}
+finish_notebook("01")
+sessionInfo()
+```

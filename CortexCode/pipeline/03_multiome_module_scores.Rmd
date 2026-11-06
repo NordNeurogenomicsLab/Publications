@@ -1,0 +1,180 @@
+---
+title: "Multiome module accessibility and linked-gene expression"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  recompute: false
+---
+
+The Figure 3 analysis was implemented in the supplied CortexCode multiome notebook by Nicolas Seban. It uses stored interval TF-IDF values for accessibility and the stored SCT data layer for linked-gene expression. Neither assay is renormalized here. UMAP coordinates and Cell_Type_3 annotations are retained from the saved analysis object.
+
+The default render loads the score checkpoints. Optional native Seurat code below documents the original module scoring and gene-link selection. It reconstructs an analysis container from the compact saved assay cache, avoiding a dependency on an entire interactive R session. Scoring is disabled unless `recompute: true` is explicitly requested.
+
+```{r setup, include=FALSE, eval=TRUE}
+if (!exists("params", inherits = FALSE)) {
+  params <- list(recompute = FALSE)
+}
+candidate_roots <- c(".", "..")
+repo_dir <- candidate_roots[vapply(
+  candidate_roots, function(path) file.exists(file.path(path, "R", "common.R")),
+  logical(1)
+)][1]
+stopifnot(!is.na(repo_dir))
+repo_dir <- normalizePath(repo_dir, winslash = "/")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = isTRUE(params$recompute),
+
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE
+)
+```
+
+## Saved score checkpoints
+
+Control-feature sets, foreground/background means and raw scores are saved. This makes both the scoring inputs and the background correction inspectable.
+
+```{r saved-score-checkpoints, eval=TRUE}
+checkpoint_dir <- file.path(repo_dir, "objects", "Fig3")
+atac_scores <- readRDS(file.path(checkpoint_dir, "ATAC_scoring.rds"))
+gene_scores <- readRDS(file.path(checkpoint_dir, "RNA_scoring.rds"))
+data.frame(
+  Source_module = names(atac_scores$features),
+  ATAC_features = lengths(atac_scores$features),
+  ATAC_controls = lengths(atac_scores$controls),
+  RNA_features = lengths(gene_scores$features),
+  RNA_controls = lengths(gene_scores$controls)
+)
+```
+
+## Original module definitions
+
+Weak P2 source modules are pooled; four smaller source modules are included in Constitutive_strong. The A16 label therefore refers to the pooled set in Figure 3. This explicit mapping is specific to the supplied multiome analysis and should not be replaced with a one-to-one lookup from the bulk ATAC catalog.
+
+```{r original-module-definitions}
+module_table <- read.csv(
+  file.path(repo_dir, "data", "upstream", "multiome", "atac_modules.csv"),
+  row.names = 1
+)
+module_table$Module[module_table$Module %in% c("P2_specific", "RBP_specific")] <- "Weak_P2"
+module_table$Module[module_table$Module %in% c("pink", "black", "greenyellow", "lightcyan", "Constitutive_strong")] <- "Constitutive_strong"
+module_table$Module[module_table$Module == "Weak_late"] <- "Weak_neuronal"
+module_table$Module[module_table$Module == "Weak_middle"] <- "Weak_immature"
+```
+
+## Stored assays and native scoring
+
+The original scoring uses 24 bins, 100 control draws per feature and seed 1, reset separately for each module. The data layer is used directly. The dummy assay below only provides a container; no dummy values contribute to any score.
+
+```{r stored-assays-and-native-scoring}
+suppressPackageStartupMessages(
+  {
+    library(Matrix)
+    library(Seurat)
+    library(dplyr)
+  }
+)
+cache <- readRDS(file.path(checkpoint_dir, "exact_V2_cache.rds"))
+cells <- rownames(cache$metadata)
+dummy_counts <- Matrix::Matrix(
+  1,
+  nrow = 1,
+  ncol = length(cells),
+
+  sparse = TRUE,
+  dimnames = list("container", cells)
+)
+multiome <- Seurat::CreateSeuratObject(
+  counts = Seurat::CreateAssayObject(counts = dummy_counts),
+
+  assay = "container",
+  meta.data = cache$metadata
+)
+multiome[["intervals"]] <- Seurat::CreateAssayObject(data = cache$intervals)
+multiome[["SCT"]] <- Seurat::CreateAssayObject(data = cache$SCT)
+peak_sets <- split(module_table$interval, module_table$Module)
+for (module in names(peak_sets)) {
+  multiome <- Seurat::AddModuleScore(
+    object = multiome,
+    features = list(peak_sets[[module]]),
+
+    assay = "intervals",
+    name = paste0(module, "_ATAC"),
+
+    nbin = 24,
+    ctrl = 100,
+    seed = 1,
+    slot = "data"
+  )
+}
+```
+
+## Linked-gene selection and expression scores
+
+Positive links are defined by zscore >= 0. For each interval, retain the smallest link P value, with the original first-row tie rule (`with_ties = FALSE`). Genes are deduplicated within module; one gene may belong to more than one module. Scores use SCT, not the RNA assay.
+
+```{r linked-gene-selection-and-expression-scores}
+module_links <- module_table[, c("interval", "Module")]
+names(module_links) <- c("query_region", "Module")
+selected_links <- cache$links %>%
+  filter(zscore >= 0) %>%
+  left_join(module_links, by = "query_region") %>%
+  group_by(query_region) %>%
+  slice_min(order_by = pvalue,
+    n = 1,
+    with_ties = FALSE) %>%
+  ungroup()
+gene_sets <- lapply(
+  split(selected_links$linked_gene, selected_links$Module),
+  unique
+)
+for (module in names(gene_sets)) {
+  multiome <- Seurat::AddModuleScore(
+    object = multiome,
+    features = list(gene_sets[[module]]),
+
+    assay = "SCT",
+    name = paste0(module, "_RNA"),
+
+    nbin = 24,
+    ctrl = 100,
+    seed = 1,
+    slot = "data"
+  )
+}
+```
+
+## Plot statistics and scaling
+
+For cluster c and raw module score s: dot size is 100 × mean(s > 0). Seurat DotPlot averages expm1(s), then applies log1p and standardization across the 16 clusters, clipping color at ±2.5. Figure 3c clips negative scores to zero for display only. The linked-gene heatmap centers module scores across cells, divides by sample SD, applies the ScaleData upper cap of 10, and clips the displayed colors at ±2.5. The heatmap rows represent module gene-set scores, not individual genes.
+
+```{r plot-statistics-and-scaling}
+dot_statistics <- function(score, cluster) {
+  groups <- split(score, cluster)
+  average <- vapply(
+    groups, function(x) mean(expm1(x)),
+    numeric(1)
+  )
+  percent_positive <- vapply(
+    groups, function(x) 100 *
+      mean(x > 0),
+    numeric(1)
+  )
+  color <- as.numeric(scale(log1p(average)))
+
+  data.frame(
+    Cluster = names(groups),
+    Average_expm1_score = average,
+    Percent_positive = percent_positive,
+
+    Color = pmax(-2.5, pmin(2.5, color))
+  )
+}
+```
+
+```{r session-info, eval=TRUE}
+sessionInfo()
+```

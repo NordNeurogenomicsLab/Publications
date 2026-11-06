@@ -1,0 +1,17 @@
+Source_module,Module,Color
+blue,A12,#FF527E
+brown,A9,#EB7100
+Constitutive_strong,A16,#C89500
+Constitutive_weak,A17,#9EB800
+cyan,A3,#6BE100
+green,A6,#37FF00
+grey,A22,#3EFF2E
+magenta,A11,#46FF76
+midnightblue,A5,#4AFFB9
+red,A7,#4DF4F9
+salmon,A4,#55C6FF
+tan,A2,#7E96FF
+turquoise,A1,#A474FF
+Weak_immature,A8,#C75AFF
+Weak_neuronal,A13,#ED47FF
+yellow,A10,#FF41F3

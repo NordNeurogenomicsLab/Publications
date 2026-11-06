@@ -1,0 +1,34 @@
+[
+  {
+    "comparison": "VZ_E12_vs_ImN_E13",
+    "motifs": 528,
+    "defined_log2FC": 527,
+    "undefined_motifs": [
+      "OTX1_MOUSE.H11MO.0.D"
+    ],
+    "max_activity_difference_rounding_error": 2.1000000023640997e-08
+  },
+  {
+    "comparison": "VZ_E12_vs_L5N_P2",
+    "motifs": 528,
+    "defined_log2FC": 527,
+    "undefined_motifs": [
+      "OTX1_MOUSE.H11MO.0.D"
+    ],
+    "max_activity_difference_rounding_error": 4.69999999475057e-08
+  },
+  {
+    "comparison": "VZ_E12_vs_L6N_P2",
+    "motifs": 528,
+    "defined_log2FC": 528,
+    "undefined_motifs": [],
+    "max_activity_difference_rounding_error": 2.0082301949858605e-08
+  },
+  {
+    "comparison": "VZ_E12_vs_SVZ_E12",
+    "motifs": 528,
+    "defined_log2FC": 528,
+    "undefined_motifs": [],
+    "max_activity_difference_rounding_error": 4.399999999958826e-08
+  }
+]

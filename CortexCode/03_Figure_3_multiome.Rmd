@@ -1,0 +1,584 @@
+---
+title: "Figure 3 and Extended Figure 5: multiome"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  run_multiome: false
+---
+
+Figure 3 relates chromatin modules to single-cell accessibility and linked-gene expression. Module definitions, native Seurat scoring, link selection and the DotPlot transformation are included directly below. A default render uses saved numerical outputs.
+
+Accessibility scores use the stored interval TF-IDF data; marker and linked-gene expression use SCT. UMAP coordinates and Cell_Type_3 labels are preserved. Dot size measures the fraction of raw module scores above zero, not the fraction of individual peaks detected. The linked-gene heatmap contains module gene-set scores, not individual-gene rows. A16 pools the five source modules specified in the module key.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+repo_dir <- REPO
+if (!exists("params", inherits = FALSE)) params <- list()
+if (is.null(params$run_multiome)) params$run_multiome <- FALSE
+
+knitr::opts_chunk$set(echo = TRUE,
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE)
+```
+
+## Original module definitions
+
+Weak P2 source modules are pooled; four smaller source modules are included in Constitutive_strong. The A16 label therefore refers to the pooled set in Figure 3. This explicit mapping is specific to the supplied multiome analysis and should not be replaced with a one-to-one lookup from the bulk ATAC catalog.
+
+```{r multiome-original-module-definitions, eval=isTRUE(params$run_multiome)}
+checkpoint_dir <- file.path(REPO, "objects", "Fig3")
+module_table <- read.csv(
+  file.path(repo_dir, "data", "upstream", "multiome", "atac_modules.csv"),
+  row.names = 1
+)
+module_table$Module[module_table$Module %in% c("P2_specific", "RBP_specific")] <- "Weak_P2"
+module_table$Module[module_table$Module %in% c("pink", "black", "greenyellow", "lightcyan", "Constitutive_strong")] <- "Constitutive_strong"
+module_table$Module[module_table$Module == "Weak_late"] <- "Weak_neuronal"
+module_table$Module[module_table$Module == "Weak_middle"] <- "Weak_immature"
+```
+
+## Stored assays and native scoring
+
+The original scoring uses 24 bins, 100 control draws per feature and seed 1, reset separately for each module. The data layer is used directly. The dummy assay below only provides a container; no dummy values contribute to any score.
+
+```{r multiome-stored-assays-and-native-scoring, eval=isTRUE(params$run_multiome)}
+suppressPackageStartupMessages(
+  {
+    library(Matrix)
+    library(Seurat)
+    library(dplyr)
+  }
+)
+cache <- readRDS(file.path(checkpoint_dir, "exact_V2_cache.rds"))
+cells <- rownames(cache$metadata)
+dummy_counts <- Matrix::Matrix(
+  1,
+  nrow = 1,
+  ncol = length(cells),
+
+  sparse = TRUE,
+  dimnames = list("container", cells)
+)
+multiome <- Seurat::CreateSeuratObject(
+  counts = Seurat::CreateAssayObject(counts = dummy_counts),
+
+
+  assay = "container",
+  meta.data = cache$metadata
+)
+multiome[["intervals"]] <- Seurat::CreateAssayObject(data = cache$intervals)
+multiome[["SCT"]] <- Seurat::CreateAssayObject(data = cache$SCT)
+peak_sets <- split(module_table$interval, module_table$Module)
+for (module in names(peak_sets)) {
+  multiome <- Seurat::AddModuleScore(
+    object = multiome,
+    features = list(peak_sets[[module]]),
+
+    assay = "intervals",
+    name = paste0(module, "_ATAC"),
+
+    nbin = 24,
+    ctrl = 100,
+    seed = 1,
+    slot = "data"
+  )
+}
+```
+
+## Linked-gene selection and expression scores
+
+Positive links are defined by zscore >= 0. For each interval, retain the smallest link P value, with the original first-row tie rule (`with_ties = FALSE`). Genes are deduplicated within module; one gene may belong to more than one module. Scores use SCT, not the RNA assay.
+
+```{r multiome-linked-gene-selection-and-expression-scores, eval=isTRUE(params$run_multiome)}
+module_links <- module_table[, c("interval", "Module")]
+names(module_links) <- c("query_region", "Module")
+selected_links <- cache$links %>%
+  filter(zscore >= 0) %>%
+  left_join(module_links, by = "query_region") %>%
+  group_by(query_region) %>%
+  slice_min(order_by = pvalue,
+    n = 1,
+    with_ties = FALSE) %>%
+  ungroup()
+gene_sets <- lapply(
+  split(selected_links$linked_gene, selected_links$Module),
+  unique
+)
+for (module in names(gene_sets)) {
+  multiome <- Seurat::AddModuleScore(
+    object = multiome,
+    features = list(gene_sets[[module]]),
+
+    assay = "SCT",
+    name = paste0(module, "_RNA"),
+
+    nbin = 24,
+    ctrl = 100,
+    seed = 1,
+    slot = "data"
+  )
+}
+```
+
+## Plot statistics and scaling
+
+For cluster c and raw module score s: dot size is 100 × mean(s > 0). Seurat DotPlot averages expm1(s), then applies log1p and standardization across the 16 clusters, clipping color at ±2.5. Figure 3c clips negative scores to zero for display only. The linked-gene heatmap centers module scores across cells, divides by sample SD, applies the ScaleData upper cap of 10, and clips the displayed colors at ±2.5. The heatmap rows represent module gene-set scores, not individual genes.
+
+```{r multiome-dot-statistics, eval=isTRUE(params$run_multiome)}
+dot_statistics <- function(score, cluster) {
+  groups <- split(score, cluster)
+  average <- vapply(
+    groups, function(x) mean(expm1(x)),
+    numeric(1)
+  )
+  percent_positive <- vapply(
+    groups, function(x) 100 *
+      mean(x > 0),
+    numeric(1)
+  )
+  color <- as.numeric(scale(log1p(average)))
+
+  data.frame(
+    Cluster = names(groups),
+    Average_expm1_score = average,
+    Percent_positive = percent_positive,
+
+    Color = pmax(-2.5, pmin(2.5, color))
+  )
+}
+```
+
+
+## Native module-score heatmap scaling
+
+Rows of Figure 3d are linked-gene module scores. The original workflow creates a score assay, scales each score across cells and displays the stored cell-type order. This code leaves gene-set membership and SCT normalization unchanged.
+
+```{r native-score-heatmap, eval=isTRUE(params$run_multiome)}
+rna_score_columns <- grep(
+  "_RNA1$", colnames(multiome[[]]),
+  value = TRUE
+)
+score_matrix <- t(as.matrix(multiome[[]][, rna_score_columns, drop = FALSE]))
+multiome[["RNA_module_scores"]] <- Seurat::CreateAssayObject(data = score_matrix)
+multiome <- Seurat::ScaleData(
+  multiome,
+  assay = "RNA_module_scores",
+  features = rownames(score_matrix),
+
+  do.center = TRUE,
+  do.scale = TRUE,
+  scale.max = 10
+)
+heatmap <- Seurat::DoHeatmap(
+  multiome,
+  assay = "RNA_module_scores",
+  features = rownames(score_matrix),
+
+  group.by = "Cell_Type_3",
+  disp.min = -2.5,
+  disp.max = 2.5
+)
+saveRDS(multiome[[]], file.path(checkpoint_dir, "recomputed_module_scores.rds"))
+```
+
+## Checkpoint-based figure export
+
+The sections below use the verified saved results. Rerun outputs above are written separately and do not replace these inputs automatically.
+
+## Figure 3a: clusters and markers
+
+Use the stored original UMAP and SCT marker expression; Eomes encodes Tbr2.
+
+```{r figure-3a-clusters-and-markers-2}
+d <- read_table("Fig3_KC", "3a_Cell_data")
+stopifnot(
+  nrow(d) == 13625, !anyDuplicated(d$Cell_ID)
+)
+export_panel(
+  umap_plot(d),
+  "Fig3/3a_clusters", 5, 4
+)
+for (g in c("Hes1", "Eomes", "Tbr1")) export_panel(
+  umap_plot(d, g),
+  paste0("Fig3/3a_", g),
+  4, 4
+)
+```
+
+## Figure 3b: exact dot-plot scores
+
+The final figure shows A1–A15. Size and color are independently named columns in the source data.
+
+```{r figure-3b-exact-dot-plot-scores-3}
+d <- read_table("Fig3_KC", "3b_Dotplot_values")
+d$Figure_module <- factor(d$Figure_module, levels = rev(paste0("A", 1:15)))
+d$Cluster <- factor(d$Cluster, levels = clusters)
+stopifnot(
+  nrow(d) == 240, all(d$Percent_score_above_zero >= 0 & d$Percent_score_above_zero <= 100)
+)
+p <- ggplot(
+  d, aes(
+    Cluster,
+    Figure_module,
+    size = Percent_score_above_zero,
+    color = Dotplot_scaled_color
+  )
+) +
+  geom_point() + scale_size_area(max_size = 6,
+    limits = c(0, 100)) +
+  scale_color_gradient2(
+    low = "#2166AC",
+    mid = "white",
+    high = "#B2182B",
+    limits = c(-2.5, 2.5)
+  ) +
+  theme(axis.text.x = element_text(angle = 90,
+    vjust = 0.5)) +
+  labs(x = NULL,
+    y = NULL,
+    size = "% score > 0",
+    color = "Scaled score")
+# Category stripe follows the module order; cluster strip uses the UMAP palette.
+module_strip <- unique(d["Figure_module"])
+module_strip$Position <- as.numeric(module_strip$Figure_module)
+module_number <- as.integer(sub("A", "", as.character(module_strip$Figure_module)))
+module_strip$Category <- ifelse(module_number <= 3, "Early", ifelse(module_number <= 11, "Intermediate", "Late"))
+cluster_strip <- data.frame(Position = seq_along(clusters))
+p <- p +
+  geom_rect(data = module_strip,
+    aes(ymin = Position - 0.5, ymax = Position + 0.5),
+    xmin = 0.25, xmax = 0.48, inherit.aes = FALSE,
+    fill = unname(MS$category[module_strip$Category]), color = NA) +
+  geom_rect(data = cluster_strip,
+    aes(xmin = Position - 0.45, xmax = Position + 0.45),
+    ymin = 0.15, ymax = 0.40, inherit.aes = FALSE,
+    fill = unname(cluster_colors[clusters]), color = NA) +
+  scale_x_discrete(labels = function(x) gsub("_", "", x), expand = expansion(add = c(0.85, 0.6))) +
+  scale_y_discrete(expand = expansion(add = c(0.9, 0.6)))
+export_panel(p, "Fig3/3b_dotplot", 3.8, 3.8)
+```
+
+## Figure 3c and e/f: UMAP overlays
+
+The six display scores use min.cutoff=0. The enhancer overlays use original interval TF-IDF values. Coverage track panels require the original fragments and are not simulated.
+
+```{r figure-3c-and-e-f-umap-overlays-4}
+d <- read_table("Fig3_KC", "3c_Plot_values")
+for (g in c("A1", "A3", "A6", "A10", "A12", "A16")) export_panel(
+  umap_plot(d, g),
+  paste0("Fig3/3c_", g),
+  4, 4
+)
+d <- read_table("Fig3_KC", "3ef_Cell_accessibility")
+for (g in c("hs1453_ATAC_TFIDF", "hs416_ATAC_TFIDF")) export_panel(
+  umap_plot(d, g),
+  paste0("Fig3/3ef_", g),
+  4, 4
+)
+```
+
+## Figure 3d: linked-gene heatmap
+
+Use exact precomputed Seurat display values in recorded cell order. White separators mark cluster boundaries and do not represent observations.
+
+```{r figure-3d-linked-gene-heatmap-5}
+d <- read_table("Fig3_KC", "3d_Heatmap_values")
+d <- d[order(d$Heatmap_cell_order),
+  ]
+m <- t(as.matrix(d[, paste0("A", c(1:17, 22))]))
+colnames(m) <- d$Cell_ID
+stopifnot(
+  ncol(m) == 13625, all(m >= -2.5 & m <= 2.5),
+  !anyNA(m)
+)
+gr <- table(factor(d$Cluster, levels = clusters))
+gaps <- head(
+  cumsum(gr),
+  -1
+)
+header <- ComplexHeatmap::HeatmapAnnotation(
+  Label = ComplexHeatmap::anno_block(
+    gp = grid::gpar(fill = "white", col = NA),
+    labels = gsub("_", "", clusters),
+    labels_rot = 90,
+    labels_gp = grid::gpar(fontsize = 9)
+  ),
+  Cluster = ComplexHeatmap::anno_block(
+    gp = grid::gpar(fill = MS$heatmap_cluster[clusters], col = NA)
+  ),
+  annotation_height = grid::unit(c(9, 2), "mm"),
+  show_annotation_name = FALSE,
+  gap = grid::unit(0.5, "mm")
+)
+heatmap <- ComplexHeatmap::Heatmap(
+  m,
+  name = "Scaled score",
+  col = circlize::colorRamp2(c(-2.5, 0, 2.5), c("#FF00FF", "#000000", "#FFFF00"), space = "RGB"),
+  cluster_rows = FALSE,
+  cluster_columns = FALSE,
+  cluster_column_slices = FALSE,
+  column_split = factor(d$Cluster, levels = clusters),
+  column_gap = grid::unit(0.2, "mm"),
+  column_title = NULL,
+  top_annotation = header,
+  left_annotation = ComplexHeatmap::rowAnnotation(
+    Category = factor(c(rep("Early", 3), rep("Intermediate", 8), rep("Late", 4), rep("Constitutive", 3)),
+      levels = c("Early", "Intermediate", "Late", "Constitutive")),
+    col = list(Category = MS$category),
+    show_annotation_name = FALSE,
+    show_legend = FALSE,
+    simple_anno_size = grid::unit(2, "mm")
+  ),
+  show_column_names = FALSE,
+  row_names_side = "left",
+  row_names_gp = grid::gpar(fontsize = 9),
+  use_raster = TRUE,
+  raster_quality = 3,
+  raster_resize_mat = FALSE,
+  raster_by_magick = FALSE,
+  heatmap_legend_param = list(
+    at = c(-2, 0, 2),
+    title_gp = grid::gpar(fontsize = 7),
+    labels_gp = grid::gpar(fontsize = 6)
+  )
+)
+export_complex_heatmap(heatmap, "Fig3/3d_linked_gene_scores", 4.4, 4.6)
+save_object(
+  list(
+    matrix = m,
+    cluster = d$Cluster,
+    cell_order = d$Cell_ID,
+    module_key = read_table("Fig3_KC", "3_Module_key")
+  ),
+  "Fig3/heatmap_plot_object"
+)
+```
+
+## Extended Figure 5 QC and marker expression
+
+RNA and ATAC quality metrics are separate. Cell-level replicates are CCx and RCx; cells are not biological replicates.
+
+```{r extended-figure-5-qc-and-marker-expression-6}
+d <- read_table("Extended_Fig5_KC", "5a_Per_cell_QC")
+z <- pivot_longer(
+  d, cols = c(nCount_RNA, nFeature_RNA, nCount_peaks, nFeature_peaks),
+  names_to = "Metric",
+  values_to = "Value"
+)
+export_panel(
+  ggplot(z, aes(Replicate, Value, fill = Replicate)) +
+    geom_violin(scale = "width") +
+    facet_wrap(~Metric,
+      scales = "free_y",
+      ncol = 2) +
+    scale_y_log10(), "Ext5/5a_QC", 7, 6
+)
+d <- read_table("Extended_Fig5_KC", "5b_RNA_marker_expression")
+d$Cluster <- factor(d$Cluster, levels = clusters)
+z <- pivot_longer(
+  d, cols = -c(Cell_ID, Replicate, Cluster),
+  names_to = "Gene",
+  values_to = "Expression"
+)
+export_panel(
+  ggplot(z, aes(Cluster, Expression, fill = Cluster)) +
+    geom_violin(scale = "width",
+      linewidth = 0.15) +
+    facet_wrap(~Gene,
+      scales = "free_y",
+      ncol = 3) +
+    scale_fill_manual(values = violin_colors) +
+    theme(
+      axis.text.x = element_text(angle = 90, size = 5),
+
+      legend.position = "none"
+    ),
+  "Ext5/5b_RNA_markers", 11, 10
+)
+```
+
+## Extended Figure 5l: cluster-enriched accessible intervals
+
+The bar represents the composition of positively enriched accessible intervals within each cluster, rather than all significant increases and decreases. The reconstructed display rule is adjusted P < 0.001, average log2FC > 0.5 and detection in at least 25% of cells in the cluster. The denominator is the number of retained intervals in that cluster. A peak may contribute to more than one cluster, but is counted once within a cluster.
+
+Use Nic's module pooling before counting: pink, black, greenyellow and lightcyan join Constitutive_strong; P2_specific/RBP_specific join Weak_P2; Weak_middle and Weak_late become Weak_immature and Weak_neuronal. The display filters naturally leave 16 pooled groups. No module is discarded merely to match the artwork. The filter/pooling combination reproduces the saved native bar image to approximately two pixels at its original resolution. The exact original plotting statement was not supplied; the inclusive 25% boundary is explicit. Several adjusted-P thresholds yield identical retained rows and cannot be distinguished from this plot alone.
+
+```{r extended5l-positive-accessibility-definition}
+plot_extended5l_positive_DA <- function() {
+  d <- read_table("Extended_Fig5_KC", "5l_Significant_DA_intervals")
+  key <- read.csv(file.path(REPO, "data/upstream/multiome/atac_modules.csv"),
+    row.names = 1)
+  stopifnot(!anyDuplicated(key$interval), all(d$interval %in% key$interval))
+  d$Source_bulk_module <- d$Module
+  d$Source_module <- key$Module[match(d$interval, key$interval)]
+  pool <- c(pink = "Constitutive_strong", black = "Constitutive_strong",
+    greenyellow = "Constitutive_strong", lightcyan = "Constitutive_strong",
+    P2_specific = "Weak_P2", RBP_specific = "Weak_P2",
+    Weak_middle = "Weak_immature", Weak_late = "Weak_neuronal")
+  selected <- d[d$p_val_adj < 0.001 & d$avg_log2FC > 0.5 & d$pct.1 >= 0.25, ]
+  selected$Pooled_module <- selected$Source_module
+  change <- selected$Pooled_module %in% names(pool)
+  selected$Pooled_module[change] <- pool[selected$Pooled_module[change]]
+  palette <- read.csv(file.path(REPO, "provenance/Extended5l_module_palette.csv"))
+  stopifnot(setequal(unique(selected$Pooled_module), palette$Source_module),
+    !anyDuplicated(paste(selected$cluster, selected$interval)))
+  selected$Module <- palette$Module[match(selected$Pooled_module, palette$Source_module)]
+  counts <- selected %>% count(cluster, Module, name = "DA_interval_count") %>%
+    complete(cluster = clusters, Module = palette$Module,
+      fill = list(DA_interval_count = 0)) %>%
+    group_by(cluster) %>%
+    mutate(Cluster_total = sum(DA_interval_count),
+      Proportion = DA_interval_count / Cluster_total) %>% ungroup()
+  stopifnot(sum(counts$DA_interval_count) == nrow(selected),
+    all(abs(tapply(counts$Proportion, counts$cluster, sum) - 1) < 1e-12))
+  counts$cluster <- factor(counts$cluster, levels = clusters)
+  counts$Module <- factor(counts$Module, levels = palette$Module)
+  p <- ggplot(counts, aes(cluster, Proportion, fill = Module)) +
+    geom_col(width = 0.92) +
+    scale_fill_manual(values = setNames(palette$Color, palette$Module), drop = FALSE) +
+    scale_x_discrete(labels = function(x) gsub("_", "", x)) +
+    scale_y_continuous(breaks = seq(0, 1, 0.25), expand = expansion(mult = c(0, 0))) +
+    labs(x = "Cluster", y = "Proportion of DA intervals", fill = "Modules") +
+    theme_classic(base_size = 12, base_family = "Arial") +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10),
+      legend.text = element_text(size = 9), legend.title = element_text(size = 10),
+      legend.key.height = grid::unit(3.3, "mm"), legend.key.width = grid::unit(4, "mm"))
+  export_panel(p, "Ext5/5l_DA_modules", 6.4, 4.8,
+    note = "Positive cluster-enriched intervals: adjusted P<0.001, log2FC>0.5, detection>=25%; native module pooling; within-cluster denominator")
+  write.csv(counts, file.path(REPO,
+    "data/source_tables/Extended_Fig5_KC/5l_Positive_DA_module_proportions.csv"), row.names = FALSE)
+  write.csv(counts, file.path(REPO,
+    "data/source_tables/Extended_Fig5_KC/5l_DA_module_proportions.csv"), row.names = FALSE)
+  save_object(list(counts = counts, selected_intervals = selected,
+    filter = list(adjusted_P = 0.001, log2FC_greater_than = 0.5,
+      detection_at_least = 0.25), module_pooling = pool, palette = palette),
+    "multiome/5l_positive_DA_composition")
+}
+```
+
+## Extended Figure 5 PCA from saved VST inputs
+
+Only the inexpensive prcomp projection is rerun as a numerical check; the original DESeq2 transformation is not refitted.
+
+```{r extended-figure-5-pca-from-saved-vst-inputs-7}
+for (panel in c("5h", "5j")) {
+  d <- read_table("Extended_Fig5_KC", paste0(panel, "_PCA_coordinates"))
+  v <- read_table("Extended_Fig5_KC", paste0(panel, "_VST_inputs"))
+  pc <- prcomp(
+    t(numeric_matrix(v)),
+    center = TRUE,
+    scale. = FALSE
+  )
+  stopifnot(
+    max(
+      abs(
+        abs(pc$x[, 1]) -
+          abs(d$PC1)
+      )
+    ) <
+      1e-07
+  )
+  d$PCA_class <- sub("_.*", "", d$Cluster)
+  d$Label <- gsub("_", "-", d$Cluster)
+  variance <- summary(pc)$importance[2, 1:2]
+  p <- ggplot(d,
+    aes(Plot_PC1, Plot_PC2, color = PCA_class, label = Label)) +
+    geom_point(size = 3) +
+    geom_text(vjust = -0.6,
+      size = 2.4) +
+    scale_color_manual(values = MS$pca_class) +
+    labs(x = sprintf("PC1 (%.0f%% variance)", 100 * variance[1]),
+      y = sprintf("PC2 (%.0f%% variance)", 100 * variance[2]), color = "Class")
+  export_panel(
+    p, paste0("Ext5/", panel, "_PCA"),
+    6, 5
+  )
+  save_object(pc, paste0("multiome/", panel, "_PCA"))
+}
+plot_extended5l_positive_DA()
+
+d <- read_table("Extended_Fig5_KC", "5c_Bulk_median_CPM")
+d$Module <- factor(d$Fine_clusters_short, levels = c("A1", "A6", "A9", "A10", "A16"))
+d$Compartment <- ifelse(grepl("Svz", d$Sample), "SVZ",
+  ifelse(grepl("Nex", d$Sample), "ImN", "VZ"))
+d$Age <- sub(".*_(E[0-9]+)_.*", "\\1", d$Sample)
+d$Plot_x <- as.numeric(d$Module) + c(VZ = -0.18, SVZ = 0, ImN = 0.18)[d$Compartment]
+category <- data.frame(
+  Position = 1:5,
+  Category = c("Early", "Intermediate", "Intermediate", "Intermediate", "Constitutive")
+)
+p <- ggplot(d, aes(Plot_x, Median_CPM, color = Compartment, alpha = Age)) +
+  geom_point(position = position_jitter(width = 0.025, height = 0, seed = 1), size = 2.4) +
+  geom_rect(
+    data = category,
+    aes(xmin = Position - 0.42, xmax = Position + 0.42,
+        ymin = 1.55, ymax = 1.62, fill = Category),
+    inherit.aes = FALSE,
+    color = NA
+  ) +
+  scale_color_manual(values = c(VZ = "#5B7FBD", SVZ = "#12B64D", ImN = "#F45A5C")) +
+  scale_alpha_manual(values = c(E11 = 0.45, E12 = 0.7, E13 = 1)) +
+  scale_fill_manual(values = MS$category) +
+  scale_x_continuous(breaks = 1:5, labels = levels(d$Module)) +
+  coord_cartesian(ylim = c(1.5, 5.15)) +
+  labs(x = NULL, y = "Median CPM", color = "Sorted cell type", alpha = "Age", fill = "Module category") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.text = element_text(size = 7))
+export_panel(
+  p,
+  "Ext5/5c_bulk_medians",
+  4.8,
+  3.5,
+  note = "Original bulk module medians, manuscript module order and cell-type/age display; no PCA or new normalization"
+)
+
+```
+
+## Extended Figure 5d: available ATAC means
+
+Use five equal-height module strips in manuscript order and the blue/cyan/cream/yellow/red scale. Every saved interval is retained. The explicit display ordering and scaling are documented in notebook 12; the large A1 block does not undergo a new expensive clustering.
+
+```{r extended-figure-5d-available-atac-means-8}
+plot_extended_atac_mean_heatmap(
+  "5d_ATAC_cluster_means", c("A1", "A8", "A9", "A10", "A18"),
+  "Ext5/5d_ATAC_cluster_means_matched"
+)
+```
+
+```{r session-info}
+finish_notebook("03")
+sessionInfo()
+```
+
+## Gene-expression insets
+
+These use the saved normalized RNA data layer, not the SCT values used for marker overlays. Fine clusters are collapsed to RG, IPC and CPN without changing expression values.
+
+```{r figure-3-rna-insets}
+rna <- read.csv(file.path(REPO, "data/upstream/multiome/Hes1_Tbr1_RNA_cells.csv"))
+stopifnot(nrow(rna) == 13625, !anyDuplicated(rna$Cell_ID),
+  all(is.finite(rna$Hes1)), all(is.finite(rna$Tbr1)),
+  setequal(rna$Cell_ID, read_table("Fig3_KC", "3d_Heatmap_values")$Cell_ID))
+rna$Population <- factor(sub("_.*", "", rna$Cell_Type_3), levels = c("CPN", "IPC", "RG"))
+for (gene in c("Hes1", "Tbr1")) {
+  p <- ggplot(rna, aes(.data[[gene]], Population, fill = Population)) +
+    geom_violin(orientation = "y", scale = "width", linewidth = 0.35) +
+    scale_fill_manual(values = c(RG = "#F8766D", IPC = "#00BA38", CPN = "#619CFF")) +
+    scale_y_discrete(position = "right") +
+    labs(title = paste(gene, "RNA"), x = NULL, y = NULL) +
+    theme_classic(base_size = 13) +
+    theme(legend.position = "none", plot.title = element_text(face = "bold.italic"))
+  key <- data.frame(Category = factor(c("Early", "Intermediate", "Late", "Constitutive"),
+    levels = c("Constitutive", "Late", "Intermediate", "Early")), x = 0)
+  legend <- ggplot(key, aes(x, Category, fill = Category)) +
+    geom_point(shape = 22, size = 3, color = "white") +
+    geom_text(aes(label = Category), x = 0.12, hjust = 0, size = 3.5) +
+    scale_fill_manual(values = MS$category) + xlim(-0.1, 1) +
+    labs(title = "WGCNA module\ncategory") + theme_void() +
+    theme(legend.position = "none", plot.title = element_text(size = 11, face = "bold"))
+  inset <- p / legend + patchwork::plot_layout(heights = c(1.5, 1))
+  export_panel(inset, paste0("Fig3/3ef_", gene, "_RNA"), 1.8, 2.7)
+}
+```

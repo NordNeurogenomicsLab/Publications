@@ -1,0 +1,288 @@
+---
+title: "Figure 5 and Extended Figure 7: RNA and histology"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  run_topgo: false
+  run_pseudobulk: false
+---
+
+Figure 5 compares WT and Kdm6b-mutant RNA profiles and histological measurements. Original litter/sex-adjusted differential-expression statistics are retained; `pipeline/05_RNA_and_pseudobulk.Rmd` distinguishes these results from the separate multiome pseudobulk PCA.
+
+Histology measurements are parsed with mouse, section, hemisphere and anatomical region recorded separately. Biological summaries average within mouse before comparing groups; sections are not counted as independent animals. The supplied Figure 5g/h grids contain one WT and one mutant mouse each, so no additional biological replicates or significance tests are inferred. The original Figure 5d GO output is not available in the supplied inputs.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+repo_dir <- REPO
+if (!exists("params", inherits = FALSE)) params <- list()
+if (is.null(params$run_topgo)) params$run_topgo <- FALSE
+if (is.null(params$run_pseudobulk)) params$run_pseudobulk <- FALSE
+
+knitr::opts_chunk$set(echo = TRUE,
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE)
+```
+
+
+## RNA biological-process enrichment with topGO
+
+The code below adapts the recovered Neurona topGO implementation (weight01 Fisher primary, classic Fisher diagnostic) to mouse annotation. It includes the tested-gene universe, Ensembl-to-Entrez mapping, foreground selection, graph-aware testing and complete term statistics. **The original CortexCode Figure 5d plotting output and exact topGO configuration were not recovered.** Therefore node size and DE-selection thresholds must be supplied explicitly; Neurona’s human annotation or thresholds are not represented as historical CortexCode settings. BH columns are supplementary summaries of graph-dependent tests, not a replacement for the primary weight01 P values. This optional rerun does not certify reproduction of Figure 5d.
+
+```{r rna-topgo, eval=isTRUE(params$run_topgo)}
+library(topGO)
+library(org.Mm.eg.db)
+library(GO.db)
+library(AnnotationDbi)
+
+run_topgo_bp <- function(universe_entrez, foreground_entrez, node_size, primary_algorithm = "weight01") {
+  universe_entrez <- unique(as.character(na.omit(universe_entrez)))
+  foreground_entrez <- intersect(
+    unique(as.character(na.omit(foreground_entrez))),
+    universe_entrez
+  )
+  stopifnot(
+    length(universe_entrez) > 0, length(foreground_entrez) > 0
+  )
+  selected <- factor(
+    as.integer(universe_entrez %in% foreground_entrez),
+    levels = c(0, 1)
+  )
+  names(selected) <- universe_entrez
+  ontology <- methods::new(
+    "topGOdata",
+    ontology = "BP",
+    allGenes = selected,
+    nodeSize = as.integer(node_size),
+
+    annot = topGO::annFUN.org,
+    mapping = "org.Mm.eg.db",
+    ID = "entrez"
+  )
+  primary <- topGO::runTest(ontology,
+    algorithm = primary_algorithm,
+    statistic = "fisher")
+  classic <- topGO::runTest(ontology,
+    algorithm = "classic",
+    statistic = "fisher")
+  ids <- topGO::usedGO(ontology)
+  counts <- topGO::termStat(ontology, ids)
+  primary_p <- topGO::score(primary)[ids]
+  classic_p <- topGO::score(classic)[ids]
+  result <- data.frame(
+    GO_ID = ids,
+    Term = vapply(
+      ids, function(id) {
+        term <- GO.db::GOTERM[[id]]
+        if (is.null(term))
+          NA_character_ else AnnotationDbi::Term(term)
+      }, character(1)
+    ),
+    Annotated = counts[ids, "Annotated"],
+    Significant = counts[ids, "Significant"],
+
+    Expected = counts[ids, "Expected"],
+    P_weight01 = unname(primary_p),
+
+    P_classic = unname(classic_p)
+  )
+  result$Fold_enrichment <- result$Significant/result$Expected
+  result$BH_weight01 <- p.adjust(result$P_weight01, method = "BH")
+  result$BH_classic <- p.adjust(result$P_classic, method = "BH")
+  list(
+    table = result[order(result$P_weight01),
+      ],
+      universe = universe_entrez,
+      foreground = foreground_entrez,
+      algorithm = primary_algorithm,
+
+    node_size = node_size,
+    versions = sessionInfo()
+  )
+}
+
+# An explicit configuration is required because the original Figure 5d
+# foreground, background, nodeSize and annotation release were not recovered.
+# Required columns: Population, Direction, P_field, P_cutoff, abs_logFC_min,
+# node_size. This file must be supplied by the analyst.
+configuration_file <- Sys.getenv("CORTEX_TOPGO_CONFIG")
+stopifnot(
+  nzchar(configuration_file),
+  file.exists(configuration_file)
+)
+configuration <- read.csv(configuration_file, stringsAsFactors = FALSE)
+stopifnot(
+  all(
+    c("Population", "Direction", "P_field", "P_cutoff", "abs_logFC_min", "node_size") %in%
+      names(configuration)
+  )
+)
+topgo_output <- file.path(REPO, "objects", "topGO", "recomputed")
+dir.create(topgo_output,
+  recursive = TRUE,
+  showWarnings = FALSE)
+for (i in seq_len(nrow(configuration))) {
+  settings <- configuration[i, ]
+  input <- switch(
+    settings$Population,
+    VZ = "VZ_wt_vs_mut_DE_Litter_Sex_cor.csv",
+    nonVZ = "nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv"
+  )
+  de <- read.csv(file.path(REPO, "data", "upstream", "RNA", input))
+  # A tested-gene universe excludes genes with unavailable test statistics.
+  de <- de[is.finite(de$PValue) &
+    is.finite(de$logFC),
+    ]
+  de$ENSEMBL <- sub("[.][0-9]+$", "", de$gene_id)
+  mapping <- AnnotationDbi::select(
+    org.Mm.eg.db, keys = unique(de$ENSEMBL),
+    keytype = "ENSEMBL",
+    columns = "ENTREZID"
+  )
+  # All nonmissing mapped Entrez IDs are retained and deduplicated; one-to-many
+  # mappings are not resolved by arbitrary first-row selection.
+  de <- merge(de,
+    mapping,
+    by = "ENSEMBL",
+    all.x = TRUE,
+    sort = FALSE)
+  p <- de[[settings$P_field]]
+  stopifnot(
+    length(p) ==
+      nrow(de)
+  )
+  direction <- switch(
+    settings$Direction,
+    Up = de$logFC > 0,
+    Down = de$logFC < 0,
+    stop("Direction must be Up or Down")
+  )
+  selected <- !is.na(p) &
+    p < settings$P_cutoff & abs(de$logFC) >=
+    settings$abs_logFC_min & direction
+  fit <- run_topgo_bp(
+    universe_entrez = de$ENTREZID,
+    foreground_entrez = de$ENTREZID[selected],
+
+    node_size = settings$node_size
+  )
+  fit$configuration <- settings
+  saveRDS(
+    fit, file.path(topgo_output, paste0(settings$Population, "_", settings$Direction, ".rds"))
+  )
+}
+```
+## Recorded pseudobulk PCA procedure
+
+The normalization is VST with blind=TRUE, followed by variance ranking and prcomp(center=TRUE, scale.=FALSE). PCA signs are arbitrary; the display notebooks record the sign used for manuscript orientation. Do not run a second transformation on the saved VST plotting matrix.
+
+```{r rna-pseudobulk-pca, eval=isTRUE(params$run_pseudobulk)}
+suppressPackageStartupMessages(library(DESeq2))
+pseudobulk_pca <- function(count_file) {
+  counts <- as.matrix(read.csv(count_file,
+    row.names = 1,
+    check.names = FALSE))
+  stopifnot(all(counts == round(counts)))
+  counts <- counts[rowSums(counts) > 0, , drop = FALSE]
+
+  sample_data <- data.frame(
+    row.names = colnames(counts),
+    Cluster = colnames(counts)
+  )
+  dataset <- DESeq2::DESeqDataSetFromMatrix(
+    countData = round(counts),
+    colData = sample_data,
+    design = ~1
+  )
+  transformed <- SummarizedExperiment::assay(DESeq2::vst(dataset, blind = TRUE))
+  feature_variance <- apply(transformed, 1, var)
+  selected <- names(sort(feature_variance, decreasing = TRUE))[1:500]
+
+  prcomp(
+    t(transformed[selected, , drop = FALSE]),
+    center = TRUE,
+    scale. = FALSE
+  )
+}
+multiome_dir <- file.path(repo_dir, "data", "upstream", "multiome")
+rna_pca <- pseudobulk_pca(file.path(multiome_dir, "RNA_pseudobulk_counts.csv"))
+atac_pca <- pseudobulk_pca(file.path(multiome_dir, "intervals_pseudobulk_counts.csv"))
+```
+
+
+## Checkpoint-based figure export
+
+The sections below use the verified saved results. Rerun outputs above are written separately and do not replace these inputs automatically.
+
+## Figure 5c differential expression
+
+Plot the original effect and significance fields; biological counts from the explicit author metadata are VZ WT 4/Mut 4 and non-VZ WT 3/Mut 4.
+
+```{r figure-5c-differential-expression-2}
+for (pop in c("VZ", "nonVZ")) {
+  d <- read_table("Fig5_KC", paste0("5c_", pop, "_RNA_DE"))
+  export_panel(
+    rna_volcano(d, pop),
+    paste0("Fig5/5c_", pop, "_RNA_volcano"),
+    3.3,
+    3.3,
+    note = "Original RNA statistics; manuscript-selected gene labels and exact original DE counts"
+  )
+}
+```
+
+## Figure 5e–i histological measurements
+
+Explicit parsing code and within-mouse summaries are shared with Extended Figure 7. Every point in the final summary plot represents a mouse; section-level records are also exported.
+
+```{r figure-5e-i-histological-measurements-3}
+source(file.path(REPO, "R/histology.R"))
+histology_fig5()
+```
+
+## Extended Figure 7a/b expression
+
+Stored RNA data-layer values and original UMAP; these are not SCT marker values.
+
+```{r extended-figure-7a-b-expression-4}
+d <- read_table("Extended_Fig7_KC", "7ab_Per_cell_RNA_expression")
+d$Cluster <- factor(d$Cluster, levels = clusters)
+for (g in c("Kdm6a", "Kdm6b")) {
+  export_panel(
+    umap_plot(d, g),
+    paste0("Ext7/7a_", g, "_UMAP"),
+    4, 4
+  )
+  p <- ggplot(d, aes(Cluster, .data[[g]], fill = Cluster)) +
+    geom_violin(scale = "width",
+      linewidth = 0.2) +
+    scale_fill_manual(values = MS$heatmap_cluster) +
+    scale_x_discrete(labels = function(x) gsub("_", "", x)) +
+    theme(
+      axis.text.x = element_text(angle = 90, hjust = 1),
+
+      legend.position = "none"
+    ) +
+    labs(
+      y = paste(g, "RNA log expression"),
+      x = NULL
+    )
+  export_panel(
+    p, paste0("Ext7/7b_", g, "_violin"),
+    8, 3
+  )
+}
+plot_rpkm(
+  read_table("Extended_Fig7_KC", "7cde_jk_RPKM"),
+  "Ext7/7cde_jk_RPKM"
+)
+histology_ext7()
+histology_ext7_lengths()
+```
+
+```{r session-info}
+finish_notebook("05")
+sessionInfo()
+```

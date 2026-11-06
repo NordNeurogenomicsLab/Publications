@@ -1,0 +1,127 @@
+{
+  "metadata_source": "GEO_submission.Rmd",
+  "metadata_lines": "3540-3556",
+  "author_script_sha256": "5cca3906efbd439ff6905f1af89fca0167e26501400147c2cfc9cb42fe1e3f7e",
+  "featurecounts_source": "FASTQ_GEO/Kdm6b_RNA_seq/Kdm6b_sorted_final_15samples.txt",
+  "featurecounts_sha256": "b39b39f25ec119d33aa8a4603c2f07537e0a4b49593c143627ef1b99b3de6306",
+  "verified_RPKM_rows": 285,
+  "analyzed_libraries": 15,
+  "discarded_plot_rows": 0,
+  "normalization": "edgeR default RPKM without calcNormFactors: 1e9 * count / gene length / total assigned gene counts",
+  "Shank1_gene_id": "ENSMUSG00000038738",
+  "Shank1_identity_check": "GRCm38.102 gene annotation: ENSMUSG00000038738 is Shank1, chr7:44310253-44360572. Normalization lengths remain the original GRCm38.95 featureCounts lengths.",
+  "Shank1_high_cKO_sample": "Kdm6b_08plus_mut_S10",
+  "Shank1_high_cKO_RPKM": 22.29126119429071,
+  "original_artwork_point_checks": [
+    {
+      "panel": "6bprime",
+      "gene": "Neurod2",
+      "population": "FlashTagPositive",
+      "WT_points": 4,
+      "cKO_points": 4,
+      "original_artwork_points": 8,
+      "regenerated_points": 8,
+      "correlation_RPKM_vs_artwork_y": -0.9999408650847162,
+      "max_linear_fit_residual_pt": 0.15010727866604157
+    },
+    {
+      "panel": "6bprime",
+      "gene": "Ppp1r1b",
+      "population": "FlashTagPositive",
+      "WT_points": 4,
+      "cKO_points": 4,
+      "original_artwork_points": 8,
+      "regenerated_points": 8,
+      "correlation_RPKM_vs_artwork_y": -0.9998218046957043,
+      "max_linear_fit_residual_pt": 0.2191077809080184
+    },
+    {
+      "panel": "6bprime",
+      "gene": "Neurod2",
+      "population": "FlashTagNegative",
+      "WT_points": 3,
+      "cKO_points": 4,
+      "original_artwork_points": 7,
+      "regenerated_points": 7,
+      "correlation_RPKM_vs_artwork_y": -0.9999267496216871,
+      "max_linear_fit_residual_pt": 0.1762551367952483
+    },
+    {
+      "panel": "6bprime",
+      "gene": "Ppp1r1b",
+      "population": "FlashTagNegative",
+      "WT_points": 3,
+      "cKO_points": 4,
+      "original_artwork_points": 7,
+      "regenerated_points": 7,
+      "correlation_RPKM_vs_artwork_y": -0.9999772219581833,
+      "max_linear_fit_residual_pt": 0.11076596529755989
+    },
+    {
+      "panel": "6o",
+      "gene": "Tbr1",
+      "population": "FlashTagNegative",
+      "WT_points": 3,
+      "cKO_points": 4,
+      "original_artwork_points": 7,
+      "regenerated_points": 7,
+      "correlation_RPKM_vs_artwork_y": -0.9999616017435391,
+      "max_linear_fit_residual_pt": 0.13320219406892875
+    },
+    {
+      "panel": "6o",
+      "gene": "Bcl11b",
+      "population": "FlashTagNegative",
+      "WT_points": 3,
+      "cKO_points": 4,
+      "original_artwork_points": 7,
+      "regenerated_points": 7,
+      "correlation_RPKM_vs_artwork_y": -0.9999406566010058,
+      "max_linear_fit_residual_pt": 0.17070215283712287
+    },
+    {
+      "panel": "6o",
+      "gene": "Wnt7b",
+      "population": "FlashTagNegative",
+      "WT_points": 3,
+      "cKO_points": 4,
+      "original_artwork_points": 7,
+      "regenerated_points": 7,
+      "correlation_RPKM_vs_artwork_y": -0.9998180564231058,
+      "max_linear_fit_residual_pt": 0.33018682815600187
+    },
+    {
+      "panel": "6o",
+      "gene": "Slc17a6",
+      "population": "FlashTagPositive",
+      "WT_points": 4,
+      "cKO_points": 4,
+      "original_artwork_points": 8,
+      "regenerated_points": 8,
+      "correlation_RPKM_vs_artwork_y": -0.9996480804399879,
+      "max_linear_fit_residual_pt": 0.49228280675907854
+    },
+    {
+      "panel": "6o",
+      "gene": "Nrxn2",
+      "population": "FlashTagNegative",
+      "WT_points": 3,
+      "cKO_points": 4,
+      "original_artwork_points": 7,
+      "regenerated_points": 7,
+      "correlation_RPKM_vs_artwork_y": -0.9998875099499596,
+      "max_linear_fit_residual_pt": 0.19961864315604316
+    },
+    {
+      "panel": "6o",
+      "gene": "Shank1",
+      "population": "FlashTagNegative",
+      "WT_points": 3,
+      "cKO_points": 4,
+      "original_artwork_points": 7,
+      "regenerated_points": 7,
+      "correlation_RPKM_vs_artwork_y": -0.9999227684420202,
+      "max_linear_fit_residual_pt": 0.14875251168911063
+    }
+  ]
+}

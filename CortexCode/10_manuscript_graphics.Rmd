@@ -1,0 +1,567 @@
+---
+title: "Manuscript display settings and panel exports"
+output: html_document
+---
+
+This notebook applies the manuscript display conventions to the saved numerical inputs: palettes, module order, panel dimensions and selected vector plot checkpoints. It is a display/export stage, not a new statistical analysis. Source identities and hashes for vector checkpoints are recorded in `provenance/plot_checkpoints.json`.
+
+Figure 1c uses the saved ATAC display matrix. The AC and ME3 signal panels use final module subsets with an explicit row-standardized display transformation. Exact final AC/ME3 heatmap scaling is not established by the archived inputs. Figure 6f and other input limitations remain identified in `DATA_AVAILABILITY.md`.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+suppressPackageStartupMessages(library(patchwork))
+knitr::opts_chunk$set(echo = TRUE,
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE)
+```
+
+## Original vector plot checkpoints
+
+These are reused exports from the existing author scripts, with original source filenames and hashes recorded. Some labels predate Illustrator changes. The original AC heatmap alternative includes more modules than the final main figure; the assembled figure uses the final-module reconstruction below instead.
+
+The original Extended Figure 8 Euler export retains its reported 823-interval intersection and 3,217 ME3-only plotting input. The actual side-specific unique ME3 overlap is 821, as recorded separately in the source table. Reusing this original schematic does not change that distinction.
+
+```{r original-vector-plot-checkpoints-2}
+assets <- jsonlite::fromJSON(file.path(REPO, "provenance/plot_checkpoints.json"))
+for (i in seq_len(nrow(assets))) {
+  dst <- file.path(REPO, "panels", assets$panel[i])
+  dir.create(
+    dirname(dst),
+    recursive = TRUE,
+    showWarnings = FALSE
+  )
+  stopifnot(
+    file.copy(
+      file.path(REPO, assets$pdf[i]),
+      paste0(dst, ".pdf"),
+      overwrite = TRUE
+    ),
+    file.copy(
+      file.path(REPO, assets$png[i]),
+      paste0(dst, ".png"),
+      overwrite = TRUE
+    )
+  )
+  panel_registry[[assets$panel[i]]] <- data.frame(
+    panel = assets$panel[i],
+    note = assets$note[i],
+    width = NA_real_,
+
+    height = NA_real_
+  )
+}
+jsonlite::write_json(
+  MS, file.path(REPO, "provenance/manuscript_palettes.json"),
+  auto_unbox = TRUE,
+  pretty = TRUE
+)
+```
+
+## Figure 1: aligned module panels
+
+Counts, heatmap, proximal/distal fractions and median conservation share one module order. Final main-figure module subsets are A1–A17, Ac1–Ac15 and TMK1–TMK15. No values are pooled or reassigned to force an Illustrator label match.
+
+```{r figure-1-aligned-module-panels-3}
+for (prefix in c("c", "d", "e")) {
+  med <- read_table("Fig1_KC", paste0(prefix, "2_Median_signal"))
+  cnt <- read_table("Fig1_KC", paste0(prefix, "1_Module_counts"))
+  ann <- read_table("Fig1_KC", paste0(prefix, "3_Module_summaries"))
+  keys <- if (prefix == "c")
+    paste0("A", 1:17) else if (prefix == "d")
+    paste0("Ac", 1:15) else paste0("TMK", 1:15)
+  med <- med[match(keys, med$Fine_clusters_short),
+    ]
+  cnt <- cnt[match(keys, cnt$Fine_clusters_short),
+    ]
+  ann <- ann[match(keys, ann$Fine_clusters_short),
+    ]
+  stopifnot(
+    !anyNA(med$Fine_clusters_short),
+    !anyNA(cnt$Peak_count)
+  )
+  m <- as.matrix(med[, vapply(med, is.numeric, logical(1))])
+  rownames(m) <- keys
+  z <- t(scale(t(m)))
+  z[!is.finite(z)] <- 0
+  if (prefix == "c") {
+    dynamic <- read_table("Fig1_KC", "c2_dynamic_heatmap")
+    constitutive <- read_table("Fig1_KC", "c2_constitutive_heatmap")
+    original_display <- cbind(numeric_matrix(dynamic), numeric_matrix(constitutive))
+    stopifnot(all(colnames(m) %in% rownames(original_display)))
+    stopifnot(all(med$Fine_clusters %in% colnames(original_display)))
+    z <- t(original_display[colnames(m), med$Fine_clusters, drop = FALSE])
+    rownames(z) <- keys
+    stopifnot(identical(dim(z), dim(m)), all(is.finite(z)))
+  }
+  h <- as.data.frame(as.table(z))
+  names(h) <- c("Row", "Sample", "Z")
+  h$Module <- factor(
+    as.character(h$Row),
+    levels = keys
+  )
+  h$Sample <- factor(h$Sample, levels = rev(colnames(z)))
+  cnt$Module <- ann$Module <- factor(keys, levels = keys)
+  p1 <- ggplot(cnt, aes(Module, Peak_count/1000)) +
+    geom_col(fill = "black",
+      width = 0.9) +
+    labs(
+      y = expression(10^3 * " pREs"),
+      x = NULL
+    ) +
+    theme(
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+
+      plot.margin = margin(0, 3, 0, 3),
+      axis.title.y = element_text(size = 7),
+
+      axis.text.y = element_text(size = 6)
+    )
+  p2 <- ggplot(h, aes(Module, Sample, fill = Z)) +
+    geom_raster() + scale_fill_gradientn(
+    colors = MS$inferno,
+    limits = if (prefix == "c") c(-2, 2) else c(-4, 4),
+
+    oob = scales::squish
+  ) +
+    labs(x = NULL,
+      y = NULL,
+      fill = "Z score") +
+    theme(
+      axis.text.y = element_blank(),
+      axis.ticks.y = element_blank(),
+
+      axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+
+      legend.position = if (prefix == "e")
+        "right" else "none", plot.margin = margin(0, 3, 0, 3)
+    )
+  a <- ann[, c("Module", "Proximal_percent", "Distal_percent")]
+  a <- pivot_longer(
+    a, c(Proximal_percent, Distal_percent),
+    names_to = "Class",
+    values_to = "Percent"
+  )
+  p3 <- ggplot(a, aes(Module, Percent, fill = Class)) +
+    geom_col(width = 0.9) +
+    scale_fill_manual(values = c(Proximal_percent = "#00643B",
+      Distal_percent = "#19AE69")) +
+    labs(x = NULL,
+      y = "%") +
+    theme(
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+
+      legend.position = "none",
+      axis.title.y = element_text(size = 7),
+
+      axis.text.y = element_text(size = 6),
+
+      plot.margin = margin(0, 3, 0, 3)
+    )
+  p4 <- ggplot(ann, aes(Module, Median_of_peak_mean_phastCons)) +
+    geom_col(fill = "#993333",
+      width = 0.9) +
+    labs(x = NULL,
+      y = "Median\nphastCons") +
+    theme(
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+
+      axis.title.y = element_text(size = 7),
+
+      axis.text.y = element_text(size = 6),
+
+      plot.margin = margin(0, 3, 0, 3)
+    )
+  highlight <- which(keys %in% if (prefix == "c") c("A1", "A12") else if (prefix == "d") "Ac7" else "TMK3")
+  display_labels <- setNames(sub("^TMK", "TM", keys), keys)
+  highlight_layer <- lapply(highlight, function(position) {
+    annotate(
+      "rect",
+      xmin = position - 0.5,
+      xmax = position + 0.5,
+      ymin = -Inf,
+      ymax = Inf,
+      fill = NA,
+      color = "#EE3890",
+      linewidth = 0.45
+    )
+  })
+  p1 <- p1 + highlight_layer
+  p2 <- p2 + highlight_layer + scale_x_discrete(labels = display_labels)
+  p3 <- p3 + highlight_layer
+  p4 <- p4 + highlight_layer
+  export_panel(
+    p1/p2/p3/p4 + plot_layout(heights = c(0.6, 3, 0.6, 0.6)),
+    paste0("Fig1/", prefix, "_manuscript_stack"),
+    5, 6.5, note = "Final canonical module subset; inferno palette; saved ATAC display values, AC/ME3 row-z-score display approximation; verified counts/fractions/conservation"
+  )
+}
+```
+
+## Figure 3: combined marker and module UMAPs
+
+```{r figure-3-combined-marker-and-module-umaps-4}
+d <- read_table("Fig3_KC", "3a_Cell_data")
+p <- umap_plot(d)
+export_panel(p, "Fig3/3a_clusters", 3.2, 2.7)
+markers <- lapply(
+  c("Hes1", "Eomes", "Tbr1"),
+  function(g) umap_plot(d, g) +
+    theme(
+      axis.title = element_blank(),
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+
+      legend.position = "none"
+    )
+)
+export_panel(
+  wrap_plots(markers, nrow = 1),
+  "Fig3/3a_marker_strip", 6, 2
+)
+d <- read_table("Fig3_KC", "3c_Plot_values")
+pp <- lapply(
+  c("A1", "A3", "A6", "A10", "A12", "A16"),
+  function(g) umap_plot(d, g) +
+    theme(
+      axis.title = element_blank(),
+      axis.text = element_text(size = 7),
+
+      legend.text = element_text(size = 6),
+
+      legend.key.height = grid::unit(4, "mm")
+    )
+)
+export_panel(
+  wrap_plots(pp, ncol = 2),
+  "Fig3/3c_six_modules", 5, 7
+)
+```
+
+## Figure 4: stage-based median trajectories
+
+```{r figure-4-stage-based-median-trajectories-5}
+# Reproduce the final treemap partition and semantic colors from the
+# verified counts.
+d <- read_table("Fig4_KC", "4a_Interaction_counts")
+counts <- setNames(d$Count, d$overlap_type)
+n <- sum(counts)
+left <- (counts["three_way"] + counts["atac_ac"])/n
+right <- 1 - left
+top <- (counts["atac_singleton"] + counts["ac_me3"])/n/right
+mid <- (counts["ac_singleton"] + counts["atac_me3"])/n/right
+z <- data.frame(
+  Type = c(
+    "three_way", "atac_ac", "atac_singleton", "ac_me3", "ac_singleton",
+    "atac_me3", "me3_singleton"
+  ),
+  xmin = c(
+    0, 0, left, left + right * counts["atac_singleton"]/(counts["atac_singleton"] +
+      counts["ac_me3"]), left, left + right * counts["ac_singleton"]/(counts["ac_singleton"] +
+      counts["atac_me3"]), left
+  ),
+  xmax = c(
+    left, left, left + right * counts["atac_singleton"]/(counts["atac_singleton"] +
+      counts["ac_me3"]), 1, left + right * counts["ac_singleton"]/(counts["ac_singleton"] +
+      counts["atac_me3"]), 1, 1
+  ),
+  ymin = c(
+    1 - counts["three_way"]/n/left, 0, 1 - top, 1 - top, 1 - top - mid,
+    1 - top - mid, 0
+  ),
+  ymax = c(
+    1, 1 - counts["three_way"]/n/left, 1, 1, 1 - top, 1 - top, 1 - top -
+      mid
+  )
+)
+z$Count <- counts[z$Type]
+z$Label <- c(
+  "3 way", "ATAC-\nH3K27ac", "ATAC\nsingleton", "H3K27ac-\nH3K27me3", "H3K27ac\nsingleton",
+  "ATAC-\nH3K27me3", "H3K27me3\nsingleton"
+)
+z$Label <- paste0(
+  z$Label, "\n", sprintf("%.1f%%", 100 * z$Count/n),
+  "\n(", z$Count, ")"
+)
+cols <- c(
+  three_way = "#CCCAC6",
+  atac_ac = "#F48CA1",
+  atac_singleton = "#FFB254",
+
+  ac_me3 = "#92D4D5",
+  ac_singleton = "#E85B70",
+  atac_me3 = "#00ADC0",
+  me3_singleton = "#ABD7A1"
+)
+p <- ggplot(z) +
+  geom_rect(
+    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = Type),
+
+    color = "white",
+    linewidth = 0.4
+  ) +
+  geom_text(
+    aes((xmin + xmax)/2, (ymin + ymax)/2, label = Label),
+    size = 4.5,
+    fontface = "bold"
+  ) +
+  scale_fill_manual(values = cols) +
+  coord_fixed(expand = FALSE) +
+  theme_void() + theme(legend.position = "none") +
+  labs(title = "Peak proximity interactions") +
+  theme(plot.title = element_text(size = 18, face = "bold"))
+export_panel(p, "Fig4/4a_treemap_manuscript", 5, 6)
+for (s in c("4b_A1", "4c_Ac7", "4d_TM3")) {
+  d <- read_table("Fig4_KC", s)
+  val <- grep(
+    "^Median_", names(d),
+    value = TRUE
+  )
+  d$Position <- seq_len(nrow(d))
+  d$Cell_type <- ifelse(
+    grepl("Vz", d$Sample, ignore.case = TRUE) &
+      !grepl("Svz", d$Sample, ignore.case = TRUE),
+    "VZ", ifelse(
+      grepl("Svz", d$Sample, ignore.case = TRUE),
+      "SVZ", ifelse(
+        grepl("Nex", d$Sample, ignore.case = TRUE),
+        "ImN", ifelse(
+          grepl("Ntsr", d$Sample, ignore.case = TRUE),
+          "L6N", "L5N"
+        )
+      )
+    )
+  )
+  d$Sample_group <- sub("_[CR](_|$).*", "", d$Sample)
+  d$Sample_group <- factor(d$Sample_group, levels = unique(d$Sample_group))
+  d$Group_position <- as.numeric(d$Sample_group)
+  p <- ggplot(d, aes(Group_position, .data[[val]], color = Cell_type)) +
+    geom_boxplot(
+      aes(group = Sample_group),
+      width = 0.55,
+      linewidth = 0.4,
+      outlier.shape = NA
+    ) +
+    geom_point(size = 1) +
+    geom_smooth(
+      aes(group = 1),
+      method = "loess",
+      span = 0.8,
+      se = FALSE,
+      color = "black",
+      linewidth = 0.6
+    ) +
+    scale_color_manual(values = MS$cell) +
+    labs(x = NULL,
+      y = gsub("_", " ", val)) +
+    theme(
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+
+      legend.position = "none"
+    )
+  span <- diff(range(d[[val]], na.rm = TRUE))
+  lower <- min(d[[val]], na.rm = TRUE) - 0.18 * span
+  stage_strip <- unique(d[, c("Group_position", "Cell_type")])
+  p <- p + geom_rect(
+    data = stage_strip,
+    aes(
+      xmin = Group_position - 0.5,
+      xmax = Group_position + 0.5,
+      ymin = lower,
+      ymax = lower + 0.07 * span,
+      fill = Cell_type
+    ),
+    inherit.aes = FALSE,
+    color = NA
+  ) + scale_fill_manual(values = MS$cell) +
+    labs(title = paste(sub(".*_", "", s), "trajectory")) +
+    theme(plot.title = element_text(size = 17, face = "bold"),
+      axis.text.y = element_text(size = 13),
+      axis.title.y = element_text(size = 15), legend.position = "none")
+  export_panel(
+    p, paste0("Fig4/", s, "_trajectory"),
+    5, 2.5
+  )
+}
+```
+
+## Figure 6: manuscript box plots, GO and saved resampling violin
+
+```{r figure-6-manuscript-box-plots-go-and-saved-resampling-violin-6}
+for (s in c("6bprime_RPKM", "6o_RPKM")) {
+  d <- read_table("Fig6_KC", s)
+  for (g in unique(d$Gene)) for (ft in unique(d$FlashTag_population)) {
+    z <- d[d$Gene == g & d$FlashTag_population == ft, ]
+    if (!nrow(z))
+      next
+    p <- ggplot(
+      z, aes(
+        factor(Genotype, levels = c("WT", "Mut"), labels = c("WT", "cKO")),
+        RPKM, color = Genotype
+      )
+    ) +
+      geom_boxplot(outlier.shape = NA,
+        linewidth = 0.4,
+        width = 0.65) +
+      geom_point(aes(shape = Sex),
+        position = position_jitter(width = 0.08, height = 0, seed = 1),
+
+        size = 1.3
+      ) +
+      scale_color_manual(values = MS$rna) +
+      scale_shape_manual(values = c(F = 16, M = 17)) +
+      labs(title = g,
+        subtitle = if (ft == "FlashTagPositive") "FTpos" else "FTneg",
+        x = NULL,
+        y = "RPKM") +
+      theme(legend.position = "none",
+        plot.title = element_text(size = 12, face = "bold.italic"),
+        plot.subtitle = element_text(size = 9),
+        axis.text = element_text(size = 10),
+        axis.title = element_text(size = 10))
+    point_layer <- ggplot_build(p)$data[[2]]
+    stopifnot(nrow(point_layer) == nrow(z), identical(sort(point_layer$y), sort(z$RPKM)))
+    export_panel(
+      p, paste0("Fig6/", s, "_", g, "_", ft),
+      1.3, 1.65, note = "Reconstructed RPKM; WT blue/cKO red from manuscript"
+    )
+  }
+}
+for (b in c("Fig6_KC", "Extended_Fig8_KC")) {
+  s <- if (b == "Fig6_KC")
+    "6d_GO_plotted" else "8g_GO_plotted"
+  d <- read_table(b, s)
+  p <- manuscript_go_bars(
+    d,
+    if (b == "Fig6_KC") "#2178B4" else "#F05A5B"
+  )
+  export_panel(
+    p, paste0(
+      if (b == "Fig6_KC")
+        "Fig6/" else "Ext8/", s
+    ),
+    3.4, 2.5
+  )
+}
+d <- read_table("Fig6_KC", "6h_Variant_null_replicates")
+d <- d[d$MinMutPerRegion == 1, ]
+z <- bind_rows(
+  data.frame(Group = "control", Regions = d$n_ctrl),
+
+  data.frame(Group = "case",
+    Regions = d$n_case)
+)
+z$Group <- factor(z$Group, levels = c("control", "case"))
+p <- ggplot(z,
+  aes(Group, Regions, color = Group, fill = Group)) +
+  geom_violin(linewidth = 0.4,
+    alpha = 0.15,
+    scale = "width") +
+  geom_point(
+    position = position_jitter(width = 0.08, seed = 1),
+
+    size = 0.12,
+    alpha = 0.15
+  ) +
+  scale_color_manual(values = c(control = "#00BFC4",
+    case = "#F8766D")) +
+  scale_fill_manual(values = c(control = "#00BFC4",
+    case = "#F8766D")) +
+  labs(x = NULL,
+    y = "Regions",
+    title = ">0 mutations per region") +
+  theme(legend.position = "none")
+export_panel(
+  p, "Fig6/6h_variant_violin", 4, 5, note = "Original 1000 balanced-downsampling replicates; no simulation rerun"
+)
+d <- read_table("Fig6_KC", "6f_Gene_peak_counts")
+d <- d %>%
+  group_by(RNA_direction) %>%
+  mutate(Plot_fraction = Gene_peak_overlap_count / sum(Gene_peak_overlap_count)) %>%
+  ungroup()
+d$RNA_direction <- factor(d$RNA_direction, levels = c("Downregulated", "Upregulated"))
+p <- ggplot(d,
+  aes(x = 2, y = Plot_fraction, fill = Peak_class)) +
+  geom_col(width = 1,
+    color = "black",
+    linewidth = 0.3) +
+  coord_polar(theta = "y") +
+  xlim(0.5, 2.5) +
+  facet_wrap(~RNA_direction, ncol = 1) +
+  theme_void() + scale_fill_manual(values = c(`Fold <= 0.5` = "#D3D3D3", `Fold > 0.5` = "#EE3890")) +
+  labs(title = "Gene-peak overlaps", fill = NULL) +
+  theme(
+    plot.title = element_text(size = 8),
+    strip.text = element_text(size = 7),
+    legend.position = "bottom",
+    legend.text = element_text(size = 6),
+    legend.key.size = grid::unit(2, "mm")
+  )
+totals <- aggregate(Gene_peak_overlap_count ~ RNA_direction, d, sum)
+p <- p + geom_text(
+  data = totals,
+  aes(x = 0.5, y = 0, label = paste0("n=", Gene_peak_overlap_count)),
+  inherit.aes = FALSE,
+  size = 2.8,
+  fontface = "bold"
+)
+export_panel(
+  p, "Fig6/6f_donut_recovered_analysis", 2.3, 3.6, note = "Manuscript magenta/grey; recovered original totals 484/250; final artwork 362/281 unresolved"
+)
+```
+
+## Extended Figure 5: stacked QC and marker violins
+
+```{r extended-figure-5-stacked-qc-and-marker-violins-7}
+d <- read_table("Extended_Fig5_KC", "5a_Per_cell_QC")
+z <- pivot_longer(
+  d, c(nCount_RNA, nFeature_RNA, nCount_peaks, nFeature_peaks),
+  names_to = "Metric",
+  values_to = "Value"
+)
+z$Metric <- factor(z$Metric, levels = names(MS$qc))
+export_panel(
+  ggplot(z, aes(Replicate, Value, fill = Metric)) +
+    geom_violin(scale = "width",
+      linewidth = 0.2) +
+    facet_grid(Metric ~ ., scales = "free_y") +
+    scale_fill_manual(values = MS$qc) +
+    theme(legend.position = "none") +
+    labs(x = NULL, y = NULL),
+
+  "Ext5/5a_QC", 3, 8
+)
+d <- read_table("Extended_Fig5_KC", "5b_RNA_marker_expression")
+d$Cluster <- factor(d$Cluster, levels = clusters)
+z <- pivot_longer(
+  d, cols = -c(Cell_ID, Replicate, Cluster),
+  names_to = "Gene",
+  values_to = "Expression"
+)
+z$Gene <- factor(z$Gene, levels = names(MS$marker))
+export_panel(
+  ggplot(z, aes(Cluster, Expression, fill = Gene)) +
+    geom_violin(scale = "width",
+      linewidth = 0.15) +
+    facet_grid(Gene ~ ., scales = "free_y",
+      labeller = labeller(Gene = function(x) ifelse(x == "Eomes", "Tbr2", x))) +
+    scale_fill_manual(values = MS$marker) +
+    theme(
+      axis.text.x = element_text(angle = 90, size = 6),
+
+      axis.text.y = element_blank(),
+      axis.ticks.y = element_blank(),
+
+      legend.position = "none"
+    ) +
+    labs(x = NULL, y = NULL),
+
+  "Ext5/5b_RNA_markers", 9, 10
+)
+finish_notebook("10")
+sessionInfo()
+```

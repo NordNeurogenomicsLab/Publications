@@ -1,0 +1,21 @@
+# Analysis methods and implementation map
+
+The figure Rmds include the scientific code and conditional execution controls. All costly analysis flags default to false. Saved results are loaded for routine panel export; enabling a rerun does not automatically replace final plotting inputs.
+
+| Analysis | Notebook sections | Recorded settings / controls |
+|---|---|---|
+| WGCNA | 01: count preparation through signed network fitting | edgeR library-size CPM without TMM or log transformation; histone `reduce(min.gapwidth=1000)` and count summation; `goodSamplesGenes`; powers ATAC 6, AC 5, ME3 9; signed/bicor/signed TOM; minimum 30; maximum block 25,000; merge height 0.25; deepSplit 2; pamStage false; reassignment 1e-10; no saved TOMs; 12/10/12 threads. `run_wgcna` |
+| Grey refinement | 01: grey refinement and curated naming | ATAC log-CPM prior 1, hierarchical cut 14; AC/ME3 log2(FPKM+1), column scaling, hierarchical cuts 20/9; explicit manual collapse labels. `run_refinement` |
+| Interval GO | 02: GREAT and display | mm10; original default ATAC association rule, oneClosest for AC/ME3; binomial BH <0.1 for display; FE cap 5; saved manually selected term lists. `run_great` / `inspect_enrichment` |
+| Motifs | 02: HOMER generation through curated matrices | 200-bp summit BEDs; module-complement background; mm10; size given; lengths 6/8/10/12; 16 threads; basic. Top 20 per module above native −ln(P) 5; greedy Levenshtein identity ≥0.8; max aggregation; cap 30. `run_homer` / `inspect_enrichment` |
+| Multiome | 03: module definitions through native heatmap | Stored interval TF-IDF and SCT data; pooled module definitions; AddModuleScore seed 1, 24 bins, 100 controls; zscore≥0 links; per-interval minimum P with original tie rule; unique genes per module. `run_multiome` |
+| Integration | 04: catalog through biological programs | ±2.5-kb intervals; pairwise/three-way joins and singletons; stage medians; zero quantile 5% ATAC/AC and 2% ME3; 10 ordinal levels; feature engineering, anchors, PCA, UMAP and Leiden code included. Selected calls use 15 PCs, 200 UMAP neighbors, min_dist 0.2, seed 42 and bundle-specific SNN/resolution/merge parameters. `run_integration`; optional saved bundle loading via `load_native_bundles` |
+| RNA GO | 05: topGO | Mouse Ensembl-to-Entrez mapping; tested-gene universe; up/down selection explicitly configured; weight01 Fisher primary and classic Fisher diagnostic. Historical Figure 5d configuration unavailable; no invented default thresholds. `run_topgo`; requires `CORTEX_TOPGO_CONFIG` |
+| Pseudobulk PCA | 05: recorded pseudobulk PCA | Saved aggregated counts; DESeq2 VST blind true; 500 highest-variance features; centered, unscaled PCA. `run_pseudobulk` |
+| Differential chromatin | 06: native DiffBind | Matched peak catalog; total expansion 5 kb; separate Flashtag conditions; summits false; filter 0; serial legacy counting; default normalization; Treatment expr/ctrl; DBA_DESEQ2; report th=1. All required selected BAMs must exist. `run_diffbind` |
+| Gene enrichment | 07: ASD-gene null | Fu workbook sheet 11; original orthogene strategy; 10,000 draws without replacement; nominal RNA P<0.05; observed-overlap z score and one-sided normal tail. Sequential rerun is not bitwise identical to an unspecified historical parallel RNG stream. `run_gene_null` |
+| Variant enrichment | 07: full native class | 1,000 balanced subsets; seed 1234; downsample fraction 0.8, cap 5,000; selected ME3/ATAC/GENOA filtering and merge rules in class; empirical sign tail with +1 correction. `run_variant_analysis` |
+
+Exact source filenames and hashes are in `provenance/analysis_code_sources.csv` and `provenance/additional_analysis_code_sources.json`. Input hashes are recorded separately. Code adapted to portable input locations retains the original scientific operations; deliberate changes such as serial scheduling or strict missing-BAM checks are stated in the notebook.
+
+The original Figure 5d topGO settings, original bulk-RNA fitting code and historical annotation/software environments are not established by the available files. These gaps must remain explicit until the original materials are supplied. A current R session report describes the rerun environment, not the historical execution environment.

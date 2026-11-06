@@ -1,0 +1,3330 @@
+---
+title: "Figure 4 and Extended Figure 6: multimodal integration"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  run_integration: false
+  load_native_bundles: false
+---
+
+Figure 4 integrates interval-level links between ATAC, H3K27ac and H3K27me3. The final catalog contains 157,984 records including singletons and 92,568 linked records. Denominators are stated for each summary. Catalog construction, stage aggregation, ordinal encoding, full clustering routines and manual program definitions are included below.
+
+The saved cluster-trajectory table below is a cluster-level diagnostic, not a newly calculated mean for every final program. Final program means are retained in the original vector plot checkpoint used by the display notebook. The source program label 2d corresponds to the label 3d in the manuscript artwork. The exact final network-view version is not established by the available inputs.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+repo_dir <- REPO
+if (!exists("params", inherits = FALSE)) params <- list()
+if (is.null(params$run_integration)) params$run_integration <- FALSE
+if (is.null(params$load_native_bundles)) params$load_native_bundles <- FALSE
+
+knitr::opts_chunk$set(echo = TRUE,
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE)
+```
+
+
+## Construct the pairwise, three-way and singleton catalog
+
+The original integration code below expands each master interval by ±2.5 kb, joins the three pairwise overlap tables, verifies the exact common intersection, removes three-way pairs from the pairwise sets and appends intervals absent from all overlaps as singletons. Original row indices are retained. Execution is sequential here to avoid changing the user's parallel-worker plan; the overlap calculations and joins are unchanged. The following clustering section loads the final saved catalog by default within its optional rerun branch, so a freshly constructed catalog must be compared with it before substitution.
+
+```{r integration-build-catalog, eval=isTRUE(params$run_integration)}
+
+# Data input
+
+# Contains GENOA but not VISTA annotations yet
+atac <- read.csv(file.path(REPO, "data", "upstream", "final_tables", "Supp_Table_1_ATAC_master.csv"))
+ac <- read.csv(file.path(REPO, "data", "upstream", "final_tables", "Supp_Table_2_AC_master.csv"))
+me3 <-  read.csv(file.path(REPO, "data", "upstream", "final_tables", "Supp_Table_3_ME3_master.csv"))
+
+
+
+# Fixing capitalization/spelling issue
+ac$Fine_clusters <- ifelse(ac$Fine_clusters == "Grey", "grey", ac$Fine_clusters)
+
+unique(ac$Fine_clusters)
+unique(atac$Fine_clusters)
+unique(me3$Fine_clusters)
+
+head(atac)
+head(me3)
+head(ac)
+
+
+gc()
+
+
+library(GenomicRanges)
+library(dplyr)
+library(furrr)
+
+# --- Convert to GRanges (±2.5 kb buffer) ---
+buffer <- 2500
+gr <- list(
+  ATAC = GRanges(seqnames = atac$seqnames,
+
+                 ranges   = IRanges(start = atac$start - buffer,
+
+                                    end   = atac$end + buffer),
+                 Fine_cluster = atac$Fine_clusters),
+  AC   = GRanges(seqnames = ac$seqnames,
+
+                 ranges   = IRanges(start = ac$start - buffer,
+
+                                    end   = ac$end + buffer),
+                 Fine_cluster = ac$Fine_clusters),
+  ME3  = GRanges(seqnames = me3$seqnames,
+
+                 ranges   = IRanges(start = me3$start - buffer,
+
+                                    end   = me3$end + buffer),
+                 Fine_cluster = me3$Fine_clusters)
+)
+
+
+
+names(gr$ATAC) <- atac$ID
+names(gr$AC)   <- ac$ID
+names(gr$ME3)  <- me3$ID
+gr <- lapply(gr, function(x) { x$width <- width(x); x })
+
+
+
+# --- Pairwise overlaps ---
+df_atac_ac  <- setNames(as.data.frame(findOverlaps(gr$ATAC, gr$AC)),
+                        c("idx_atac", "idx_ac"))
+df_ac_me3   <- setNames(as.data.frame(findOverlaps(gr$AC, gr$ME3)),
+                        c("idx_ac", "idx_me3"))
+df_atac_me3 <- setNames(as.data.frame(findOverlaps(gr$ATAC, gr$ME3)),
+                        c("idx_atac", "idx_me3"))
+
+
+
+
+# --- Three-way overlaps ---
+three_way_df <- df_atac_ac %>%
+  inner_join(df_ac_me3,  by = "idx_ac") %>%
+  inner_join(df_atac_me3, by = c("idx_atac","idx_me3")) %>%
+  mutate(
+    Chromosome = as.character(seqnames(gr$ATAC)[idx_atac]),
+    ATAC_FC    = gr$ATAC$Fine_cluster[idx_atac],
+    AC_FC      = gr$AC$Fine_cluster[idx_ac],
+    ME3_FC     = gr$ME3$Fine_cluster[idx_me3],
+    ATAC_Start = start(gr$ATAC)[idx_atac],
+    ATAC_End = end(gr$ATAC)[idx_atac],
+
+    AC_Start   = start(gr$AC)[idx_ac],
+    AC_End   = end(gr$AC)[idx_ac],
+
+    ME3_Start  = start(gr$ME3)[idx_me3],
+    ME3_End  = end(gr$ME3)[idx_me3]
+  )
+
+################################################################################
+
+# --- Validate overlap widths (parallel) ---
+# This step goes beyond 'findOverlaps()' and checks the *exact* base-pair
+# intersection among ATAC, AC, and ME3 intervals.
+# We also compute two useful metrics:
+#   1) Overlap_width  = number of base pairs shared by all three regions
+#   2) Overlap_all_three = TRUE/FALSE flag if they overlap at all
+#   3) Overlap_range = span of the union of all three intervals
+# These values help confirm that apparent three-way overlaps are biologically valid.
+
+# Use parallel workers for speed
+future::plan(future::sequential)
+
+# Define a function that takes start and end coordinates of three intervals
+# and computes the overlap width, overlap presence, and genomic span
+compute_overlap <- function(s1, e1, s2, e2, s3, e3) {
+  # Expand each interval into a sequence of base positions
+  # (e.g., s1=100, e1=105 → seq(100,105) = 100,101,102,103,104,105)
+  # Then find the base positions common to all three intervals
+  common <- Reduce(intersect, list(seq(s1, e1), seq(s2, e2), seq(s3, e3)))
+
+  # Return a list with:
+  list(
+    width = length(common),            # exact number of overlapping bases
+    has   = length(common) > 0,        # TRUE if there is any overlap at all
+    range = max(e1, e2, e3) - min(s1, s2, s3) + 1  # total span covered by union
+  )
+}
+
+# Apply compute_overlap() in parallel across all rows of three_way_df
+# Each row = one candidate 3-way overlap (ATAC, AC, ME3 interval triplet)
+res <- future_pmap(
+  list(
+    three_way_df$ATAC_Start, three_way_df$ATAC_End,
+    three_way_df$AC_Start,   three_way_df$AC_End,
+    three_way_df$ME3_Start,  three_way_df$ME3_End
+  ),
+  compute_overlap
+)
+
+# Extract values from the result list into three new columns:
+three_way_df$Overlap_width     <- sapply(res, `[[`, "width")  # number of bp shared
+three_way_df$Overlap_all_three <- sapply(res, `[[`, "has")    # TRUE/FALSE overlap flag
+three_way_df$Overlap_range     <- sapply(res, `[[`, "range")  # genomic span of union
+
+# --- Output ---
+# After this step, three_way_df contains:
+#   - The original indices + Fine_clusters and coordinates
+#   - Overlap_width: quantitative measure of overlap (bp)
+#   - Overlap_all_three: logical, TRUE if overlap > 0
+#   - Overlap_range: span from the leftmost start to rightmost end
+# This ensures that only biologically meaningful three-way overlaps are kept.
+
+
+
+
+library(purrr)
+library(dplyr)
+
+# --- Helper: Create unique keys for filtering ---
+# Keys are "idxA|idxB" strings that uniquely identify a pair of intervals
+make_key <- function(x, y) paste(x, y, sep = "|")
+
+# --- Keys for three-way overlaps ---
+# For each pair, create keys so we can exclude them from two-way overlaps
+three_way_keys <- list(
+  atac_ac  = make_key(three_way_df$idx_atac, three_way_df$idx_ac),
+  atac_me3 = make_key(three_way_df$idx_atac, three_way_df$idx_me3),
+  ac_me3   = make_key(three_way_df$idx_ac,   three_way_df$idx_me3)
+)
+
+# --- Overlap width helper (two-way version) ---
+# Computes exact base-pair overlap between two intervals
+compute_overlap_width <- function(start1, end1, start2, end2) {
+  max(0, min(end1, end2) - max(start1, start2) + 1)
+}
+
+# --- Filtered ATAC–AC overlaps ---
+two_way_atac_ac <- df_atac_ac %>%
+  # exclude pairs already present in three-way overlaps
+  filter(!make_key(idx_atac, idx_ac) %in% three_way_keys$atac_ac) %>%
+  # make sure indices exist (safety check)
+  filter(idx_atac <= length(gr$ATAC), idx_ac <= length(gr$AC)) %>%
+  # add genomic coordinates and compute overlap width
+  mutate(
+    ATAC_Start = start(gr$ATAC)[idx_atac],
+    ATAC_End   = end(gr$ATAC)[idx_atac],
+    AC_Start   = start(gr$AC)[idx_ac],
+    AC_End     = end(gr$AC)[idx_ac],
+    Overlap_width = mapply(compute_overlap_width, ATAC_Start, ATAC_End, AC_Start, AC_End)
+  ) %>%
+  filter(Overlap_width > 0) %>%
+  # annotate metadata
+  mutate(
+    overlap_type = "atac_ac",
+    Chromosome   = as.character(seqnames(gr$ATAC)[idx_atac]),
+    ATAC_FC      = gr$ATAC$Fine_cluster[idx_atac],
+    AC_FC        = gr$AC$Fine_cluster[idx_ac],
+    ATAC_Width   = gr$ATAC$width[idx_atac],
+    AC_Width     = gr$AC$width[idx_ac]
+  )
+
+# --- Filtered ATAC–ME3 overlaps ---
+two_way_atac_me3 <- df_atac_me3 %>%
+  filter(!make_key(idx_atac, idx_me3) %in% three_way_keys$atac_me3) %>%
+  filter(idx_atac <= length(gr$ATAC), idx_me3 <= length(gr$ME3)) %>%
+  mutate(
+    ATAC_Start = start(gr$ATAC)[idx_atac],
+    ATAC_End   = end(gr$ATAC)[idx_atac],
+    ME3_Start  = start(gr$ME3)[idx_me3],
+    ME3_End    = end(gr$ME3)[idx_me3],
+    Overlap_width = mapply(compute_overlap_width, ATAC_Start, ATAC_End, ME3_Start, ME3_End)
+  ) %>%
+  filter(Overlap_width > 0) %>%
+  mutate(
+    overlap_type = "atac_me3",
+    Chromosome   = as.character(seqnames(gr$ATAC)[idx_atac]),
+    ATAC_FC      = gr$ATAC$Fine_cluster[idx_atac],
+    ME3_FC       = gr$ME3$Fine_cluster[idx_me3],
+    ATAC_Width   = gr$ATAC$width[idx_atac],
+    ME3_Width    = gr$ME3$width[idx_me3]
+  )
+
+# --- Filtered AC–ME3 overlaps ---
+two_way_ac_me3 <- df_ac_me3 %>%
+  filter(!make_key(idx_ac, idx_me3) %in% three_way_keys$ac_me3) %>%
+  filter(idx_ac <= length(gr$AC), idx_me3 <= length(gr$ME3)) %>%
+  mutate(
+    AC_Start  = start(gr$AC)[idx_ac],
+    AC_End    = end(gr$AC)[idx_ac],
+    ME3_Start = start(gr$ME3)[idx_me3],
+    ME3_End   = end(gr$ME3)[idx_me3],
+    Overlap_width = mapply(compute_overlap_width, AC_Start, AC_End, ME3_Start, ME3_End)
+  ) %>%
+  filter(Overlap_width > 0) %>%
+  mutate(
+    overlap_type = "ac_me3",
+    Chromosome   = as.character(seqnames(gr$AC)[idx_ac]),
+    AC_FC        = gr$AC$Fine_cluster[idx_ac],
+    ME3_FC       = gr$ME3$Fine_cluster[idx_me3],
+    AC_Width     = gr$AC$width[idx_ac],
+    ME3_Width    = gr$ME3$width[idx_me3]
+  )
+
+# --- Combine all two-way overlaps into one data frame ---
+two_way_df <- bind_rows(two_way_atac_ac, two_way_atac_me3, two_way_ac_me3)
+
+
+
+library(furrr)
+library(future)
+
+# --- Parallel setup ---
+# Use all cores minus one for performance
+future::plan(future::sequential)
+
+# --- Flexible overlap function for two intervals ---
+# Computes:
+#   - width = number of base pairs in the intersection
+#   - has_overlap = TRUE if overlap > 0
+#   - range = span of the union of the two intervals
+compute_two_way_overlap <- function(start1, end1, start2, end2) {
+  common <- intersect(seq(start1, end1), seq(start2, end2))
+  range  <- max(end1, end2) - min(start1, start2) + 1
+  list(width = length(common),
+    has_overlap = length(common) > 0,
+    range = range)
+}
+
+# --- Prepare overlap inputs based on overlap type ---
+# Each row in two_way_df is either ATAC–AC, ATAC–ME3, or AC–ME3
+# We pass the correct start/end pairs to the overlap function
+overlap_inputs <- pmap(
+  two_way_df,
+  function(overlap_type, ATAC_Start, ATAC_End, AC_Start, AC_End, ME3_Start, ME3_End, ...) {
+    if (overlap_type == "atac_ac") {
+      list(ATAC_Start, ATAC_End, AC_Start, AC_End)
+    } else if (overlap_type == "atac_me3") {
+      list(ATAC_Start, ATAC_End, ME3_Start, ME3_End)
+    } else if (overlap_type == "ac_me3") {
+      list(AC_Start, AC_End, ME3_Start, ME3_End)
+    } else {
+      list(NA, NA, NA, NA)
+    }
+  }
+)
+
+# --- Run overlap validation in parallel ---
+overlap_results <- future_map(
+  overlap_inputs,
+  ~compute_two_way_overlap(.x[[1]], .x[[2]], .x[[3]], .x[[4]])
+)
+
+# --- Extract results back into two_way_df ---
+two_way_df$Overlap_width   <- sapply(overlap_results, `[[`, "width")       # exact overlap bp
+two_way_df$Overlap_all_two <- sapply(overlap_results, `[[`, "has_overlap") # TRUE/FALSE overlap
+two_way_df$Overlap_range   <- sapply(overlap_results, `[[`, "range")       # span of union
+
+
+
+
+head(three_way_df)
+
+head(two_way_df)
+
+
+dim(three_way_df)
+
+dim(two_way_df)
+
+
+
+# --- Harmonize and combine two-way and three-way overlaps ---
+
+three_way_df_renamed <- three_way_df
+if ("Overlap_all_three" %in% names(three_way_df_renamed)) {
+  names(three_way_df_renamed)[names(three_way_df_renamed) == "Overlap_all_three"] <- "Overlap_check"
+}
+if (!"Overlap_check" %in% names(three_way_df_renamed)) {
+  three_way_df_renamed$Overlap_check <- NA
+}
+three_way_df_renamed$overlap_type <- "three_way"
+
+two_way_df_renamed <- two_way_df
+if ("Overlap_all_two" %in% names(two_way_df_renamed)) {
+  names(two_way_df_renamed)[names(two_way_df_renamed) == "Overlap_all_two"] <- "Overlap_check"
+}
+if (!"Overlap_check" %in% names(two_way_df_renamed)) {
+  two_way_df_renamed$Overlap_check <- NA
+}
+
+# 2. Define schema
+common_cols <- c(
+  "idx_atac", "idx_ac", "idx_me3",
+  "Chromosome",
+  "ATAC_FC", "AC_FC", "ME3_FC",
+  "ATAC_Start", "ATAC_End",
+  "AC_Start", "AC_End",
+  "ME3_Start", "ME3_End",
+  "Overlap_width", "Overlap_check", "Overlap_range",
+  "overlap_type",
+  "ATAC_Width", "AC_Width", "ME3_Width"
+)
+
+# 3. Add missing columns
+three_way_df_renamed[setdiff(common_cols, names(three_way_df_renamed))] <- NA
+two_way_df_renamed[setdiff(common_cols, names(two_way_df_renamed))]     <- NA
+
+# 4. Recompute widths
+three_way_df_renamed <- three_way_df_renamed %>%
+  mutate(
+    ATAC_Width = ifelse(!is.na(ATAC_Start), ATAC_End - ATAC_Start + 1, NA),
+    AC_Width   = ifelse(!is.na(AC_Start),   AC_End   - AC_Start   + 1, NA),
+    ME3_Width  = ifelse(!is.na(ME3_Start),  ME3_End  - ME3_Start  + 1, NA)
+  )
+
+two_way_df_renamed <- two_way_df_renamed %>%
+  mutate(
+    ATAC_Width = ifelse(!is.na(ATAC_Start), ATAC_End - ATAC_Start + 1, ATAC_Width),
+    AC_Width   = ifelse(!is.na(AC_Start),   AC_End   - AC_Start   + 1, AC_Width),
+    ME3_Width  = ifelse(!is.na(ME3_Start),  ME3_End  - ME3_Start  + 1, ME3_Width)
+  )
+
+# 5. Reorder
+three_way_df_renamed <- three_way_df_renamed %>% dplyr::select(all_of(common_cols))
+two_way_df_renamed   <- two_way_df_renamed   %>% dplyr::select(all_of(common_cols))
+
+# 6. Combine
+all_overlaps <- bind_rows(three_way_df_renamed, two_way_df_renamed)
+
+
+atac_singletons <- atac %>%
+  transmute(
+    idx_atac = row_number(),
+    idx_ac = NA_integer_,
+    idx_me3 = NA_integer_,
+    Chromosome = seqnames,
+    ATAC_FC = Fine_clusters,
+    AC_FC = "NA_module",
+    ME3_FC = "NA_module",
+    ATAC_Start = start,
+    ATAC_End = end,
+    AC_Start = NA_integer_,
+    AC_End = NA_integer_,
+    ME3_Start = NA_integer_,
+    ME3_End = NA_integer_,
+    overlap_type = "atac_singleton"
+  )
+
+ac_singletons <- ac %>%
+  transmute(
+    idx_atac = NA_integer_,
+    idx_ac = row_number(),
+    idx_me3 = NA_integer_,
+    Chromosome = seqnames,
+    ATAC_FC = "NA_module",
+    AC_FC = Fine_clusters,
+    ME3_FC = "NA_module",
+    ATAC_Start = NA_integer_,
+    ATAC_End = NA_integer_,
+    AC_Start = start,
+    AC_End = end,
+    ME3_Start = NA_integer_,
+    ME3_End = NA_integer_,
+    overlap_type = "ac_singleton"
+  )
+
+me3_singletons <- me3 %>%
+  transmute(
+    idx_atac = NA_integer_,
+    idx_ac = NA_integer_,
+    idx_me3 = row_number(),
+    Chromosome = seqnames,
+    ATAC_FC = "NA_module",
+    AC_FC = "NA_module",
+    ME3_FC = Fine_clusters,
+    ATAC_Start = NA_integer_,
+    ATAC_End = NA_integer_,
+    AC_Start = NA_integer_,
+    AC_End = NA_integer_,
+    ME3_Start = start,
+    ME3_End = end,
+    overlap_type = "me3_singleton"
+  )
+
+overlap_core <- all_overlaps %>%
+  dplyr::select(idx_atac, idx_ac, idx_me3)
+
+all_overlaps_total <- bind_rows(
+  all_overlaps,
+  anti_join(atac_singletons, overlap_core, by = "idx_atac"),
+  anti_join(ac_singletons,  overlap_core, by = "idx_ac"),
+  anti_join(me3_singletons, overlap_core, by = "idx_me3")
+)
+
+
+```
+
+## Stage medians and ordinal encoding
+
+The helper functions below are selected from the original integration branch. Medians are computed across samples within each developmental stage. ATAC and AC use the 5th-percentile zero cutoff; ME3 uses the 2nd percentile. Remaining values are quantile-binned into ten levels, with the original rank-binning fallback if tied quantile breaks collapse. These ordinal values are not raw CPM/FPKM or WGCNA inputs.
+
+```{r integration-stage-encoding, eval=isTRUE(params$run_integration)}
+suppressPackageStartupMessages(
+  {
+    library(dplyr)
+    library(tidyr)
+  }
+)
+# Recorded developmental-stage aggregation and ordinal encoder.
+# Source: Kdm6b_ME3_AC_and_ATAC_big_picture_Fg.6_v4.Rmd.
+construct_metadata <- function(df, modality) {
+  # Pick suffix by modality
+  suffix <- ifelse(modality == "ATAC", "_cpm$", "_fpkm$")
+
+  # Extract sample names
+  sample_names <- grep(
+    suffix, names(df),
+    value = TRUE
+  )
+  sample_clean <- gsub(suffix, "", sample_names)
+  sample_clean <- gsub("^(Atac_|Hac_|Htk_)", "", sample_clean)  # strip prefixes
+
+  metadata <- data.frame(
+    RawName = sample_names,
+    Samples = sample_clean,
+    stringsAsFactors = FALSE
+  )
+
+  # Age: extract E## or P##
+  metadata$age <- gsub(".*(E\\d+|P\\d+).*", "\\1", metadata$Samples)
+
+  # Region: _C = Caudal, _R = Rostral
+  metadata$region <- ifelse(
+    grepl("_C", metadata$Samples),
+    "Caudal", ifelse(
+      grepl("_R", metadata$Samples),
+      "Rostral", NA
+    )
+  )
+
+  # Developmental compartment
+  metadata$dev <- NA
+  metadata$dev[grepl("Nex", metadata$Samples)] <- "Neurons"
+  metadata$dev[grepl("Vz", metadata$Samples)] <- "VZ"
+  metadata$dev[grepl("Svz", metadata$Samples)] <- "SVZ"
+  metadata$dev[grepl("Ntsr", metadata$Samples)] <- "L6"
+  metadata$dev[grepl("Rbp", metadata$Samples)] <- "L5"
+
+  return(metadata)
+}
+# Usage
+build_stage_matrix <- function(df, metadata, suffix) {
+
+  value_cols <- grep(
+    paste0(suffix, "$"),
+    names(df),
+    value = TRUE
+  )
+
+  df %>%
+    dplyr::select(ID, all_of(value_cols)) %>%
+    tidyr::pivot_longer(
+      cols = all_of(value_cols),
+      names_to = "RawName",
+      values_to = "value"
+    ) %>%
+    dplyr::left_join(metadata, by = "RawName") %>%
+    dplyr::filter(dev %in% c("VZ", "SVZ", "Neurons", "L6", "L5")) %>%
+    dplyr::mutate(
+      stage = dplyr::recode(
+        dev,
+        VZ = "VZ",
+        SVZ = "SVZ",
+        Neurons = "ImN",
+        L6 = "L6N",
+
+        L5 = "L5N"
+      )
+    ) %>%
+    dplyr::group_by(ID, stage) %>%
+    dplyr::summarise(
+      value = median(value, na.rm = TRUE),
+
+
+      .groups = "drop"
+    ) %>%
+    tidyr::pivot_wider(names_from = stage,
+      values_from = value) %>%
+    dplyr::arrange(ID)
+}
+ordinalize <- function(mat,
+  stages,
+  zero_q = 0.05,
+  n_levels = 10,
+  id_col = "ID") {
+
+  x <- as.matrix(mat[, stages, drop = FALSE])
+  ids <- mat[[id_col]]
+
+  zero_cut <- as.numeric(
+    quantile(
+      as.numeric(x),
+      zero_q,
+      na.rm = TRUE,
+      type = 7
+    )
+  )
+
+  nz <- as.numeric(x)[as.numeric(x) >
+    zero_cut]
+  q <- as.numeric(
+    quantile(
+      nz,
+      probs = seq(0, 1, length.out = n_levels + 1),
+
+
+      na.rm = TRUE,
+      type = 7
+    )
+  )
+
+  # guard ties
+  q <- unique(q)
+  if ((length(q) -
+    1) < n_levels) {
+    warning("Quantile breaks collapsed; falling back to rank-binning.")
+    out <- matrix(
+      0L, nrow = nrow(x),
+      ncol = ncol(x),
+      dimnames = list(ids, stages)
+    )
+    keep <- x > zero_cut
+    rk <- rank(x[keep], ties.method = "average")
+    out[keep] <- pmax(
+      1L, pmin(
+        n_levels, floor(
+          (rk - 1)/length(rk) *
+          n_levels
+        ) +
+          1L
+      )
+    )
+    return(out)
+  }
+
+  encode <- function(v) {
+    out <- integer(length(v))
+    keep <- v > zero_cut
+    out[!keep] <- 0L
+    out[keep] <- as.integer(cut(v[keep],
+      breaks = q,
+      labels = 1:n_levels,
+      include.lowest = TRUE))
+    out
+  }
+
+  out <- apply(x, 2, encode)
+  rownames(out) <- ids
+  storage.mode(out) <- "integer"
+  out
+}
+
+catalog_dir <- file.path(repo_dir, "data", "upstream", "final_tables")
+atac <- read.csv(
+  file.path(catalog_dir, "Supp_Table_1_ATAC_master.csv"),
+  check.names = FALSE
+)
+ac <- read.csv(
+  file.path(catalog_dir, "Supp_Table_2_AC_master.csv"),
+  check.names = FALSE
+)
+me3 <- read.csv(
+  file.path(catalog_dir, "Supp_Table_3_ME3_master.csv"),
+  check.names = FALSE
+)
+stages <- c("VZ", "SVZ", "ImN", "L6N", "L5N")
+atac_stage <- build_stage_matrix(
+  atac, construct_metadata(atac, "ATAC"),
+  "_cpm"
+)
+ac_stage <- build_stage_matrix(
+  ac, construct_metadata(ac, "AC"),
+  "_fpkm"
+)
+me3_stage <- build_stage_matrix(
+  me3, construct_metadata(me3, "ME3"),
+  "_fpkm"
+)
+atac_ordinal <- ordinalize(atac_stage,
+  stages,
+  zero_q = 0.05,
+  n_levels = 10)
+ac_ordinal <- ordinalize(ac_stage,
+  stages,
+  zero_q = 0.05,
+  n_levels = 10)
+me3_ordinal <- ordinalize(me3_stage,
+  stages,
+  zero_q = 0.02,
+  n_levels = 10)
+```
+
+
+## Assign stage trajectories to overlap records
+
+The overlap catalog retains ±2.5-kb expanded interval coordinates. For each record, the original algorithm averages all overlapping peak-level ordinal vectors and rounds to integer levels. Entirely absent modality vectors become zero. Pairwise and three-way records remain separate counting units.
+
+```{r integration-overlap-vectors, eval=isTRUE(params$run_integration)}
+make_traj_gr <- function(program_levels) {
+
+  df <- program_levels %>%
+    mutate(ID_orig = ID) %>%
+    separate(
+      ID, into = c("chr", "start", "end"),
+      sep = "_",
+      convert = TRUE
+    ) %>%
+    mutate(program = factor(program,
+      levels = stages)) %>%
+    arrange(ID_orig, program) %>%
+    group_by(ID_orig, chr, start, end) %>%
+    summarise(
+      vec = paste(level, collapse = "-"),
+
+      .groups = "drop"
+    )
+
+  GRanges(
+    seqnames = df$chr,
+    ranges = IRanges(df$start, df$end),
+
+    vec = df$vec
+  )
+}
+
+make_overlap_gr <- function(df, start_col, end_col) {
+
+  keep <- !is.na(df[[start_col]]) &
+    !is.na(df[[end_col]])
+
+  GRanges(
+    seqnames = df$Chromosome[keep],
+    ranges = IRanges(df[[start_col]][keep], df[[end_col]][keep]),
+
+    row_idx = which(keep)
+  )
+}
+
+assign_by_overlap <- function(ov_gr, traj_gr, n_rows, stages) {
+
+  out <- matrix(
+    NA_integer_,
+    nrow = n_rows,
+    ncol = length(stages),
+
+    dimnames = list(NULL, stages)
+  )
+
+  hits <- findOverlaps(ov_gr, traj_gr, ignore.strand = TRUE)
+  if (length(hits) ==
+    0)
+    return(out)
+
+  traj_mat <- as.matrix(
+    mcols(traj_gr)[,
+      stages, drop = FALSE]
+  )
+  storage.mode(traj_mat) <- "numeric"
+
+  qh <- queryHits(hits)
+  sh <- subjectHits(hits)
+
+  # group subject hits by query hit index
+  sh_by_q <- split(sh, qh)
+  for (qi_chr in names(sh_by_q)) {
+    qi <- as.integer(qi_chr)
+    row_out <- mcols(ov_gr)$row_idx[qi]
+    out[row_out, ] <- as.integer(round(colMeans(traj_mat[sh_by_q[[qi_chr]], , drop = FALSE],
+      na.rm = TRUE)))
+  }
+
+  storage.mode(out) <- "integer"
+  out
+}
+
+library(GenomicRanges)
+library(IRanges)
+all_overlaps_total <- read.csv(
+  file.path(
+    REPO, "data", "upstream", "integration", "all_overlaps_total_aug_with_Programs.csv"
+  ),
+  check.names = FALSE
+)
+atac_gr <- make_traj_gr(atac_ordinal, atac, stages)
+ac_gr <- make_traj_gr(ac_ordinal, ac, stages)
+me3_gr <- make_traj_gr(me3_ordinal, me3, stages)
+ATAC_mat <- assign_by_overlap(
+  make_overlap_gr(all_overlaps_total, "ATAC_Start", "ATAC_End"),
+  atac_gr, nrow(all_overlaps_total),
+  stages
+)
+AC_mat <- assign_by_overlap(
+  make_overlap_gr(all_overlaps_total, "AC_Start", "AC_End"),
+  ac_gr, nrow(all_overlaps_total),
+  stages
+)
+ME3_mat <- assign_by_overlap(
+  make_overlap_gr(all_overlaps_total, "ME3_Start", "ME3_End"),
+  me3_gr, nrow(all_overlaps_total),
+  stages
+)
+zero_vec <- rep(0L, length(stages))
+traj_df <- all_overlaps_total %>%
+  mutate(
+    ATAC_vec = asplit(ATAC_mat, 1),
+    AC_vec = asplit(AC_mat, 1),
+    ME3_vec = asplit(ME3_mat, 1)
+  ) %>%
+  mutate(
+    across(
+      ends_with("_vec"),
+      ~lapply(
+        .x, function(v) {
+          if (all(is.na(v)))
+          zero_vec else as.integer(v)
+        }
+      )
+    )
+  )
+```
+
+## Pairwise feature engineering, UMAP and graph clustering
+
+This is the selected original function, including level/slope/monotonicity/coupling features, anchor construction, PCA, UMAP, neighborhood graph construction, Leiden clustering and small-cluster merging. Its generic defaults are overridden by the manuscript calls below.
+
+```{r run-pairwise-recluster-and-plots, eval=isTRUE(params$run_integration)}
+run_pairwise_recluster_and_plots <- function(
+  traj_df,
+  connection = c("atac_ac", "atac_me3", "ac_me3"),
+
+  # Back-compat / safety
+  clustering_method = "umap_aligned",
+
+  # ---- shared size control ----
+  min_cluster_size = 500L,
+
+  # ---- PCA dimensions (for initial dimensionality reduction) ----
+  cluster_n_pcs = 30L,   # PCA dims BEFORE UMAP
+
+  # ---- UMAP parameters (computed BEFORE clustering) ----
+  n_neighbors = 25,
+  min_dist = 0.05,
+  umap_threads = 15,
+  umap_metric = "euclidean",
+
+  # ---- Clustering in UMAP space ----
+  cluster_k_param    = 30L,       # kNN in UMAP space
+  cluster_snn_k      = NULL,      # SNN neighbors in UMAP space
+  cluster_resolution = 1.2,
+  cluster_prune_snn  = 0.02,
+  cluster_algorithm  = c("leiden", "louvain"),
+  use_snn            = TRUE,
+
+  # ---- output dirs ----
+  out_plot_dir = file.path(REPO, "reports", "integration_recomputed"),
+  out_obj_dir  = file.path(REPO, "objects", "integration", "recomputed"),
+
+  # ---- core params ----
+  stages = c("VZ","SVZ","ImN","L6N","L5N"),
+  max_level = 10L,
+
+  # ---- anchors (included in BOTH PCA + UMAP) ----
+  use_anchors = TRUE,
+  const_range_cut = 1L,
+  const_sd_cut    = 0.75,
+  level_breaks    = c(-Inf, 3.5, 7.5, Inf),
+  target_anchor_ratio = 0.20,
+
+  # ---- feature engineering toggles ----
+  include_all_modalities = TRUE,
+  include_monotonicity  = TRUE,
+  include_coupling      = TRUE,
+
+  # If TRUE, applied to features before PCA
+  row_normalize_features = FALSE,
+
+  # ---- parallelism (monotonicity sign-change bits) ----
+  n_workers = 1L,
+  parallel_threshold = 60000,
+
+  # ---- feature inspection ----
+  inspect_feature_matrix = TRUE,
+  feature_head_n = 6,
+  show_feature_names = FALSE,
+
+  # ---- plotting aesthetics ----
+  modality_colors = c(ATAC = "#D55E00", AC = "#009E73", ME3 = "#0072B2"),
+
+  ribbon_alpha = 0.22,
+  line_width = 0.9,
+  point_size = 1.6,
+  facet_ncol = 6,
+
+  # ---- plot sizes ----
+  umap_width  = 7.5 * 1.6,
+  umap_height = 7.0 * 1.6,
+  traj_width  = 14.5,
+  traj_height = 9.5,
+
+  # ---- filenames ----
+  umap_prefix = "UMAP_pairwise",
+  traj_prefix = "Trajectories_pairwise",
+
+  # ---- behavior ----
+  show_plots = TRUE,
+  save_bundle = TRUE,
+  seed = 42
+) {
+
+  suppressPackageStartupMessages({
+    library(dplyr)
+    library(tidyr)
+    library(tibble)
+    library(uwot)
+    library(ggplot2)
+    library(ggrepel)
+    library(scales)
+    library(grid)
+    library(Matrix)
+    library(RANN)
+    library(igraph)
+    library(parallel)
+  })
+
+  if (!identical(clustering_method, "umap_aligned")) {
+    stop("This function supports clustering_method = 'umap_aligned' only.")
+  }
+
+  connection <- match.arg(connection)
+  cluster_algorithm <- match.arg(cluster_algorithm)
+  set.seed(seed)
+
+  dir.create(out_plot_dir,
+    showWarnings = FALSE,
+    recursive = TRUE)
+  dir.create(out_obj_dir,
+    showWarnings = FALSE,
+    recursive = TRUE)
+
+  dev_fun <- if (exists("cairo_pdf")) cairo_pdf else pdf
+  p <- length(stages)
+  zero_vec <- rep(0L, p)
+
+  safe_num <- function(x) gsub("\\.", "p", as.character(x))
+
+  # -----------------------------
+  # Fast scaling
+  # -----------------------------
+  fast_scale <- function(X) {
+    X <- as.matrix(X)
+    X[!is.finite(X)] <- 0
+    if (requireNamespace("matrixStats", quietly = TRUE)) {
+      mu  <- matrixStats::colMeans2(X)
+      sdv <- matrixStats::colSds(X, center = mu)
+    } else {
+      mu  <- colMeans(X)
+      sdv <- apply(X, 2, sd)
+    }
+    sdv[!is.finite(sdv) | sdv == 0] <- 1
+    Xz <- sweep(X, 2, mu, "-")
+    Xz <- sweep(Xz, 2, sdv, "/")
+    Xz[!is.finite(Xz)] <- 0
+    Xz
+  }
+
+  safe_row_normalize <- function(X) {
+    X <- as.matrix(X)
+    rn <- sqrt(rowSums(X^2, na.rm = TRUE))
+    rn[!is.finite(rn) | rn == 0] <- 1
+    Xn <- sweep(X, 1, rn, "/")
+    Xn[!is.finite(Xn)] <- 0
+    Xn
+  }
+
+  # -----------------------------
+  # Robust vector parser
+  # -----------------------------
+  parse_stage_vec <- function(x, stages, zero_vec, max_level) {
+    if (is.numeric(x) || is.integer(x)) {
+      v <- as.integer(x)
+    } else if (is.list(x) && length(x) == 1 && (is.numeric(x[[1]]) || is.integer(x[[1]]))) {
+      v <- as.integer(x[[1]])
+    } else if (is.character(x)) {
+      parts <- trimws(strsplit(x, ",", fixed = TRUE)[[1]])
+      parts <- parts[nzchar(parts)]
+      v <- suppressWarnings(as.integer(parts))
+    } else if (is.null(x) || (length(x) == 1 && is.na(x))) {
+      v <- integer(0)
+    } else {
+      stop("Unsupported vector encoding type: ", paste(class(x), collapse = "/"))
+    }
+
+    if (length(v) == 0 || all(is.na(v))) return(zero_vec)
+    if (length(v) != length(stages)) stop("Vector length mismatch: expected ", length(stages), " got ", length(v))
+    if (any(v < 0, na.rm = TRUE) || any(v > max_level, na.rm = TRUE)) stop("Vector has values outside [0,",
+      max_level,
+      "]")
+    v
+  }
+
+  # -----------------------------
+  # Anchors
+  # -----------------------------
+  const_bin <- function(v,
+    const_range_cut = 1L,
+    const_sd_cut = 0.75,
+    level_breaks = c(-Inf, 3.5, 7.5, Inf)) {
+    v <- as.numeric(v)
+    mu  <- mean(v, na.rm = TRUE)
+    sdv <- sd(v, na.rm = TRUE)
+    rng <- diff(range(v, na.rm = TRUE))
+    is_const <- is.finite(rng) && is.finite(sdv) && rng <= const_range_cut && sdv <= const_sd_cut
+    if (!is_const) return("Dynamic")
+    as.character(
+      cut(mu, breaks = level_breaks,
+          labels = c("Const_Low","Const_Med","Const_High"),
+          include.lowest = TRUE)
+    )
+  }
+
+  make_anchor_mm_4lvl <- function(bin, prefix) {
+    lvl <- c("Const_Low","Const_Med","Const_High","Dynamic")
+    bin <- factor(as.character(bin), levels = lvl)
+    mm  <- model.matrix(~ 0 + bin)
+    need <- paste0("bin", lvl)
+    missing <- setdiff(need, colnames(mm))
+    if (length(missing) > 0) {
+      mm <- cbind(mm, matrix(0, nrow(mm), length(missing), dimnames = list(NULL, missing)))
+    }
+    mm <- mm[, need, drop = FALSE]
+    colnames(mm) <- paste0(prefix, "_", lvl)
+    mm
+  }
+
+  # -----------------------------
+  # Monotonic features
+  # -----------------------------
+  mono_mat <- function(mat,
+    prefix,
+    n_workers = 1L,
+    parallel_ok = FALSE) {
+    mat <- as.matrix(mat)
+    n <- nrow(mat)
+    p <- ncol(mat)
+    dv <- mat[, -1, drop = FALSE] - mat[, -p, drop = FALSE]
+
+    delta_total <- mat[, p] - mat[, 1]
+    early_late  <- rowMeans(mat[, (p-1):p, drop = FALSE]) - rowMeans(mat[, 1:2, drop = FALSE])
+
+    peak_pos   <- (max.col(mat,  ties.method = "first") - 1) / (p - 1)
+    trough_pos <- (max.col(-mat, ties.method = "first") - 1) / (p - 1)
+
+    max_slope_pos <- (max.col(dv,  ties.method = "first") - 1) / (ncol(dv) - 1)
+    min_slope_pos <- (max.col(-dv, ties.method = "first") - 1) / (ncol(dv) - 1)
+
+    sign_change_one <- function(x) {
+      s <- sign(x); s <- s[is.finite(s) & s != 0]
+      if (length(s) < 2) return(0L)
+      sum(s[-1] != s[-length(s)])
+    }
+    is_mono_one <- function(x) {
+      s <- sign(x); s <- s[is.finite(s) & s != 0]
+      if (length(s) == 0) return(1L)
+      as.integer(all(s >= 0) || all(s <= 0))
+    }
+
+    if (!parallel_ok || n_workers <= 1L) {
+      n_sc <- vapply(seq_len(n), function(i) sign_change_one(dv[i, ]), integer(1))
+      mono <- vapply(seq_len(n), function(i) is_mono_one(dv[i, ]), integer(1))
+    } else {
+      idx_chunks <- split(seq_len(n),
+        cut(seq_len(n), breaks = n_workers, labels = FALSE))
+      cl <- parallel::makeCluster(as.integer(n_workers))
+      on.exit(parallel::stopCluster(cl), add = TRUE)
+      parallel::clusterExport(cl,
+        varlist = c("dv","sign_change_one","is_mono_one"),
+        envir = environment())
+      out <- parallel::parLapply(cl, idx_chunks, function(ii) {
+        list(
+          n_sc = vapply(ii, function(i) sign_change_one(dv[i, ]), integer(1)),
+          mono = vapply(ii, function(i) is_mono_one(dv[i, ]), integer(1))
+        )
+      })
+      n_sc <- unlist(lapply(out, `[[`, "n_sc"), use.names = FALSE)
+      mono <- unlist(lapply(out, `[[`, "mono"), use.names = FALSE)
+    }
+
+    out <- cbind(
+      delta_total    = delta_total,
+      early_late     = early_late,
+      n_sign_changes = n_sc,
+      is_monotonic   = mono,
+      peak_pos       = peak_pos,
+      trough_pos     = trough_pos,
+      max_slope_pos  = max_slope_pos,
+      min_slope_pos  = min_slope_pos
+    )
+    colnames(out) <- paste0(prefix, "_", colnames(out))
+    out
+  }
+
+  # -----------------------------
+  # Rowwise correlation (vectorized)
+  # -----------------------------
+  row_cor <- function(A, B) {
+    A <- as.matrix(A); B <- as.matrix(B)
+    ma <- rowMeans(A, na.rm = TRUE)
+    mb <- rowMeans(B, na.rm = TRUE)
+    Ac <- A - ma
+    Bc <- B - mb
+    num <- rowSums(Ac * Bc, na.rm = TRUE)
+    den <- sqrt(rowSums(Ac^2,
+      na.rm = TRUE) * rowSums(Bc^2,
+      na.rm = TRUE))
+    out <- ifelse(is.finite(den) & den > 0, num / den, 0)
+    out[!is.finite(out)] <- 0
+    out
+  }
+
+  # -----------------------------
+  # Coupling features
+  # -----------------------------
+  coupling_mat <- function(A, B, prefix) {
+    A <- as.matrix(A); B <- as.matrix(B)
+    dvA <- A[, -1, drop = FALSE] - A[, -ncol(A), drop = FALSE]
+    dvB <- B[, -1, drop = FALSE] - B[, -ncol(B), drop = FALSE]
+
+    cor_level <- row_cor(A, B)
+    cor_slope <- row_cor(dvA, dvB)
+
+    diffAB <- A - B
+    mean_abs_diff <- rowMeans(abs(diffAB), na.rm = TRUE)
+    l2_dist <- sqrt(rowSums(diffAB^2, na.rm = TRUE))
+
+    elA <- rowMeans(A[, (ncol(A)-1):ncol(A), drop = FALSE]) - rowMeans(A[, 1:2, drop = FALSE])
+    elB <- rowMeans(B[, (ncol(B)-1):ncol(B), drop = FALSE]) - rowMeans(B[, 1:2, drop = FALSE])
+    early_late_diff <- elA - elB
+
+    out <- cbind(
+      cor_level       = cor_level,
+      cor_slope       = cor_slope,
+      mean_abs_diff   = mean_abs_diff,
+      l2_dist         = l2_dist,
+      cos_shape       = cor_level,
+      early_late_diff = early_late_diff
+    )
+    colnames(out) <- paste0(prefix, "_", colnames(out))
+    out
+  }
+
+  # -----------------------------
+  # Relabel clusters 1..K by size
+  # -----------------------------
+  relabel_by_size <- function(lbl) {
+    lbl <- as.integer(lbl)
+    sz <- sort(table(lbl), decreasing = TRUE)
+    old <- as.integer(names(sz))
+    map <- setNames(seq_along(old), old)
+    as.integer(map[as.character(lbl)])
+  }
+
+  # -----------------------------
+  # Merge small clusters into nearest big cluster (centroid-based)
+  # -----------------------------
+  merge_small_clusters <- function(X, lbl, min_size, fallback_big_n = 50L) {
+    lbl <- as.integer(lbl)
+    if (min_size <= 1) return(lbl)
+
+    sz <- sort(table(lbl), decreasing = TRUE)
+    labs <- as.integer(names(sz))
+
+    big   <- as.integer(names(sz)[sz >= min_size])
+    small <- as.integer(names(sz)[sz <  min_size])
+
+    if (length(big) == 0L) {
+      big <- labs[seq_len(min(length(labs), as.integer(fallback_big_n)))]
+      small <- setdiff(labs, big)
+    }
+    if (length(small) == 0L || length(big) == 0L) return(lbl)
+
+    cent_big <- do.call(rbind,
+      lapply(big, function(k) colMeans(X[lbl == k, , drop = FALSE], na.rm = TRUE)))
+    rownames(cent_big) <- as.character(big)
+
+    for (s in small) {
+      idx_s <- which(lbl == s)
+      if (length(idx_s) == 0L) next
+      cent_s <- matrix(colMeans(X[idx_s, , drop = FALSE], na.rm = TRUE),
+        nrow = 1)
+      nn <- RANN::nn2(data = cent_big,
+        query = cent_s,
+        k = 1)
+      target <- as.integer(rownames(cent_big)[nn$nn.idx[1, 1]])
+      lbl[idx_s] <- target
+    }
+    lbl
+  }
+
+  # -----------------------------
+  # Graph clustering in UMAP space (2D)
+  # -----------------------------
+  cluster_in_umap_space <- function(umap_coords,
+                                     k_param = 30L,
+                                     snn_k = NULL,
+                                     resolution = 1.2,
+                                     prune_snn = 0.02,
+                                     algorithm = c("leiden","louvain"),
+                                     use_snn = TRUE,
+                                     seed = 42) {
+
+    algorithm <- match.arg(algorithm)
+    set.seed(seed)
+
+    emb <- as.matrix(umap_coords)
+    emb[!is.finite(emb)] <- 0
+
+    if (isTRUE(use_snn)) {
+      if (is.null(snn_k)) snn_k <- min(as.integer(k_param), 200L)
+      k_nn <- as.integer(snn_k)
+    } else {
+      k_nn <- as.integer(k_param)
+    }
+
+    nn <- RANN::nn2(emb, k = k_nn + 1L)
+    idx  <- nn$nn.idx[, -1, drop = FALSE]
+    dist <- nn$nn.dists[, -1, drop = FALSE]
+    n <- nrow(idx)
+
+    if (!isTRUE(use_snn)) {
+      w <- 1 / (1 + as.vector(t(dist)))
+      W <- Matrix::sparseMatrix(
+        i = rep(seq_len(n), each = k_nn),
+
+        j = as.vector(t(idx)),
+        x = w,
+        dims = c(n, n)
+      )
+      W <- pmax(W, Matrix::t(W))
+      W <- Matrix::drop0(W)
+    } else {
+      M <- Matrix::sparseMatrix(
+        i = rep(seq_len(n), each = k_nn),
+
+        j = as.vector(t(idx)),
+        x = 1,
+        dims = c(n, n)
+      )
+      U <- M + Matrix::t(M); U@x[] <- 1
+      S <- M %*% Matrix::t(M)
+      W <- (S * U)
+      diag(W) <- 0
+      W@x <- W@x / (2 * k_nn - W@x)
+
+      if (!is.null(prune_snn) && prune_snn > 0) {
+        W@x[W@x < prune_snn] <- 0
+      }
+      W <- Matrix::drop0(W)
+
+      if (length(W@x) == 0) {
+        warning("SNN pruning removed all edges; falling back to weighted kNN graph.")
+        w <- 1 / (1 + as.vector(t(dist)))
+        W <- Matrix::sparseMatrix(
+          i = rep(seq_len(n), each = k_nn),
+
+          j = as.vector(t(idx)),
+          x = w,
+          dims = c(n, n)
+        )
+        W <- pmax(W, Matrix::t(W))
+        W <- Matrix::drop0(W)
+      }
+    }
+
+    deg <- Matrix::rowSums(W != 0)
+    diagnostics <- list(
+      edges = length(W@x),
+      mean_degree = mean(deg),
+      frac_isolated = mean(deg == 0),
+      k_nn_used = k_nn,
+      space = "UMAP_2D"
+    )
+
+    g <- igraph::graph_from_adjacency_matrix(W,
+      mode = "undirected",
+      weighted = TRUE,
+      diag = FALSE)
+
+    if (algorithm == "leiden") {
+      has_igraph_leiden <- "cluster_leiden" %in% getNamespaceExports("igraph")
+      if (has_igraph_leiden) {
+        cl <- igraph::cluster_leiden(g,
+          resolution_parameter = resolution,
+          weights = igraph::E(g)$weight)
+        memb <- igraph::membership(cl)
+      } else if (requireNamespace("leiden", quietly = TRUE)) {
+        memb <- leiden::leiden(g,
+          resolution_parameter = resolution,
+          weights = igraph::E(g)$weight,
+          seed = seed)
+      } else {
+        warning("Leiden not available; falling back to Louvain.")
+        cl <- igraph::cluster_louvain(g, weights = igraph::E(g)$weight)
+        memb <- igraph::membership(cl)
+      }
+    } else {
+      cl <- igraph::cluster_louvain(g, weights = igraph::E(g)$weight)
+      memb <- igraph::membership(cl)
+    }
+
+    list(cluster = as.integer(memb),
+      graph = g,
+      W = W,
+      diagnostics = diagnostics)
+  }
+
+  # ============================================================
+  # 1) Pairwise subset
+  # ============================================================
+  miss <- function(x) is.na(x) | x == 0
+
+  df <- switch(
+    connection,
+    atac_ac  = traj_df %>% filter(!miss(idx_atac), !miss(idx_ac),  miss(idx_me3)),
+    atac_me3 = traj_df %>% filter(!miss(idx_atac),  miss(idx_ac), !miss(idx_me3)),
+    ac_me3   = traj_df %>% filter( miss(idx_atac), !miss(idx_ac), !miss(idx_me3))
+  )
+  if (nrow(df) == 0) stop("No rows found for connection = ", connection)
+
+  mods_pair <- switch(
+    connection,
+    atac_ac  = c("ATAC","AC"),
+    atac_me3 = c("ATAC","ME3"),
+    ac_me3   = c("AC","ME3")
+  )
+  mods_feat <- if (isTRUE(include_all_modalities)) c("ATAC","AC","ME3") else mods_pair
+
+  df <- df %>%
+    mutate(
+      ATAC_vec = lapply(ATAC_vec, parse_stage_vec, stages = stages, zero_vec = zero_vec, max_level = max_level),
+
+      AC_vec   = lapply(AC_vec,   parse_stage_vec, stages = stages, zero_vec = zero_vec, max_level = max_level),
+
+      ME3_vec  = lapply(ME3_vec,
+      parse_stage_vec,
+      stages = stages,
+      zero_vec = zero_vec,
+      max_level = max_level)
+    )
+
+  mat_for <- function(mod) {
+    vv <- df[[paste0(mod, "_vec")]]
+    m <- matrix(unlist(vv, use.names = FALSE),
+      ncol = length(stages),
+      byrow = TRUE)
+    colnames(m) <- paste0(mod, "_", stages)
+    storage.mode(m) <- "integer"
+    m
+  }
+
+  MAT <- lapply(mods_feat, mat_for)
+  names(MAT) <- mods_feat
+
+  # ============================================================
+  # 2) Engineered feature matrix (NO PROFILES)
+  # ============================================================
+  X_levels <- do.call(cbind, MAT)
+
+  get_slopes <- function(mat, mod) {
+    d <- mat[, -1, drop = FALSE] - mat[, -ncol(mat), drop = FALSE]
+    colnames(d) <- paste0("d", mod, "_", stages[-1], "_minus_", stages[-p])
+    d
+  }
+  X_slopes <- do.call(cbind, lapply(names(MAT), function(m) get_slopes(MAT[[m]], m)))
+
+  X_mono <- NULL
+  if (isTRUE(include_monotonicity)) {
+    parallel_ok <- (as.integer(n_workers) > 1L) && (nrow(df) >= as.integer(parallel_threshold))
+    X_mono <- do.call(cbind, lapply(names(MAT), function(m) {
+      mono_mat(MAT[[m]],
+        prefix = m,
+        n_workers = n_workers,
+        parallel_ok = parallel_ok)
+    }))
+  }
+
+  X_couple <- NULL
+  if (isTRUE(include_coupling)) {
+    pairs <- combn(names(MAT), 2, simplify = FALSE)
+    X_couple <- do.call(cbind, lapply(pairs, function(pr) {
+      m1 <- pr[1]; m2 <- pr[2]
+      coupling_mat(MAT[[m1]], MAT[[m2]], prefix = paste0(m1, "_", m2))
+    }))
+  }
+
+  X_cont  <- cbind(X_levels, X_slopes, X_mono, X_couple)
+  Xz_cont <- fast_scale(X_cont)
+
+  if (isTRUE(inspect_feature_matrix)) {
+    message("===== Feature matrix: Xz_cont (engineered; NO profiles) =====")
+    message("dim: ", nrow(Xz_cont), " x ", ncol(Xz_cont))
+    if (isTRUE(show_feature_names)) message("features: ", paste(colnames(Xz_cont), collapse = ", "))
+    print(utils::head(Xz_cont, feature_head_n))
+  }
+
+  # ============================================================
+  # 3) Anchors + unified matrix for PCA → UMAP → clustering
+  # ============================================================
+  anchor_mm <- NULL
+  w_anchor <- 0
+  X_for_pca <- Xz_cont
+
+  if (isTRUE(use_anchors)) {
+    bin_list <- lapply(names(MAT), function(m) {
+      apply(MAT[[m]], 1, const_bin,
+            const_range_cut = const_range_cut,
+            const_sd_cut    = const_sd_cut,
+            level_breaks    = level_breaks)
+    })
+    names(bin_list) <- names(MAT)
+    anchor_mm <- do.call(cbind, lapply(names(bin_list), function(m) make_anchor_mm_4lvl(bin_list[[m]], m)))
+
+    cont_norm   <- sqrt(rowSums(Xz_cont^2, na.rm = TRUE))
+    anchor_norm <- sqrt(rowSums(anchor_mm^2, na.rm = TRUE))
+    anchor_norm[!is.finite(anchor_norm) | anchor_norm == 0] <- 1
+
+    w_anchor <- target_anchor_ratio *
+      median(cont_norm, na.rm = TRUE) /
+      median(anchor_norm, na.rm = TRUE)
+    if (!is.finite(w_anchor)) w_anchor <- 0
+
+    X_for_pca <- cbind(Xz_cont, w_anchor * anchor_mm)
+    X_for_pca[!is.finite(X_for_pca)] <- 0
+  }
+
+  if (isTRUE(row_normalize_features)) {
+    X_for_pca <- safe_row_normalize(X_for_pca)
+  }
+
+  # ============================================================
+  # 4) PCA → UMAP → Cluster in UMAP space
+  # ============================================================
+
+  # Step 4a: PCA dimensionality reduction
+  set.seed(seed)
+  X_use <- as.matrix(X_for_pca)
+  X_use[!is.finite(X_use)] <- 0
+
+  if (!is.null(cluster_n_pcs) && cluster_n_pcs > 1L && ncol(X_use) > 2L) {
+    npc <- min(as.integer(cluster_n_pcs), ncol(X_use) - 1L)
+    if (requireNamespace("irlba", quietly = TRUE)) {
+      pca_emb <- irlba::prcomp_irlba(X_use,
+        n = npc,
+        center = TRUE,
+        scale. = FALSE)$x
+    } else {
+      pca_emb <- stats::prcomp(X_use,
+        rank. = npc,
+        center = TRUE,
+        scale. = FALSE)$x
+    }
+    message("PCA: Reduced to ", ncol(pca_emb), " dimensions for UMAP input")
+  } else {
+    pca_emb <- X_use
+    message("PCA: Skipped (using full feature matrix for UMAP)")
+  }
+
+  # Step 4b: UMAP from PCA embedding
+  set.seed(seed)
+  umap_input <- as.matrix(pca_emb)
+  umap_input[!is.finite(umap_input)] <- 0
+
+  message("Computing UMAP from PCA space...")
+  um <- uwot::umap(
+    umap_input,
+    n_neighbors = n_neighbors,
+    min_dist    = min_dist,
+    metric      = umap_metric,
+    n_threads   = umap_threads
+  )
+  message("UMAP computed: ", nrow(um), " points in 2D space")
+
+  # Step 4c: Cluster in UMAP space (THIS IS THE KEY CHANGE)
+  message("Clustering in UMAP space (ensures alignment with visualization)...")
+  gc <- cluster_in_umap_space(
+    um,
+    k_param    = as.integer(cluster_k_param),
+    snn_k      = cluster_snn_k,
+    resolution = cluster_resolution,
+    prune_snn  = cluster_prune_snn,
+    algorithm  = cluster_algorithm,
+    use_snn    = use_snn,
+    seed       = seed
+  )
+
+  cl_raw <- as.integer(gc$cluster)
+  cl_raw <- merge_small_clusters(um, cl_raw, min_size = as.integer(min_cluster_size))
+  cl_raw <- relabel_by_size(cl_raw)
+  df$two_way_cluster <- factor(cl_raw)
+
+  message(sprintf(
+    "Graph diagnostics: edges=%s | mean_degree=%.2f | isolated=%.1f%% | kNN_used=%d | space=%s",
+
+    scales::comma(gc$diagnostics$edges),
+    gc$diagnostics$mean_degree,
+    100 * gc$diagnostics$frac_isolated,
+    gc$diagnostics$k_nn_used,
+    gc$diagnostics$space
+  ))
+
+  tab <- dplyr::count(tibble(cluster = df$two_way_cluster),
+    cluster,
+    name = "n") %>%
+    mutate(frac = n / sum(n))
+
+  algo_note <- paste0(
+    "UMAP-aligned clustering (", cluster_algorithm,
+    ", use_snn=", use_snn,
+    ", k=", cluster_k_param,
+    ifelse(isTRUE(use_snn), paste0(", snn_k=", gc$diagnostics$k_nn_used), ""),
+    ", res=", cluster_resolution,
+    ", prune=", signif(cluster_prune_snn, 3),
+    ", merge<", min_cluster_size, ")"
+  )
+
+  algo_suffix <- paste0(
+    "umap_aligned_",
+    cluster_algorithm,
+    "_k", cluster_k_param,
+    ifelse(isTRUE(use_snn), paste0("_snn", gc$diagnostics$k_nn_used), "_knn"),
+    "_pcs", ifelse(is.null(cluster_n_pcs), "full", cluster_n_pcs),
+    "_unn", n_neighbors,
+    "_res", safe_num(cluster_resolution),
+    "_pr", safe_num(cluster_prune_snn),
+    "_m", min_cluster_size,
+    ifelse(isTRUE(use_anchors), paste0("_anch", safe_num(signif(w_anchor, 3))), "_noanch"),
+    ifelse(isTRUE(include_monotonicity), "_mono", "_nomono"),
+    ifelse(isTRUE(include_coupling), "_coup", "_nocoup")
+  )
+
+  message(
+    "Engineered features. Profiles=OFF; Monotonicity=",
+    ifelse(include_monotonicity, "ON", "OFF"),
+
+    "; Coupling=", ifelse(include_coupling, "ON", "OFF"),
+    "; Anchors=", ifelse(use_anchors, "ON", "OFF"),
+    ifelse(use_anchors, paste0(" | w_anchor=", signif(w_anchor, 3)), ""),
+    ifelse(row_normalize_features, " | row_norm=ON", " | row_norm=OFF"),
+
+    " | PCA dims=", ncol(pca_emb),
+    " | UMAP n_neighbors=", n_neighbors,
+    " | clustering=", algo_note,
+    " | K=", dplyr::n_distinct(df$two_way_cluster)
+  )
+
+  # ============================================================
+  # 5) UMAP plot with clusters
+  # ============================================================
+  umap_df <- df %>% mutate(UMAP1 = um[, 1],
+    UMAP2 = um[, 2])
+
+  label_df <- umap_df %>%
+    group_by(two_way_cluster) %>%
+    summarise(
+      UMAP1 = median(UMAP1, na.rm = TRUE),
+
+      UMAP2 = median(UMAP2, na.rm = TRUE),
+
+      n     = dplyr::n(),
+      .groups = "drop"
+    ) %>%
+    mutate(label = paste0(two_way_cluster,
+      "\n(n=",
+      n,
+      ")"))
+
+  p_umap <- ggplot(umap_df, aes(UMAP1, UMAP2, color = two_way_cluster)) +
+    geom_point(size = 0.22,
+      alpha = 0.55) +
+    ggrepel::geom_label_repel(
+      data = label_df,
+      aes(x = UMAP1, y = UMAP2, label = label),
+
+      inherit.aes = FALSE,
+      color = "black",
+      fill  = scales::alpha("white", 0.40),
+      label.size = 0.20,
+      size = 3.2,
+      max.overlaps = Inf,
+      min.segment.length = 0,
+      seed = seed
+    ) +
+    guides(color = guide_legend(override.aes = list(size = 3.5,
+      alpha = 1))) +
+    theme_classic() +
+    theme(
+      legend.position = "right",
+      legend.key.height = grid::unit(0.5, "cm"),
+      legend.key.width  = grid::unit(0.5, "cm")
+    ) +
+    labs(
+      title = paste0("Pairwise chromatin programs: ", connection, " (engineered features; NO profiles)"),
+      subtitle = paste0("UMAP computed from PCA (", ncol(pca_emb), " dims). Clustering = ", algo_note, " [IN UMAP SPACE]"),
+
+      color = "Cluster"
+    )
+
+  umap_stem <- paste0(umap_prefix, "_", connection, "_", algo_suffix)
+  umap_pdf  <- file.path(out_plot_dir, paste0(umap_stem, ".pdf"))
+  ggsave(umap_pdf,
+    p_umap,
+    width = umap_width,
+    height = umap_height,
+    units = "in",
+    device = dev_fun)
+  if (isTRUE(show_plots)) print(p_umap)
+
+  # ============================================================
+  # 6) Trajectory plot (pair modalities only)
+  # ============================================================
+  vec_to_long <- function(df_in, mod) {
+    mat <- matrix(unlist(df_in[[paste0(mod, "_vec")]], use.names = FALSE),
+      ncol = length(stages),
+      byrow = TRUE)
+    colnames(mat) <- stages
+    as.data.frame(mat) %>%
+      mutate(row_id = seq_len(nrow(mat))) %>%
+      pivot_longer(-row_id,
+        names_to = "Stage",
+        values_to = "quantile_value") %>%
+      mutate(Modality = mod)
+  }
+
+  longA <- vec_to_long(umap_df, mods_pair[1])
+  longB <- vec_to_long(umap_df, mods_pair[2])
+
+  traj_long <- bind_rows(longA, longB) %>%
+    left_join(
+      umap_df %>% transmute(row_id = dplyr::row_number(), cluster = as.character(two_way_cluster)),
+
+      by = "row_id"
+    ) %>%
+    mutate(
+      Stage    = factor(Stage, levels = stages),
+
+      Modality = factor(Modality, levels = c("ATAC","AC","ME3")),
+
+      cluster  = factor(cluster,
+      levels = levels(umap_df$two_way_cluster))
+    )
+
+  cluster_n <- traj_long %>%
+    distinct(row_id, cluster) %>%
+    dplyr::count(cluster, name = "n")
+
+  traj_summary <- traj_long %>%
+    group_by(cluster, Modality, Stage) %>%
+    summarise(
+      mean_quantile = mean(quantile_value, na.rm = TRUE),
+
+      sd_quantile   = sd(quantile_value, na.rm = TRUE),
+
+      .groups = "drop"
+    ) %>%
+    left_join(cluster_n, by = "cluster") %>%
+    mutate(
+      ymin = pmax(0, mean_quantile - sd_quantile),
+      ymax = pmin(max_level, mean_quantile + sd_quantile),
+      cluster_label = paste0(as.character(cluster),
+      "\n(n=",
+      n,
+      ")")
+    )
+
+  label_levels <- traj_summary %>%
+    distinct(cluster, cluster_label) %>%
+    mutate(ord = suppressWarnings(as.integer(as.character(cluster)))) %>%
+    arrange(ord) %>%
+    pull(cluster_label)
+  traj_summary$cluster_label <- factor(traj_summary$cluster_label, levels = label_levels)
+
+  p_traj <- ggplot(traj_summary,
+    aes(Stage, mean_quantile, color = Modality, group = Modality)) +
+    geom_line(linewidth = line_width) +
+    geom_point(size = point_size) +
+    facet_wrap(~ cluster_label, ncol = facet_ncol) +
+    scale_color_manual(values = modality_colors) +
+    scale_y_continuous(limits = c(0, max_level),
+      breaks = seq(0, max_level, 2)) +
+    theme_minimal(base_size = 11) +
+    theme(
+      panel.grid.minor = element_blank(),
+      strip.background = element_rect(fill = "grey90", color = NA),
+
+      strip.text = element_text(face = "bold"),
+
+      axis.text.x = element_text(angle = 45, hjust = 1),
+
+      legend.position = "bottom"
+    ) +
+    labs(
+      x = "Developmental stage",
+      y = "Mean quantized signal level (0–10)",
+      color = "Modality",
+      title = paste0("Mean quantized chromatin trajectories (", connection, ")"),
+      subtitle = paste0(
+        "Clusters aligned with UMAP (", algo_note, ")\n",
+        "Band = ±1 SD across loci within cluster"
+      )
+    )
+
+  traj_stem <- paste0(traj_prefix, "_", connection, "_", algo_suffix)
+  traj_pdf  <- file.path(out_plot_dir, paste0(traj_stem, ".pdf"))
+  ggsave(traj_pdf,
+    p_traj,
+    width = traj_width,
+    height = traj_height,
+    units = "in",
+    device = dev_fun)
+  if (isTRUE(show_plots)) print(p_traj)
+
+  # ============================================================
+  # 7) Bundle
+  # ============================================================
+  bundle <- list(
+    connection = connection,
+    modalities_pair = mods_pair,
+    modalities_features = mods_feat,
+    stages = stages,
+    max_level = max_level,
+
+    feature_engineering = list(
+      include_all_modalities = include_all_modalities,
+      include_monotonicity = include_monotonicity,
+      include_coupling = include_coupling
+    ),
+
+    use_anchors = use_anchors,
+    w_anchor = w_anchor,
+    anchor_mm = anchor_mm,
+    row_normalize_features = row_normalize_features,
+
+    clustering_note = algo_note,
+    algo_suffix = algo_suffix,
+    min_cluster_size = as.integer(min_cluster_size),
+    clustering_obj = gc,
+    cluster_table = tab,
+
+    X_cont = X_cont,
+    Xz_cont = Xz_cont,
+    X_for_pca = X_for_pca,
+    pca_embedding = pca_emb,
+
+    umap_coords = um,
+    umap_df = umap_df,
+    umap_plot = p_umap,
+
+    traj_plot = p_traj,
+    traj_summary = traj_summary,
+
+    files = list(
+      umap_pdf = umap_pdf,
+      traj_pdf = traj_pdf
+    ),
+
+    params = list(
+      n_neighbors = n_neighbors,
+      min_dist = min_dist,
+      umap_threads = umap_threads,
+      umap_metric = umap_metric,
+      cluster_k_param = cluster_k_param,
+      cluster_snn_k = cluster_snn_k,
+      cluster_n_pcs = cluster_n_pcs,
+      cluster_resolution = cluster_resolution,
+      cluster_prune_snn = cluster_prune_snn,
+      cluster_algorithm = cluster_algorithm,
+      use_snn = use_snn,
+      seed = seed
+    )
+  )
+
+  if (isTRUE(save_bundle)) {
+    bundle_rds <- file.path(out_obj_dir, paste0(umap_stem, ".rds"))
+    saveRDS(bundle, bundle_rds)
+    bundle$files$bundle_rds <- bundle_rds
+  }
+
+  invisible(bundle)
+}
+```
+
+## Three-way feature engineering, UMAP and graph clustering
+
+This is the selected original function, including level/slope/monotonicity/coupling features, anchor construction, PCA, UMAP, neighborhood graph construction, Leiden clustering and small-cluster merging. Its generic defaults are overridden by the manuscript calls below.
+
+```{r run-threeway-recluster-and-plots, eval=isTRUE(params$run_integration)}
+run_threeway_recluster_and_plots <- function(
+  traj_df,
+
+  # Back-compat / safety
+  clustering_method = "umap_aligned",
+
+  # ---- shared size control ----
+  min_cluster_size = 500L,
+
+  # ---- PCA dimensions (for initial dimensionality reduction) ----
+  cluster_n_pcs = 30L,   # PCA dims BEFORE UMAP
+
+  # ---- UMAP parameters (computed BEFORE clustering) ----
+  n_neighbors = 25,
+  min_dist = 0.05,
+  umap_threads = 15,
+  umap_metric = "euclidean",
+
+  # ---- Clustering in UMAP space ----
+  cluster_k_param    = 30L,       # kNN in UMAP space
+  cluster_snn_k      = NULL,      # SNN neighbors in UMAP space
+  cluster_resolution = 1.2,
+  cluster_prune_snn  = 0.02,
+  cluster_algorithm  = c("leiden", "louvain"),
+  use_snn            = TRUE,
+
+  # ---- output dirs ----
+  out_plot_dir = file.path(REPO, "reports", "integration_recomputed"),
+  out_obj_dir  = file.path(REPO, "objects", "integration", "recomputed"),
+
+  # ---- core params ----
+  stages = c("VZ","SVZ","ImN","L6N","L5N"),
+  max_level = 10L,
+
+  # ---- anchors (included in BOTH PCA + UMAP) ----
+  use_anchors = TRUE,
+  const_range_cut = 1L,
+  const_sd_cut    = 0.75,
+  level_breaks    = c(-Inf, 3.5, 7.5, Inf),
+  target_anchor_ratio = 0.20,
+
+  # ---- feature engineering toggles ----
+  # (kept for symmetry; three-way always has all 3 modalities available)
+  include_monotonicity  = TRUE,
+  include_coupling      = TRUE,
+
+  # If TRUE, applied to features before PCA
+  row_normalize_features = FALSE,
+
+  # ---- parallelism (monotonicity sign-change bits) ----
+  n_workers = 1L,
+  parallel_threshold = 60000,
+
+  # ---- feature inspection ----
+  inspect_feature_matrix = TRUE,
+  feature_head_n = 6,
+  show_feature_names = FALSE,
+
+  # ---- plotting aesthetics ----
+  modality_colors = c(ATAC = "#D55E00", AC = "#009E73", ME3 = "#0072B2"),
+
+  ribbon_alpha = 0.22,
+  line_width = 0.9,
+  point_size = 1.6,
+  facet_ncol = 6,
+
+  # ---- plot sizes ----
+  umap_width  = 7.5 * 1.6,
+  umap_height = 7.0 * 1.6,
+  traj_width  = 14.5,
+  traj_height = 9.5,
+
+  # ---- filenames ----
+  umap_prefix = "UMAP_threeway",
+  traj_prefix = "Trajectories_threeway",
+
+  # ---- behavior ----
+  show_plots = TRUE,
+  save_bundle = TRUE,
+  seed = 42
+) {
+
+  suppressPackageStartupMessages({
+    library(dplyr)
+    library(tidyr)
+    library(tibble)
+    library(uwot)
+    library(ggplot2)
+    library(ggrepel)
+    library(scales)
+    library(grid)
+    library(Matrix)
+    library(RANN)
+    library(igraph)
+    library(parallel)
+  })
+
+  if (!identical(clustering_method, "umap_aligned")) {
+    stop("This function supports clustering_method = 'umap_aligned' only.")
+  }
+
+  cluster_algorithm <- match.arg(cluster_algorithm)
+  set.seed(seed)
+
+  dir.create(out_plot_dir,
+    showWarnings = FALSE,
+    recursive = TRUE)
+  dir.create(out_obj_dir,
+    showWarnings = FALSE,
+    recursive = TRUE)
+
+  dev_fun <- if (exists("cairo_pdf")) cairo_pdf else pdf
+  p <- length(stages)
+  zero_vec <- rep(0L, p)
+
+  safe_num <- function(x) gsub("\\.", "p", as.character(x))
+
+  # -----------------------------
+  # Fast scaling
+  # -----------------------------
+  fast_scale <- function(X) {
+    X <- as.matrix(X)
+    X[!is.finite(X)] <- 0
+    if (requireNamespace("matrixStats", quietly = TRUE)) {
+      mu  <- matrixStats::colMeans2(X)
+      sdv <- matrixStats::colSds(X, center = mu)
+    } else {
+      mu  <- colMeans(X)
+      sdv <- apply(X, 2, sd)
+    }
+    sdv[!is.finite(sdv) | sdv == 0] <- 1
+    Xz <- sweep(X, 2, mu, "-")
+    Xz <- sweep(Xz, 2, sdv, "/")
+    Xz[!is.finite(Xz)] <- 0
+    Xz
+  }
+
+  safe_row_normalize <- function(X) {
+    X <- as.matrix(X)
+    rn <- sqrt(rowSums(X^2, na.rm = TRUE))
+    rn[!is.finite(rn) | rn == 0] <- 1
+    Xn <- sweep(X, 1, rn, "/")
+    Xn[!is.finite(Xn)] <- 0
+    Xn
+  }
+
+  # -----------------------------
+  # Robust vector parser
+  # -----------------------------
+  parse_stage_vec <- function(x, stages, zero_vec, max_level) {
+    if (is.numeric(x) || is.integer(x)) {
+      v <- as.integer(x)
+    } else if (is.list(x) && length(x) == 1 && (is.numeric(x[[1]]) || is.integer(x[[1]]))) {
+      v <- as.integer(x[[1]])
+    } else if (is.character(x)) {
+      parts <- trimws(strsplit(x, ",", fixed = TRUE)[[1]])
+      parts <- parts[nzchar(parts)]
+      v <- suppressWarnings(as.integer(parts))
+    } else if (is.null(x) || (length(x) == 1 && is.na(x))) {
+      v <- integer(0)
+    } else {
+      stop("Unsupported vector encoding type: ", paste(class(x), collapse = "/"))
+    }
+
+    if (length(v) == 0 || all(is.na(v))) return(zero_vec)
+    if (length(v) != length(stages)) stop("Vector length mismatch: expected ", length(stages), " got ", length(v))
+    if (any(v < 0, na.rm = TRUE) || any(v > max_level, na.rm = TRUE)) stop("Vector has values outside [0,",
+      max_level,
+      "]")
+    v
+  }
+
+  # -----------------------------
+  # Anchors
+  # -----------------------------
+  const_bin <- function(v,
+    const_range_cut = 1L,
+    const_sd_cut = 0.75,
+    level_breaks = c(-Inf, 3.5, 7.5, Inf)) {
+    v <- as.numeric(v)
+    mu  <- mean(v, na.rm = TRUE)
+    sdv <- sd(v, na.rm = TRUE)
+    rng <- diff(range(v, na.rm = TRUE))
+    is_const <- is.finite(rng) && is.finite(sdv) && rng <= const_range_cut && sdv <= const_sd_cut
+    if (!is_const) return("Dynamic")
+    as.character(
+      cut(mu, breaks = level_breaks,
+          labels = c("Const_Low","Const_Med","Const_High"),
+          include.lowest = TRUE)
+    )
+  }
+
+  make_anchor_mm_4lvl <- function(bin, prefix) {
+    lvl <- c("Const_Low","Const_Med","Const_High","Dynamic")
+    bin <- factor(as.character(bin), levels = lvl)
+    mm  <- model.matrix(~ 0 + bin)
+    need <- paste0("bin", lvl)
+    missing <- setdiff(need, colnames(mm))
+    if (length(missing) > 0) {
+      mm <- cbind(mm, matrix(0, nrow(mm), length(missing), dimnames = list(NULL, missing)))
+    }
+    mm <- mm[, need, drop = FALSE]
+    colnames(mm) <- paste0(prefix, "_", lvl)
+    mm
+  }
+
+  # -----------------------------
+  # Monotonic features
+  # -----------------------------
+  mono_mat <- function(mat,
+    prefix,
+    n_workers = 1L,
+    parallel_ok = FALSE) {
+    mat <- as.matrix(mat)
+    n <- nrow(mat)
+    p <- ncol(mat)
+    dv <- mat[, -1, drop = FALSE] - mat[, -p, drop = FALSE]
+
+    delta_total <- mat[, p] - mat[, 1]
+    early_late  <- rowMeans(mat[, (p-1):p, drop = FALSE]) - rowMeans(mat[, 1:2, drop = FALSE])
+
+    peak_pos   <- (max.col(mat,  ties.method = "first") - 1) / (p - 1)
+    trough_pos <- (max.col(-mat, ties.method = "first") - 1) / (p - 1)
+
+    max_slope_pos <- (max.col(dv,  ties.method = "first") - 1) / (ncol(dv) - 1)
+    min_slope_pos <- (max.col(-dv, ties.method = "first") - 1) / (ncol(dv) - 1)
+
+    sign_change_one <- function(x) {
+      s <- sign(x); s <- s[is.finite(s) & s != 0]
+      if (length(s) < 2) return(0L)
+      sum(s[-1] != s[-length(s)])
+    }
+    is_mono_one <- function(x) {
+      s <- sign(x); s <- s[is.finite(s) & s != 0]
+      if (length(s) == 0) return(1L)
+      as.integer(all(s >= 0) || all(s <= 0))
+    }
+
+    if (!parallel_ok || n_workers <= 1L) {
+      n_sc <- vapply(seq_len(n), function(i) sign_change_one(dv[i, ]), integer(1))
+      mono <- vapply(seq_len(n), function(i) is_mono_one(dv[i, ]), integer(1))
+    } else {
+      idx_chunks <- split(seq_len(n),
+        cut(seq_len(n), breaks = n_workers, labels = FALSE))
+      cl <- parallel::makeCluster(as.integer(n_workers))
+      on.exit(parallel::stopCluster(cl), add = TRUE)
+      parallel::clusterExport(cl,
+        varlist = c("dv","sign_change_one","is_mono_one"),
+        envir = environment())
+      out <- parallel::parLapply(cl, idx_chunks, function(ii) {
+        list(
+          n_sc = vapply(ii, function(i) sign_change_one(dv[i, ]), integer(1)),
+          mono = vapply(ii, function(i) is_mono_one(dv[i, ]), integer(1))
+        )
+      })
+      n_sc <- unlist(lapply(out, `[[`, "n_sc"), use.names = FALSE)
+      mono <- unlist(lapply(out, `[[`, "mono"), use.names = FALSE)
+    }
+
+    out <- cbind(
+      delta_total    = delta_total,
+      early_late     = early_late,
+      n_sign_changes = n_sc,
+      is_monotonic   = mono,
+      peak_pos       = peak_pos,
+      trough_pos     = trough_pos,
+      max_slope_pos  = max_slope_pos,
+      min_slope_pos  = min_slope_pos
+    )
+    colnames(out) <- paste0(prefix, "_", colnames(out))
+    out
+  }
+
+  # -----------------------------
+  # Rowwise correlation (vectorized)
+  # -----------------------------
+  row_cor <- function(A, B) {
+    A <- as.matrix(A); B <- as.matrix(B)
+    ma <- rowMeans(A, na.rm = TRUE)
+    mb <- rowMeans(B, na.rm = TRUE)
+    Ac <- A - ma
+    Bc <- B - mb
+    num <- rowSums(Ac * Bc, na.rm = TRUE)
+    den <- sqrt(rowSums(Ac^2,
+      na.rm = TRUE) * rowSums(Bc^2,
+      na.rm = TRUE))
+    out <- ifelse(is.finite(den) & den > 0, num / den, 0)
+    out[!is.finite(out)] <- 0
+    out
+  }
+
+  # -----------------------------
+  # Coupling features
+  # -----------------------------
+  coupling_mat <- function(A, B, prefix) {
+    A <- as.matrix(A); B <- as.matrix(B)
+    dvA <- A[, -1, drop = FALSE] - A[, -ncol(A), drop = FALSE]
+    dvB <- B[, -1, drop = FALSE] - B[, -ncol(B), drop = FALSE]
+
+    cor_level <- row_cor(A, B)
+    cor_slope <- row_cor(dvA, dvB)
+
+    diffAB <- A - B
+    mean_abs_diff <- rowMeans(abs(diffAB), na.rm = TRUE)
+    l2_dist <- sqrt(rowSums(diffAB^2, na.rm = TRUE))
+
+    elA <- rowMeans(A[, (ncol(A)-1):ncol(A), drop = FALSE]) - rowMeans(A[, 1:2, drop = FALSE])
+    elB <- rowMeans(B[, (ncol(B)-1):ncol(B), drop = FALSE]) - rowMeans(B[, 1:2, drop = FALSE])
+    early_late_diff <- elA - elB
+
+    out <- cbind(
+      cor_level       = cor_level,
+      cor_slope       = cor_slope,
+      mean_abs_diff   = mean_abs_diff,
+      l2_dist         = l2_dist,
+      cos_shape       = cor_level,
+      early_late_diff = early_late_diff
+    )
+    colnames(out) <- paste0(prefix, "_", colnames(out))
+    out
+  }
+
+  # -----------------------------
+  # Relabel clusters 1..K by size
+  # -----------------------------
+  relabel_by_size <- function(lbl) {
+    lbl <- as.integer(lbl)
+    sz <- sort(table(lbl), decreasing = TRUE)
+    old <- as.integer(names(sz))
+    map <- setNames(seq_along(old), old)
+    as.integer(map[as.character(lbl)])
+  }
+
+  # -----------------------------
+  # Merge small clusters into nearest big cluster (centroid-based)
+  # -----------------------------
+  merge_small_clusters <- function(X, lbl, min_size, fallback_big_n = 50L) {
+    lbl <- as.integer(lbl)
+    if (min_size <= 1) return(lbl)
+
+    sz <- sort(table(lbl), decreasing = TRUE)
+    labs <- as.integer(names(sz))
+
+    big   <- as.integer(names(sz)[sz >= min_size])
+    small <- as.integer(names(sz)[sz <  min_size])
+
+    if (length(big) == 0L) {
+      big <- labs[seq_len(min(length(labs), as.integer(fallback_big_n)))]
+      small <- setdiff(labs, big)
+    }
+    if (length(small) == 0L || length(big) == 0L) return(lbl)
+
+    cent_big <- do.call(rbind,
+      lapply(big, function(k) colMeans(X[lbl == k, , drop = FALSE], na.rm = TRUE)))
+    rownames(cent_big) <- as.character(big)
+
+    for (s in small) {
+      idx_s <- which(lbl == s)
+      if (length(idx_s) == 0L) next
+      cent_s <- matrix(colMeans(X[idx_s, , drop = FALSE], na.rm = TRUE),
+        nrow = 1)
+      nn <- RANN::nn2(data = cent_big,
+        query = cent_s,
+        k = 1)
+      target <- as.integer(rownames(cent_big)[nn$nn.idx[1, 1]])
+      lbl[idx_s] <- target
+    }
+    lbl
+  }
+
+  # -----------------------------
+  # Graph clustering in UMAP space (2D)
+  # -----------------------------
+  cluster_in_umap_space <- function(umap_coords,
+                                    k_param = 30L,
+                                    snn_k = NULL,
+                                    resolution = 1.2,
+                                    prune_snn = 0.02,
+                                    algorithm = c("leiden","louvain"),
+                                    use_snn = TRUE,
+                                    seed = 42) {
+
+    algorithm <- match.arg(algorithm)
+    set.seed(seed)
+
+    emb <- as.matrix(umap_coords)
+    emb[!is.finite(emb)] <- 0
+
+    if (isTRUE(use_snn)) {
+      if (is.null(snn_k)) snn_k <- min(as.integer(k_param), 200L)
+      k_nn <- as.integer(snn_k)
+    } else {
+      k_nn <- as.integer(k_param)
+    }
+
+    nn <- RANN::nn2(emb, k = k_nn + 1L)
+    idx  <- nn$nn.idx[, -1, drop = FALSE]
+    dist <- nn$nn.dists[, -1, drop = FALSE]
+    n <- nrow(idx)
+
+    if (!isTRUE(use_snn)) {
+      w <- 1 / (1 + as.vector(t(dist)))
+      W <- Matrix::sparseMatrix(
+        i = rep(seq_len(n), each = k_nn),
+
+        j = as.vector(t(idx)),
+        x = w,
+        dims = c(n, n)
+      )
+      W <- pmax(W, Matrix::t(W))
+      W <- Matrix::drop0(W)
+    } else {
+      M <- Matrix::sparseMatrix(
+        i = rep(seq_len(n), each = k_nn),
+
+        j = as.vector(t(idx)),
+        x = 1,
+        dims = c(n, n)
+      )
+      U <- M + Matrix::t(M); U@x[] <- 1
+      S <- M %*% Matrix::t(M)
+      W <- (S * U)
+      diag(W) <- 0
+      W@x <- W@x / (2 * k_nn - W@x)
+
+      if (!is.null(prune_snn) && prune_snn > 0) {
+        W@x[W@x < prune_snn] <- 0
+      }
+      W <- Matrix::drop0(W)
+
+      if (length(W@x) == 0) {
+        warning("SNN pruning removed all edges; falling back to weighted kNN graph.")
+        w <- 1 / (1 + as.vector(t(dist)))
+        W <- Matrix::sparseMatrix(
+          i = rep(seq_len(n), each = k_nn),
+
+          j = as.vector(t(idx)),
+          x = w,
+          dims = c(n, n)
+        )
+        W <- pmax(W, Matrix::t(W))
+        W <- Matrix::drop0(W)
+      }
+    }
+
+    deg <- Matrix::rowSums(W != 0)
+    diagnostics <- list(
+      edges = length(W@x),
+      mean_degree = mean(deg),
+      frac_isolated = mean(deg == 0),
+      k_nn_used = k_nn,
+      space = "UMAP_2D"
+    )
+
+    g <- igraph::graph_from_adjacency_matrix(W,
+      mode = "undirected",
+      weighted = TRUE,
+      diag = FALSE)
+
+    if (algorithm == "leiden") {
+      has_igraph_leiden <- "cluster_leiden" %in% getNamespaceExports("igraph")
+      if (has_igraph_leiden) {
+        cl <- igraph::cluster_leiden(g,
+          resolution_parameter = resolution,
+          weights = igraph::E(g)$weight)
+        memb <- igraph::membership(cl)
+      } else if (requireNamespace("leiden", quietly = TRUE)) {
+        memb <- leiden::leiden(g,
+          resolution_parameter = resolution,
+          weights = igraph::E(g)$weight,
+          seed = seed)
+      } else {
+        warning("Leiden not available; falling back to Louvain.")
+        cl <- igraph::cluster_louvain(g, weights = igraph::E(g)$weight)
+        memb <- igraph::membership(cl)
+      }
+    } else {
+      cl <- igraph::cluster_louvain(g, weights = igraph::E(g)$weight)
+      memb <- igraph::membership(cl)
+    }
+
+    list(cluster = as.integer(memb),
+      graph = g,
+      W = W,
+      diagnostics = diagnostics)
+  }
+
+  # ============================================================
+  # 1) Three-way subset
+  # ============================================================
+  miss <- function(x) is.na(x) | x == 0
+
+  df <- traj_df %>%
+    filter(!miss(idx_atac), !miss(idx_ac), !miss(idx_me3))
+
+  if (nrow(df) == 0) stop("No three-way rows found: require idx_atac, idx_ac, idx_me3 all non-missing/nonzero.")
+
+  mods_feat <- c("ATAC","AC","ME3")
+
+  df <- df %>%
+    mutate(
+      ATAC_vec = lapply(ATAC_vec, parse_stage_vec, stages = stages, zero_vec = zero_vec, max_level = max_level),
+
+      AC_vec   = lapply(AC_vec,   parse_stage_vec, stages = stages, zero_vec = zero_vec, max_level = max_level),
+
+      ME3_vec  = lapply(ME3_vec,
+      parse_stage_vec,
+      stages = stages,
+      zero_vec = zero_vec,
+      max_level = max_level)
+    )
+
+  mat_for <- function(mod) {
+    vv <- df[[paste0(mod, "_vec")]]
+    m <- matrix(unlist(vv, use.names = FALSE),
+      ncol = length(stages),
+      byrow = TRUE)
+    colnames(m) <- paste0(mod, "_", stages)
+    storage.mode(m) <- "integer"
+    m
+  }
+
+  MAT <- lapply(mods_feat, mat_for)
+  names(MAT) <- mods_feat
+
+  # ============================================================
+  # 2) Engineered feature matrix (NO PROFILES)
+  # ============================================================
+  X_levels <- do.call(cbind, MAT)
+
+  get_slopes <- function(mat, mod) {
+    d <- mat[, -1, drop = FALSE] - mat[, -ncol(mat), drop = FALSE]
+    colnames(d) <- paste0("d", mod, "_", stages[-1], "_minus_", stages[-p])
+    d
+  }
+  X_slopes <- do.call(cbind, lapply(names(MAT), function(m) get_slopes(MAT[[m]], m)))
+
+  X_mono <- NULL
+  if (isTRUE(include_monotonicity)) {
+    parallel_ok <- (as.integer(n_workers) > 1L) && (nrow(df) >= as.integer(parallel_threshold))
+    X_mono <- do.call(cbind, lapply(names(MAT), function(m) {
+      mono_mat(MAT[[m]],
+        prefix = m,
+        n_workers = n_workers,
+        parallel_ok = parallel_ok)
+    }))
+  }
+
+  X_couple <- NULL
+  if (isTRUE(include_coupling)) {
+    pairs <- combn(names(MAT), 2, simplify = FALSE)
+    X_couple <- do.call(cbind, lapply(pairs, function(pr) {
+      m1 <- pr[1]; m2 <- pr[2]
+      coupling_mat(MAT[[m1]], MAT[[m2]], prefix = paste0(m1, "_", m2))
+    }))
+  }
+
+  X_cont  <- cbind(X_levels, X_slopes, X_mono, X_couple)
+  Xz_cont <- fast_scale(X_cont)
+
+  if (isTRUE(inspect_feature_matrix)) {
+    message("===== Feature matrix: Xz_cont (engineered; NO profiles) =====")
+    message("dim: ", nrow(Xz_cont), " x ", ncol(Xz_cont))
+    if (isTRUE(show_feature_names)) message("features: ", paste(colnames(Xz_cont), collapse = ", "))
+    print(utils::head(Xz_cont, feature_head_n))
+  }
+
+  # ============================================================
+  # 3) Anchors + unified matrix for PCA → UMAP → clustering
+  # ============================================================
+  anchor_mm <- NULL
+  w_anchor <- 0
+  X_for_pca <- Xz_cont
+
+  if (isTRUE(use_anchors)) {
+    bin_list <- lapply(names(MAT), function(m) {
+      apply(MAT[[m]], 1, const_bin,
+            const_range_cut = const_range_cut,
+            const_sd_cut    = const_sd_cut,
+            level_breaks    = level_breaks)
+    })
+    names(bin_list) <- names(MAT)
+    anchor_mm <- do.call(cbind, lapply(names(bin_list), function(m) make_anchor_mm_4lvl(bin_list[[m]], m)))
+
+    cont_norm   <- sqrt(rowSums(Xz_cont^2, na.rm = TRUE))
+    anchor_norm <- sqrt(rowSums(anchor_mm^2, na.rm = TRUE))
+    anchor_norm[!is.finite(anchor_norm) | anchor_norm == 0] <- 1
+
+    w_anchor <- target_anchor_ratio *
+      median(cont_norm, na.rm = TRUE) /
+      median(anchor_norm, na.rm = TRUE)
+    if (!is.finite(w_anchor)) w_anchor <- 0
+
+    X_for_pca <- cbind(Xz_cont, w_anchor * anchor_mm)
+    X_for_pca[!is.finite(X_for_pca)] <- 0
+  }
+
+  if (isTRUE(row_normalize_features)) {
+    X_for_pca <- safe_row_normalize(X_for_pca)
+  }
+
+  # ============================================================
+  # 4) PCA → UMAP → Cluster in UMAP space
+  # ============================================================
+
+  # Step 4a: PCA
+  set.seed(seed)
+  X_use <- as.matrix(X_for_pca)
+  X_use[!is.finite(X_use)] <- 0
+
+  if (!is.null(cluster_n_pcs) && cluster_n_pcs > 1L && ncol(X_use) > 2L) {
+    npc <- min(as.integer(cluster_n_pcs), ncol(X_use) - 1L)
+    if (requireNamespace("irlba", quietly = TRUE)) {
+      pca_emb <- irlba::prcomp_irlba(X_use,
+        n = npc,
+        center = TRUE,
+        scale. = FALSE)$x
+    } else {
+      pca_emb <- stats::prcomp(X_use,
+        rank. = npc,
+        center = TRUE,
+        scale. = FALSE)$x
+    }
+    message("PCA: Reduced to ", ncol(pca_emb), " dimensions for UMAP input")
+  } else {
+    pca_emb <- X_use
+    message("PCA: Skipped (using full feature matrix for UMAP)")
+  }
+
+  # Step 4b: UMAP from PCA embedding
+  set.seed(seed)
+  umap_input <- as.matrix(pca_emb)
+  umap_input[!is.finite(umap_input)] <- 0
+
+  message("Computing UMAP from PCA space...")
+  um <- uwot::umap(
+    umap_input,
+    n_neighbors = n_neighbors,
+    min_dist    = min_dist,
+    metric      = umap_metric,
+    n_threads   = umap_threads
+  )
+  message("UMAP computed: ", nrow(um), " points in 2D space")
+
+  # Step 4c: Cluster IN UMAP space (aligned)
+  message("Clustering in UMAP space (ensures alignment with visualization)...")
+  gc <- cluster_in_umap_space(
+    um,
+    k_param    = as.integer(cluster_k_param),
+    snn_k      = cluster_snn_k,
+    resolution = cluster_resolution,
+    prune_snn  = cluster_prune_snn,
+    algorithm  = cluster_algorithm,
+    use_snn    = use_snn,
+    seed       = seed
+  )
+
+  cl_raw <- as.integer(gc$cluster)
+  cl_raw <- merge_small_clusters(um, cl_raw, min_size = as.integer(min_cluster_size))
+  cl_raw <- relabel_by_size(cl_raw)
+  df$three_way_cluster <- factor(cl_raw)
+
+  message(sprintf(
+    "Graph diagnostics: edges=%s | mean_degree=%.2f | isolated=%.1f%% | kNN_used=%d | space=%s",
+
+    scales::comma(gc$diagnostics$edges),
+    gc$diagnostics$mean_degree,
+    100 * gc$diagnostics$frac_isolated,
+    gc$diagnostics$k_nn_used,
+    gc$diagnostics$space
+  ))
+
+  tab <- dplyr::count(tibble(cluster = df$three_way_cluster),
+    cluster,
+    name = "n") %>%
+    mutate(frac = n / sum(n))
+
+  algo_note <- paste0(
+    "UMAP-aligned clustering (", cluster_algorithm,
+    ", use_snn=", use_snn,
+    ", k=", cluster_k_param,
+    ifelse(isTRUE(use_snn), paste0(", snn_k=", gc$diagnostics$k_nn_used), ""),
+    ", res=", cluster_resolution,
+    ", prune=", signif(cluster_prune_snn, 3),
+    ", merge<", min_cluster_size, ")"
+  )
+
+  algo_suffix <- paste0(
+    "umap_aligned_",
+    cluster_algorithm,
+    "_k", cluster_k_param,
+    ifelse(isTRUE(use_snn), paste0("_snn", gc$diagnostics$k_nn_used), "_knn"),
+    "_pcs", ifelse(is.null(cluster_n_pcs), "full", cluster_n_pcs),
+    "_unn", n_neighbors,
+    "_res", safe_num(cluster_resolution),
+    "_pr", safe_num(cluster_prune_snn),
+    "_m", min_cluster_size,
+    ifelse(isTRUE(use_anchors), paste0("_anch", safe_num(signif(w_anchor, 3))), "_noanch"),
+    ifelse(isTRUE(include_monotonicity), "_mono", "_nomono"),
+    ifelse(isTRUE(include_coupling), "_coup", "_nocoup")
+  )
+
+  message(
+    "Engineered features. Profiles=OFF; Monotonicity=",
+    ifelse(include_monotonicity, "ON", "OFF"),
+
+    "; Coupling=", ifelse(include_coupling, "ON", "OFF"),
+    "; Anchors=", ifelse(use_anchors, "ON", "OFF"),
+    ifelse(use_anchors, paste0(" | w_anchor=", signif(w_anchor, 3)), ""),
+    ifelse(row_normalize_features, " | row_norm=ON", " | row_norm=OFF"),
+
+    " | PCA dims=", ncol(pca_emb),
+    " | UMAP n_neighbors=", n_neighbors,
+    " | clustering=", algo_note,
+    " | K=", dplyr::n_distinct(df$three_way_cluster)
+  )
+
+  # ============================================================
+  # 5) UMAP plot with clusters
+  # ============================================================
+  umap_df <- df %>% mutate(UMAP1 = um[, 1],
+    UMAP2 = um[, 2])
+
+  label_df <- umap_df %>%
+    group_by(three_way_cluster) %>%
+    summarise(
+      UMAP1 = median(UMAP1, na.rm = TRUE),
+
+      UMAP2 = median(UMAP2, na.rm = TRUE),
+
+      n     = dplyr::n(),
+      .groups = "drop"
+    ) %>%
+    mutate(label = paste0(three_way_cluster,
+      "\n(n=",
+      n,
+      ")"))
+
+  p_umap <- ggplot(umap_df, aes(UMAP1, UMAP2, color = three_way_cluster)) +
+    geom_point(size = 0.22,
+      alpha = 0.55) +
+    ggrepel::geom_label_repel(
+      data = label_df,
+      aes(x = UMAP1, y = UMAP2, label = label),
+
+      inherit.aes = FALSE,
+      color = "black",
+      fill  = scales::alpha("white", 0.40),
+      label.size = 0.20,
+      size = 3.2,
+      max.overlaps = Inf,
+      min.segment.length = 0,
+      seed = seed
+    ) +
+    guides(color = guide_legend(override.aes = list(size = 3.5,
+      alpha = 1))) +
+    theme_classic() +
+    theme(
+      legend.position = "right",
+      legend.key.height = grid::unit(0.5, "cm"),
+      legend.key.width  = grid::unit(0.5, "cm")
+    ) +
+    labs(
+      title = "Three-way chromatin programs: ATAC–AC–ME3 (engineered features; NO profiles)",
+      subtitle = paste0("UMAP computed from PCA (", ncol(pca_emb), " dims). Clustering = ", algo_note, " [IN UMAP SPACE]"),
+
+      color = "Cluster"
+    )
+
+  umap_stem <- paste0(umap_prefix, "_ATAC_AC_ME3_", algo_suffix)
+  umap_pdf  <- file.path(out_plot_dir, paste0(umap_stem, ".pdf"))
+  ggsave(umap_pdf,
+    p_umap,
+    width = umap_width,
+    height = umap_height,
+    units = "in",
+    device = dev_fun)
+  if (isTRUE(show_plots)) print(p_umap)
+
+  # ============================================================
+  # 6) Trajectory plot (ALL 3 modalities)
+  # ============================================================
+  vec_to_long <- function(df_in, mod) {
+    mat <- matrix(unlist(df_in[[paste0(mod, "_vec")]], use.names = FALSE),
+      ncol = length(stages),
+      byrow = TRUE)
+    colnames(mat) <- stages
+    as.data.frame(mat) %>%
+      mutate(row_id = seq_len(nrow(mat))) %>%
+      pivot_longer(-row_id,
+        names_to = "Stage",
+        values_to = "quantile_value") %>%
+      mutate(Modality = mod)
+  }
+
+  traj_long <- bind_rows(
+    vec_to_long(umap_df, "ATAC"),
+    vec_to_long(umap_df, "AC"),
+    vec_to_long(umap_df, "ME3")
+  ) %>%
+    left_join(
+      umap_df %>% transmute(row_id = dplyr::row_number(), cluster = as.character(three_way_cluster)),
+
+      by = "row_id"
+    ) %>%
+    mutate(
+      Stage    = factor(Stage, levels = stages),
+
+      Modality = factor(Modality, levels = c("ATAC","AC","ME3")),
+
+      cluster  = factor(cluster,
+      levels = levels(umap_df$three_way_cluster))
+    )
+
+  cluster_n <- traj_long %>%
+    distinct(row_id, cluster) %>%
+    dplyr::count(cluster, name = "n")
+
+  traj_summary <- traj_long %>%
+    group_by(cluster, Modality, Stage) %>%
+    summarise(
+      mean_quantile = mean(quantile_value, na.rm = TRUE),
+
+      sd_quantile   = sd(quantile_value, na.rm = TRUE),
+
+      .groups = "drop"
+    ) %>%
+    left_join(cluster_n, by = "cluster") %>%
+    mutate(
+      ymin = pmax(0, mean_quantile - sd_quantile),
+      ymax = pmin(max_level, mean_quantile + sd_quantile),
+      cluster_label = paste0(as.character(cluster),
+      "\n(n=",
+      n,
+      ")")
+    )
+
+  label_levels <- traj_summary %>%
+    distinct(cluster, cluster_label) %>%
+    mutate(ord = suppressWarnings(as.integer(as.character(cluster)))) %>%
+    arrange(ord) %>%
+    pull(cluster_label)
+  traj_summary$cluster_label <- factor(traj_summary$cluster_label, levels = label_levels)
+
+  p_traj <- ggplot(traj_summary,
+    aes(Stage, mean_quantile, color = Modality, group = Modality)) +
+    geom_line(linewidth = line_width) +
+    geom_point(size = point_size) +
+    facet_wrap(~ cluster_label, ncol = facet_ncol) +
+    scale_color_manual(values = modality_colors) +
+    scale_y_continuous(limits = c(0, max_level),
+      breaks = seq(0, max_level, 2)) +
+    theme_minimal(base_size = 11) +
+    theme(
+      panel.grid.minor = element_blank(),
+      strip.background = element_rect(fill = "grey90", color = NA),
+
+      strip.text = element_text(face = "bold"),
+
+      axis.text.x = element_text(angle = 45, hjust = 1),
+
+      legend.position = "bottom"
+    ) +
+    labs(
+      x = "Developmental stage",
+      y = "Mean quantized signal level (0–10)",
+      color = "Modality",
+      title = "Mean quantized chromatin trajectories (ATAC–AC–ME3)",
+      subtitle = paste0(
+        "Clusters aligned with UMAP (", algo_note, ")\n",
+        "Band = ±1 SD across loci within cluster"
+      )
+    )
+
+  traj_stem <- paste0(traj_prefix, "_ATAC_AC_ME3_", algo_suffix)
+  traj_pdf  <- file.path(out_plot_dir, paste0(traj_stem, ".pdf"))
+  ggsave(traj_pdf,
+    p_traj,
+    width = traj_width,
+    height = traj_height,
+    units = "in",
+    device = dev_fun)
+  if (isTRUE(show_plots)) print(p_traj)
+
+  # ============================================================
+  # 7) Bundle
+  # ============================================================
+  bundle <- list(
+    connection = "threeway_ATAC_AC_ME3",
+    modalities_features = mods_feat,
+    stages = stages,
+    max_level = max_level,
+
+    feature_engineering = list(
+      include_monotonicity = include_monotonicity,
+      include_coupling = include_coupling
+    ),
+
+    use_anchors = use_anchors,
+    w_anchor = w_anchor,
+    anchor_mm = anchor_mm,
+    row_normalize_features = row_normalize_features,
+
+    clustering_note = algo_note,
+    algo_suffix = algo_suffix,
+    min_cluster_size = as.integer(min_cluster_size),
+    clustering_obj = gc,
+    cluster_table = tab,
+
+    X_cont = X_cont,
+    Xz_cont = Xz_cont,
+    X_for_pca = X_for_pca,
+    pca_embedding = pca_emb,
+
+    umap_coords = um,
+    umap_df = umap_df,
+    umap_plot = p_umap,
+
+    traj_plot = p_traj,
+    traj_summary = traj_summary,
+
+    files = list(
+      umap_pdf = umap_pdf,
+      traj_pdf = traj_pdf
+    ),
+
+    params = list(
+      n_neighbors = n_neighbors,
+      min_dist = min_dist,
+      umap_threads = umap_threads,
+      umap_metric = umap_metric,
+      cluster_k_param = cluster_k_param,
+      cluster_snn_k = cluster_snn_k,
+      cluster_n_pcs = cluster_n_pcs,
+      cluster_resolution = cluster_resolution,
+      cluster_prune_snn = cluster_prune_snn,
+      cluster_algorithm = cluster_algorithm,
+      use_snn = use_snn,
+      seed = seed
+    )
+  )
+
+  if (isTRUE(save_bundle)) {
+    bundle_rds <- file.path(out_obj_dir, paste0(umap_stem, ".rds"))
+    saveRDS(bundle, bundle_rds)
+    bundle$files$bundle_rds <- bundle_rds
+  }
+
+  invisible(bundle)
+}
+```
+
+## Selected pairwise and three-way analysis calls
+
+These calls retain the selected high- and low-resolution configurations stored in the final eight bundles. Generic function defaults are not the manuscript settings. Cluster IDs are specific to a bundle; manual program labels must not be transferred to a different clustering by numeric ID alone.
+
+```{r integration-selected-calls, eval=isTRUE(params$run_integration)}
+bundles_recomputed <- list()
+for (connection in c("atac_ac", "atac_me3", "ac_me3")) {
+  for (resolution in c("low", "high")) {
+    high <- resolution == "high"
+    key <- paste(connection, resolution, sep = "_")
+    bundles_recomputed[[key]] <- run_pairwise_recluster_and_plots(
+      traj_df = traj_df,
+      connection = connection,
+      cluster_n_pcs = 15,
+      n_neighbors = 200,
+
+      min_dist = 0.2,
+      cluster_k_param = 2500,
+      cluster_resolution = if (high)
+        0.05 else 0.03, cluster_prune_snn = if (high)
+        0 else 0.05, min_cluster_size = if (high)
+        300 else 500,
+        use_snn = TRUE,
+        cluster_algorithm = "leiden",
+        include_all_modalities = FALSE,
+
+      seed = 42,
+      show_plots = FALSE
+    )
+  }
+}
+for (resolution in c("low", "high")) {
+  high <- resolution == "high"
+  bundles_recomputed[[paste0("threeway_", resolution)]] <- run_threeway_recluster_and_plots(
+    traj_df = traj_df,
+    cluster_n_pcs = 15,
+    n_neighbors = 200,
+    min_dist = 0.2,
+
+    cluster_k_param = 2500,
+    cluster_snn_k = if (high)
+      500 else 800, cluster_resolution = if (high)
+      0.03 else 0.01,
+      cluster_prune_snn = 0,
+      min_cluster_size = 500,
+      use_snn = TRUE,
+
+    cluster_algorithm = "leiden",
+    seed = 42,
+    show_plots = FALSE
+  )
+}
+```
+
+## Manual biological program definitions
+
+The original manual cluster-to-program definitions are included verbatim. This section uses the final catalog’s saved bundle-specific cluster columns. After a new clustering, match and validate clusters before reusing the manual labels.
+
+```{r integration-manual-programs, eval=isTRUE(params$run_integration)}
+all_overlaps_aug <- all_overlaps_total
+program_defs_threeway_high_res <- list(
+  "1a. VZ/SVZ decommissioning with repression" = c(6, 16, 28),
+  "1d. Activation and derepression of SVZ pREs" = c(11, 26, 36),
+  "1f. Repression-dominant" = c(4),
+
+  "2a. Activation with derepression" = c(8, 21, 34, 39),
+  "2b. Derepression-led activation" = c(20, 29, 35),
+
+  "3a. Progressive activation with derepression" = c(1, 3, 12, 18, 27),
+  "3b. Repression of embryonic cell fates" = c(7, 17, 24, 25),
+
+  "4a. Constitutively active" = c(10, 19, 37, 38),
+  "4b. Constitutively active / bivalent" = c(5, 13, 32, 33)
+)
+
+program_defs_atac_ac_high_res <- list(
+  "1b. H3K27me3-independent decommissioning" = c(1, 3, 20, 25, 26, 28, 29, 32, 33, 37, 39),
+  "1e. Transient activation of SVZ pREs (H3K27me3 independent)" = c(2, 5, 10, 35),
+
+  "2c. Progressive activation (H3K27me3-independent)" = c(9, 11, 12, 13, 16, 22, 30, 44),
+
+  "3c. Progressive activation (H3K27me3-independent)" = c(14, 15, 24, 34, 40, 42, 43),
+
+  "4c. ATAC-H3K27ac constitutive" = c(17, 18, 21, 36, 38, 41)
+)
+
+program_defs_atac_me3_low_res <- list(
+  "1c. Progressive repression" = c(3, 4),
+  "2d. ATAC/H3K27me3 derepression" = c(6),
+  "4d. Progressive derepression (non-cortical brain pREs?)" = c(2)
+)
+
+# -----------------------------
+# 2) Helper: defs -> lookup (cluster_id -> program_name)
+# -----------------------------
+defs_to_lookup <- function(defs) {
+  data.frame(
+    cluster_id = as.integer(unlist(defs, use.names = FALSE)),
+
+    program = rep(names(defs), times = vapply(defs, length, integer(1))),
+
+    stringsAsFactors = FALSE
+  )
+}
+
+lk_3way   <- defs_to_lookup(program_defs_threeway_high_res)
+lk_aa     <- defs_to_lookup(program_defs_atac_ac_high_res)
+lk_am_low <- defs_to_lookup(program_defs_atac_me3_low_res)
+
+stopifnot(!any(duplicated(lk_3way$cluster_id)))
+stopifnot(!any(duplicated(lk_aa$cluster_id)))
+stopifnot(!any(duplicated(lk_am_low$cluster_id)))
+
+map_3way   <- setNames(lk_3way$program, as.character(lk_3way$cluster_id))
+map_aa     <- setNames(lk_aa$program, as.character(lk_aa$cluster_id))
+map_am_low <- setNames(lk_am_low$program, as.character(lk_am_low$cluster_id))
+
+# -----------------------------
+# 3) Assign Program (no Program_source)
+# -----------------------------
+all_overlaps_aug$Program <- NA_character_
+
+# Three-way rows
+if ("THREEWAY_high_res_prog_cl" %in% names(all_overlaps_aug)) {
+  idx <- which(
+    all_overlaps_aug$overlap_type == "three_way" &
+      !is.na(all_overlaps_aug$THREEWAY_high_res_prog_cl)
+  )
+  if (length(idx) > 0) {
+    cl <- as.character(all_overlaps_aug$THREEWAY_high_res_prog_cl[idx])
+    all_overlaps_aug$Program[idx] <- unname(map_3way[cl])
+  }
+}
+
+# ATAC-AC rows
+if ("ATAC_AC_high_res_prog_cl" %in% names(all_overlaps_aug)) {
+  idx <- which(
+    all_overlaps_aug$overlap_type == "atac_ac" &
+      !is.na(all_overlaps_aug$ATAC_AC_high_res_prog_cl)
+  )
+  if (length(idx) > 0) {
+    cl <- as.character(all_overlaps_aug$ATAC_AC_high_res_prog_cl[idx])
+    all_overlaps_aug$Program[idx] <- unname(map_aa[cl])
+  }
+}
+
+# ATAC-ME3 rows (low-res)
+if ("ATAC_ME3_low_res_prog_cl" %in% names(all_overlaps_aug)) {
+  idx <- which(
+    all_overlaps_aug$overlap_type == "atac_me3" &
+      !is.na(all_overlaps_aug$ATAC_ME3_low_res_prog_cl)
+  )
+  if (length(idx) > 0) {
+    cl <- as.character(all_overlaps_aug$ATAC_ME3_low_res_prog_cl[idx])
+    all_overlaps_aug$Program[idx] <- unname(map_am_low[cl])
+  }
+}
+```
+
+
+## Load the original clustering bundles without refitting
+
+The saved checkpoint contains the eight selected pairwise/three-way resolution variants, their configurations, embeddings, cluster assignments and feature matrices. Loading it does not refit a model. It is optional because the object occupies approximately 571 MB on disk; the standard panel export uses the compact plotting tables.
+
+```{r integration-load-native-bundles, eval=isTRUE(params$load_native_bundles)}
+checkpoint_environment <- new.env(parent = emptyenv())
+load(
+  file.path(REPO, "objects", "integration", "umap_reclustering_bundles.RData"),
+  envir = checkpoint_environment
+)
+native_bundles <- checkpoint_environment$bundles
+stopifnot(
+  length(native_bundles) == 8
+)
+native_parameters <- lapply(native_bundles, function(bundle) bundle$params)
+native_parameters
+```
+
+## Checkpoint-based figure export
+
+The sections below use the verified saved results. Rerun outputs above are written separately and do not replace these inputs automatically.
+
+## Figure 4a–d: interaction composition and exemplar modules
+
+Recreate source-table bars and median trajectories.
+
+```{r figure-4a-d-interaction-composition-and-exemplar-modules-2}
+d <- read_table("Fig4_KC", "4a_Interaction_counts")
+num <- names(d)[vapply(d, is.numeric, logical(1))]
+p <- ggplot(
+  d, aes(
+    x = .data[[names(d)[1]]],
+    y = .data[[num[1]]]
+  )
+) +
+  geom_col(fill = "#6699AA") +
+  coord_flip() + labs(x = NULL,
+    y = num[1])
+export_panel(p, "Fig4/4a_interaction_counts", 6, 4)
+for (s in c("4b_A1", "4c_Ac7", "4d_TM3")) {
+  d <- read_table("Fig4_KC", s)
+  signal <- grep(
+    "^Median_", names(d),
+    value = TRUE
+  )
+  stopifnot(
+    length(signal) == 1
+  )
+  export_panel(
+    ggplot(d, aes(Sample, .data[[signal]], group = 1)) +
+      geom_line() + geom_point() + theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 7)),
+
+    paste0("Fig4/", s, "_trajectory"),
+    7, 3
+  )
+}
+```
+
+## Figure 4f: program counts and quantized trajectories
+
+Quantized vectors and their original mean ± SD are saved outputs, not new WGCNA fits.
+
+```{r figure-4f-program-counts-and-quantized-trajectories-3}
+d <- read_table("Fig4_KC", "4f_Program_counts")
+stopifnot(
+  sum(d$Count) == 157984
+)
+export_panel(
+  ggplot(
+    d, aes(
+      reorder(Program, Count),
+      Count
+    )
+  ) +
+    geom_col(fill = "#558899") +
+    coord_flip() + labs(x = NULL, y = "Records (including singletons)"),
+
+  "Fig4/4f_program_counts", 8, 6
+)
+d <- read_table("Fig4_KC", "4f_Quantized_trajectories")
+d$Stage <- factor(d$Stage, levels = c("VZ", "SVZ", "ImN", "L6N", "L5N"))
+p <- ggplot(d,
+  aes(Stage, mean_quantile, color = Modality, group = Modality)) +
+  geom_line() + geom_point(size = 0.6) +
+  geom_errorbar(
+    aes(ymin = ymin, ymax = ymax),
+
+    width = 0.12,
+    linewidth = 0.25
+  ) +
+  facet_wrap(~cluster, ncol = 6) +
+  scale_color_manual(values = MS$assay) +
+  theme(axis.text.x = element_text(angle = 90,
+    size = 6)) +
+  labs(y = "Mean quantile <U+00B1> SD",
+    x = NULL)
+export_panel(p, "Fig4/4f_quantized_trajectories", 14, 10)
+```
+
+## Extended Figure 6a and c
+
+Plot all saved TMK3-linked ATAC intervals and selected program heatmaps. Panel a uses explicit row z scores, fixed developmental columns and a complete-linkage display dendrogram, as documented in notebook 12. Panel c uses the stored 1–10 quantized values.
+
+```{r extended-figure-6a-and-c-4}
+plot_extended_atac_mean_heatmap(
+  "6a_TMK3_linked_ATAC_means", "All", "Ext6/6a_TMK3_linked_ATAC_matched"
+)
+for (s in c("6c_1a_Quantized_rows", "6c_2a_Quantized_rows", "6c_2b_Quantized_rows")) {
+  d <- read_table("Extended_Fig6_KC", s)
+  d <- d[order(d$split_label, d$row_order_within_split),
+    ]
+  cc <- grep(
+    "_vec_", names(d),
+    value = TRUE
+  )
+  export_heatmap(
+    as.matrix(d[, cc]),
+    paste0("Ext6/", s),
+    8, 7, note = "Saved quantized values; program/cluster order from source table"
+  )
+}
+```
+
+```{r session-info}
+finish_notebook("04")
+sessionInfo()
+```
+
+## Dynamic network from the original draft
+
+The original module-size, overlap-count, tier and seed rules are retained. This uses the saved overlap catalog, without rebuilding overlaps or networks.
+
+```{r figure-4-draft-dynamic-network}
+all_overlaps <- read.csv(file.path(REPO, "data/upstream/integration/all_overlaps_total_aug_with_Programs.csv"))
+## Hairball plot: dynamic modules only (no constitutive)
+## INPUT: all_overlaps with ATAC_FC, AC_FC, ME3_FC
+
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(tibble)
+library(ggrepel)
+
+## 1) tunables --------------------------------------------------------------
+min_connections <- 200   # <- updated
+min_module_size <- 1000  # <- keep from previous step
+allow_jitter <- TRUE
+jitter_x <- 0.1
+jitter_y <- 0.06
+
+## 2) dataset-specific tier maps -------------------------------------------
+atac_tiers <- list(
+  Early = c("turquoise","tan","cyan"),
+  Intermediate = c("salmon","midnightblue","green","red",
+                   "Weak_middle","brown","yellow","magenta"),
+  Late = c("blue","Weak_late","purple","P2_specific"),
+  Constitutive = c("Constitutive_strong","Constitutive_weak",
+                   "lightcyan","greenyellow","black","pink","grey")
+)
+ac_tiers <- list(
+  Early = c("Weak_early_VZ","turquoise","Weak_VZ","Weak_late_VZ","brown"),
+  Intermediate = c("lightgreen","black","pink","blue","tan","green","cyan",
+                   "royalblue","darkred","salmon","magenta","lightyellow",
+                   "midnightblue","purple"),
+  Late = c("yellow","red","Strong_late_1","Strong_late_2"),
+  Constitutive = c("Constitutive_strong_1","Constitutive_strong_2",
+                   "greenyellow","lightcyan","grey60","Grey","grey")
+)
+me3_tiers <- list(
+  Early = c("green","darkorange","red","greenyellow","white","salmon","brown"),
+  Intermediate = c("yellow","midnightblue","darkturquoise","steelblue","grey60",
+                   "purple","pink","magenta","black","lightcyan","lightgreen",
+                   "orange","tan","cyan","royalblue","skyblue","darkgreen",
+                   "darkgrey","saddlebrown"),
+  Late = c("blue","turquoise","Weak_late"),
+  Constitutive = c("Constitutive_medium","Constitutive_strong",
+                   "Constitutive_weak","grey")
+)
+
+get_tier <- function(ds, mod) {
+  if (is.na(ds) || is.na(mod)) return("Constitutive")
+  src <- switch(ds,
+                ATAC = atac_tiers,
+                AC   = ac_tiers,
+                ME3  = me3_tiers,
+                NULL)
+  if (is.null(src)) return("Constitutive")
+  for (nm in names(src)) if (mod %in% src[[nm]]) return(nm)
+  "Constitutive"
+}
+
+## 3) module sizes ----------------------------------------------------------
+mod_sizes <- all_overlaps %>%
+  select(ATAC_FC, AC_FC, ME3_FC) %>%
+  pivot_longer(everything(), names_to = "ds", values_to = "Module") %>%
+  separate(ds, into = c("Dataset","drop"), sep = "_", remove = TRUE) %>%
+  count(Dataset, Module, name = "mod_n")
+
+## 4) edges (all three dataset pairs) --------------------------------------
+edges_long <- all_overlaps %>%
+  transmute(
+    pair1 = paste0("ATAC_", ATAC_FC, "||AC_",  AC_FC),
+    pair2 = paste0("ATAC_", ATAC_FC, "||ME3_", ME3_FC),
+    pair3 = paste0("AC_",   AC_FC,   "||ME3_", ME3_FC)
+  ) %>%
+  pivot_longer(everything(), values_to = "pair") %>%
+  separate(pair, c("source","target"), sep = "\\|\\|")
+
+edges <- edges_long %>%
+  count(source, target, name = "weight") %>%
+  filter(weight >= min_connections)
+
+## 5) node table ------------------------------------------------------------
+nodes <- tibble(node_id = unique(c(edges$source, edges$target))) %>%
+  mutate(
+    Dataset = case_when(
+      str_starts(node_id, "ATAC_") ~ "ATAC",
+      str_starts(node_id, "AC_")   ~ "AC",
+      str_starts(node_id, "ME3_")  ~ "ME3",
+      TRUE                         ~ "other"
+    ),
+    Module = str_remove(node_id, "^(ATAC_|AC_|ME3_)")
+  ) %>%
+  left_join(mod_sizes, by = c("Dataset","Module")) %>%
+  mutate(mod_n = tidyr::replace_na(mod_n, 0L)) %>%
+  filter(mod_n >= min_module_size)
+
+## 6) drop edges to removed nodes -------------------------------------------
+edges <- edges %>%
+  semi_join(nodes, by = c("source" = "node_id")) %>%
+  semi_join(nodes, by = c("target" = "node_id"))
+
+## 7) assign tiers (flip ME3 Early↔Late for layout) ------------------------
+nodes <- nodes %>%
+  rowwise() %>%
+  mutate(BioTier = get_tier(Dataset, Module)) %>%
+  ungroup() %>%
+  mutate(
+    LayoutTier = dplyr::case_when(
+      Dataset == "ME3" & BioTier == "Early" ~ "Late",
+      Dataset == "ME3" & BioTier == "Late"  ~ "Early",
+      TRUE                                  ~ BioTier
+    )
+  )
+
+## 8) KEEP ONLY dynamic tiers (Early, Intermediate, Late) -------------------
+nodes_dyn <- nodes %>%
+  filter(LayoutTier %in% c("Early","Intermediate","Late"))
+
+edges_dyn <- edges %>%
+  filter(source %in% nodes_dyn$node_id & target %in% nodes_dyn$node_id)
+
+## 9) layout for dynamic-only ----------------------------------------------
+set.seed(123)
+
+top_layout_map <- tibble(
+  LayoutTier = c("Early", "Intermediate", "Late"),
+  x_center   = c(0.17,    0.50,           0.83),
+  x_min      = c(0.00,    0.34,           0.67),
+  x_max      = c(0.33,    0.66,           1.00)
+)
+
+dataset_y_top <- c(ATAC = 0.95, AC = 0.78, ME3 = 0.61)
+vert_span     <- 0.14
+
+nodes_layout <- nodes_dyn %>%
+  left_join(top_layout_map, by = "LayoutTier") %>%
+  arrange(LayoutTier, Dataset, Module) %>%
+  group_by(LayoutTier, Dataset) %>%
+  mutate(
+    jx = if (allow_jitter) runif(n(), -jitter_x, jitter_x) else 0,
+    x  = pmax(x_min + 0.01, pmin(x_max - 0.01, x_center + jx)),
+    y  = {
+      y0 <- dataset_y_top[[as.character(dplyr::first(Dataset))]]
+      if (n() == 1L) y0 else y0 - (row_number() - 1) * (vert_span / (n() - 1))
+    },
+    BoxID = dplyr::case_when(
+      LayoutTier == "Early"        ~ 1L,
+      LayoutTier == "Intermediate" ~ 2L,
+      LayoutTier == "Late"         ~ 3L,
+      TRUE                         ~ 99L
+    )
+  ) %>%
+  ungroup() %>%
+  rename(name = node_id)
+
+## 10) edges with colors (drop Early–Late entirely) ------------------------
+edges_plot <- edges_dyn %>%
+  left_join(nodes_layout %>% select(name, x, y, BoxID),
+            by = c("source" = "name")) %>%
+  rename(x_start = x, y_start = y, box_start = BoxID) %>%
+  left_join(nodes_layout %>% select(name, x, y, BoxID),
+            by = c("target" = "name")) %>%
+  rename(x_end = x, y_end = y, box_end = BoxID) %>%
+  filter(!(box_start %in% 1:3 & box_end %in% 1:3 & abs(box_start - box_end) == 2)) %>%
+  mutate(
+    edge_col = dplyr::case_when(
+      box_start == box_end ~ "#51449A",
+      box_start %in% 1:3 & box_end %in% 1:3 & abs(box_start - box_end) == 1 ~ "#3695CB",
+      TRUE ~ "grey65"
+    )
+  )
+
+dictionary <- read.csv(file.path(REPO, "data/upstream/Module_renaming_dictionary.csv"), fileEncoding = "UTF-8-BOM")
+stopifnot("Data_type" %in% names(dictionary))
+lookup <- setNames(dictionary$Module_figure_names_short, paste(dictionary$Data_type, dictionary$Fine_clusters))
+nodes_layout$Display <- unname(lookup[paste(nodes_layout$Dataset, nodes_layout$Module)])
+nodes_layout$Display[is.na(nodes_layout$Display)] <- nodes_layout$Module[is.na(nodes_layout$Display)]
+
+## 11) scales / labels ------------------------------------------------------
+edge_breaks <- sort(unique(c(min_connections,
+                             min_connections * 2,
+                             min_connections * 4)))
+edge_breaks <- edge_breaks[edge_breaks <= max(edges_plot$weight, na.rm = TRUE)]
+
+plot_title <- paste0("High-confidence inter-dataset links (dynamic only, ≥", min_connections, " overlaps)")
+plot_subtitle <- paste0("Early / Intermediate / Late (stretched); ME3 Early↔Late swap; nodes shown if n ≥ ", min_module_size)
+
+## 12) plot -----------------------------------------------------------------
+p <- ggplot() +
+  annotate("rect", xmin = 0.00, xmax = 0.33, ymin = 0.40, ymax = 1.00,
+           fill = "#dcecf7", alpha = 0.35) +
+  annotate("rect", xmin = 0.34, xmax = 0.66, ymin = 0.40, ymax = 1.00,
+           fill = "#f6eddc", alpha = 0.35) +
+  annotate("rect", xmin = 0.67, xmax = 1.00, ymin = 0.40, ymax = 1.00,
+           fill = "#f3dce4", alpha = 0.35) +
+  geom_rect(aes(xmin = 0.00, xmax = 0.33, ymin = 0.40, ymax = 1.00),
+            fill = NA, colour = "grey35", linewidth = 0.4, linetype = "dashed") +
+  geom_rect(aes(xmin = 0.34, xmax = 0.66, ymin = 0.40, ymax = 1.00),
+            fill = NA, colour = "grey35", linewidth = 0.4, linetype = "dashed") +
+  geom_rect(aes(xmin = 0.67, xmax = 1.00, ymin = 0.40, ymax = 1.00),
+            fill = NA, colour = "grey35", linewidth = 0.4, linetype = "dashed") +
+  annotate("text", x = 0.01, y = 0.99, label = "Early",
+           hjust = 0, vjust = 1, size = 4, fontface = "bold") +
+  annotate("text", x = 0.35, y = 0.99, label = "Intermediate",
+           hjust = 0, vjust = 1, size = 4, fontface = "bold") +
+  annotate("text", x = 0.68, y = 0.99, label = "Late",
+           hjust = 0, vjust = 1, size = 4, fontface = "bold") +
+  geom_segment(
+    data = edges_plot,
+    aes(x = x_start, y = y_start, xend = x_end, yend = y_end, size = weight),
+    colour = edges_plot$edge_col,
+    alpha  = 0.9
+  ) +
+  scale_size_continuous(
+    range  = c(0.6, 3.4),
+    breaks = edge_breaks,
+    name   = "overlaps"
+  ) +
+  geom_point(
+    data = nodes_layout,
+    aes(x = x, y = y, colour = Dataset),
+    size = 4, stroke = 0.7
+  ) +
+  ggrepel::geom_label_repel(
+    data = nodes_layout,
+    aes(x = x, y = y, label = Display, fill = BioTier),
+    size = 4,
+    colour = "#444444",
+    label.size = 0,
+    fontface = "bold",
+    box.padding = 0.35,
+    point.padding = 0.25,
+    max.overlaps = Inf,
+    segment.size = 0.25,
+    segment.alpha = 0.8,
+    min.segment.length = 0
+  ) +
+  scale_colour_manual(
+    values = c(ATAC = "#777777", AC = "#777777", ME3 = "#2DA64A"),
+    name   = "Dataset origin"
+  ) +
+  scale_fill_manual(values = c(Early = "#FFE100", Intermediate = "#7DD0E6", Late = "#FF7566"), guide = "none") +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0.40, 1.00)) +
+  labs(
+    title    = "High-confidence interdataset links (dynamic)",
+    subtitle = NULL,
+    x = NULL, y = NULL
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid      = element_blank(),
+    axis.text = element_blank(), axis.ticks = element_blank(),
+    legend.position = "right"
+  )
+
+p
+
+
+export_panel(p, "Fig4/4e_dynamic_network", 9, 4.2,
+  note = "Original Integration2 dynamic-network rules, saved overlap catalog; Illustrator layout differs")
+```
+
+## Readable program cards from saved assignments
+
+Pool the original quantized vectors with the original cluster lists. This computes descriptive means only, without clustering or model fitting. Source program 2d is displayed as 3d to follow the manuscript arrangement.
+
+```{r figure-4-readable-program-cards}
+source("R/program_summary_saved.R")
+prog_df$Key <- sub("\\..*", "", as.character(prog_df$Program))
+counts <- read_table("Fig4_KC", "4f_Program_counts")
+counts$Key <- sub("\\..*", "", counts$Program)
+keys <- c("1a", "1b", "1c", "1d", "1e", "2a", "2b", "2c", "3a", "3b", "3c", "2d", "4a", "4b")
+cards <- lapply(keys, function(key) {
+  z <- prog_df[prog_df$Key == key, ]
+  stopifnot(nrow(z) > 0)
+  count <- counts[!is.na(counts$Key) & counts$Key == key, ]
+  stopifnot(nrow(count) == 1)
+  title <- sub("\\n.*", "", as.character(z$Program[1]))
+  if (key == "2d") title <- sub("^2d", "3d", title)
+  title <- paste(strwrap(title, width = 29), collapse = "\n")
+  z$Stage <- factor(z$Stage, levels = stages)
+  strip <- data.frame(Stage = factor(stages, levels = stages), y = -0.8)
+  ggplot(z, aes(Stage, mean_quantized, color = Modality, group = Modality)) +
+    geom_tile(data = strip, aes(Stage, y, fill = Stage), inherit.aes = FALSE, height = 0.8, width = 1) +
+    geom_line(linewidth = 0.45) + geom_point(size = 0.6) +
+    scale_color_manual(values = c(ATAC = "#545454", AC = "#58B947", ME3 = "#FF3D2E")) +
+    scale_fill_manual(values = MS$cell) +
+    scale_y_continuous(breaks = c(0, 5, 10)) +
+    coord_cartesian(ylim = c(-1.2, 10.4), clip = "off") +
+    labs(title = title, subtitle = sprintf("n=%d; %.2f%%", count$Count, count$Percent), x = NULL, y = NULL) +
+    theme_minimal(base_size = 10) +
+    theme(legend.position = "none", panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_blank(), axis.text.x = element_blank(),
+      plot.title = element_text(size = 9, face = "bold", lineheight = 0.95),
+      plot.subtitle = element_text(size = 8), axis.text.y = element_text(size = 8),
+      plot.margin = margin(3, 3, 3, 3))
+})
+names(cards) <- keys
+header <- function(text) ggplot() + annotate("text", 0, 0, label = text, hjust = 0, size = 4, fontface = "bold") +
+  xlim(0, 1) + theme_void() + theme(plot.background = element_rect(fill = "grey85", color = NA))
+legend <- ggplot(data.frame(Modality = c("ATAC", "AC", "ME3"), x = 1, y = 3:1), aes(x, y, color = Modality)) +
+  geom_point(size = 2) + geom_text(aes(label = c("ATAC", "H3K27ac", "H3K27me3")), hjust = -0.15, size = 3.2) +
+  scale_color_manual(values = c(ATAC = "#545454", AC = "#58B947", ME3 = "#FF3D2E")) +
+  coord_cartesian(xlim = c(0.9, 2), ylim = c(0, 4)) + theme_void() + theme(legend.position = "none")
+g1 <- (cards[["1a"]] | cards[["1b"]] | legend) / (cards[["1c"]] | cards[["1d"]] | cards[["1e"]])
+g2 <- cards[["2a"]] | cards[["2b"]] | cards[["2c"]]
+g34 <- (cards[["3a"]] | cards[["3b"]] | cards[["4a"]]) / (cards[["3c"]] | cards[["2d"]] | cards[["4b"]])
+p <- header("1. Progenitor (VZ/SVZ) programs") / g1 /
+  header("2. Prenatal neuronal (ImN) programs") / g2 /
+  header("3. Postnatal neuronal programs       4. Constitutive") / g34 +
+  patchwork::plot_layout(heights = c(0.22, 2, 0.22, 1, 0.22, 2))
+export_panel(p, "Fig4/4f_readable_programs", 5.7, 8.5)
+write.csv(prog_df, file.path(REPO, "data/upstream/integration/program_summary_saved.csv"), row.names = FALSE)
+```

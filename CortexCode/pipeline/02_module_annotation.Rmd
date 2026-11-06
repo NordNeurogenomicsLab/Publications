@@ -1,0 +1,110 @@
+---
+title: "Final module annotation and manuscript nomenclature"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  recompute: false
+---
+
+The initial WGCNA color labels and the final biological module catalog serve different purposes. The final catalogs retain the original network color, grey-module refinement, developmental class and manuscript label where those fields are available. This notebook loads the recorded final assignments rather than recreating exploratory grey-splitting alternatives.
+
+No additional clustering, rule selection or module relabeling is performed during a normal render. The exact final refinement assignments are data inputs to downstream enrichment and integration analyses.
+
+```{r setup, include=FALSE, eval=TRUE}
+if (!exists("params", inherits = FALSE)) {
+  params <- list(recompute = FALSE)
+}
+candidate_roots <- c(".", "..")
+repo_dir <- candidate_roots[vapply(
+  candidate_roots, function(path) file.exists(file.path(path, "R", "common.R")),
+  logical(1)
+)][1]
+stopifnot(!is.na(repo_dir))
+repo_dir <- normalizePath(repo_dir, winslash = "/")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = isTRUE(params$recompute),
+
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE
+)
+```
+
+## Load the final catalogs
+
+These are the interval-level tables used for the manuscript source data. Each interval must have one stable genomic ID.
+
+```{r load-the-final-catalogs, eval=TRUE}
+catalog_dir <- file.path(repo_dir, "data", "upstream", "final_tables")
+catalog_files <- c(
+  ATAC = "Supp_Table_1_ATAC_master.csv",
+  AC = "Supp_Table_2_AC_master.csv",
+
+  ME3 = "Supp_Table_3_ME3_master.csv"
+)
+catalogs <- lapply(
+  catalog_files, function(name) {
+    read.csv(
+      file.path(catalog_dir, name),
+      check.names = FALSE
+    )
+  }
+)
+stopifnot(
+  all(
+    vapply(
+      catalogs, function(x) !anyDuplicated(x$ID),
+      logical(1)
+    )
+  )
+)
+module_counts <- lapply(
+  catalogs, function(x) {
+    as.data.frame(table(x$Fine_clusters, x$Fine_clusters_short))
+  }
+)
+module_counts <- lapply(
+  module_counts, function(x) x[x$Freq >
+    0, ]
+)
+module_counts
+```
+
+## Preserve the initial assignments
+
+For ATAC, the final catalog explicitly retains the initial WGCNA SP6 color and grey refinement columns. These columns should not be substituted for one another. The initial fitted network has 67,435 features and the final catalog has 67,518 intervals; downstream analyses use the final catalog as supplied.
+
+```{r preserve-the-initial-assignments, eval=TRUE}
+atac_assignment_fields <- c(
+  "ID", "colors_ATAC_SP6", "grey_ATAC_resplit", "Fine_clusters", "Fine_clusters_short",
+  "Cluster_type", "Top_level_clusters"
+)
+atac_assignments <- catalogs$ATAC[, atac_assignment_fields]
+head(atac_assignments)
+```
+
+## Separate display transformations from network inputs
+
+The manuscript uses module medians and standardized display matrices. The stored signal columns are used as supplied; a display z score does not describe the CPM matrix on which the network was fitted. The figure notebooks state when a recovered heatmap uses an approximate display transformation.
+
+```{r separate-display-transformations-from-network-inputs}
+atac_signal_columns <- grep(
+  "_cpm$", names(catalogs$ATAC),
+  value = TRUE
+)
+atac_module_medians <- aggregate(
+  catalogs$ATAC[, atac_signal_columns],
+  by = list(Module = catalogs$ATAC$Fine_clusters_short),
+
+  FUN = median,
+  na.rm = TRUE
+)
+head(atac_module_medians)
+```
+
+```{r session-info, eval=TRUE}
+sessionInfo()
+```

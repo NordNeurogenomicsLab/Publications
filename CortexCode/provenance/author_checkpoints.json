@@ -1,0 +1,353 @@
+{
+  "Session_dump_annotations_Fig1_and_2..RData": {
+    "file": "objects/author_checkpoints/Session_dump_annotations_Fig1_and_2..rds",
+    "objects": {
+      "dynamic_ht": {
+        "class": "Heatmap",
+        "dim": [20, 15]
+      },
+      "constitutive_ht": {
+        "class": "Heatmap",
+        "dim": [20, 7]
+      },
+      "ht": {
+        "class": "Heatmap",
+        "dim": [15, 16]
+      },
+      "ht_ac": {
+        "class": "Heatmap",
+        "dim": [18, 12]
+      },
+      "ht_me3": {
+        "class": "Heatmap",
+        "dim": [18, 10]
+      },
+      "ht_atac_go_uncurated": {
+        "class": "Heatmap",
+        "dim": [475, 20]
+      },
+      "atac_summary": {
+        "class": ["tbl_df", "tbl", "data.frame"],
+        "dim": [22, 5]
+      },
+      "ac_summary": {
+        "class": ["tbl_df", "tbl", "data.frame"],
+        "dim": [21, 5]
+      },
+      "me3_summary": {
+        "class": ["tbl_df", "tbl", "data.frame"],
+        "dim": [20, 5]
+      },
+      "map_atac": {
+        "class": "data.frame",
+        "dim": [22, 5]
+      },
+      "map_ac": {
+        "class": "data.frame",
+        "dim": [29, 5]
+      },
+      "map_me3": {
+        "class": "data.frame",
+        "dim": [20, 5]
+      },
+      "atac_map": {
+        "class": "data.frame",
+        "dim": [22, 4]
+      },
+      "ac_map": {
+        "class": "data.frame",
+        "dim": [29, 4]
+      },
+      "me3_map": {
+        "class": "data.frame",
+        "dim": [35, 4]
+      },
+      "metadata_atac": {
+        "class": "data.frame",
+        "dim": [20, 4]
+      },
+      "metadata_ac": {
+        "class": "data.frame",
+        "dim": [18, 4]
+      },
+      "metadata_me3": {
+        "class": "data.frame",
+        "dim": [17, 4]
+      }
+    }
+  },
+  "Session_dump_Integration_10_30_2025v2.RData": {
+    "file": "objects/author_checkpoints/Session_dump_Integration_10_30_2025v2.rds",
+    "objects": {
+      "ac": {
+        "class": "data.frame",
+        "dim": [66230, 74]
+      },
+      "all_overlaps": {
+        "class": "data.frame",
+        "dim": [92568, 20]
+      },
+      "all_overlaps_clean": {
+        "class": "data.frame",
+        "dim": [92568, 20]
+      },
+      "all_pairs": {
+        "class": "data.frame",
+        "dim": [123021, 3]
+      },
+      "ap_ac_me3": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "ap_all": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "ap_atac_ac": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "ap_atac_me3": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "atac": {
+        "class": "data.frame",
+        "dim": [67518, 86]
+      },
+      "atac_ac_overlap_counts": {
+        "class": ["tbl_df", "tbl", "data.frame"],
+        "dim": [43616, 2]
+      },
+      "combined_panel": {
+        "class": ["patchwork", "gg", "ggplot"],
+        "dim": {}
+      },
+      "connections": {
+        "class": "data.frame",
+        "dim": [3008, 8]
+      },
+      "df_ac_me3": {
+        "class": "data.frame",
+        "dim": [33518, 2]
+      },
+      "df_atac_ac": {
+        "class": "data.frame",
+        "dim": [58580, 2]
+      },
+      "df_atac_me3": {
+        "class": "data.frame",
+        "dim": [43728, 2]
+      },
+      "filtered_overlaps": {
+        "class": "data.frame",
+        "dim": [79676, 20]
+      },
+      "me3": {
+        "class": "data.frame",
+        "dim": [71339, 56]
+      },
+      "overlap_counts": {
+        "class": "data.frame",
+        "dim": [4, 5]
+      },
+      "p": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p1": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p2": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "pair_counts": {
+        "class": ["tbl_df", "tbl", "data.frame"],
+        "dim": [1673, 5]
+      },
+      "plot_ac_me3": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "plot_atac_ac": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "plot_atac_me3": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "plot_data": {
+        "class": ["tbl_df", "tbl", "data.frame"],
+        "dim": [60, 10]
+      },
+      "plot_df": {
+        "class": "data.frame",
+        "dim": [68431, 20]
+      },
+      "plot_df_unique": {
+        "class": "data.frame",
+        "dim": [58709, 20]
+      },
+      "plot_three_way": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "three_way": {
+        "class": "data.frame",
+        "dim": [33507, 20]
+      },
+      "three_way_ac_me3": {
+        "class": "data.frame",
+        "dim": [22717, 3]
+      },
+      "three_way_atac_ac": {
+        "class": "data.frame",
+        "dim": [27841, 3]
+      },
+      "three_way_atac_me3": {
+        "class": "data.frame",
+        "dim": [26294, 3]
+      },
+      "three_way_df": {
+        "class": "data.frame",
+        "dim": [33524, 16]
+      },
+      "three_way_df_renamed": {
+        "class": "data.frame",
+        "dim": [33524, 20]
+      },
+      "top_connections": {
+        "class": ["tbl_df", "tbl", "data.frame"],
+        "dim": [80, 3]
+      },
+      "two_way": {
+        "class": "data.frame",
+        "dim": [46169, 20]
+      },
+      "two_way_ac_me3": {
+        "class": "data.frame",
+        "dim": [8610, 13]
+      },
+      "two_way_atac_ac": {
+        "class": "data.frame",
+        "dim": [34063, 13]
+      },
+      "two_way_atac_me3": {
+        "class": "data.frame",
+        "dim": [16371, 13]
+      },
+      "two_way_df": {
+        "class": "data.frame",
+        "dim": [59044, 20]
+      },
+      "two_way_df_renamed": {
+        "class": "data.frame",
+        "dim": [59044, 20]
+      },
+      "two_way_pairs": {
+        "class": "data.frame",
+        "dim": [46169, 3]
+      }
+    }
+  },
+  "Session_dump_FIg6_12_06_2025.RData": {
+    "file": "objects/author_checkpoints/Session_dump_FIg6_12_06_2025.rds",
+    "objects": {
+      "bottom_row": {
+        "class": ["patchwork", "gg", "ggplot"],
+        "dim": {}
+      },
+      "donut_atac": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "donut_me3": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "gg_atac_go": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "gg_bar": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "gg_epi_rna": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "gg_go_10": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "gg_go_bar": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "gg_go_curated": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "gg_go_heat": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "gg_go_top10": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "gg_me3_go": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "gg_volcano": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p_atac": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p_atac_down": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p_atac_up": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p_bed0": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p_bed5000": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p_me3": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p_me3_down": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p_me3_up": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "p_volcano": {
+        "class": ["gg", "ggplot"],
+        "dim": {}
+      },
+      "top_row": {
+        "class": ["patchwork", "gg", "ggplot"],
+        "dim": {}
+      }
+    }
+  }
+}

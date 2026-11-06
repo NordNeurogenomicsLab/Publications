@@ -1,0 +1,22 @@
+[
+  {
+    "source": "Integration2.Rmd",
+    "sha256": "ed4b9e2ec3c2186c00123b89031f71e2d5ca47a31f4404a3d97144bc7015578e",
+    "role": "Pairwise/three-way genomic overlap construction"
+  },
+  {
+    "source": "Kdm6b_H3K27me3_ChIP_seq_diffbind_KC.Rmd",
+    "sha256": "e00cc91be559e1464bad158566bb5d324f60a0cb267e9f51a02d76a1c5e4c8b3",
+    "role": "Final DiffBind peak-set/counting/DESeq2 workflow"
+  },
+  {
+    "source": "Variant permutation analysis - new list of variants.Rmd",
+    "sha256": "47bfff1cc2ef739fa531a92c83a7104316c18e5b5f33dbb11606d1d9272f4e95",
+    "role": "Fu ASD gene-set orthology and normal-tail resampling"
+  },
+  {
+    "source": "Neurona_RNAseq_topGO_SP10_v3_FIXED.R",
+    "sha256": "10d5c136c2d3ac4b89003302e6b5eaef218ec79eacc31aa9232a60b4383bfd7d",
+    "role": "topGO implementation reference; mouse adaptation is not a recovered Figure 5d configuration"
+  }
+]

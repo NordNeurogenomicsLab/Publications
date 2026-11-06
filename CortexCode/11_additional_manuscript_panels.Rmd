@@ -1,0 +1,295 @@
+---
+title: "Grouped quantitative panel displays"
+output: html_document
+---
+
+This notebook groups saved quantitative outputs into display panels. It presents ASD-gene overlap counts, mean RNA expression, original bulk RNA values, differential-chromatin volcanoes, interval counts and the saved integration UMAP export. It does not fit new models or embeddings. Figure-specific counting units and biological sample identities are retained.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+suppressPackageStartupMessages(library(patchwork))
+knitr::opts_chunk$set(echo = TRUE,
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE)
+```
+
+## Figure 6g schematic overlap counts
+
+The original gene-set overlap statistics are represented schematically with the manuscript's pink/purple and green palette. Circle areas are not quantitative. The source analysis tested 175 ASD genes, which is distinct from the full 185-gene literature set printed in the artwork.
+
+```{r figure-6g-schematic-overlap-counts-2}
+plots <- list()
+for (pop in c("VZ", "nonVZ")) {
+  s <- read_table("Fig6_KC", paste0("6g_", pop, "_Statistics"))
+  t <- seq(0, 2 * pi, length.out = 180)
+  circ <- bind_rows(
+    data.frame(
+      x = cos(t),
+      y = sin(t),
+      Set = "RNA"
+    ),
+    data.frame(
+      x = -1 + 0.38 * cos(t),
+      y = -0.05 + 0.38 * sin(t),
+      Set = "ASD"
+    )
+  )
+  p <- ggplot(circ,
+    aes(x, y, group = Set, fill = Set)) +
+    geom_polygon(alpha = 0.8,
+      color = NA) +
+    scale_fill_manual(
+      values = c(RNA = if (pop == "VZ") "#E49CB0" else "#A2A4CF",
+      ASD = "#A4CEA0")
+    ) +
+    annotate(
+      "text",
+      x = 0.1,
+      y = 0,
+      label = paste0(pop, " DE genes\nn=", s$DE_genes_P05),
+
+      size = 3
+    ) +
+    annotate(
+      "text",
+      x = -1.2,
+      y = -0.65,
+      label = paste0("ASD tested\nn=", s$ASD_genes_tested),
+
+      size = 2.7
+    ) +
+    annotate(
+      "text",
+      x = -0.93,
+      y = 0.55,
+      label = paste0("Overlap n=", s$Observed_ASD_overlap),
+
+      size = 2.8
+    ) +
+    coord_equal(
+      xlim = c(-1.6, 1.3),
+      ylim = c(-1.05, 1.05)
+    ) +
+    theme_void() + theme(legend.position = "none")
+  plots[[pop]] <- p
+}
+export_panel(
+  wrap_plots(plots, nrow = 1),
+  "Fig6/6g_ASD_gene_overlap", 8, 3.5, note = "Schematic circle areas; original observed overlaps and tested gene universes; no new statistical test"
+)
+```
+
+## Extended Figure 7 grouped expression panels
+
+```{r extended-figure-7-grouped-expression-panels-3}
+s <- read_table("Extended_Fig7_KC", "7ab_Cluster_RNA_summary")
+for (g in c("Kdm6a", "Kdm6b")) {
+  z <- s[s$Gene == g, ]
+  z$Cluster <- factor(z$Cluster, levels = clusters)
+  export_panel(
+    ggplot(z, aes(Cluster, Mean_log_expression, group = 1)) +
+      geom_line(color = "black",
+        linewidth = 0.5) +
+      geom_point(size = 1) +
+      labs(
+        title = paste(g, "mean expression"),
+        x = NULL,
+        y = "RNA log expression"
+      ) +
+      theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 7)),
+
+    paste0("Ext7/7ab_mean_", g),
+    5, 3
+  )
+}
+d <- read_table("Extended_Fig7_KC", "7cde_jk_RPKM")
+d$FlashTag_population <- factor(d$FlashTag_population,
+  levels = c("FlashTagPositive", "FlashTagNegative"))
+for (g in c("Kdm6a", "Kdm6b")) {
+  z <- d[d$Gene == g, ]
+  stopifnot(
+    nrow(z) > 0
+  )
+  p <- ggplot(
+    z, aes(
+      factor(Genotype, levels = c("WT", "Mut")),
+      RPKM, color = Genotype
+    )
+  ) +
+    geom_boxplot(outlier.shape = NA,
+      linewidth = 0.4,
+      width = 0.6) +
+    geom_point(
+      position = position_jitter(width = 0.06, height = 0, seed = 1),
+
+      size = 1
+    ) +
+    facet_wrap(~FlashTag_population, scales = "free_y") +
+    scale_color_manual(values = MS$rna) +
+    labs(x = NULL,
+      y = "RPKM",
+      title = g) +
+    theme(legend.position = "none")
+  fdr_labels <- unique(z[, c("FlashTag_population", "RNA_BH_FDR")])
+  p <- p + geom_text(
+    data = fdr_labels,
+    aes(x = 1.5, y = Inf, label = sprintf("FDR = %.3g", RNA_BH_FDR)),
+    inherit.aes = FALSE,
+    vjust = 1.5,
+    size = 2.5,
+    color = ifelse(fdr_labels$RNA_BH_FDR < 0.05, "#448844", "#D84E4A")
+  )
+  export_panel(
+    p, paste0("Ext7/7cd_RPKM_", g),
+    5, 3
+  )
+}
+display_genes <- c("Kdm6b", "Tbr1", "Slc17a6", "Bcl11b", "Neurod2", "Nrxn2")
+z <- d[d$Gene %in% display_genes, ]
+z$Gene <- factor(z$Gene, levels = display_genes)
+# Each gene has its own shared FTpos/FTneg Y axis, as in the manuscript.
+gene_panels <- lapply(display_genes, function(gene) {
+  q <- z[z$Gene == gene, ]
+  q$Population <- factor(q$FlashTag_population,
+    levels = c("FlashTagPositive", "FlashTagNegative"),
+    labels = c("FTpos", "FTneg"))
+  q$Genotype <- factor(q$Genotype, levels = c("WT", "Mut"))
+  p <- ggplot(q, aes(Genotype, RPKM, color = Genotype)) +
+    geom_boxplot(outlier.shape = NA, linewidth = 0.4, width = 0.65) +
+    geom_point(aes(shape = Sex), position = position_jitter(width = 0.045, height = 0, seed = 1), size = 1.4) +
+    facet_grid(~Population) +
+    scale_color_manual(values = MS$rna) +
+    scale_shape_manual(values = c(F = 16, M = 17)) +
+    scale_x_discrete(labels = c(WT = "WT", Mut = "cKO")) +
+    labs(title = gene, x = NULL, y = "RPKM") +
+    theme(legend.position = "none",
+      plot.title = element_text(face = "bold.italic", hjust = 0.5, size = 14),
+      strip.text = element_text(size = 10),
+      panel.spacing.x = grid::unit(0.6, "mm"),
+      axis.text = element_text(size = 10), axis.title = element_text(size = 11))
+  stopifnot(nrow(ggplot_build(p)$data[[1]]) == 4,
+    nrow(ggplot_build(p)$data[[2]]) == nrow(q))
+  p
+})
+export_panel(wrap_plots(gene_panels, nrow = 1),
+  "Ext7/7e_RPKM_strip", 17, 3.3,
+  note = "Six gene blocks; FTpos then FTneg with a shared Y axis within each gene; all 90 observations retained")
+for (gene in c("Tle4", "Tbr1")) {
+  z <- d[d$Gene == gene, ]
+  p <- ggplot(z, aes(factor(Genotype, levels = c("WT", "Mut")), RPKM, color = Genotype)) +
+    geom_boxplot(outlier.shape = NA, linewidth = 0.3, width = 0.65) +
+    geom_point(position = position_jitter(width = 0.06, height = 0, seed = 1), size = 0.8) +
+    facet_wrap(~FlashTag_population, scales = "free_y", ncol = 1) +
+    scale_color_manual(values = MS$rna) +
+    labs(title = gene, x = NULL, y = "RPKM") +
+    theme(legend.position = "none", strip.text = element_text(size = 7))
+  export_panel(p, paste0("Ext7/", if (gene == "Tle4") "7j_Tle4_RPKM" else "7k_Tbr1_RPKM"), 1.6, 3.3)
+}
+```
+
+## Extended Figure 8 volcano grid
+
+```{r extended-figure-8-volcano-grid-4}
+pp <- list()
+# Manuscript order: FlashTag-negative above FlashTag-positive.
+# Keep one X range within each assay and one Y range across all six panels.
+assays <- c(atac = "ATAC", ac = "H3K27ac", me3 = "H3K27me3")
+all_tables <- lapply(names(assays), function(a) {
+  lapply(c("FTneg", "FTpos"), function(ft) {
+    read_table("Extended_Fig8_KC", paste0("8e_", a, "_", ft))
+  })
+})
+names(all_tables) <- names(assays)
+ymax <- max(vapply(unlist(all_tables, recursive = FALSE),
+  function(d) max(d$neg_log10_P, na.rm = TRUE), numeric(1)))
+ymax <- max(20, ceiling(ymax / 5) * 5)
+for (ft in c("FTneg", "FTpos")) for (a in names(assays)) {
+  d <- all_tables[[a]][[match(ft, c("FTneg", "FTpos"))]]
+  xmax <- max(abs(unlist(lapply(all_tables[[a]], function(x) x$Signed_log2FC))), na.rm = TRUE)
+  xmax <- ceiling(xmax)
+  p <- volcano(d) +
+    coord_cartesian(xlim = c(-xmax, xmax), ylim = c(0, ymax), expand = FALSE) +
+    scale_y_continuous(breaks = seq(0, ymax, by = 5)) +
+    geom_vline(xintercept = 0, linewidth = 0.25, color = "grey55") +
+    labs(title = paste(assays[[a]], ft),
+      x = "Signed log2 fold change", y = "-log10(P value)") +
+    theme(legend.position = "none", plot.title = element_text(size = 13),
+      axis.text = element_text(size = 10), axis.title = element_text(size = 11))
+  stopifnot(nrow(ggplot_build(p)$data[[1]]) == nrow(d))
+  pp[[paste(a, ft)]] <- p
+}
+export_panel(wrap_plots(pp, ncol = 3), "Ext8/8e_six_volcanoes", 10, 7,
+  note = "FTneg above FTpos; ATAC, H3K27ac, H3K27me3 left to right; common Y scale and assay-specific shared X limits; no rows clipped")
+
+```
+
+## Extended Figure 1 absolute differential counts
+
+The manuscript displays counts, not fractions. Use the saved per-module counts with explicit comparison labels. The module colors follow the manuscript's yellow/intermediate blue/red/grey grouping.
+
+```{r extended-figure-1-absolute-differential-counts-5}
+module_cols <- function(u) {
+  n <- as.integer(gsub("[^0-9]", "", u))
+  maxn <- max(n)
+  cols <- rep("#969696", length(u))
+  cols[n <= 3] <- colorRampPalette(c("#FBD602", "#CDAB2C", "#9B9A00"))(3)[n[n <=
+    3]]
+  mid <- n > 3 & n <= 11
+  cols[mid] <- colorRampPalette(c("#62B876", "#44B1CB", "#5899C8"))(8)[n[mid] -
+    3]
+  late <- n > 11 & n <= 15
+  cols[late] <- colorRampPalette(c("#F0644C", "#AE2424"))(4)[n[late] -
+    11]
+  setNames(cols, u)
+}
+for (s in c("1e_DiffBind_counts", "1f_DiffBind_counts", "1g_DiffBind_counts")) {
+  if (s %in% c("1f_DiffBind_counts", "1g_DiffBind_counts")) {
+    plot_ext1_differential_counts(s)
+    next
+  }
+  d <- read_table("Extended_Fig1_KC", s)
+  d$Comparison <- factor(d$Comparison, levels = unique(d$Comparison))
+  d$Module <- factor(d$Module, levels = module_order(d$Module))
+  p <- ggplot(d, aes(Comparison, Significant_interval_count, fill = Module)) +
+    geom_col() + scale_fill_manual(values = module_cols(levels(d$Module))) +
+    labs(x = NULL,
+      y = "Significant intervals") +
+    theme(
+      axis.text.x = element_text(angle = 20, hjust = 1, size = 6),
+
+      legend.text = element_text(size = 6),
+
+      legend.key.size = grid::unit(2, "mm")
+    )
+  export_panel(
+    p, paste0("Ext1/", s),
+    8, 5
+  )
+}
+```
+
+## Saved Extended Figure 6 UMAP export
+
+This original vector export is loaded directly. No UMAP embedding or reclustering is rerun.
+
+```{r saved-extended-figure-6-umap-export-6}
+for (ext in c("pdf", "png")) stopifnot(
+  file.copy(
+    file.path(
+      REPO, "objects/plot_checkpoints", paste0("Ext_Data_Fig_6_Selected_bundle_UMAPs_no_legend.", ext)
+    ),
+    file.path(REPO, "panels/Ext6", paste0("6b_saved_UMAPs.", ext)),
+    overwrite = TRUE
+  )
+)
+panel_registry[["Ext6/6b_saved_UMAPs"]] <- data.frame(
+  panel = "Ext6/6b_saved_UMAPs",
+  note = "Original saved selected-bundle UMAP vector export; no reclustering",
+
+  width = NA_real_,
+  height = NA_real_
+)
+finish_notebook("11")
+sessionInfo()
+```

@@ -1,0 +1,51 @@
+{
+  "original_plot_chunks_preserved": {
+    "01_WGCNA_checkpoints.Rmd": 3,
+    "02_Figures_1_2_modules.Rmd": 6,
+    "03_Figure_3_multiome.Rmd": 8,
+    "04_Figure_4_integration.Rmd": 4,
+    "05_Figure_5_RNA_histology.Rmd": 4,
+    "06_Figure_6_epigenomics.Rmd": 6,
+    "07_Figure_6_variants.Rmd": 4
+  },
+  "native_function_identity": {
+    "make_peaks_gr_from_df": "PASS",
+    "build_peak_set": "PASS",
+    "run_diffbind": "PASS",
+    "run_pairwise_recluster_and_plots": "PASS",
+    "run_threeway_recluster_and_plots": "PASS",
+    "make_traj_gr": "PASS",
+    "make_overlap_gr": "PASS",
+    "assign_by_overlap": "PASS"
+  },
+  "default_methods_render": "PASS, seven notebooks; all analysis flags false",
+  "HOMER_max_absolute_difference": 0,
+  "expensive_analyses_executed": false,
+  "syntax_checked_notebooks": 19,
+  "syntax_checked_R_chunks": 139,
+  "historical_full_rerun_validated": false,
+  "qualification": "Validation covers syntax, safe default methods renders, unchanged plotting expressions, selected original function identities and archived HOMER numerical reproduction. Expensive rerun branches were not executed.",
+  "checked_utc": "2026-11-05T07:50:08.490767+00:00",
+  "source_sha256": {
+    "00_inputs_and_provenance.Rmd": "6d610832bb0ac82e2b97e265a2a3dda221d29f3558a900453ed3c4ff9e0cb019",
+    "01_WGCNA_checkpoints.Rmd": "5c71089d8fb5be4f8505683a22dc99b1d1cf1e8d1eac1520294a7fc0c676f4d6",
+    "02_Figures_1_2_modules.Rmd": "d39bdee9c772a5248851b21cbd47a99898a53269fc83548d79fec93c724b6913",
+    "03_Figure_3_multiome.Rmd": "54ea6d944410fcfcde3bfcc5873f42ea209a9a18fa3141c8ce8fe4ddeea83d0c",
+    "04_Figure_4_integration.Rmd": "bf7684df0508dd6c753a434e15651378ab6e3ccbbfd93418beabfcc64a5264d2",
+    "05_Figure_5_RNA_histology.Rmd": "88ad5dacacbb342427ad85377d751fd2269825ff50dccd344d786292325b69d7",
+    "06_Figure_6_epigenomics.Rmd": "41d3103ecca63a2b1b32da68b92fd0f6e2ecc303451c76346eece2180d225eb1",
+    "07_Figure_6_variants.Rmd": "c59a6323679e7ec96fa982e88856c1d50874f3685f641905d3d816bf817b245e",
+    "08_Figure_7_enhancer_histology.Rmd": "a36b79bc8753f40959f4917dff1a29dbe700f40f6079f84c77fee14dccb411b5",
+    "10_manuscript_graphics.Rmd": "f7e790e96f837134c492dcd9ed0f43c449d152b730cd4e100231803ebfaef512",
+    "11_additional_manuscript_panels.Rmd": "3fb6ef9e6a1e251e561cdca0f217e34ba14aeba9be6e6889d1eb35a4f64338de",
+    "pipeline/00_sequencing_inputs.Rmd": "a6fc795a947bbe7ac40a1253e53bbaa049ec64e27445aa16882444c7baecff11",
+    "pipeline/01_WGCNA_network_generation.Rmd": "9d62fc9bb22b757092b732941a7f2301d47e3974d80b0a1c7edff3cbe892730c",
+    "pipeline/02_module_annotation.Rmd": "acd15c1c14a738717e86bd62fd526e8717342af912db2dc1c0d2145e0f5ebc0a",
+    "pipeline/03_multiome_module_scores.Rmd": "9f5e020624bb22a92a4d7dd968c3279a7aa9c32ef1595658bd535b45aa18379a",
+    "pipeline/04_integration_trajectories.Rmd": "2c67e3279e5c4883b38ac4089c87c26ab8c1c4e78c526e8e2fecb2f3051d5f07",
+    "pipeline/05_RNA_and_pseudobulk.Rmd": "830ed7118df24a7f8260f44b01ae19cc8110f04700dea39e6dd5fdb6fe85cd85",
+    "pipeline/06_epigenomic_statistics.Rmd": "a6048c2f326c503e1ab5055d98aa29f2a4f336437b50a2b6c84dd396f42d7b30",
+    "pipeline/07_variant_enrichment.Rmd": "028670de685279d25fd7f5a81dabad7c346733508c18b490118a684ec0713a69"
+  },
+  "later_graphics_audit": "Subsequent figure styling and Ext7 grid parsing updates are recorded in figure_draft_validation.json. Original source hashes above describe the earlier methods audit."
+}

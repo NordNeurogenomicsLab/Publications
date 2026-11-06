@@ -1,0 +1,109 @@
+---
+title: "Differential chromatin statistics and module enrichment"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  recompute: false
+---
+
+The final epigenomic input tables are the modality-specific, expand_bed_5000 DiffBind DESeq2 result files for FlashTag-positive and FlashTag-negative populations. Older exploratory peak-universe and summit-window alternatives are not silently substituted for these named inputs. This notebook documents the downstream quantities used in the figures and checks the saved module-enrichment statistics; it does not recount reads or refit the differential models.
+
+Two effect measures are retained: DiffBind `Fold`, and the mutant-minus-control normalized concentration difference used on the volcano x axis. Their different definitions must remain explicit.
+
+```{r setup, include=FALSE, eval=TRUE}
+if (!exists("params", inherits = FALSE)) {
+  params <- list(recompute = FALSE)
+}
+candidate_roots <- c(".", "..")
+repo_dir <- candidate_roots[vapply(
+  candidate_roots, function(path) file.exists(file.path(path, "R", "common.R")),
+  logical(1)
+)][1]
+stopifnot(!is.na(repo_dir))
+repo_dir <- normalizePath(repo_dir, winslash = "/")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = isTRUE(params$recompute),
+
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE
+)
+```
+
+## Differential result fields
+
+Read one final result table. Statistical significance is retained from its original p.value/FDR columns; no P value is recomputed from the displayed concentration difference.
+
+```{r differential-result-fields, eval=TRUE}
+result_dir <- file.path(repo_dir, "data", "upstream", "final_tables")
+me3_results <- read.csv(
+  file.path(
+    result_dir, "H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv"
+  ),
+  check.names = FALSE
+)
+display_log2fc <- me3_results$Conc_Kdm6b_expr - me3_results$Conc_Kdm6b_ctrl
+head(
+  data.frame(
+    DiffBind_Fold = me3_results$Fold,
+    Display_concentration_difference = display_log2fc,
+
+    P_value = me3_results$p.value,
+    FDR = me3_results$FDR
+  )
+)
+```
+
+## Module enrichment from saved counting units
+
+The hypergeometric universe is defined by background peaks, not genes or interaction records. For each module, the one-sided upper-tail probability is computed from its selected/background counts, and Benjamini–Hochberg adjustment is applied over the tested modules.
+
+```{r module-enrichment-from-saved-counting-units, eval=TRUE}
+enrichment <- read.csv(
+  file.path(
+    repo_dir, "data", "source_tables", "Fig6_KC", "6e_Module_enrichment.csv"
+  )
+)
+calculated_p <- phyper(
+  q = enrichment$Selected_peaks - 1,
+  m = enrichment$Background_peaks,
+  n = enrichment$Background_total -
+    enrichment$Background_peaks,
+    k = enrichment$Selected_total,
+    lower.tail = FALSE
+)
+calculated_fdr <- p.adjust(calculated_p, method = "BH")
+stopifnot(
+  isTRUE(
+    all.equal(calculated_p, enrichment$Hypergeometric_P, tolerance = 1e-10)
+  )
+)
+stopifnot(
+  isTRUE(all.equal(calculated_fdr, enrichment$BH_FDR, tolerance = 1e-10))
+)
+head(
+  enrichment[, c("Module_figure", "Fold_enrichment", "Hypergeometric_P", "BH_FDR")]
+)
+```
+
+## RPKM counting convention
+
+Displayed RPKM values are derived from raw counts, gene lengths and the sum of gene counts in each library. These are descriptive expression values; the original RNA differential statistics are retained separately and are not inferred from RPKM.
+
+```{r rpkm-counting-convention, eval=TRUE}
+expression <- read.csv(file.path(repo_dir, "data", "source_tables", "Fig6_KC", "6o_RPKM.csv"))
+calculated_rpkm <- as.double(expression$Raw_count) *
+  1e+09/(as.double(expression$Gene_length_bp) *
+  as.double(expression$Library_sum_gene_counts))
+stopifnot(
+  max(abs(calculated_rpkm - expression$RPKM)) <
+    1e-08
+)
+```
+
+```{r session-info, eval=TRUE}
+sessionInfo()
+```

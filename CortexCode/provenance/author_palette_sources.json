@@ -1,0 +1,58 @@
+{
+  "dynamic_ht": {
+    "colors": ["#000004FF", "#57106EFF", "#BB3755FF", "#F98D0AFF", "#FCFFA4FF"],
+    "levels": [-2, -1, 0, 1, 2],
+    "rows": ["Atac_Vz_E10_C_cpm", "Atac_Vz_E10_R_cpm", "Atac_Vz_E11_C_cpm", "Atac_Vz_E11_R_cpm", "Atac_Vz_E12_C_cpm", "Atac_Vz_E12_R_cpm", "Atac_Vz_E13_C_cpm", "Atac_Vz_E13_R_cpm", "Atac_Svz9Hr_E12_C_cpm", "Atac_Svz9Hr_E12_R_cpm", "Atac_Nex_E12_C_cpm", "Atac_Nex_E12_R_cpm", "Atac_Nex_E13_C_cpm", "Atac_Nex_E13_R_cpm", "Atac_Nex_E15_C_cpm", "Atac_Nex_E15_R_cpm", "Atac_Ntsr_P2_C_reseq_cpm", "Atac_Ntsr_P2_R_cpm", "Atac_Rbp_P2_C_cpm", "Atac_Rbp_P2_R_cpm"],
+    "columns": ["turquoise", "tan", "cyan", "salmon", "midnightblue", "green", "red", "brown", "Weak_middle", "yellow", "magenta", "blue", "Weak_late", "purple", "P2_specific"],
+    "bottom_annotation": {
+      "counts": {},
+      "bars": {}
+    }
+  },
+  "constitutive_ht": {
+    "colors": ["#000004FF", "#57106EFF", "#BB3755FF", "#F98D0AFF", "#FCFFA4FF"],
+    "levels": [-2, -1, 0, 1, 2],
+    "rows": ["Atac_Vz_E10_C_cpm", "Atac_Vz_E10_R_cpm", "Atac_Vz_E11_C_cpm", "Atac_Vz_E11_R_cpm", "Atac_Vz_E12_C_cpm", "Atac_Vz_E12_R_cpm", "Atac_Vz_E13_C_cpm", "Atac_Vz_E13_R_cpm", "Atac_Svz9Hr_E12_C_cpm", "Atac_Svz9Hr_E12_R_cpm", "Atac_Nex_E12_C_cpm", "Atac_Nex_E12_R_cpm", "Atac_Nex_E13_C_cpm", "Atac_Nex_E13_R_cpm", "Atac_Nex_E15_C_cpm", "Atac_Nex_E15_R_cpm", "Atac_Ntsr_P2_C_reseq_cpm", "Atac_Ntsr_P2_R_cpm", "Atac_Rbp_P2_C_cpm", "Atac_Rbp_P2_R_cpm"],
+    "columns": ["lightcyan", "greenyellow", "black", "pink", "Constitutive_strong", "grey", "Constitutive_weak"],
+    "bottom_annotation": {
+      "counts": {},
+      "bars": {}
+    }
+  },
+  "ht": {
+    "colors": ["#FFFFFFFF", "#FCBBA1FF", "#FB6A4AFF", "#DE2D26FF"],
+    "levels": [0, 2, 4, 6],
+    "rows": ["cell cycle DNA replication", "somatic stem cell population maintenance", "apoptotic process involved in development", "dendrite extension", "forebrain reorganization", "neuron differentiation", "positive regulation of histone methylation", "regulation of axon extension", "neuron projection guidance", "neuron fate commitment", "positive regulation of synaptic plasticity", "positive regulation of axon guidance", "regulation of ion transmembrane transport", "negative regulation of cell division", "regulation of calcium ion import"],
+    "columns": ["turquoise", "tan", "cyan", "salmon", "midnightblue", "green", "red", "brown", "yellow", "magenta", "blue", "Weak_late", "purple", "P2_specific", "Constitutive_strong", "Constitutive_weak"],
+    "bottom_annotation": {
+      "Stage": {
+        "colors": ["#9E9E9EFF", "#FFD43BFF", "#9BD3E0FF", "#E85C4AFF"],
+        "levels": ["Constitutive", "Early", "Intermediate", "Late"]
+      }
+    }
+  },
+  "ht_ac": {
+    "colors": ["#FFFFFFFF", "#FCBBA1FF", "#FB6A4AFF", "#DE2D26FF"],
+    "levels": [0, 2, 4, 6],
+    "rows": ["regulation of G0 to G1 transition", "stem cell population maintenance", "negative regulation of cell cycle process", "somatic stem cell population maintenance", "cell cycle DNA replication", "central nervous system development", "neuron migration", "axonal fasciculation", "regulation of histone methylation", "dendrite extension", "positive regulation of synaptic plasticity", "synapse maturation", "cortical cytoskeleton organization", "long term synaptic depression", "neuronal action potential propagation", "actin cytoskeleton reorganization", "protein acylation", "ribonucleoprotein complex subunit organization"],
+    "columns": ["turquoise", "Weak_early_VZ", "brown", "black", "pink", "blue", "yellow", "red", "Strong_late_1", "purple", "Constitutive_strong_1", "Constitutive_strong_2"],
+    "bottom_annotation": {
+      "Stage": {
+        "colors": ["#9E9E9EFF", "#FFD43BFF", "#9BD3E0FF", "#E85C4AFF"],
+        "levels": ["Constitutive", "Early", "Intermediate", "Late"]
+      }
+    }
+  },
+  "ht_me3": {
+    "colors": ["#FFFFFFFF", "#FCBBA1FF", "#FB6A4AFF", "#DE2D26FF"],
+    "levels": [0, 2, 4, 6],
+    "rows": ["anterior/posterior pattern specification", "fibroblast growth factor receptor signaling pathway", "hindbrain development", "negative regulation of glial cell differentiation", "negative regulation of oligodendrocyte differentiation", "neuron development", "neuron fate commitment", "pattern specification process", "positive regulation of Wnt signaling pathway, planar cell polarity pathway", "regionalization", "regulation of axon extension", "regulation of cell fate commitment", "regulation of histone methylation", "regulation of synapse structural plasticity", "regulation of transcription involved in cell fate commitment", "rostrocaudal neural tube patterning", "spinal cord association neuron differentiation", "stem cell population maintenance"],
+    "columns": ["green", "red", "greenyellow", "yellow", "midnightblue", "blue", "turquoise", "Weak_late", "Constitutive_medium", "Constitutive_strong"],
+    "bottom_annotation": {
+      "Stage": {
+        "colors": ["#9E9E9EFF", "#FFD43BFF", "#9BD3E0FF", "#E85C4AFF"],
+        "levels": ["Constitutive", "Early", "Intermediate", "Late"]
+      }
+    }
+  }
+}

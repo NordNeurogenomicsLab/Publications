@@ -1,0 +1,226 @@
+[
+  {
+    "panel": "Fig1/d2_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig1_AC_Modules_heatmap_noOther.pdf",
+    "png": "objects/plot_checkpoints/Fig1_AC_Modules_heatmap_noOther.png",
+    "source": "KC_Figures2/Fig1_AC_Modules_heatmap_noOther.pdf",
+    "sha256": "87d67e4d77182e674c47bb511d1a05d55fd0dc839c128781dc2f44aff0050fea",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig1/e2_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig1_ME3_Curated_modules_heatmap.pdf",
+    "png": "objects/plot_checkpoints/Fig1_ME3_Curated_modules_heatmap.png",
+    "source": "KC_Figures2/Fig1_ME3_Curated_modules_heatmap.pdf",
+    "sha256": "08216a07519d06e79b8a48e9440307c156223a124a8e621e59a69752c3920cf1",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig1/c3_prox_dist_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig1_ATAC_prox_dist_proportions.pdf",
+    "png": "objects/plot_checkpoints/Fig1_ATAC_prox_dist_proportions.png",
+    "source": "KC_Figures2/Fig1_ATAC_prox_dist_proportions.pdf",
+    "sha256": "eac02b255e8f3cd05df528b77567efc48b29b485e32dae7b4c8b53656e54a50d",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig1/d3_prox_dist_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig1_AC_prox_dist_proportions.pdf",
+    "png": "objects/plot_checkpoints/Fig1_AC_prox_dist_proportions.png",
+    "source": "KC_Figures2/Fig1_AC_prox_dist_proportions.pdf",
+    "sha256": "0006df75aa2210ecf8b1889237327ae5f81ad0501d10d0dfa38b93f3fab3301c",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig1/e3_prox_dist_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig1_ME3_prox_dist_proportions.pdf",
+    "png": "objects/plot_checkpoints/Fig1_ME3_prox_dist_proportions.png",
+    "source": "KC_Figures2/Fig1_ME3_prox_dist_proportions.pdf",
+    "sha256": "93af07191beed3f31f68d78c93169f92f78cb9e1783b62b047125d9ee38f2e3d",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig1/c3_conservation_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig1_ATAC_median_phastCons_mean_by_module.pdf",
+    "png": "objects/plot_checkpoints/Fig1_ATAC_median_phastCons_mean_by_module.png",
+    "source": "KC_Figures2/Fig1_ATAC_median_phastCons_mean_by_module.pdf",
+    "sha256": "c1ae4e9ae83cbcee93a96cb5b5b4c5897600e067c7afcfd3b0aeada46a77e8ae",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig1/d3_conservation_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig1_AC_median_phastCons_mean_by_module.pdf",
+    "png": "objects/plot_checkpoints/Fig1_AC_median_phastCons_mean_by_module.png",
+    "source": "KC_Figures2/Fig1_AC_median_phastCons_mean_by_module.pdf",
+    "sha256": "625e0a46ae7468ca58c49071719d56db7ce1ea94f60947ff4fed475ad38c908a",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig1/e3_conservation_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig1_ME3_median_phastCons_mean_by_module.pdf",
+    "png": "objects/plot_checkpoints/Fig1_ME3_median_phastCons_mean_by_module.png",
+    "source": "KC_Figures2/Fig1_ME3_median_phastCons_mean_by_module.pdf",
+    "sha256": "8d1964388a3b8a5d400a08432c76dff64555ad157ecd651f3313875dc3a35601",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig2/2a_GO_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig2_ATAC_GO_heatmap_Athena_curated_terms.pdf",
+    "png": "objects/plot_checkpoints/Fig2_ATAC_GO_heatmap_Athena_curated_terms.png",
+    "source": "KC_Figures2/Fig2_ATAC_GO_heatmap_Athena_curated_terms.pdf",
+    "sha256": "73029a75ac9bada86013ebc73721434854736b2e6c8454dff0a44138a4ed16eb",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig2/2b_GO_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig2_AC_GO_heatmap_Athena_curated_terms.pdf",
+    "png": "objects/plot_checkpoints/Fig2_AC_GO_heatmap_Athena_curated_terms.png",
+    "source": "KC_Figures2/Fig2_AC_GO_heatmap_Athena_curated_terms.pdf",
+    "sha256": "f1f0222c3664be5fca1b8301451f6d2640c9a99222da48a80211b1374c751e72",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig2/2c_GO_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig2_ME3_GO_heatmap_Athena_curated_terms.pdf",
+    "png": "objects/plot_checkpoints/Fig2_ME3_GO_heatmap_Athena_curated_terms.png",
+    "source": "KC_Figures2/Fig2_ME3_GO_heatmap_Athena_curated_terms.pdf",
+    "sha256": "54d743b8862bd97227f09ca82fc8fff247fb91735d0416edba6207c32ada6421",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig2/2g_HOMER_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig2_HOMER_Motif_Enrichment_LogPvalues_collapsed_curated_motifs_short.pdf",
+    "png": "objects/plot_checkpoints/Fig2_HOMER_Motif_Enrichment_LogPvalues_collapsed_curated_motifs_short.png",
+    "source": "KC_Figures2/Fig2_HOMER_Motif_Enrichment_LogPvalues_collapsed_curated_motifs_short.pdf",
+    "sha256": "bf4460d1ec53f3cb46a26919572c1f381a1c4c2d7c6cad0cced3e3ca950031a3",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig4/4a_treemap_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig4a_treemap_correct_Interconnection_types_w_singletons.pdf",
+    "png": "objects/plot_checkpoints/Fig4a_treemap_correct_Interconnection_types_w_singletons.png",
+    "source": "KC_Figures2/Fig4a_treemap_correct_Interconnection_types_w_singletons.pdf",
+    "sha256": "bd54dff7c158693dd1b84a731169e04f9afb98b3f7ebc6969e058fc555236d0d",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig4/4f_programs_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig_4h_program_summary_Athena_edits.pdf",
+    "png": "objects/plot_checkpoints/Fig_4h_program_summary_Athena_edits.png",
+    "source": "KC_Figures2/Fig_4h_program_summary_Athena_edits.pdf",
+    "sha256": "c0253b282f95eb4df4cd8f302c7226e62062b27884b98d35cb4d6ef0f986e3a6",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig4/4bprime_chord_author_saved",
+    "pdf": "objects/plot_checkpoints/Chord_ATAC_turquoise_AC-ME3_mod-ge-1000_links-ge-200.pdf",
+    "png": "objects/plot_checkpoints/Chord_ATAC_turquoise_AC-ME3_mod-ge-1000_links-ge-200.png",
+    "source": "KC_Figures2/Chord_ATAC_turquoise_AC-ME3_mod-ge-1000_links-ge-200.pdf",
+    "sha256": "66700fd38cf146d32ec2bdb744eed95e6cff0d341ebbfc84e9065be90f7fe2e7",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig4/4cprime_chord_author_saved",
+    "pdf": "objects/plot_checkpoints/Chord_condition_AC_blue_ATAC-ME3_mod-ge-5_links-ge-200.pdf",
+    "png": "objects/plot_checkpoints/Chord_condition_AC_blue_ATAC-ME3_mod-ge-5_links-ge-200.png",
+    "source": "KC_Figures2/Chord_condition_AC_blue_ATAC-ME3_mod-ge-5_links-ge-200.pdf",
+    "sha256": "1329541762f2ad2aecd124e05a1f2408524cbbaf2e2a84985679108546e4d544",
+    "note": "Corrected focal-module selection: AC blue = Ac7, n=4794. Original saved vector export; replaces the AC yellow/Ac9 chord mistakenly selected earlier."
+  },
+  {
+    "panel": "Fig4/4dprime_chord_author_saved",
+    "pdf": "objects/plot_checkpoints/Chord_condition_ME3_red_ATAC-AC_mod-ge-5_links-ge-50.pdf",
+    "png": "objects/plot_checkpoints/Chord_condition_ME3_red_ATAC-AC_mod-ge-5_links-ge-50.png",
+    "source": "KC_Figures2/Chord_condition_ME3_red_ATAC-AC_mod-ge-5_links-ge-50.pdf",
+    "sha256": "f6f2986da257bb985f004b31f38c4f811a1975df6ba73df42b099658f5784e68",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Fig6/6e_module_treemap_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig6_treemap_H3K27me3_module_treemap.pdf",
+    "png": "objects/plot_checkpoints/Fig6_treemap_H3K27me3_module_treemap.png",
+    "source": "KC_Figures2/Fig6_treemap_H3K27me3_module_treemap.pdf",
+    "sha256": "b8417c136228875658093c4debe5ff4e10fb93f90bbccaa9e519cbfbeda6dc79",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Ext8/8h_module_treemap_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig6F_ATAC_module_treemap.pdf",
+    "png": "objects/plot_checkpoints/Fig6F_ATAC_module_treemap.png",
+    "source": "KC_Figures2/Fig6F_ATAC_module_treemap.pdf",
+    "sha256": "7f1dc5ddf6a59d194c4d51a2497aac21f3780e3c9c546fd702fe066945d9580e",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Ext1/1d_AC_widths_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig1_Supp_AC_peak_width.pdf",
+    "png": "objects/plot_checkpoints/Fig1_Supp_AC_peak_width.png",
+    "source": "KC_Figures2/Fig1_Supp_AC_peak_width.pdf",
+    "sha256": "6b06f56f256b625709ba5dd6393b76048c585485d2743d2dc1e512793424118f",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Ext1/1d_ME3_widths_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig1_Supp_ME3_peak_width_v2.pdf",
+    "png": "objects/plot_checkpoints/Fig1_Supp_ME3_peak_width_v2.png",
+    "source": "KC_Figures2/Fig1_Supp_ME3_peak_width_v2.pdf",
+    "sha256": "5ac90b18e1d00696551de7ad0d555e6741d7f01fca89203e879835d89640ecd3",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Ext1/1c_TSS_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig.2_Supplement_dist_to_TSS_ridge_plots.pdf",
+    "png": "objects/plot_checkpoints/Fig.2_Supplement_dist_to_TSS_ridge_plots.png",
+    "source": "KC_Figures2/Fig.2_Supplement_dist_to_TSS_ridge_plots.pdf",
+    "sha256": "55f0e230661a217ee795e7d0d35403f4c41a00b92a2af016d5b366d41b70003d",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Ext4/4c_GENOA_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig2_GENOA_enhancers_in_distal_ATAC_peaks.pdf",
+    "png": "objects/plot_checkpoints/Fig2_GENOA_enhancers_in_distal_ATAC_peaks.png",
+    "source": "KC_Figures2/Fig2_GENOA_enhancers_in_distal_ATAC_peaks.pdf",
+    "sha256": "88b25685b6771ea76935bac82ea41e13569a743217d751804649d2dce974a971",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Ext6/6c_1a_author_saved",
+    "pdf": "objects/plot_checkpoints/threeway_clusters_1a_linked_quantized_ComplexHeatmap.pdf",
+    "png": "objects/plot_checkpoints/threeway_clusters_1a_linked_quantized_ComplexHeatmap.png",
+    "source": "KC_Figures2/threeway_clusters_1a_linked_quantized_ComplexHeatmap.pdf",
+    "sha256": "544a3c10f58114d989eeaa39ba58ac87a463bc4bb4ec3a54e17192db4aa13bee",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Ext6/6c_2a_author_saved",
+    "pdf": "objects/plot_checkpoints/threeway_clusters_2a_linked_quantized_ComplexHeatmap.pdf",
+    "png": "objects/plot_checkpoints/threeway_clusters_2a_linked_quantized_ComplexHeatmap.png",
+    "source": "KC_Figures2/threeway_clusters_2a_linked_quantized_ComplexHeatmap.pdf",
+    "sha256": "bcd71e0073d1377d155603d670d557a890b17315fc50b9df7454adbedd272b1f",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Ext6/6c_2b_author_saved",
+    "pdf": "objects/plot_checkpoints/threeway_clusters_2b_linked_quantized_ComplexHeatmap.pdf",
+    "png": "objects/plot_checkpoints/threeway_clusters_2b_linked_quantized_ComplexHeatmap.png",
+    "source": "KC_Figures2/threeway_clusters_2b_linked_quantized_ComplexHeatmap.pdf",
+    "sha256": "ab47ffd99dc9745b571d0073c2be2cd140f159bff84e22e0544b517abd0a7f4c",
+    "note": "Original vector plot export; labels may precede Illustrator relabeling; numerical definitions preserved"
+  },
+  {
+    "panel": "Ext6/6b_saved_UMAPs",
+    "pdf": "objects/plot_checkpoints/Ext_Data_Fig_6_Selected_bundle_UMAPs_no_legend.pdf",
+    "png": "objects/plot_checkpoints/Ext_Data_Fig_6_Selected_bundle_UMAPs_no_legend.png",
+    "source": "KC_Figures2/Ext_Data_Fig_6_Selected_bundle_UMAPs_no_legend.pdf",
+    "sha256": "009b2ebe8ca1beee3271fdd61c78601bb25c4831ebe35761cf81c02cef58d20e",
+    "note": "Original selected-bundle UMAP export; final analysis not rerun"
+  },
+  {
+    "panel": "Ext8/8f_Euler_author_saved",
+    "pdf": "objects/plot_checkpoints/Fig6_Supp_euler_ATAC_vs_ME3_limited_overlap_diffbind_expand_bed_5000.pdf",
+    "png": "objects/plot_checkpoints/Fig6_Supp_euler_ATAC_vs_ME3_limited_overlap_diffbind_expand_bed_5000.png",
+    "source": "KC_Figures2/Fig6_Supp_euler_ATAC_vs_ME3_limited_overlap_diffbind_expand_bed_5000.pdf",
+    "sha256": "1913d392381decfa331dac04a519550144d02948adc54076821d83a254ddf89d",
+    "note": "Original reported Euler: ATAC only 6641, ME3 only 3217, intersection 823. Actual side-specific unique ME3 overlap is 821; original plotting convention retained, not recomputed."
+  }
+]

@@ -1,0 +1,573 @@
+---
+title: "Figures 1–2 and Extended Figures 1–2, 4: epigenomic modules"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  run_great: false
+  run_homer: false
+  inspect_enrichment: false
+---
+
+Figures 1 and 2 summarize the final module catalogs: interval counts, developmental signal, TSS proximity, sequence conservation, GO enrichment, VISTA annotations and HOMER motifs. The WGCNA notebook includes network construction and refinement; GREAT and HOMER analysis code is included directly below.
+
+Statistical and plotting units are explicit: interval summaries use peaks; VISTA comparisons use the displayed assigned enhancer/module universe; motif matrices use the recorded consensus groups. The notebook reads the original enrichment results rather than rerunning GO or motif tools against potentially changed annotations. Stored display matrices are distinguished from transformations applied for visualization.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+repo_dir <- REPO
+if (!exists("params", inherits = FALSE)) params <- list()
+if (is.null(params$run_great)) params$run_great <- FALSE
+if (is.null(params$run_homer)) params$run_homer <- FALSE
+if (is.null(params$inspect_enrichment)) params$inspect_enrichment <- FALSE
+
+knitr::opts_chunk$set(echo = TRUE,
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE)
+```
+
+
+## Interval GO enrichment with GREAT
+
+This is the original interval-based analysis: mm10 GREAT, its default association rule for ATAC, and `oneClosest` for AC/ME3. No explicit custom background was passed. The biological-process tables are saved in full. A rerun queries an external service and can reflect a changed annotation release; default figure generation uses the archived results.
+
+```{r run-great, eval=isTRUE(params$run_great)}
+library(rGREAT)
+library(GenomicRanges)
+catalog_dir <- file.path(REPO, "data", "upstream", "final_tables")
+catalog_files <- c(
+  ATAC = "Supp_Table_1_ATAC_master.csv",
+  AC = "Supp_Table_2_AC_master.csv",
+  ME3 = "Supp_Table_3_ME3_master.csv"
+)
+great_output <- file.path(REPO, "objects", "enrichment", "recomputed")
+dir.create(great_output,
+  recursive = TRUE,
+  showWarnings = FALSE)
+run_module_great <- function(catalog, modality) {
+  modules <- unique(catalog$Fine_clusters)
+  modules <- modules[!is.na(modules)]
+  results <- lapply(
+    modules, function(module) {
+      selected <- catalog[catalog$Fine_clusters %in% module, , drop = FALSE]
+      intervals <- GRanges(
+        seqnames = selected$seqnames,
+        ranges = IRanges(start = selected$start, end = selected$end)
+      )
+      # Preserve the original association-rule distinction.
+      if (modality == "ATAC") {
+        job <- rGREAT::submitGreatJob(intervals, species = "mm10")
+      } else {
+        job <- rGREAT::submitGreatJob(intervals,
+          species = "mm10",
+          rule = "oneClosest")
+      }
+      tables <- rGREAT::getEnrichmentTables(job)
+      biological_process <- tables[["GO Biological Process"]]
+      biological_process$Fine_cluster <- module
+      biological_process
+    }
+  )
+  dplyr::bind_rows(results)
+}
+for (modality in names(catalog_files)) {
+  catalog <- read.csv(file.path(catalog_dir, catalog_files[[modality]]))
+  result <- run_module_great(catalog, modality)
+  write.csv(
+    result, file.path(great_output, paste0(modality, "_FineClusters_rGREAT_GO.csv")),
+    row.names = FALSE
+  )
+}
+```
+
+## GO filtering and display transformation
+
+GREAT binomial BH-adjusted P values determine the display mask at 0.1. Fold enrichment is capped at 5. Manually selected term and module lists are retained by the plotting matrices; they are not a new significance test.
+
+```{r great-display-transform, eval=isTRUE(params$inspect_enrichment)}
+enrichment_dir <- file.path(REPO, "data", "upstream", "enrichment")
+great_tables <- lapply(
+  c("ATAC", "AC", "ME3"),
+  function(modality) {
+    read.csv(
+      file.path(enrichment_dir, paste0(modality, "_FineClusters_rGREAT_GO.csv")),
+      check.names = FALSE
+    )
+  }
+)
+names(great_tables) <- c("ATAC", "AC", "ME3")
+great_display_values <- function(results, selected_terms, selected_modules) {
+  selected <- results[results$name %in% selected_terms & results$Fine_cluster %in%
+    selected_modules, , drop = FALSE]
+  selected$Display_FE <- ifelse(
+    !is.na(selected$Binom_Adjp_BH) &
+      selected$Binom_Adjp_BH < 0.1, pmin(selected$Binom_Fold_Enrichment, 5),
+    0
+  )
+  selected[, c("name", "Fine_cluster", "Binom_Fold_Enrichment", "Binom_Adjp_BH", "Display_FE")]
+}
+# Term and module selections for the final panels are retained explicitly in
+# the per-panel source matrices below, rather than selected by a new test.
+```
+
+## HOMER target regions, background and command
+
+The selected archived summit-result parameter files specify 200-bp summit windows, other nonmissing modules as the background, mm10, motif lengths 6/8/10/12, 16 threads and `-basic`. The code below reproduces that recorded command. The manuscript describes a GC-matched global background, which is a different branch of the older script; it must not be claimed for these selected results without resolving the discrepancy. BED files are already zero-based and are not shifted again.
+
+```{r run-homer, eval=isTRUE(params$run_homer)}
+atac <- read.csv(
+  file.path(REPO, "data", "upstream", "final_tables", "Supp_Table_1_ATAC_master.csv")
+)
+homer_root <- file.path(REPO, "objects", "HOMER", "recomputed")
+region_dir <- file.path(homer_root, "regions")
+result_dir <- file.path(homer_root, "results")
+dir.create(region_dir,
+  recursive = TRUE,
+  showWarnings = FALSE)
+dir.create(result_dir,
+  recursive = TRUE,
+  showWarnings = FALSE)
+write_summit_bed <- function(table, path) {
+  bed <- data.frame(
+    Chromosome = table$seqnames,
+    Start = pmax(0, table$summit - 100),
+
+    End = table$summit + 100,
+    Name = table$ID,
+    Score = 0,
+    Strand = "."
+  )
+  write.table(bed,
+    path,
+    sep = "\t",
+    quote = FALSE,
+    row.names = FALSE,
+    col.names = FALSE)
+}
+homer_executable <- Sys.getenv("CORTEX_HOMER_BIN", "findMotifsGenome.pl")
+for (module in unique(na.omit(atac$Fine_clusters))) {
+  target <- atac[!is.na(atac$Fine_clusters) &
+    atac$Fine_clusters == module, ]
+  background <- atac[!is.na(atac$Fine_clusters) &
+    atac$Fine_clusters != module, ]
+  target_bed <- file.path(region_dir, paste0("Fine_", module, "_summit_targets.bed"))
+  background_bed <- file.path(region_dir, paste0("Fine_", module, "_summit_bg.bed"))
+  write_summit_bed(target, target_bed)
+  write_summit_bed(background, background_bed)
+  status <- system2(
+    homer_executable, args = c(
+      shQuote(target_bed),
+      "mm10", shQuote(file.path(result_dir, paste0(module, "_summit"))),
+      "-bg", shQuote(background_bed),
+      "-size", "given", "-len", "6,8,10,12", "-preparsedDir", shQuote(file.path(result_dir, "_preparsed")),
+      "-p", "16", "-basic"
+    )
+  )
+  stopifnot(status == 0)
+}
+```
+
+## Known-motif selection and sequence collapse
+
+The original selection takes up to 20 motifs per module with native score ≥5, then displays those consensuses across all modules. Similar consensuses are greedily grouped at Levenshtein identity ≥0.8, taking the maximum score per module. HOMER `Log P-value` is a natural logarithm: the stored score is −ln(P), with display cap 30. Divide by ln(10) to obtain −log10(P); the numerical display is not silently reinterpreted.
+
+```{r homer-select-collapse, eval=isTRUE(params$inspect_enrichment)}
+library(dplyr);library(tidyr);library(stringdist);library(viridis)
+pval.cap <- 30
+min.pval <- 5                # used ONLY for selecting top motifs *within module*
+identity.threshold <- 0.8    # 80% identity
+data.dir <- file.path(REPO, "data", "upstream", "HOMER", "results")
+
+# -------------------------
+# 1) Collect motif results (HOMER knownResults.txt)
+# -------------------------
+module.results <- dir(data.dir)[grep("summit", dir(data.dir))]
+
+motif.tables <- lapply(module.results, function(mod) {
+  df <- read.table(file.path(data.dir, mod, "knownResults.txt"),
+                   header = TRUE,
+                   sep = "\t",
+
+                   stringsAsFactors = FALSE,
+                   comment.char = "")
+  df <- df[, c("Motif.Name", "Consensus", "Log.P.value")]
+  df$module <- gsub("_summit", "", mod)
+  df
+})
+
+motif.long <- bind_rows(motif.tables)
+
+# -------------------------------------------------------------------
+# 2) Select TOP 20 motifs per module *that pass the threshold in that module*
+#    Selection uses Score = -Log.P.value >= min.pval within each module.
+#    (Later, heatmap will show these motifs' values across ALL modules.)
+# -------------------------------------------------------------------
+motif.scored <- motif.long %>%
+  mutate(Score = -Log.P.value,
+         Score = ifelse(is.finite(Score) & Score >= 0, Score, NA_real_))
+
+motif.top20.sel <- motif.scored %>%
+  group_by(module) %>%
+  filter(Score >= min.pval) %>%              # threshold applies here (for selection)
+  arrange(desc(Score), .by_group = TRUE) %>%
+  slice_head(n = 20) %>%
+  ungroup()
+
+# set of consensuses to plot (selected in ANY module)
+consensus_keep <- unique(motif.top20.sel$Consensus)
+
+# -------------------------------------------------------------
+# 3) Build matrix for ALL modules but ONLY for selected motifs
+#    (no further thresholding; show whatever value each has)
+# -------------------------------------------------------------
+motif.logp <- motif.scored %>%
+  filter(Consensus %in% consensus_keep) %>%
+  group_by(Consensus, module) %>%
+  summarise(Score = max(Score, na.rm = TRUE),
+    .groups = "drop") %>%
+  mutate(Score = ifelse(is.finite(Score), Score, NA_real_)) %>%
+  pivot_wider(id_cols = Consensus,
+    names_from = module,
+    values_from = Score)
+
+motif_seq_df <- as.data.frame(motif.logp)
+rownames(motif_seq_df) <- motif_seq_df$Consensus
+motif_seq_df <- motif_seq_df[, sapply(motif_seq_df, is.numeric), drop = FALSE]
+motif_seq_df[] <- lapply(motif_seq_df, function(x) as.numeric(as.character(x)))
+motif_seq_mat <- as.matrix(motif_seq_df)
+motif_seq_mat[!is.finite(motif_seq_mat)] <- NA_real_
+
+# -------------------------
+# 4) Collapse similar consensus sequences (≥ identity.threshold)
+# -------------------------
+consensus <- rownames(motif_seq_mat)
+collapsed_groups <- list()
+used <- rep(FALSE, length(consensus))
+
+for (i in seq_along(consensus)) {
+  if (used[i]) next
+  seq_i <- consensus[i]
+  group <- seq_i
+  for (j in seq_along(consensus)) {
+    if (i == j || used[j]) next
+    seq_j <- consensus[j]
+    len <- max(nchar(seq_i), nchar(seq_j))
+    dist <- stringdist(seq_i, seq_j, method = "lv")
+    sim <- 1 - dist / len
+    if (sim >= identity.threshold) {
+      group <- c(group, seq_j)
+      used[j] <- TRUE
+    }
+  }
+  collapsed_groups[[seq_i]] <- group
+  used[i] <- TRUE
+}
+
+col_max_na <- function(v) if (all(is.na(v))) NA_real_ else max(v, na.rm = TRUE)
+
+collapsed_mat <- do.call(
+  rbind,
+  lapply(collapsed_groups, function(grp) {
+    mat <- motif_seq_mat[grp, , drop = FALSE]
+    apply(mat, 2, col_max_na)
+  })
+)
+
+collapsed_mat <- as.matrix(collapsed_mat)
+collapsed_mat[!is.finite(collapsed_mat)] <- NA_real_
+
+# -------------------------
+# 4b) Row names with TF family + consensus
+# -------------------------
+motif.top20.allmods <- motif.scored %>% filter(Consensus %in% consensus_keep)
+motif.top20.allmods <- motif.top20.allmods %>%
+  mutate(TFfamily = sub("/.*$", "", Motif.Name))
+
+cons_to_tf <- motif.top20.allmods %>%
+  distinct(Consensus, TFfamily)
+
+rownames(collapsed_mat) <- sapply(collapsed_groups, function(grp) {
+  tfs <- cons_to_tf$TFfamily[cons_to_tf$Consensus %in% grp]
+  tf_part <- paste(unique(tfs), collapse = " | ")
+  seq_part <- paste(grp, collapse = "|")
+  paste0(tf_part, "\n", seq_part)
+})
+
+# -------------------------
+# 5) Cap values; drop only all-NA rows/cols (no sig filter now)
+# -------------------------
+collapsed_mat[collapsed_mat > pval.cap] <- pval.cap
+keep_rows <- rowSums(is.finite(collapsed_mat)) > 0
+keep_cols <- colSums(is.finite(collapsed_mat)) > 0
+collapsed_mat <- collapsed_mat[keep_rows, keep_cols, drop = FALSE]
+
+if (nrow(collapsed_mat) == 0 || ncol(collapsed_mat) == 0) {
+  stop("Matrix is empty after pruning all-NA rows/cols.")
+}
+```
+
+## Curated motif families and manuscript columns
+
+The final curated consensus memberships and source-to-manuscript module mapping are explicit source tables. Uncapped native scores and converted −log10(P) values remain distinct.
+
+```{r homer-curated-matrix, eval=isTRUE(params$inspect_enrichment)}
+membership <- read_table("Fig2_KC", "2g_Consensus_membership")
+module_key <- read_table("Fig2_KC", "2g_Module_key")
+group_order <- unique(membership$Motif_label)
+curated_uncapped <- do.call(
+  rbind, lapply(
+    group_order, function(label) {
+      sequences <- membership$Consensus[membership$Motif_label == label]
+      stopifnot(all(sequences %in% rownames(motif_seq_mat)))
+      apply(motif_seq_mat[sequences, , drop = FALSE], 2, col_max_na)
+    }
+  )
+)
+rownames(curated_uncapped) <- group_order
+curated_lnP <- curated_uncapped[, module_key$HOMER_module, drop = FALSE]
+colnames(curated_lnP) <- module_key$Canonical_module
+curated_display <- pmin(curated_lnP, 30)
+curated_log10P <- curated_lnP/log(10)
+```
+
+## Checkpoint-based figure export
+
+The sections below use the verified saved results. Rerun outputs above are written separately and do not replace these inputs automatically.
+
+## Figure 1 module counts, signals and annotations
+
+ATAC uses the saved final heatmap matrices. AC/ME3 median signals are shown with row z scores as an approximate visual reconstruction; this is a display transformation, not the WGCNA input.
+
+```{r figure-1-module-counts-signals-and-annotations-2}
+for (prefix in c("c", "d", "e")) {
+  counts <- read_table("Fig1_KC", paste0(prefix, "1_Module_counts"))
+  counts$Fine_clusters_short <- factor(
+    counts$Fine_clusters_short, levels = module_order(counts$Fine_clusters_short)
+  )
+  export_panel(
+    ggplot(counts, aes(Fine_clusters_short, Peak_count)) +
+      geom_col(fill = c(c = "#DDAA33",
+        d = "#BB5566",
+        e = "#4477AA")[[prefix]]) +
+      coord_flip() + labs(x = NULL, y = "pREs"),
+
+    paste0("Fig1/", prefix, "1_module_counts"),
+    3, 7
+  )
+  med <- read_table("Fig1_KC", paste0(prefix, "2_Median_signal"))
+  m <- numeric_matrix(med, key = 2)
+  export_heatmap(
+    m, paste0("Fig1/", prefix, "2_median_signal"),
+    8,
+    7,
+    zscore = TRUE,
+    note = "Median stored signal per module/sample; row z scores; AC/ME3 final artwork scaling/order not certified"
+  )
+  ann <- read_table("Fig1_KC", paste0(prefix, "3_Peak_annotations"))
+  ann$Module <- factor(
+    ann$Fine_clusters_short, levels = module_order(ann$Fine_clusters_short)
+  )
+  export_panel(
+    ggplot(ann, aes(Module, phastCons_mean)) +
+      geom_boxplot(outlier.shape = NA,
+        fill = "grey85") +
+      coord_flip() + labs(y = "Mean phastCons per pRE", x = NULL),
+
+    paste0("Fig1/", prefix, "3_conservation"),
+    4, 7
+  )
+  tss <- as.data.frame(
+    prop.table(
+      table(ann$Module, ann$TSS_category),
+      1
+    )
+  )
+  names(tss) <- c("Module", "TSS_category", "Fraction")
+  export_panel(
+    ggplot(tss, aes(Module, Fraction, fill = TSS_category)) +
+      geom_col() + coord_flip() + labs(x = NULL),
+    paste0("Fig1/", prefix, "3_TSS_categories"),
+    5, 7
+  )
+}
+for (s in c("c2_dynamic_heatmap", "c2_constitutive_heatmap")) {
+  d <- read_table("Fig1_KC", s)
+  export_heatmap(
+    t(numeric_matrix(d)),
+    paste0("Fig1/", s, "_saved"),
+    8,
+    5,
+    limit = 2,
+    note = "Saved ATAC display z-score matrix; no new standardization"
+  )
+}
+```
+
+## Figure 2 GO and motif heatmaps
+
+GO matrices contain the saved original plotting scores. HOMER uses the saved curated consensus groups and the original cap of 30.
+
+```{r figure-2-go-and-motif-heatmaps-3}
+go_display_terms <- list(
+  `2b_GO_plot_matrix` = c(
+    "regulation of G0 to G1 transition", "stem cell population maintenance",
+    "negative regulation of cell cycle process", "cell cycle DNA replication",
+    "central nervous system development", "neuron migration", "axonal fasciculation",
+    "regulation of histone methylation", "dendrite extension",
+    "positive regulation of synaptic plasticity", "synapse maturation",
+    "cortical cytoskeleton organization", "long term synaptic depression",
+    "neuronal action potential propagation", "protein acylation"
+  ),
+  `2c_GO_plot_matrix` = c(
+    "spinal cord association neuron differentiation", "pattern specification process",
+    "regionalization", "neuron fate commitment", "regulation of axon extension",
+    "negative regulation of oligodendrocyte differentiation",
+    "regulation of histone methylation", "hindbrain development", "neuron development",
+    "regulation of synapse structural plasticity", "rostrocaudal neural tube patterning",
+    "positive regulation of Wnt signaling pathway, planar cell polarity pathway",
+    "fibroblast growth factor receptor signaling pathway",
+    "regulation of transcription involved in cell fate commitment",
+    "stem cell population maintenance"
+  )
+)
+# Explicit, panel-specific column selections from the final manuscript.
+# Ac16 remains valid in VISTA/network panels; it is excluded only here.
+go_display_modules <- list(
+  `2a_GO_plot_matrix` = paste0("A", c(1:7, 9:17)),
+  `2b_GO_plot_matrix` = paste0("Ac", c(1, 3, 5, 6, 7, 9, 10, 11, 14)),
+  `2c_GO_plot_matrix` = paste0("TM", c(1, 3, 4, 6, 7, 11:15))
+)
+for (s in c("2a_GO_plot_matrix", "2b_GO_plot_matrix", "2c_GO_plot_matrix")) {
+  d <- read_table("Fig2_KC", s)
+  if (!is.null(go_display_terms[[s]])) {
+    index <- match(go_display_terms[[s]], d[[1]])
+    stopifnot(!anyNA(index))
+    d <- d[index, , drop = FALSE]
+  }
+  assay <- if (s == "2a_GO_plot_matrix") "ATAC" else if (s == "2b_GO_plot_matrix") "AC" else "ME3"
+  source_columns <- names(d)[-1]
+  display_labels <- manuscript_module_labels(source_columns, assay)
+  index <- match(go_display_modules[[s]], display_labels)
+  stopifnot(!anyNA(index), !anyDuplicated(display_labels))
+  mat <- as.matrix(d[, source_columns[index], drop = FALSE])
+  rownames(mat) <- d$GO_term
+  stopifnot(identical(manuscript_module_labels(colnames(mat), assay), go_display_modules[[s]]))
+  export_heatmap(
+    mat,
+    paste0("Fig2/", s),
+    5.8, 2.8
+  )
+}
+d <- read_table("Fig2_KC", "2g_Curated_plot_scores")
+motif_order <- c("Pax6", "Zic3", setdiff(d$Motif_label, c("Pax6", "Zic3")))
+d <- d[match(motif_order, d$Motif_label), , drop = FALSE]
+export_heatmap(
+  numeric_matrix(d, key = 1),
+  "Fig2/2g_HOMER_curated", 5, 4.5, note = "Original consensus motif-group enrichment, cap 30; final A8/A9 column alignment not independently certified"
+)
+```
+
+## Figure 2 VISTA
+
+Use assigned displayed modules only; H3K27ac denominators are 12 VZ and 17 non-VZ. The accompanying Fisher/BH tables preserve the corresponding universe.
+
+```{r figure-2-vista-4}
+for (s in c("2d_VISTA_counts", "2dprime_VISTA_counts")) {
+  d <- read_table("Fig2_KC", s)
+  tests <- read_table("Fig2_KC", sub("counts$", "tests", s))
+  p <- vista_panel(d, tests, acetylation = grepl("prime", s))
+  export_panel(
+    p, paste0("Fig2/", s),
+    if (grepl("prime", s)) 3.2 else 2.6,
+    2.6
+  )
+}
+```
+
+## Extended Figure 1 distributions and developmental contrasts
+
+Distances of zero are retained at zero in the stored input and mapped to 1 bp solely for the log axis. Peak widths are converted to kb.
+
+```{r extended-figure-1-distributions-and-developmental-contrasts-5}
+for (assay in c("ATAC", "AC", "ME3")) {
+  d <- read_table("Extended_Fig1_KC", paste0("1c_", assay, "_TSS"))
+  d$Plot_distance_bp <- pmax(
+    abs(d$dist_to_nearest_TSS),
+    1
+  )
+  p <- ggplot(
+    d, aes(
+      Plot_distance_bp,
+      group = Fine_clusters_short,
+      color = Fine_clusters_short
+    )
+  ) +
+    geom_density(linewidth = 0.4) +
+    scale_x_log10() + labs(x = "Distance to nearest TSS (bp)",
+      color = "Module")
+  export_panel(
+    p, paste0("Ext1/1c_", assay, "_TSS"),
+    8, 4
+  )
+}
+for (assay in c("AC", "ME3")) {
+  d <- read_table("Extended_Fig1_KC", paste0("1d_", assay, "_widths"))
+  d$Module <- factor(d$Fine_clusters_short, levels = module_order(d$Fine_clusters_short))
+  export_panel(
+    ggplot(d, aes(Module, width/1000)) +
+      geom_boxplot(outlier.shape = NA) +
+      scale_y_log10() + coord_flip() + labs(y = "Peak width (kb)", x = NULL),
+
+    paste0("Ext1/1d_", assay, "_widths"),
+    4, 7
+  )
+}
+for (s in c("1e_DiffBind_counts", "1f_DiffBind_counts", "1g_DiffBind_counts")) {
+  if (s %in% c("1f_DiffBind_counts", "1g_DiffBind_counts")) {
+    plot_ext1_differential_counts(s)
+    next
+  }
+  d <- read_table("Extended_Fig1_KC", s)
+  export_panel(
+    ggplot(d, aes(Comparison, Fraction, fill = Module)) +
+      geom_col() + coord_flip() + labs(x = NULL, y = "Fraction of module-assigned significant intervals"),
+
+    paste0("Ext1/", s),
+    9, 5
+  )
+}
+```
+
+## Extended Figure 2 footprints and Extended Figure 4 GENOA
+
+Footprint tables retain all 528 motifs per contrast and the original HINT statistic and P values. The manuscript X coordinate is log2((Protection Score + TC)comparison / (Protection Score + TC)VZ), rather than the native TF_Activity difference. The saved difference agrees with the difference of these activity sums within 1e-7 (rounding). Activity components and log2 fold changes are explicit source columns. A log2 ratio is undefined for non-positive activity: OTX1 is retained with an unavailable ratio in the ImN and L5N contrasts. No pseudocount, absolute-value transformation or new P-value calculation is applied. All finite ratios are displayed, including the large, nonsignificant OTX1 ratios in the other two contrasts.
+
+```{r extended-figure-2-footprints-and-extended-figure-4-genoa-6}
+for (s in c(
+  "VZ_E12_vs_SVZ_E12", "VZ_E12_vs_ImN_E13", "VZ_E12_vs_L6N_P2", "VZ_E12_vs_L5N_P2"
+)) {
+  d <- read_table("Extended_Fig2_KC", s)
+  export_panel(
+    footprint_plot(d, s),
+    paste0("Ext2/", s),
+    2.8,
+    2.8,
+    note = "All original motif statistics; named TF-family display labels; no footprint analysis rerun"
+  )
+}
+
+d <- read_table("Extended_Fig4_KC", "4c_GENOA_distal_counts")
+export_panel(
+  ggplot(d, aes(Module, pct, fill = genoa_category)) +
+    geom_col() + coord_flip() + labs(x = NULL, y = "Distal pREs (%)"),
+
+  "Ext4/4c_GENOA_distal", 6, 5
+)
+```
+
+```{r session-info}
+finish_notebook("02")
+sessionInfo()
+```

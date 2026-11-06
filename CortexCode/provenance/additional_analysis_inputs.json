@@ -1,0 +1,127 @@
+[
+  {
+    "file": "data/upstream/integration/all_overlaps_total_aug_with_Programs.csv",
+    "bytes": 34110824,
+    "sha256": "2952dafdabc0c6d3cf4ccb2b7a3522dcc030fd4707355f0acc2f26ab13a75153"
+  },
+  {
+    "file": "objects/integration/umap_reclustering_bundles.RData",
+    "bytes": 570998324,
+    "sha256": "ecb0ce28439843df1001b0837970f6bc111aeffb7131bc08eb9ac111c9b6f7cb"
+  },
+  {
+    "file": "provenance/HOMER_commands/black_summit.txt",
+    "bytes": 221,
+    "sha256": "a82191d1f0c0b18842ac75538b6bb09905e28a99d3ac53d5ea86467cff5c786d"
+  },
+  {
+    "file": "provenance/HOMER_commands/blue_summit.txt",
+    "bytes": 218,
+    "sha256": "945ede3ce9b263dd9d7e0bd50e88807c467ee1f88a4d9a4109a2f2dbb3016a00"
+  },
+  {
+    "file": "provenance/HOMER_commands/brown_summit.txt",
+    "bytes": 221,
+    "sha256": "73afb8722a83db20d91ec2d18baf289b6ed12b1f489dff617724b28f1e35b430"
+  },
+  {
+    "file": "provenance/HOMER_commands/Constitutive_strong_summit.txt",
+    "bytes": 263,
+    "sha256": "423ff47480d40b33a19b940bbe45accf58df1766460f5a93de8c27867bcf5e1d"
+  },
+  {
+    "file": "provenance/HOMER_commands/Constitutive_weak_summit.txt",
+    "bytes": 257,
+    "sha256": "08987930ce6378f48e4f93c42c4722e6579a874f5f32ba2df4d2cb22efc59ed6"
+  },
+  {
+    "file": "provenance/HOMER_commands/cyan_summit.txt",
+    "bytes": 218,
+    "sha256": "a70b05140c8a601124410cfdd9f9a02287124be5d2cb3661e4975cb78980a7f7"
+  },
+  {
+    "file": "provenance/HOMER_commands/green_summit.txt",
+    "bytes": 221,
+    "sha256": "a817a914909df16de056109e894527777ac680e16632874e06dc1b6c7d0e0518"
+  },
+  {
+    "file": "provenance/HOMER_commands/greenyellow_summit.txt",
+    "bytes": 239,
+    "sha256": "8e019b7570a477ee6bb43d95f47f20b74eb7cc82b02bc21f3966b91af0c701a7"
+  },
+  {
+    "file": "provenance/HOMER_commands/grey_summit.txt",
+    "bytes": 218,
+    "sha256": "9be7fb2ef0b056cfcbd36d98b8c5a7911fe91ff68154cb29d38ae4c70233edd2"
+  },
+  {
+    "file": "provenance/HOMER_commands/lightcyan_summit.txt",
+    "bytes": 233,
+    "sha256": "b8b8985004b3e1bcb24d4510431e7e08d037dcf6936bd9d089dbc89413500b96"
+  },
+  {
+    "file": "provenance/HOMER_commands/magenta_summit.txt",
+    "bytes": 227,
+    "sha256": "b2808fffd9dfb23654a819a2b5b7eb9ec4f63d2ae9b19f62cfe9ed636bb0f0a0"
+  },
+  {
+    "file": "provenance/HOMER_commands/midnightblue_summit.txt",
+    "bytes": 242,
+    "sha256": "6fdc1ab6e543bb9da92cfceeac74caa75bfb556c19b2e96e49e216398bcd2d2e"
+  },
+  {
+    "file": "provenance/HOMER_commands/P2_specific_summit.txt",
+    "bytes": 239,
+    "sha256": "09132f91959f0b8aa0f1ad101bc2f99a08095834270916f6ea876bc40a4562ac"
+  },
+  {
+    "file": "provenance/HOMER_commands/pink_summit.txt",
+    "bytes": 218,
+    "sha256": "d5d594523ebd4bd8d9043bb400cae22f8741b0b8051b42f233342253cffd8693"
+  },
+  {
+    "file": "provenance/HOMER_commands/purple_summit.txt",
+    "bytes": 224,
+    "sha256": "74d1688299b76dc77e7b7ccb221f14d3ebcad85e48b361f96038aab79c37e9d7"
+  },
+  {
+    "file": "provenance/HOMER_commands/red_summit.txt",
+    "bytes": 215,
+    "sha256": "5fbbf0b9894d4d89761bb81c9ce0358dfbdc85fbe72cd4e215b758bc8da2250f"
+  },
+  {
+    "file": "provenance/HOMER_commands/salmon_summit.txt",
+    "bytes": 224,
+    "sha256": "3ad6fabb459cca1419a83cd29c5424ea5d18e5839366befc10876c63ad4e4c6f"
+  },
+  {
+    "file": "provenance/HOMER_commands/tan_summit.txt",
+    "bytes": 215,
+    "sha256": "a8c7065724fbe1e74a1a6b9105ba580041a04266c89c91dadccec0fdeb557f8c"
+  },
+  {
+    "file": "provenance/HOMER_commands/turquoise_summit.txt",
+    "bytes": 233,
+    "sha256": "4089dc72e054fb88b591e6bfe8863cce7d9fce35ae51abc885beea96fb9a36a7"
+  },
+  {
+    "file": "provenance/HOMER_commands/Weak_late_summit.txt",
+    "bytes": 233,
+    "sha256": "3b0bbb4aa58d10bef0a3baf4166154c7e648ca67272d5a5a1e17a20e24c2ccbf"
+  },
+  {
+    "file": "provenance/HOMER_commands/Weak_middle_summit.txt",
+    "bytes": 239,
+    "sha256": "59ac4fc1170b92ded8eb41b3f9dbf99d720e236b21b99478b250d9c04215e13c"
+  },
+  {
+    "file": "provenance/HOMER_commands/yellow_summit.txt",
+    "bytes": 224,
+    "sha256": "0b24332c53926c623a3ce3ef5c29fca3ebdb0c005ee34f9243bd7b67434d481e"
+  },
+  {
+    "file": "data/upstream/variants/NIHMS1844621-supplement-Supplementary_Table.xlsx",
+    "bytes": 16750972,
+    "sha256": "d9b422b6590def55f90a716b826c04b5e479dbf6c433990be47692db6e4ce0c4"
+  }
+]

@@ -1,0 +1,23 @@
+Figure,Panels,Status,Inputs_or_output,Limitations
+Fig1,c–e,Exported,"Module counts, stored signal, TSS, conservation; original ATAC heatmap objects also exported",AC/ME3 final display scaling/order not independently certified
+Fig2,"a–d, d-prime, g",Exported,"GO, VISTA, curated HOMER",Final A8/A9 HOMER alignment not independently certified
+Fig3,"a–d, e/f UMAP",Exported,Exact supplied-notebook score inputs and original stored UMAP,A16 pooling and original module labels documented
+Fig3,e-prime/f-prime,Not regenerated,Coverage plots,Original fragment files/track rendering not independently verified
+Fig4,"a–d, f",Exported,Final interaction/program counts and saved quantized trajectories,Program 2d/3d label difference retained explicitly
+Fig4,e,Historical alternatives only,Saved alluvial/overlap plot objects,Exact final network edge-list/version unresolved
+Fig5,"c, e–i",Exported,Original RNA statistics and original histology measurements,5g/h available records contain one WT and one mutant mouse each
+Fig5,d,Not regenerated,RNA GO,Original GO outputs unavailable; not replaced by a new enrichment test
+Fig6,"b-prime, c–e, g, h, o",Exported,"RNA, original differential concentrations/statistics, enrichment and saved simulations",RPKM reconstructed from original counts/lengths/library totals; original plotting CSV absent
+Fig6,f,Recovered analysis only,Original 484/250 gene–peak overlap donut,Final artwork 362/281 not reproduced; no threshold changes made
+Fig7,"k, l",Exported,Original per-mouse intensities normalized to Nkx,"WT n=1, het n=3, KO n=4"
+Ext1,c–g,Exported,"TSS distances, widths, developmental differential counts",Source catalogs retained; small Ac29/TMK4 artwork count differences documented in prior audit
+Ext2,footprint contrasts,Exported,All original 528 motifs per contrast,Plot display approximate
+Ext3,all,Original artwork only,Genome-browser tracks and expression images,Not recreated from final count matrices; original track/image sources needed
+Ext4,c,Exported,GENOA distal overlap proportions,Original fitted GENOA coefficient/statistic outputs for panel b unavailable
+Ext5,"a-f, h, j, l",Exported,"QC, bulk medians, five ATAC strips, AC/ME3 linked-gene scores, PCA and DA proportions",Exact historical marker count/row order not independently certified; 5l now uses recovered positive-DA filters and native pooling; 16 modules
+Ext5,"g, i, k",Exported,"Original SCT residuals, interval/peak layers and saved marker results",Top-10 display selection explicit; 14 selected RNA marker records absent from stored SCT variable-feature layer are reported; no new marker tests
+Ext6,"a, c",Exported,TMK3-linked ATAC means and quantized program matrices,a final heatmap display order/scaling not certified
+Ext7,"a–e, j, k",Exported,"Stored RNA UMAP/expression, reconstructed bulk RPKM and histology",No cell-level observations counted as biological replicates
+Ext8,e–i,Exported,"Volcano, side-specific interval overlap, GO/modules and variants",823 ATAC vs 821 ME3 overlaps represented separately rather than forcing a symmetric Euler diagram
+Ext9,f,Exported,Original enhancer-deletion measurements,Original anatomical photographs remain artwork
+All,"schematics, microscopy, motif logos, browser screenshots",Original artwork only,Final AI files in manuscript directory,Not fabricated or presented as computationally regenerated panels

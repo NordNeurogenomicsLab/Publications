@@ -1,0 +1,15 @@
+{
+  "selected_records": 26020,
+  "display_modules": 16,
+  "cluster_count": 16,
+  "mean_fraction_error": 0.0007846014503828057,
+  "maximum_fraction_error": 0.004380812230850999,
+  "maximum_native_pixel_error": 1.7567057045712506,
+  "definition_status": "Numerically recovered, original plotting statement unavailable",
+  "filter": {
+    "adjusted_P_less_than": 0.001,
+    "average_log2FC_greater_than": 0.5,
+    "detection_at_least": 0.25
+  },
+  "source_data_sync": "Excel, canonical CSV and RDS synchronized 2026-11-05; FDR<0.001 matches source request and retains identical 26,020 intervals."
+}

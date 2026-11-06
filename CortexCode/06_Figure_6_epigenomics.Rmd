@@ -1,0 +1,481 @@
+---
+title: "Figure 6 and Extended Figure 8: Kdm6b epigenomics"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  run_diffbind: false
+  check_statistics: false
+---
+
+Figure 6 uses the original modality-specific DiffBind results and module/GO enrichment tables. The original DiffBind workflow, the two effect measures, enrichment counting units and expression normalization are included below. Volcano colors retain the original P values and FDR; their x coordinate is the normalized concentration difference, not the DiffBind Fold coefficient.
+
+The available original Figure 6f analysis yields 484 downregulated and 250 upregulated gene–peak overlaps. This counting unit and these outputs are retained explicitly; they do not reproduce the final artwork labels 362/281. This unresolved correspondence is documented in `DATA_AVAILABILITY.md` rather than resolved by changing thresholds.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+repo_dir <- REPO
+if (!exists("params", inherits = FALSE)) params <- list()
+if (is.null(params$run_diffbind)) params$run_diffbind <- FALSE
+if (is.null(params$check_statistics)) params$check_statistics <- FALSE
+
+knitr::opts_chunk$set(echo = TRUE,
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE)
+```
+
+
+## Differential chromatin analysis from BAMs
+
+The original DiffBind workflow is included below: modality-matched master peak sets, expansion by 5 kb total (2.5 kb per side), separate Flashtag-positive/negative contrasts, no summit recentering, count filter 0, default DiffBind normalization, Treatment expr versus ctrl and the DESeq2 backend. All results are exported with `th=1`, retaining unfiltered P/FDR fields. BAMs are external inputs, supplied through `CORTEX_BAM_DIR`. The default figure export loads the original differential tables.
+
+```{r native-diffbind, eval=isTRUE(params$run_diffbind)}
+library(DiffBind)
+library(GenomicRanges)
+library(IRanges)
+library(dplyr)
+catalog_dir <- file.path(REPO, "data", "upstream", "final_tables")
+atac <- read.csv(file.path(catalog_dir, "Supp_Table_1_ATAC_master.csv"))
+ac <- read.csv(file.path(catalog_dir, "Supp_Table_2_AC_master.csv"))
+me3 <- read.csv(file.path(catalog_dir, "Supp_Table_3_ME3_master.csv"))
+sample_sheet <- read.csv(file.path(
+  REPO, "data", "upstream", "diffbind", "sample_metadata.csv"
+), check.names = FALSE)
+bam_dir <- Sys.getenv("CORTEX_BAM_DIR")
+stopifnot(nzchar(bam_dir), dir.exists(bam_dir))
+for (column in intersect(c("bamReads", "bamControl"), names(sample_sheet))) {
+  present <- !is.na(sample_sheet[[column]]) & nzchar(sample_sheet[[column]])
+  sample_sheet[[column]][present] <- file.path(bam_dir, sample_sheet[[column]][present])
+}
+out_dir <- file.path(REPO, "objects", "DiffBind", "recomputed")
+peaks_outdir <- file.path(out_dir, "peaks")
+dir.create(peaks_outdir,
+  recursive = TRUE,
+  showWarnings = FALSE)
+
+make_peaks_gr_from_df <- function(df,
+                                  expand_bed = 0L,
+                                  seq_col   = "seqnames",
+                                  start_col = "start",
+                                  end_col   = "end") {
+  stopifnot(all(c(seq_col, start_col, end_col) %in% names(df)))
+
+  gr <- GRanges(
+    seqnames = df[[seq_col]],
+    ranges   = IRanges(start = df[[start_col]], end = df[[end_col]]),
+
+    strand   = "*"
+  )
+
+  expand_bed <- as.integer(expand_bed)
+  if (!is.na(expand_bed) && expand_bed > 0L) {
+    new_widths <- width(gr) + expand_bed
+    gr <- resize(gr,
+      width = new_widths,
+      fix = "center")
+    start(gr)[start(gr) < 1L] <- 1L
+  }
+
+  mcols(gr)$name  <- paste0("peak", seq_along(gr))
+  mcols(gr)$score <- 1L
+
+  gr
+}
+
+build_peak_set <- function(PeakSet = c("me3", "ac", "atac"),
+                           expand_bed = 0L,
+                           peaks_outdir) {
+  PeakSet <- tolower(match.arg(PeakSet))
+
+  df <- switch(
+    PeakSet,
+    atac = atac,
+    ac   = ac,
+    me3  = me3
+  )
+
+  gr <- make_peaks_gr_from_df(df, expand_bed = expand_bed)
+
+  suffix   <- if (expand_bed > 0L) paste0("_exp", expand_bed, "bp") else ""
+  bed_name <- paste0(PeakSet, "_peaks", suffix, ".bed")
+  bed_path <- file.path(peaks_outdir, bed_name)
+
+  rtracklayer::export(gr, bed_path, format = "BED")
+
+  list(gr = gr,
+    path = bed_path)
+}
+
+run_diffbind <- function(sample_sheet,
+                         contrast_name,
+                         out_dir,
+                         Modality        = "H3K27Me3",
+                         PeakSet         = c("me3", "ac", "atac"),
+                         expand_bed      = 0L,
+                         ConditionFilter = NULL) {
+
+  PeakSet <- tolower(match.arg(PeakSet))
+
+  ## Filter by Modality and tissue (all ChIP-seq datasets of interest are Cortex)
+  sample_sheet <- sample_sheet %>%
+    dplyr::filter(
+      Modality == !!Modality,
+      Dissection_Tissue == "Cortex"
+    )
+
+  ## Optional filter by Condition: "FlashtagNeg" or "FlashtagPos"
+  if (!is.null(ConditionFilter)) {
+    sample_sheet <- sample_sheet %>%
+      dplyr::filter(Condition == !!ConditionFilter)
+  }
+
+  if (nrow(sample_sheet) == 0L) {
+    message("Skipping ", contrast_name,
+            " (no samples after Modality / Condition / Tissue filters).")
+    return(invisible(NULL))
+  }
+
+  ## Build chosen peak set
+  peak_info <- build_peak_set(
+    PeakSet      = PeakSet,
+    expand_bed   = expand_bed,
+    peaks_outdir = peaks_outdir
+  )
+
+  sample_sheet <- sample_sheet %>%
+    mutate(Peaks = peak_info$path) %>%
+    dplyr::filter(file.exists(bamReads))
+
+  if (nrow(sample_sheet) == 0L) {
+    message("Skipping ", contrast_name, " (no samples with existing BAMs).")
+    return(invisible(NULL))
+  }
+
+  cond_label <- if (is.null(ConditionFilter)) "All" else ConditionFilter
+
+  message("Running DiffBind for: ", contrast_name,
+          " | Modality = ", Modality,
+          " | PeakSet = ", PeakSet,
+          " | expand_bed = ", expand_bed,
+          " | Condition = ", cond_label)
+
+  ## --- DiffBind pipeline ---------------------------------------------------
+  dba_obj <- dba(sampleSheet = sample_sheet)
+
+  ## These options often help avoid 'error writing to connection'
+  ## on Windows / when parallel or summarizeOverlaps misbehaves
+  dba_obj <- dba.count(
+    dba_obj,
+    summits               = FALSE,
+    filter                = 0,
+    bUseSummarizeOverlaps = FALSE,  # use older counting instead of summarizeOverlaps
+    bParallel             = FALSE   # avoid parallel cluster / connection issues
+  )
+
+  dba_obj <- dba.normalize(dba_obj)
+
+  dba_obj <- dba.contrast(
+    dba_obj,
+    contrast = c("Treatment", "expr", "ctrl"),
+    name1    = "Kdm6b_expr",
+    name2    = "Kdm6b_ctrl"
+  )
+
+  print(dba.show(dba_obj, bContrasts = TRUE))
+
+  dba_obj <- dba.analyze(dba_obj, method = DBA_DESEQ2)
+
+  res <- dba.report(
+    dba_obj,
+    contrast    = 1,
+    th          = 1,
+    bCounts     = TRUE,
+    bNormalized = TRUE
+  )
+
+  res_df <- as.data.frame(res)
+
+  ## Build output file name with run parameters, including Condition
+  out_file <- file.path(
+    out_dir,
+    paste0(
+      contrast_name,
+      "_Modality_", Modality,
+      "_PeakSet_", PeakSet,
+      "_expand_bed_", expand_bed,
+      "_Condition_", cond_label,
+      "__genotype_DBA_DESEQ2.csv"
+    )
+  )
+
+  write.csv(
+    res_df,
+    file      = out_file,
+    row.names = FALSE
+  )
+
+  invisible(dba_obj)
+}
+
+for (condition in c("FlashtagNeg", "FlashtagPos")) {
+  suffix <- if (condition == "FlashtagNeg") "FTneg" else "FTpos"
+  for (modality in c("ATAC", "H3K27Ac", "H3K27Me3")) {
+    selected_samples <- sample_sheet[
+      sample_sheet$Modality == modality &
+        sample_sheet$Condition == condition &
+        sample_sheet$Dissection_Tissue == "Cortex",
+      , drop = FALSE
+    ]
+    stopifnot(nrow(selected_samples) > 0)
+    stopifnot(all(file.exists(selected_samples$bamReads)))
+    peak_set <- switch(modality,
+      ATAC = "atac",
+      H3K27Ac = "ac",
+      H3K27Me3 = "me3")
+    run_diffbind(
+      sample_sheet = sample_sheet,
+      contrast_name = paste(if (modality == "H3K27Ac") "Ac" else modality, suffix, sep = "_"),
+
+      out_dir = out_dir,
+      Modality = modality,
+      PeakSet = peak_set,
+      expand_bed = 5000L,
+      ConditionFilter = condition
+    )
+  }
+}
+```
+## Module enrichment from saved counting units
+
+The hypergeometric universe is defined by background peaks, not genes or interaction records. For each module, the one-sided upper-tail probability is computed from its selected/background counts, and Benjamini–Hochberg adjustment is applied over the tested modules.
+
+```{r upstream-module-enrichment-from-saved-counting-units, eval=isTRUE(params$check_statistics)}
+enrichment <- read.csv(
+  file.path(repo_dir, "data", "source_tables", "Fig6_KC", "6e_Module_enrichment.csv")
+)
+calculated_p <- phyper(
+  q = enrichment$Selected_peaks - 1,
+  m = enrichment$Background_peaks,
+  n = enrichment$Background_total -
+    enrichment$Background_peaks,
+    k = enrichment$Selected_total,
+    lower.tail = FALSE
+)
+calculated_fdr <- p.adjust(calculated_p, method = "BH")
+stopifnot(
+  isTRUE(all.equal(calculated_p, enrichment$Hypergeometric_P, tolerance = 1e-10))
+)
+stopifnot(isTRUE(all.equal(calculated_fdr, enrichment$BH_FDR, tolerance = 1e-10)))
+head(
+  enrichment[, c("Module_figure", "Fold_enrichment", "Hypergeometric_P", "BH_FDR")]
+)
+```
+
+## RPKM counting convention
+
+Displayed RPKM values are derived from raw counts, gene lengths and the sum of gene counts in each library. These are descriptive expression values; the original RNA differential statistics are retained separately and are not inferred from RPKM.
+
+```{r upstream-rpkm-counting-convention, eval=isTRUE(params$check_statistics)}
+expression <- read.csv(file.path(repo_dir, "data", "source_tables", "Fig6_KC", "6o_RPKM.csv"))
+calculated_rpkm <- as.double(expression$Raw_count) *
+  1e+09/(as.double(expression$Gene_length_bp) *
+  as.double(expression$Library_sum_gene_counts))
+stopifnot(
+  max(abs(calculated_rpkm - expression$RPKM)) <
+    1e-08
+)
+```
+
+
+## Checkpoint-based figure export
+
+The sections below use the verified saved results. Rerun outputs above are written separately and do not replace these inputs automatically.
+
+## Authoritative bulk-RNA sample metadata
+
+The explicit sample table in `GEO_submission.Rmd` defines the cell populations. Sorting-name suffixes reverse between litters: litter 1 minus libraries are VZ/FTpos, whereas litter 2 plus libraries are VZ/FTpos. The portable `sample_metadata.csv` retains all 15 libraries used in that analysis, including sex determined from RNA. Do not infer cell population from the filename alone. Plot all available sample values; the boxplot's duplicate outlier symbols are suppressed only because the separate point layer displays every observation.
+
+```{r bulk-rna-authoritative-sample-metadata}
+bulk_metadata <- read.csv(file.path(REPO, "data/upstream/RNA/sample_metadata.csv"))
+stopifnot(nrow(bulk_metadata) == 15, !anyDuplicated(bulk_metadata$Sample))
+with(bulk_metadata, table(FlashTag_population, Genotype))
+```
+
+## Recorded RPKM normalization from the author workflow
+
+This code follows the featureCounts/DGEList/rpkm block in `GEO_submission.Rmd`. Library sizes use all assigned gene counts. No expression filter or TMM normalization is inserted before RPKM. Execution is optional because the verified plotting tables are already saved.
+
+```{r bulk-rna-recorded-rpkm-normalization, eval=FALSE}
+counts <- read.delim(
+  file.path(REPO, "data/upstream/RNA/featureCounts_final_15samples.txt"),
+  comment.char = "#", check.names = FALSE
+)
+metadata <- read.csv(file.path(REPO, "data/upstream/RNA/sample_metadata.csv"))
+sample_columns <- vapply(metadata$Sample, function(sample) {
+  hit <- which(grepl(paste0(sample, "_Aligned"), names(counts), fixed = TRUE))
+  stopifnot(length(hit) == 1)
+  hit
+}, integer(1))
+expression_counts <- as.matrix(counts[, sample_columns])
+rownames(expression_counts) <- counts$Geneid
+colnames(expression_counts) <- metadata$Sample
+stopifnot(all(expression_counts >= 0), all(counts$Length > 0))
+dge <- edgeR::DGEList(counts = expression_counts)
+rpkm_matrix <- edgeR::rpkm(dge, gene.length = counts$Length, log = FALSE)
+```
+
+## Figure 6b/o bulk RNA
+
+The original plotting RPKM CSV was unavailable. The expression calculation uses raw gene counts, gene lengths and library gene-count sums and preserves the original RNA statistics.
+
+```{r figure-6b-o-bulk-rna-2}
+plot_rpkm(
+  read_table("Fig6_KC", "6bprime_RPKM"),
+  "Fig6/6bprime_RPKM"
+)
+plot_rpkm(
+  read_table("Fig6_KC", "6o_RPKM"),
+  "Fig6/6o_RPKM"
+)
+```
+
+## Figure 6c and Extended Figure 8e volcanoes
+
+No differential model fitting; plot the original saved coordinates and significance categories.
+
+```{r figure-6c-and-extended-figure-8e-volcanoes-3}
+for (ft in c("FTpos", "FTneg")) {
+  d <- read_table("Fig6_KC", paste0("6c_ME3_", ft))
+  stopifnot(max(d$neg_log10_P, na.rm = TRUE) <= 18.5)
+  export_panel(
+    volcano(d) +
+      scale_y_continuous(breaks = c(0, 5, 10, 15)) +
+      coord_cartesian(ylim = c(0, 18.5), expand = FALSE) +
+      labs(title = if (ft == "FTpos") "FlashTag-positive" else "FlashTag-negative") +
+      theme(
+        legend.position = "none",
+        plot.title = element_text(size = 8),
+        axis.text = element_text(size = 7),
+        axis.title = element_text(size = 8)
+      ),
+    paste0("Fig6/6c_ME3_", ft),
+    2.2, 2.6
+  )
+  for (a in c("atac", "ac", "me3")) {
+    d <- read_table("Extended_Fig8_KC", paste0("8e_", a, "_", ft))
+    export_panel(
+      volcano(d),
+      paste0("Ext8/8e_", a, "_", ft),
+      5, 4
+    )
+  }
+}
+```
+
+## Figure 6d/e and Extended Figure 8g/h enrichment
+
+Preserve original enrichment values, biological universe and BH adjustment.
+
+```{r figure-6d-e-and-extended-figure-8g-h-enrichment-4}
+for (b in c("Fig6_KC", "Extended_Fig8_KC")) {
+  prefix <- if (b == "Fig6_KC")
+    "6" else "8"
+  pdir <- if (b == "Fig6_KC")
+    "Fig6" else "Ext8"
+  s <- if (b == "Fig6_KC")
+    "6e_Module_enrichment" else "8h_Module_enrichment"
+  d <- read_table(b, s)
+  p <- ggplot(d, aes(Module_figure, Fold_enrichment, color = neg_log10_FDR)) +
+    geom_point(size = 3) +
+    scale_color_gradient(low = "grey75",
+      high = "#B2182B") +
+    geom_hline(yintercept = 1,
+      linetype = 2) +
+    theme(axis.text.x = element_text(angle = 90,
+      hjust = 1)) +
+    labs(x = NULL,
+      y = "Fold enrichment")
+  export_panel(
+    p, paste0(pdir, "/", s),
+    8, 4
+  )
+  s <- if (b == "Fig6_KC")
+    "6d_GO_plotted" else "8g_GO_plotted"
+  d <- read_table(b, s)
+  export_panel(
+    ggplot(
+      d, aes(
+        reorder(name, max_FE),
+        max_FE
+      )
+    ) +
+      geom_col(fill = "#6699AA") +
+      coord_flip() + labs(x = NULL, y = "Maximum fold enrichment"),
+
+    paste0(pdir, "/", s),
+    8, 5
+  )
+}
+```
+
+## Figure 6f saved donut
+
+Retain the original gene–peak overlap unit; do not relabel these totals as unique genes or final artwork counts.
+
+```{r figure-6f-saved-donut-5}
+d <- read_table("Fig6_KC", "6f_Gene_peak_counts")
+d <- d %>%
+  group_by(RNA_direction) %>%
+  mutate(Plot_fraction = Gene_peak_overlap_count / sum(Gene_peak_overlap_count)) %>%
+  ungroup()
+stopifnot(
+  sum(d$Gene_peak_overlap_count[d$RNA_direction == "Downregulated"]) == 484, sum(d$Gene_peak_overlap_count[d$RNA_direction == "Upregulated"]) == 250
+)
+p <- ggplot(d,
+  aes(x = 2, y = Plot_fraction, fill = Peak_class)) +
+  geom_col(width = 1,
+    color = "white") +
+  coord_polar(theta = "y") +
+  xlim(0.5, 2.5) +
+  facet_wrap(~RNA_direction) +
+  theme_void() + scale_fill_manual(values = c(`Fold <= 0.5` = "grey80", `Fold > 0.5` = "#4477AA")) +
+  labs(
+    title = "Recovered analysis: 484 down / 250 up gene<U+2013>peak overlaps"
+  )
+export_panel(
+  p, "Fig6/6f_donut_recovered_analysis", 7, 4, note = "Recovered original analysis, not final Illustrator totals 362/281; gene<U+2013>peak overlap counting unit"
+)
+```
+
+## Extended Figure 8f interval overlap
+
+ATAC-side overlap is 823 intervals and ME3-side overlap is 821 intervals. These different counts reflect many-to-many intersections. Display original set sizes without forcing an invalid symmetric Euler intersection.
+
+```{r extended-figure-8f-interval-overlap-6}
+d <- read_table("Extended_Fig8_KC", "8f_Overlap_counts")
+print(d)
+z <- data.frame(
+  Set = c("ATAC", "ME3 up"),
+  Total = c(d$ATAC_total, d$ME3_up_total),
+  Overlapping = c(d$ATAC_overlapping_ME3, d$Unique_ME3_overlapping_ATAC)
+)
+z$Nonoverlapping <- z$Total - z$Overlapping
+z <- pivot_longer(
+  z, c(Overlapping, Nonoverlapping),
+  names_to = "Class",
+  values_to = "Intervals"
+)
+export_panel(
+  ggplot(z, aes(Set, Intervals, fill = Class)) +
+    geom_col() + scale_fill_manual(values = c(Overlapping = "#8877AA", Nonoverlapping = "grey80")),
+
+  "Ext8/8f_interval_overlap", 4, 4, note = "Side-specific unique interval overlap counts; replaces geometric Euler area approximation"
+)
+```
+
+```{r session-info}
+finish_notebook("06")
+sessionInfo()
+```

@@ -1,0 +1,123 @@
+---
+title: "Balanced variant downsampling in ME3-enriched regions"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  recompute: false
+---
+
+This notebook documents the original `ME3_Exact_Enrichment_Run` implementation. The selected ME3 regions have nominal P < 0.05 and a positive mutant-minus-control concentration difference. Overlapping intervals are merged, with a maximum merged width of 50 kb. Variants are filtered by overlap with both ATAC and strong GENOA intervals after hg38-to-mm10 lift-over.
+
+The primary analysis compares numbers of regions containing at least one variant under repeated balanced downsampling. It is **not** a shuffled-label permutation test. Native analysis code is in `R/variant_analysis.R`; it is the selected class from the original notebook, with exploratory alternatives and local execution paths omitted. The default render only reads the saved results.
+
+```{r setup, include=FALSE, eval=TRUE}
+if (!exists("params", inherits = FALSE)) {
+  params <- list(recompute = FALSE)
+}
+candidate_roots <- c(".", "..")
+repo_dir <- candidate_roots[vapply(
+  candidate_roots, function(path) file.exists(file.path(path, "R", "common.R")),
+  logical(1)
+)][1]
+stopifnot(!is.na(repo_dir))
+repo_dir <- normalizePath(repo_dir, winslash = "/")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = isTRUE(params$recompute),
+
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE
+)
+```
+
+## Saved configuration and results
+
+The filtered source sets contain 3,260 case and 1,880 control variants. Sampling uses 80% of the smaller group, capped at 5,000; the effective sample size is therefore 1,504 per group per replicate. There are 1,000 replicates and the seed is 1234. Threshold k means more than k variants per region; k=0 is the primary criterion.
+
+```{r saved-configuration-and-results, eval=TRUE}
+table_dir <- file.path(repo_dir, "data", "source_tables", "Fig6_KC")
+parameters <- read.csv(file.path(table_dir, "6h_Resampling_parameters.csv"))
+statistics <- read.csv(file.path(table_dir, "6h_Variant_statistics.csv"))
+parameters
+statistics
+```
+
+## Native analysis dependencies
+
+This chunk is disabled by default. Input variant and lift-over files must be supplied explicitly; the notebook does not contain account credentials or machine-specific paths.
+
+```{r native-analysis-dependencies}
+suppressPackageStartupMessages(
+  {
+    library(R6)
+    library(dplyr)
+    library(tidyr)
+    library(ggplot2)
+    library(GenomicRanges)
+    library(IRanges)
+    library(GenomeInfoDb)
+    library(rtracklayer)
+    library(data.table)
+    library(readr)
+  }
+)
+source(file.path(repo_dir, "R", "variant_analysis.R"))
+variants_file <- Sys.getenv("CORTEX_VARIANTS_TSV")
+liftover_chain <- Sys.getenv("CORTEX_LIFTOVER_CHAIN")
+stopifnot(
+  file.exists(variants_file),
+  file.exists(liftover_chain)
+)
+```
+
+## Original analysis call
+
+The constructor below records the selected analysis settings. The implementation also checks input columns and harmonizes sequence levels. A normal render does not call `run_all()`.
+
+```{r original-analysis-call}
+analysis <- ME3_Exact_Enrichment_Run$new(
+  me3_diffbind_path = file.path(
+    repo_dir, "data", "upstream", "final_tables", "H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv"
+  ),
+  atac_path = file.path(
+    repo_dir, "data", "upstream", "final_tables", "Supp_Table_1_ATAC_master.csv"
+  ),
+  genoa_path = file.path(
+    repo_dir, "data", "upstream", "GENOA", "atac_idr_peaks_merged_uniform_genoa_strong_0.5-distal_and_proximal-mm10.bed"
+  ),
+  variants_tsv_path = variants_file,
+  liftover_chain_path = liftover_chain,
+
+  n_null_reps = 1000L,
+  downsample_to = 5000L,
+  downsample_frac = 0.8,
+  rand_seed = 1234L,
+
+  verbose = TRUE
+)
+analysis$run_all()
+results <- analysis$get_results()
+```
+
+## Empirical one-sided tail
+
+The recorded primary tail is (number of replicates with case-minus-control region count <= 0 + 1) / (number of replicates + 1). The following inexpensive calculation checks the saved replicates; it does not draw new subsets.
+
+```{r empirical-one-sided-tail, eval=TRUE}
+replicates <- read.csv(file.path(table_dir, "6h_Variant_null_replicates.csv"))
+primary <- replicates[replicates$k == 0, ]
+stopifnot(
+  nrow(primary) == 1000
+)
+empirical_tail <- (sum(primary$diff <= 0) +
+  1)/(nrow(primary) +
+  1)
+empirical_tail
+```
+
+```{r session-info, eval=TRUE}
+sessionInfo()
+```

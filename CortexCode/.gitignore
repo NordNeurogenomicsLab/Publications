@@ -1,0 +1,15 @@
+# Local large data and generated products are saved in this delivery but excluded from ordinary Git commits.
+data/
+objects/
+panels/
+reports/
+Figure_drafts/
+.Rhistory
+.RData
+.Rproj.user/
+*_cache/
+*_files/
+
+# Local inspection tools and preserved development snapshots
+local_tools/
+local_archive/

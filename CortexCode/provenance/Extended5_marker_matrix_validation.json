@@ -1,0 +1,23 @@
+{
+  "5g": {
+    "panel": "5g",
+    "rows": 140,
+    "cells": 13625,
+    "assay": "SCT scale.data",
+    "maximum_value_difference": 0
+  },
+  "5i": {
+    "panel": "5i",
+    "rows": 159,
+    "cells": 13625,
+    "assay": "intervals",
+    "maximum_value_difference": 3.5527e-15
+  },
+  "5k": {
+    "panel": "5k",
+    "rows": 157,
+    "cells": 13625,
+    "assay": "peaks",
+    "maximum_value_difference": 1.7764e-15
+  }
+}

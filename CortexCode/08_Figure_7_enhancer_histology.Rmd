@@ -1,0 +1,33 @@
+---
+title: "Figure 7 and Extended Figure 9: enhancer deletion"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+---
+
+Figure 7k/l and Extended Figure 9f quantify TBR1 intensity after enhancer deletion. Each anatomical measurement is normalized to the Nkx intensity from the same source row. Within-mouse measurements are averaged before displaying biological samples.
+
+The supplied data contain one WT, three heterozygous and four knockout mice. Mouse identifiers and section-level measurements are retained in the exported summaries. No new significance tests are inferred from sections or from a single WT animal.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+knitr::opts_chunk$set(echo = TRUE,
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE)
+```
+
+## Figure 7k/l and Extended Figure 9f
+
+Verify the original normalization against raw intensities, retain mouse IDs and show all measured anatomical regions.
+
+```{r figure-7k-l-and-extended-figure-9f-2}
+source(file.path(REPO, "R/histology.R"))
+histology_fig7()
+```
+
+```{r session-info}
+finish_notebook("08")
+sessionInfo()
+```

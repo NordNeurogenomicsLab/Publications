@@ -1,0 +1,70 @@
+---
+title: "Sequencing inputs and assay processing records"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  recompute: false
+---
+
+The developmental epigenomic analyses start from peak-count tables produced upstream of WGCNA. ENCODE ATAC/ChIP sample configuration JSON files are retained as processing records. This notebook inventories those records; it does not run alignment, peak calling or an unrecorded replacement pipeline. The peak-count inputs, fitted WGCNA networks and final annotated catalogs are distinct stages of the analysis.
+
+```{r setup, include=FALSE, eval=TRUE}
+if (!exists("params", inherits = FALSE)) {
+  params <- list(recompute = FALSE)
+}
+candidate_roots <- c(".", "..")
+repo_dir <- candidate_roots[vapply(
+  candidate_roots, function(path) file.exists(file.path(path, "R", "common.R")),
+  logical(1)
+)][1]
+stopifnot(!is.na(repo_dir))
+repo_dir <- normalizePath(repo_dir, winslash = "/")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = isTRUE(params$recompute),
+
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE
+)
+```
+
+## Processing configurations
+
+Read the original JSON keys without embedding machine-specific execution paths in the notebook. Pipeline versions should be taken from the original execution records, not inferred from the current installation.
+
+```{r processing-configurations, eval=TRUE}
+configuration_dir <- file.path(repo_dir, "data", "upstream", "ENCODE_configs")
+configuration_files <- list.files(configuration_dir,
+  pattern = "[.]json$",
+  full.names = TRUE)
+configuration_summary <- do.call(
+  rbind, lapply(
+    configuration_files, function(path) {
+      settings <- jsonlite::fromJSON(path)
+      title_key <- grep(
+        "[.]title$", names(settings),
+        value = TRUE
+      )
+      type_key <- grep(
+        "[.]pipeline_type$", names(settings),
+        value = TRUE
+      )
+
+      data.frame(
+        Configuration = basename(path),
+        Title = if (length(title_key))
+          settings[[title_key[1]]] else NA_character_, Pipeline_type = if (length(type_key))
+          settings[[type_key[1]]] else NA_character_
+      )
+    }
+  )
+)
+configuration_summary
+```
+
+```{r session-info, eval=TRUE}
+sessionInfo()
+```

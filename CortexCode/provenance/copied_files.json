@@ -1,0 +1,638 @@
+[
+  {
+    "source": "GitHub_repository/WGCNA_input_data/data_h3k27ac_merged_by_1kb.RData",
+    "file": "data/upstream/WGCNA/WGCNA_input_data/data_h3k27ac_merged_by_1kb.RData",
+    "bytes": 2049595,
+    "sha256": "5e8b4e588cb5382e6211a30f882da230f76988d6d899a482d3cf30fb73d03891"
+  },
+  {
+    "source": "GitHub_repository/WGCNA_input_data/data_h3k27me3_merged_by_1kb.RData",
+    "file": "data/upstream/WGCNA/WGCNA_input_data/data_h3k27me3_merged_by_1kb.RData",
+    "bytes": 1957254,
+    "sha256": "d72fed8bbfef3c51f8297502af0c24907efbaf96f258a929ab47e793699c0c3c"
+  },
+  {
+    "source": "GitHub_repository/WGCNA_objects/net_WGCNA_ATAC_sp6.Rds",
+    "file": "data/upstream/WGCNA/WGCNA_objects/net_WGCNA_ATAC_sp6.Rds",
+    "bytes": 2496888,
+    "sha256": "01d86cae6cdee66e0981bf96b652d53805b412005e69fcf3ab3c0d91507b6d9b"
+  },
+  {
+    "source": "GitHub_repository/WGCNA_objects/net_WGCNA_H3K27ac_merged_by_1kb_sp5.Rds",
+    "file": "data/upstream/WGCNA/WGCNA_objects/net_WGCNA_H3K27ac_merged_by_1kb_sp5.Rds",
+    "bytes": 2432360,
+    "sha256": "8607766fee59e9ab88f21e1e08b93f4964b84c8c3034119003fdcc715b79c3f8"
+  },
+  {
+    "source": "GitHub_repository/WGCNA_objects/net_WGCNA_H3K27me3_merged_by_1kb_sp9.Rds",
+    "file": "data/upstream/WGCNA/WGCNA_objects/net_WGCNA_H3K27me3_merged_by_1kb_sp9.Rds",
+    "bytes": 2629349,
+    "sha256": "1b32577d67fb269ba001802fdd530db9598449201d845546ea7f42ec55408706"
+  },
+  {
+    "source": "KC_supp_tables_2026/Ac_FTneg_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv",
+    "file": "data/upstream/final_tables/Ac_FTneg_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv",
+    "bytes": 8301452,
+    "sha256": "35939ae332930ddeaf85f469782e0db049683a7a648713e1801ddbc3f1c0e6fa"
+  },
+  {
+    "source": "KC_supp_tables_2026/Ac_FTpos_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv",
+    "file": "data/upstream/final_tables/Ac_FTpos_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv",
+    "bytes": 8319772,
+    "sha256": "1014a986e6d7f996b0b3dc0dcbfe7a4b109e20f5178efcdf33b1ac63c0480a7d"
+  },
+  {
+    "source": "KC_supp_tables_2026/ATAC_FTneg_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv",
+    "file": "data/upstream/final_tables/ATAC_FTneg_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv",
+    "bytes": 8239013,
+    "sha256": "74825cadfa45bbb92281a56d8ce89ec97e8c92828d23d8381e22ba4cfa0c39a9"
+  },
+  {
+    "source": "KC_supp_tables_2026/ATAC_FTpos_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv",
+    "file": "data/upstream/final_tables/ATAC_FTpos_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv",
+    "bytes": 8907448,
+    "sha256": "344e8c778e3ea99d937a89aedf62bf5bd851dc2ffd2ab591b0b875468cfe0e99"
+  },
+  {
+    "source": "KC_supp_tables_2026/H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv",
+    "file": "data/upstream/final_tables/H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv",
+    "bytes": 7036402,
+    "sha256": "685809dd212372a6fc8078d72b1fc6911a64d0d7c83c2e2b4681e149e84e6624"
+  },
+  {
+    "source": "KC_supp_tables_2026/H3K27Me3_FTpos_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv",
+    "file": "data/upstream/final_tables/H3K27Me3_FTpos_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv",
+    "bytes": 7123743,
+    "sha256": "baa77ea763169d1b507b35cb5facdce80f78ee5371d07e4bf615f0620acbd646"
+  },
+  {
+    "source": "KC_supp_tables_2026/Supp_Table_1_ATAC_master.csv",
+    "file": "data/upstream/final_tables/Supp_Table_1_ATAC_master.csv",
+    "bytes": 44041689,
+    "sha256": "095e36258c56616ca65a2256ea2fb3acdf4bdc432408c2569816b01d5eca6dc5"
+  },
+  {
+    "source": "KC_supp_tables_2026/Supp_Table_2_AC_master.csv",
+    "file": "data/upstream/final_tables/Supp_Table_2_AC_master.csv",
+    "bytes": 38107394,
+    "sha256": "d18bb7679dd77f9515550763795271f64f37a5051f0f08d53b1d9efc0fc9a12f"
+  },
+  {
+    "source": "KC_supp_tables_2026/Supp_Table_3_ME3_master.csv",
+    "file": "data/upstream/final_tables/Supp_Table_3_ME3_master.csv",
+    "bytes": 34792808,
+    "sha256": "3bdf49344cddcf8ad9e72da9981d7c7773017d5d0a431960cc534f0bedf17f3c"
+  },
+  {
+    "source": "KC_supp_tables_2026/Supp_Table_4_WGCNA_interactions_and_Programs.csv",
+    "file": "data/upstream/final_tables/Supp_Table_4_WGCNA_interactions_and_Programs.csv",
+    "bytes": 33451792,
+    "sha256": "c35903ba3de66342e6fc89cb4f1c70f02662dea6df6b39f608256b3b388fa633"
+  },
+  {
+    "source": "DE_tables/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv",
+    "file": "data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv",
+    "bytes": 1818944,
+    "sha256": "591072d5b6a306c50bc26944cb6a5366068f8bcd10c97db4bfbbd75466c158df"
+  },
+  {
+    "source": "DE_tables/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv",
+    "file": "data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv",
+    "bytes": 1857459,
+    "sha256": "346a908cf1a41ff33cf36f496f7f480660d1b091530c997d71fd12bf48fab201"
+  },
+  {
+    "source": "Module_renaming_dictionary.csv",
+    "file": "data/upstream/Module_renaming_dictionary.csv",
+    "bytes": 3268,
+    "sha256": "b44f1d54e3202b7f820b82ad9e731497945869ec983ab64f601594ff26f8dbeb"
+  },
+  {
+    "source": "network_edges.csv",
+    "file": "data/upstream/network_edges.csv",
+    "bytes": 1301,
+    "sha256": "987ce23a1b9f1eee83c8c8fba20a728fe3f1d2dde259c5a4f18f2ae920d2e33c"
+  },
+  {
+    "source": "network_nodes.csv",
+    "file": "data/upstream/network_nodes.csv",
+    "bytes": 565,
+    "sha256": "c0da3cc2a5c39c92b49f1123df640606434b7cfec668acf503cff1a70d99f227"
+  },
+  {
+    "source": "V2 multiome analysis: exact_V2_cache.rds",
+    "file": "objects/Fig3/exact_V2_cache.rds",
+    "bytes": 2313956922,
+    "sha256": "a518397d56d05cf14c349655daa8fcbc6a8ba361b36a6a76a5dbd6ecddbde0c3"
+  },
+  {
+    "source": "V2 multiome analysis: ATAC_scoring.rds",
+    "file": "objects/Fig3/ATAC_scoring.rds",
+    "bytes": 29412274,
+    "sha256": "b5753cd77b83d53787a391e2cd536a39bafba1bb01416a074732b711eefa3c80"
+  },
+  {
+    "source": "V2 multiome analysis: RNA_scoring.rds",
+    "file": "objects/Fig3/RNA_scoring.rds",
+    "bytes": 9184735,
+    "sha256": "8d5516762c8cbcc4ba4174463f9f02999829be6c398cda1ca851e5516638ac90"
+  },
+  {
+    "source": "V2 multiome analysis: reconstruction_results.rds",
+    "file": "objects/Fig3/reconstruction_results.rds",
+    "bytes": 48958579,
+    "sha256": "3b99e60285d6dbc341ff8dfb43c0950de676bff44334545dbb7fd52b08fa9183"
+  },
+  {
+    "source": "Rub_Cortex_Dev/V3/atac_modules.csv",
+    "file": "data/upstream/multiome/atac_modules.csv",
+    "bytes": 3882275,
+    "sha256": "dd5bb9306580fa6ce79023688c55d85d608e8d8fb55adb96fb4d0562658a1f91"
+  },
+  {
+    "source": "Saved multiome analysis export: RNA_pseudobulk_counts.csv",
+    "file": "data/upstream/multiome/RNA_pseudobulk_counts.csv",
+    "bytes": 1768794,
+    "sha256": "ece5b4360cd25937d75e774141b8d90eb5950897ebd9466cc2bc2435f55e5544"
+  },
+  {
+    "source": "Saved multiome analysis export: intervals_pseudobulk_counts.csv",
+    "file": "data/upstream/multiome/intervals_pseudobulk_counts.csv",
+    "bytes": 5418687,
+    "sha256": "69a78a801bf257ca3ceb7832072f85a4b1b456e7dd408b90e90d5e6b7aa05bbc"
+  },
+  {
+    "source": "Saved multiome analysis export: SCT_cluster_means.csv",
+    "file": "data/upstream/multiome/SCT_cluster_means.csv",
+    "bytes": 5989876,
+    "sha256": "f83b2f52b389102c7ccbdf2396ebce8c31ab9441af0c6405cc62b434a0cba9db"
+  },
+  {
+    "source": "Saved multiome analysis export: ATAC_cluster_means.csv",
+    "file": "data/upstream/multiome/ATAC_cluster_means.csv",
+    "bytes": 59180004,
+    "sha256": "da77b78d4acd349128c5b1847814b2703a6d847a1839f77db3e5643a10884ca0"
+  },
+  {
+    "source": "Saved multiome analysis export: embedding_umap_nn.csv",
+    "file": "data/upstream/multiome/embedding_umap_nn.csv",
+    "bytes": 807089,
+    "sha256": "1a1a1068d65d69f81dfe0078c99e31f26bd2543045f5709193f2654a9a68fb2e"
+  },
+  {
+    "source": "Saved multiome analysis export: multiome_cell_metadata.csv",
+    "file": "data/upstream/multiome/multiome_cell_metadata.csv",
+    "bytes": 5925320,
+    "sha256": "dc7211e009b974a0435dde6c0c834d3e69409d2b31b5863f1faf41b40dcb30f1"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Kdm6b_KO_neg.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Kdm6b_KO_neg.json",
+    "bytes": 582,
+    "sha256": "bbb8fcf23d1d2f7aff59a2272742bade53f1bf7a099cb4a3ad5e35a77f821ac7"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Kdm6b_KO_pos.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Kdm6b_KO_pos.json",
+    "bytes": 580,
+    "sha256": "75d19d90d9a7818e046b486a10f736f82840ceed6a4090ece9e55bee32a6bed2"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Kdm6b_WT_neg.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Kdm6b_WT_neg.json",
+    "bytes": 585,
+    "sha256": "028a5bae703b95d26fdc1519d4a71666fb1a1911cd50d2f8b56a12b45b15f11f"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Kdm6b_WT_pos.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Kdm6b_WT_pos.json",
+    "bytes": 583,
+    "sha256": "3257c83d5371b68b0fb9566d88bd1fbecd31516dca49a93e4cc7dc8a2cff0233"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Nex_E12_C.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Nex_E12_C.json",
+    "bytes": 437,
+    "sha256": "00b6fe691be49100815e7ec3851e0fc41765e30afa6e4d8941ce858f6d56a8fd"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Nex_E12_R.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Nex_E12_R.json",
+    "bytes": 445,
+    "sha256": "5603b61ac3c154e2a05e3bbe925daf2de386725aa466f9d6efdf9c8abc58704f"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Nex_E13_C.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Nex_E13_C.json",
+    "bytes": 359,
+    "sha256": "b2de63f5e8b3665fd53d11b8cfcf594cd6b9213d5e3d9909aa9e49426eefa3b2"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Nex_E13_R.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Nex_E13_R.json",
+    "bytes": 434,
+    "sha256": "e0f96837a1bbde95a17ee6ac02308cb16724ce01bcacf9f02f98a8315f9fee50"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Nex_E15_C.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Nex_E15_C.json",
+    "bytes": 431,
+    "sha256": "f0bcecc81db563e70cf50c50318968bd576c81c871c59e969245f231c7ac8f5a"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Nex_E15_R.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Nex_E15_R.json",
+    "bytes": 522,
+    "sha256": "04ed1373e908c884cca02d15738984512730dd56805341adbabb3f40aeaf7a5c"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Ntsr_P2_C_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Ntsr_P2_C_reseq.json",
+    "bytes": 603,
+    "sha256": "d9b5cbff2f97dad015d7bb89a5c77dafe24561fc3b76a4ec6c70c5903509afe6"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Ntsr_P2_R.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Ntsr_P2_R.json",
+    "bytes": 356,
+    "sha256": "0948098c3890faed564d7740045a367d9a95a7c73e4f5df3cfb0d5971aa39e2a"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Rbp_P2_C.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Rbp_P2_C.json",
+    "bytes": 423,
+    "sha256": "3c4b500aa9ed18647ab17e36dda3a16d067df905d5df1f596971e788bbd9d411"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Rbp_P2_R.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Rbp_P2_R.json",
+    "bytes": 506,
+    "sha256": "0a7b87c73038f4a97521a68f451eb5ba11aa3c445c7f6dfb48f751fdc6c09e8b"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Svz9Hr_E12_C.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Svz9Hr_E12_C.json",
+    "bytes": 364,
+    "sha256": "a8112a7c4d3fd29ec10349d108a91c31c3d3b34b4edc6bbb6de6c14a1f1797c8"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Svz9Hr_E12_R.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Svz9Hr_E12_R.json",
+    "bytes": 364,
+    "sha256": "46cfb40169c5963900ea8fd705179415c12f8aa770c0dc924ba7c631599dbc96"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Vz_E10_C.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Vz_E10_C.json",
+    "bytes": 436,
+    "sha256": "8f23cc5b588fd3780140fe3f13ea16a61349989dd7c5d09be47e5a002594b7fc"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Vz_E10_R.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Vz_E10_R.json",
+    "bytes": 436,
+    "sha256": "bc9b2374dffd02cf7e01a9999ccfbd6f822e7e316e11fdb8d3b3d1a812bf973b"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Vz_E11_C.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Vz_E11_C.json",
+    "bytes": 430,
+    "sha256": "b5d42b2d02e0fe98ce45fd781ab8c450db77217b8669b227605029706435c68c"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Vz_E11_R.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Vz_E11_R.json",
+    "bytes": 430,
+    "sha256": "b0c54fffab3957f355d0c0e90cc18be546b9700fb1d5031aca7bdb95bc92df03"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Vz_E12_C.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Vz_E12_C.json",
+    "bytes": 356,
+    "sha256": "8a4c96e277c1e315fdf280280a87d9ef2a9ba7fa77eab43e2ae5d830cae2f5d2"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Vz_E12_R.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Vz_E12_R.json",
+    "bytes": 356,
+    "sha256": "a69d6ab8a91a54818781cafda6b5033b70e81d185531b312a8e6fb9488433339"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Vz_E13_C.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Vz_E13_C.json",
+    "bytes": 535,
+    "sha256": "f94dc93d2b492b8d471849d2cb662f1aa08403027c9bd99e14f280692934676f"
+  },
+  {
+    "source": "final_configs_from_Sean/Atac_Vz_E13_R.json",
+    "file": "data/upstream/ENCODE_configs/Atac_Vz_E13_R.json",
+    "bytes": 446,
+    "sha256": "ae8723759c6c3cccf42603368280737f7e2ae1b6f19386e013acb310728851f3"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Kdm6b_KO_neg.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Kdm6b_KO_neg.json",
+    "bytes": 559,
+    "sha256": "18c815ea6bb4ae4c88b1ff44845467b15660e0513c53ce8af7e6bb814d9de7f1"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Kdm6b_KO_pos.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Kdm6b_KO_pos.json",
+    "bytes": 557,
+    "sha256": "723e77aa5187e2eb6b79d843611b476971125ab738e33db87ef4a7d9c5fd8df6"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Kdm6b_WT_neg.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Kdm6b_WT_neg.json",
+    "bytes": 635,
+    "sha256": "96e7ac30e29e530e018347ef01ea925d9d4abb0a1306425ff65a9ceba290da82"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Kdm6b_WT_pos.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Kdm6b_WT_pos.json",
+    "bytes": 501,
+    "sha256": "97a1d9b2356e52bffd185b22b0411bc39cfd2daa597a3df6f3cf104c9dfe6681"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Nex_E12_C.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Nex_E12_C.json",
+    "bytes": 414,
+    "sha256": "55eb9335c36219de5ae37ea8480727bcc8e5841fbb71503992ad4d11f2fa38a8"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Nex_E12_R.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Nex_E12_R.json",
+    "bytes": 414,
+    "sha256": "b47059e9ba81402412bfb70a22d16d882c3fc7a68a6d5ae35cea765d9a4af0da"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Nex_E13_C_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Nex_E13_C_reseq.json",
+    "bytes": 774,
+    "sha256": "673149a4782fc88da062fc8a88fc40f834cbac04b665f29a3c93444b41d1b812"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Nex_E13_R_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Nex_E13_R_reseq.json",
+    "bytes": 557,
+    "sha256": "d08b4ac12736e18234b8796c3396a320d9ecf30716106176fa33fdf666f28323"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Nex_E15_C.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Nex_E15_C.json",
+    "bytes": 413,
+    "sha256": "444ffcd63af1031edf41c84895ff0dd620db9c6c810a8aca97ec2c1be51dbe25"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Nex_E15_R.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Nex_E15_R.json",
+    "bytes": 413,
+    "sha256": "93b09504929872bbf92c53dd55b0e1f48634417efad4d910661859f0a724ccfa"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Ntsr_P2_C.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Ntsr_P2_C.json",
+    "bytes": 490,
+    "sha256": "346afc6da29925c8d1fde168836197f21d9c60558784d9a9e353cfe7bf7ca76a"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Rbp_P2_C.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Rbp_P2_C.json",
+    "bytes": 410,
+    "sha256": "a65c161fa82cebc1b2d43a329ce4f542dddfaf269896ec20214f0dbb45331012"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Rbp_P2_R_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Rbp_P2_R_reseq.json",
+    "bytes": 544,
+    "sha256": "e36b46b26e897ab632f113a4742984b29618d7f512eb6d9bd47b412e924b82ff"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Svz9hr_E12_C_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Svz9hr_E12_C_reseq.json",
+    "bytes": 565,
+    "sha256": "2003534c186baab8793347852d9cccf09447710f6df6d4fcfce71208c0952fdc"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Svz9hr_E12_R.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Svz9hr_E12_R.json",
+    "bytes": 421,
+    "sha256": "088365ca85530272d9ed0fed9729ac5b9241bdb7a5a2ad761a4ae1ff2314d100"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Vz_E10_C.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Vz_E10_C.json",
+    "bytes": 410,
+    "sha256": "67dae76d307a57b6d6b166b05eff311a86f9124234e82806df5316052078e889"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Vz_E10_R.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Vz_E10_R.json",
+    "bytes": 410,
+    "sha256": "cd2b826133b7a842b3b2e72e920bfaad6d51c9dc29de1fed35d7a8c80c4e8da9"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Vz_E11_C_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Vz_E11_C_reseq.json",
+    "bytes": 724,
+    "sha256": "1e9b9c90bbf2fadbdbe5ad08b7a0b29fe734ed493025c76a971cf029f79663d2"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Vz_E11_R_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Vz_E11_R_reseq.json",
+    "bytes": 624,
+    "sha256": "c4c23edff7ab8a3c868d9d14f20c5fbb19cb48921d3872d5f748d990e2ef7e81"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Vz_E12_C.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Vz_E12_C.json",
+    "bytes": 417,
+    "sha256": "1f141ee34c510993f668e20ea12c7705dc6fe2381ef332c1192c748b6133143a"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Vz_E12_R.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Vz_E12_R.json",
+    "bytes": 417,
+    "sha256": "62d0545b1dbf81b580e6b0c5817e6a42506c6ee42d703602000a90eff57835ae"
+  },
+  {
+    "source": "final_configs_from_Sean/Hac_Vz_E13_R_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Hac_Vz_E13_R_reseq.json",
+    "bytes": 555,
+    "sha256": "ee0b9a59fc68ff4a51194d24466e7b56586cbd4e7a8a3eebe3dfb18febadd666"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Kdm6b_KO_neg.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Kdm6b_KO_neg.json",
+    "bytes": 690,
+    "sha256": "77cdf458962e95063fa60779093fe5760991fa169ae78f19bbad75b740cab00b"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Kdm6b_KO_pos.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Kdm6b_KO_pos.json",
+    "bytes": 500,
+    "sha256": "0a9fd0477bab592ef3655e9fa97738785ad49cf9b5500df276d7b938aa447c89"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Kdm6b_WT_neg.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Kdm6b_WT_neg.json",
+    "bytes": 501,
+    "sha256": "32676a2a4512996e1f6ee6bc214353535dc9b27f3eb1f8f2cfc6e6588e150fcc"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Kdm6b_WT_pos.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Kdm6b_WT_pos.json",
+    "bytes": 500,
+    "sha256": "c9720706dc1a7a380cdb2ac331857fb3d50e1f9c6b60f26138c75cb36579bfd1"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Nex_E12_C_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Nex_E12_C_reseq.json",
+    "bytes": 550,
+    "sha256": "5f141249387c461c42325a48388b5e6cc8542f0aad64e8da4f15aae0156ea8be"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Nex_E12_R.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Nex_E12_R.json",
+    "bytes": 412,
+    "sha256": "da2c1a99e23382ba9bcc60e7da43403dfb195cbd55e3cce9b3ae31e584ab9592"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Nex_E13_C_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Nex_E13_C_reseq.json",
+    "bytes": 561,
+    "sha256": "b1eb16484749603be6ee2e44baeddea1f7f9e0549817d2bbc29fe3850ee985b6"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Nex_E13_R_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Nex_E13_R_reseq.json",
+    "bytes": 648,
+    "sha256": "f5f491896076f9f4b351496faa181c00d1b5e4e6978ab13478145ae1387acaad"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Nex_E15_C_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Nex_E15_C_reseq.json",
+    "bytes": 741,
+    "sha256": "9ae634f91184fea4347f1091725ffcb77ea28ca78185816d60bfc50034b2b6ae"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Nex_E15_R_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Nex_E15_R_reseq.json",
+    "bytes": 735,
+    "sha256": "2e190d399369664661dda1d97f6122f31c9147408b4ee21f35486659c47aae38"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Ntsr_P2_C.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Ntsr_P2_C.json",
+    "bytes": 411,
+    "sha256": "047b7c503913ea1f5dd20b0fbe00f50bd0d62decd160c0ad537bd70a667b2291"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Ntsr_P2_R.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Ntsr_P2_R.json",
+    "bytes": 414,
+    "sha256": "bd60cbce81b565c28e30bf445bdbbbd8d87109ada7832e684f1cffc9bb00cf90"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Rbp_P2_R.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Rbp_P2_R.json",
+    "bytes": 410,
+    "sha256": "19e6f4f5e388f7fd86afb9f8774875850a561d4e5db1a333564607f2575e55f5"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Svz9hr_E12_C_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Svz9hr_E12_C_reseq.json",
+    "bytes": 675,
+    "sha256": "3728de5aa351d4d39ea0bf0b7afd4a18f8bf4e1af339ac2d8199fca656f6569a"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Svz9hr_E12_R_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Svz9hr_E12_R_reseq.json",
+    "bytes": 562,
+    "sha256": "e1ae0e728b78627105bda25de5190df8fc2e4d766e0d37250071c7418759f882"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Vz_E11_C_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Vz_E11_C_reseq.json",
+    "bytes": 957,
+    "sha256": "b1c6f8d14414a9865ae9197924e472b6eca88cc1a1ba85e51cbb5b922027002a"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Vz_E11_R_reseq.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Vz_E11_R_reseq.json",
+    "bytes": 723,
+    "sha256": "7676b037239dfc2fc3ed5696b8148aff4ee72fc046857f9f26dfad3f4a3adb24"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Vz_E12_C.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Vz_E12_C.json",
+    "bytes": 415,
+    "sha256": "d2f4da0accf0eaa24bc0133965c9cf00d69591a94abb9e266f5ca27a5547cce3"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Vz_E12_R.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Vz_E12_R.json",
+    "bytes": 415,
+    "sha256": "0967e5ddabf04f67bcb89612249259465b99e6f11b79f7fcbf1ff4c4a612bb42"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Vz_E13_C.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Vz_E13_C.json",
+    "bytes": 417,
+    "sha256": "6d7a6485b35365cfda8b80631b1aa7a22a7addac67df75a57a54dae2ffa5442c"
+  },
+  {
+    "source": "final_configs_from_Sean/Htk_Vz_E13_R.json",
+    "file": "data/upstream/ENCODE_configs/Htk_Vz_E13_R.json",
+    "bytes": 417,
+    "sha256": "0f31ef301208805412942d9739d9aa63f2ae023a7b21f678655b65663dd71731"
+  },
+  {
+    "source": "Genoa_PREs/atac_idr_peaks_merged_uniform_genoa_strong_0.5-distal_and_proximal-mm10.bed",
+    "file": "data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_strong_0.5-distal_and_proximal-mm10.bed",
+    "bytes": 765993,
+    "sha256": "dea338cdd6747dbf02297bf5552e558267200c139de1f0eef931aef9e2df6c06"
+  },
+  {
+    "source": "Genoa_PREs/atac_idr_peaks_merged_uniform_genoa_strong_0.5-distal_only-mm10.bed",
+    "file": "data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_strong_0.5-distal_only-mm10.bed",
+    "bytes": 360472,
+    "sha256": "67bd83f79f94f663c94e06e98b7bbd24a2314c1385c93922a2e4fc4d60fff310"
+  },
+  {
+    "source": "Genoa_PREs/atac_idr_peaks_merged_uniform_genoa_weak_0.5-distal_and_proximal-mm10.bed",
+    "file": "data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_weak_0.5-distal_and_proximal-mm10.bed",
+    "bytes": 2125121,
+    "sha256": "95b93407432bd5c0374adb709125e1cf62e9f048104abfcaae49fb9b4db25d6c"
+  },
+  {
+    "source": "Genoa_PREs/atac_idr_peaks_merged_uniform_genoa_weak_0.5-distal_only-mm10.bed",
+    "file": "data/upstream/GENOA/atac_idr_peaks_merged_uniform_genoa_weak_0.5-distal_only-mm10.bed",
+    "bytes": 1056557,
+    "sha256": "8dc3b4dd78c65fccf02e6d67e44a134342b96c232087ad4531f8a94a89552c95"
+  },
+  {
+    "source": "Permutation_analysis_objects/Fu_and_Kdm6b_DE_enr.RDS",
+    "file": "objects/variants/Fu_and_Kdm6b_DE_enr.RDS",
+    "bytes": 8192420,
+    "sha256": "bca6bd87348dcf71dec5539cc425d7ee306c5446edcdaf1d0243c70ccc936e78"
+  },
+  {
+    "source": "GEO_submission.Rmd explicit sample table, lines 3540-3556",
+    "file": "data/upstream/RNA/sample_metadata.csv",
+    "bytes": 1189,
+    "sha256": "582537192395b2b44745960c8b07b3e28cfbf62e35eba3572395a675a78646f8"
+  },
+  {
+    "source": "FASTQ_GEO/Kdm6b_RNA_seq/Kdm6b_sorted_final_15samples.txt",
+    "file": "data/upstream/RNA/featureCounts_final_15samples.txt",
+    "bytes": 22259151,
+    "sha256": "b39b39f25ec119d33aa8a4603c2f07537e0a4b49593c143627ef1b99b3de6306"
+  },
+  {
+    "source": "Verified original featureCounts-derived RPKM tables and explicit GEO_submission sample metadata",
+    "file": "objects/RNA/verified_plotting_inputs.rds",
+    "bytes": 5123,
+    "sha256": "3e3c65e863dc6fabf8f04e7aa5f46c516eb3174b3e2d2f45d1bc6a64fb77bf7c"
+  }
+]

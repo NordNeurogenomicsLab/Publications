@@ -1,0 +1,259 @@
+---
+title: "WGCNA of developmental chromatin profiles"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+params:
+  recompute: false
+---
+
+This notebook documents the WGCNA implementation used in the existing CortexCode network-generation script. It separates raw-count preparation, histone-interval merging, CPM normalization, quality filtering, soft-threshold diagnostics and network fitting. The fitted networks are loaded by default. Set `recompute: true` only for a deliberate, computationally intensive rerun; no network fitting is performed during a normal render.
+
+The three networks used soft-threshold powers of **6 (ATAC), 5 (H3K27ac) and 9 (H3K27me3)**. Network construction used signed bicorrelation networks and signed topological overlap. The original source-script identity and SHA-256 hash are recorded in `provenance/analysis_code_sources.csv`.
+
+WGCNA assigns initial modules. Subsequent refinement and manuscript module names are represented by the final module catalogs, not by replacing the saved network's color vector. In particular, the saved ATAC network contains 67,435 fitted features, whereas the final ATAC catalog contains 67,518 intervals. The annotation notebook retains that distinction.
+
+```{r setup, include=FALSE, eval=TRUE}
+if (!exists("params", inherits = FALSE)) {
+  params <- list(recompute = FALSE)
+}
+candidate_roots <- c(".", "..")
+repo_dir <- candidate_roots[vapply(
+  candidate_roots, function(path) file.exists(file.path(path, "R", "common.R")),
+  logical(1)
+)][1]
+stopifnot(!is.na(repo_dir))
+repo_dir <- normalizePath(repo_dir, winslash = "/")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = isTRUE(params$recompute),
+
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE
+)
+```
+
+## Packages and input locations
+
+The analysis starts from the original peak-count tables. Rerun outputs are written separately from the saved input networks.
+
+```{r packages-and-input-locations}
+suppressPackageStartupMessages(
+  {
+    library(WGCNA)
+    library(edgeR)
+    library(GenomicRanges)
+  }
+)
+input_dir <- file.path(repo_dir, "data", "upstream", "WGCNA", "WGCNA_input_data")
+output_dir <- file.path(repo_dir, "objects", "WGCNA", "recomputed")
+dir.create(output_dir,
+  recursive = TRUE,
+  showWarnings = FALSE)
+atac_input <- read.table(
+  file.path(input_dir, "atac_idr_peaks_merged_uniform-mm10.tsv"),
+  header = TRUE
+)
+ac_input <- read.table(
+  file.path(input_dir, "hac_overlap_peaks_merged-mm10.tsv"),
+  header = TRUE
+)
+me3_input <- read.table(
+  file.path(input_dir, "htk_overlap_peaks_merged-mm10.tsv"),
+  header = TRUE
+)
+```
+
+## ATAC count matrix
+
+The original ATAC table has four coordinate/summit columns followed by 20 sample-count columns. ATAC intervals are already uniform; this branch does not apply the additional histone-peak merge.
+
+```{r atac-count-matrix}
+atac_input$ID <- paste(atac_input$chrom, atac_input$start, atac_input$end, sep = "_")
+rownames(atac_input) <- atac_input$ID
+atac_counts <- as.matrix(atac_input[, 5:24])
+storage.mode(atac_counts) <- "numeric"
+```
+
+## Histone intervals within 1 kb
+
+For each histone mark, `reduce(min.gapwidth = 1000)` merges intervals separated by fewer than 1,000 bases. Original peak counts are summed within each merged interval. This is interval consolidation of the existing count table; it does not recall peaks or recount BAM reads. Coordinates are passed to the same GRanges constructor convention used in the source script.
+
+```{r histone-intervals-within-1-kb}
+merge_histone_counts <- function(peak_table) {
+  count_columns <- 4:ncol(peak_table)
+  sample_names <- names(peak_table)[count_columns]
+
+  peak_table[, count_columns] <- lapply(peak_table[, count_columns], as.numeric)
+
+  original_ranges <- GenomicRanges::makeGRangesFromDataFrame(
+    peak_table, seqnames.field = names(peak_table)[1],
+    start.field = names(peak_table)[2],
+    end.field = names(peak_table)[3],
+    keep.extra.columns = TRUE
+  )
+  merged_ranges <- GenomicRanges::reduce(original_ranges, min.gapwidth = 1000)
+
+  original_counts <- as.matrix(peak_table[, count_columns])
+  storage.mode(original_counts) <- "numeric"
+  overlaps <- GenomicRanges::findOverlaps(merged_ranges, original_ranges)
+  source_rows <- split(
+    subjectHits(overlaps),
+    queryHits(overlaps)
+  )
+
+  merged_counts <- matrix(
+    0, nrow = length(merged_ranges),
+    ncol = length(sample_names),
+    dimnames = list(NULL, sample_names)
+  )
+  for (interval in names(source_rows)) {
+    merged_counts[as.integer(interval),
+      ] <- colSums(original_counts[source_rows[[interval]], , drop = FALSE])
+  }
+
+  rownames(merged_counts) <- paste(
+    as.character(seqnames(merged_ranges)),
+    start(merged_ranges),
+    end(merged_ranges),
+    sep = "_"
+  )
+  mcols(merged_ranges) <- as.data.frame(merged_counts)
+
+  list(ranges = merged_ranges,
+    counts = merged_counts)
+}
+ac_merged <- merge_histone_counts(ac_input)
+me3_merged <- merge_histone_counts(me3_input)
+```
+
+## Normalization and quality filtering
+
+The original implementation creates an edgeR DGEList and calls `cpm()` without a separate `calcNormFactors()` step. Thus the WGCNA input is library-size CPM, not log-CPM, FPKM, TMM-adjusted expression or a heatmap z score. Samples form rows and intervals form columns. `goodSamplesGenes()` supplies the retained sample/feature mask. Sample clustering is a diagnostic display; the code does not introduce an additional automatic outlier-removal rule.
+
+```{r normalization-and-quality-filtering}
+prepare_wgcna_input <- function(count_matrix) {
+  dge <- edgeR::DGEList(counts = count_matrix)
+  cpm_matrix <- edgeR::cpm(dge)
+  expression_matrix <- t(cpm_matrix)
+
+  quality <- WGCNA::goodSamplesGenes(expression_matrix, verbose = 3)
+  if (!quality$allOK) {
+    expression_matrix <- expression_matrix[quality$goodSamples, quality$goodGenes,
+      drop = FALSE]
+  }
+
+  list(expression = expression_matrix,
+    quality = quality)
+}
+atac_prepared <- prepare_wgcna_input(atac_counts)
+ac_prepared <- prepare_wgcna_input(ac_merged$counts)
+me3_prepared <- prepare_wgcna_input(me3_merged$counts)
+sample_tree <- hclust(
+  dist(atac_prepared$expression),
+  method = "average"
+)
+plot(sample_tree,
+  main = "ATAC sample clustering",
+  xlab = "",
+  sub = "")
+```
+
+## Soft-threshold diagnostics
+
+The recorded diagnostic call evaluates powers 1–10 and 12–20 in steps of two. It does not override the correlation or network defaults of `pickSoftThreshold()`. Preserve that original diagnostic call rather than implying it used the explicit bicor/signed options of the fitted network. The selected powers below are fixed analysis settings, not reselected automatically during reproduction.
+
+```{r soft-threshold-diagnostics}
+candidate_powers <- c(1:10, seq(12, 20, by = 2))
+atac_soft_threshold <- WGCNA::pickSoftThreshold(atac_prepared$expression,
+  powerVector = candidate_powers,
+  verbose = 5)
+ac_soft_threshold <- WGCNA::pickSoftThreshold(ac_prepared$expression,
+  powerVector = candidate_powers,
+  verbose = 5)
+me3_soft_threshold <- WGCNA::pickSoftThreshold(me3_prepared$expression,
+  powerVector = candidate_powers,
+  verbose = 5)
+```
+
+## Signed network fitting
+
+These are the explicit `blockwiseModules()` settings from the original script. Thread counts are 12, 10 and 12 for ATAC, AC and ME3, respectively. The original calls did not explicitly override the default randomSeed argument; package defaults and the execution environment should therefore be recorded for any new rerun.
+
+```{r signed-network-fitting}
+fit_network <- function(expression_matrix, power, threads) {
+  WGCNA::blockwiseModules(
+    datExpr = as.data.frame(expression_matrix),
+    checkMissingData = TRUE,
+    power = power,
+    networkType = "signed",
+    TOMType = "signed",
+
+    corType = "bicor",
+    minModuleSize = 30,
+    maxBlockSize = 25000,
+    mergeCutHeight = 0.25,
+
+    deepSplit = 2,
+    pamStage = FALSE,
+    reassignThreshold = 1e-10,
+    saveTOMs = FALSE,
+
+    nThreads = threads,
+    verbose = 3
+  )
+}
+net_atac <- fit_network(atac_prepared$expression,
+  power = 6,
+  threads = 12)
+net_ac <- fit_network(ac_prepared$expression,
+  power = 5,
+  threads = 10)
+net_me3 <- fit_network(me3_prepared$expression,
+  power = 9,
+  threads = 12)
+saveRDS(net_atac, file.path(output_dir, "net_WGCNA_ATAC_sp6.Rds"))
+saveRDS(
+  net_ac, file.path(output_dir, "net_WGCNA_H3K27ac_merged_by_1kb_sp5.Rds")
+)
+saveRDS(
+  net_me3, file.path(output_dir, "net_WGCNA_H3K27me3_merged_by_1kb_sp9.Rds")
+)
+```
+
+## Saved network checkpoints
+
+This section runs during a normal render and reports the actual saved network dimensions. It does not refit a network.
+
+```{r saved-network-checkpoints, eval=TRUE}
+network_dir <- file.path(repo_dir, "data", "upstream", "WGCNA", "WGCNA_objects")
+network_files <- list.files(network_dir,
+  pattern = "[.]Rds$",
+  full.names = TRUE)
+saved_networks <- setNames(
+  lapply(network_files, readRDS),
+  basename(network_files)
+)
+network_summary <- do.call(
+  rbind, lapply(
+    names(saved_networks),
+    function(name) {
+      network <- saved_networks[[name]]
+      data.frame(
+        Network = name,
+        Fitted_features = length(network$colors),
+
+        Initial_modules = length(unique(network$colors)),
+        Samples = nrow(network$MEs)
+      )
+    }
+  )
+)
+network_summary
+```
+
+```{r session-info, eval=TRUE}
+sessionInfo()
+```

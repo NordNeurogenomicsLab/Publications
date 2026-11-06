@@ -1,0 +1,127 @@
+---
+title: "Extended Data Figures 5 and 6: saved multiome heatmaps"
+output: html_document
+params:
+  recompute_linked_scores: false
+  extract_original_marker_layers: false
+  marker_count_per_cluster: 10
+---
+
+These panels use saved normalized expression/accessibility layers, saved peak-to-gene links and previously calculated marker statistics. No differential tests, peak linking, normalization model fitting, WGCNA or embeddings run here. Cell identities and their original order within each cluster remain unchanged.
+
+The linked-gene panels extend the explicit method in `CortexCode_Nick.Rmd` from ATAC modules to the saved AC/ME3 links. The supplied notebook specifies the Figure 3 procedure, but does not identify the final supplemental marker count. The top-marker count below is therefore an explicit display parameter, not a claim to have recovered an undocumented historical selection.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+suppressPackageStartupMessages(library(Matrix))
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+## AC- and H3K27me3-linked gene module scores
+
+For each saved assay-specific link table, retain positive links (`zscore >= 0`) and the lowest link P value per peak, keeping the first row for ties. Join peak coordinates to the published module key and deduplicate linked genes within each module. Use stored SCT log-expression with 24 expression bins, 100 controls per feature and seed 1 reset for each single-module call. Subtract the control mean from the gene-set mean. Center and divide each module score by its sample standard deviation across cells, with the Seurat upper cap of 10. Only the display color saturates at ±2.5.
+
+The complete implementation is in `R/extended_multiome_heatmaps.R`. It retains gene sets, control features, selected links, unscaled scores, scaled scores and cell metadata in the saved object.
+
+```{r extended5-optional-linked-score-calculation, eval=isTRUE(params$recompute_linked_scores)}
+cache <- readRDS(file.path(REPO, "objects/Fig3/exact_V2_cache.rds"))
+link_directory <- file.path(REPO, "data/upstream/multiome")
+linked_scores <- prepare_extended5_linked_scores(cache, link_directory)
+save_object(linked_scores, "multiome/extended5_linked_scores")
+```
+
+```{r extended5-linked-gene-score-displays}
+linked_scores <- readRDS(file.path(REPO, "objects/multiome/extended5_linked_scores.rds"))
+for (assay in c("AC", "ME3")) {
+  plot_extended5_cell_heatmap(
+    linked_scores[[assay]]$scaled,
+    linked_scores$metadata,
+    if (assay == "AC") "Ext5/5e_AC_linked_gene_scores" else "Ext5/5f_ME3_linked_gene_scores",
+    row_labels = TRUE
+  )
+}
+```
+
+## RNA and accessibility marker heatmaps
+
+Marker tests remain the supplied results. Within each cluster, select positive markers with adjusted P < 0.05, ranked by decreasing average log2 fold change and then feature name. The display count is explicit. Select markers before checking the stored assay layer, and report selected features absent from that layer rather than silently replacing them.
+
+RNA uses the saved SCT scaled residuals without refitting SCT. Accessibility uses the stored normalized layer identified by exact feature-coordinate matches, then centers and divides each selected feature by its across-cell sample SD. The saved input object records the assay identity. This display scaling changes neither marker tests nor feature coordinates. The marker palettes and cluster-strip colors use sampled manuscript legend colors. RNA display colors span -2.5 to +2.5, and accessibility display colors span -1.5 to +2.5. The stored numerical matrix remains unmodified by color saturation. Rows follow cluster order and marker rank. Cells follow RG1–8, IPC1–4 and CPN1–4.
+
+The one-time extraction below copies existing layers into a compact object. Set `CORTEX_MULTIOME_OBJECT` to the original saved V2 object when rebuilding this checkpoint. The default plotting workflow loads the compact checkpoint instead.
+
+```{r extended5-optional-marker-layer-extraction, eval=isTRUE(params$extract_original_marker_layers)}
+source_object <- Sys.getenv("CORTEX_MULTIOME_OBJECT",
+  file.path(REPO, "data/upstream/multiome/Ctx_dev.clean.rds"))
+original <- readRDS(source_object)
+assays <- attr(original, "assays")
+marker_inputs <- list(
+  metadata = attr(original, "meta.data"),
+  SCT_scaled = attr(assays$SCT, "scale.data")
+)
+for (panel in c("5i", "5k")) {
+  markers <- read_table("Extended_Fig5_KC", paste0(panel, "_Marker_results"))
+  features <- unique(markers$gene)
+  matches <- vapply(assays, function(assay) {
+    sum(features %in% rownames(attr(assay, "data")))
+  }, numeric(1))
+  assay_name <- names(which.max(matches))
+  layer <- attr(assays[[assay_name]], "data")
+  marker_inputs[[panel]] <- layer[intersect(features, rownames(layer)), , drop = FALSE]
+  marker_inputs[[paste0(panel, "_assay")]] <- assay_name
+}
+save_object(marker_inputs, "multiome/marker_heatmap_inputs")
+rm(original, assays, layer)
+```
+
+```{r extended5-marker-heatmaps, eval=file.exists(file.path(REPO, "objects/multiome/marker_heatmap_inputs.rds"))}
+marker_inputs <- readRDS(file.path(REPO, "objects/multiome/marker_heatmap_inputs.rds"))
+selection_audit <- list()
+for (panel in c("5g", "5i", "5k")) {
+  layer <- if (panel == "5g") marker_inputs$SCT_scaled else marker_inputs[[panel]]
+  selected <- select_extended5_markers(
+    panel, rownames(layer), top_n = params$marker_count_per_cluster
+  )
+  selection_audit[[panel]] <- transform(selected, Panel = panel)
+  features <- unique(selected$gene[selected$Available_in_saved_layer])
+  matrix <- as.matrix(layer[features, , drop = FALSE])
+  if (panel != "5g") {
+    matrix <- t(scale(t(matrix)))
+    matrix[!is.finite(matrix)] <- 0
+    matrix[matrix > 10] <- 10
+  }
+  stopifnot(length(features) > 0, ncol(matrix) == nrow(marker_inputs$metadata))
+  plot_extended5_cell_heatmap(
+    matrix, marker_inputs$metadata,
+    paste0("Ext5/", panel, "_marker_heatmap"),
+    expression = panel == "5g"
+  )
+}
+write.csv(bind_rows(selection_audit),
+  file.path(REPO, "provenance/Extended5_marker_display_selection.csv"),
+  row.names = FALSE)
+```
+
+## ATAC means in selected bulk modules and TM3-linked regions
+
+The numerical inputs are the saved per-interval means across the same 16 clusters. Each interval is centered and divided by its across-cluster sample SD. Constant rows remain zero. Figure 5d uses five separate equal-height strips in the manuscript order A1, A8, A9, A10 and A18. Every stored interval remains in its strip. Figure 6a includes all saved TM3-linked intervals together, retaining a row dendrogram.
+
+For the five-strip panel, retain the saved interval row order within each module, rather than imposing a new clustering or developmental sorting. Each strip uses the displayed manuscript color limits: -4 to +4, except A10 at -2 to +4. Values outside a color range saturate visually and remain in the saved numerical matrix. This restores the separate color ranges visible in the native exports, including the narrower negative range in A10. The exact historical source ordering is not independently certified. The single TM3-linked block retains its complete-linkage Euclidean display dendrogram. Columns never recluster. No WGCNA or other model is refitted.
+
+```{r extended5d-and-extended6a-atac-heatmaps}
+plot_extended_atac_mean_heatmap(
+  "5d_ATAC_cluster_means",
+  c("A1", "A8", "A9", "A10", "A18"),
+  "Ext5/5d_ATAC_cluster_means_matched"
+)
+plot_extended_atac_mean_heatmap(
+  "6a_TMK3_linked_ATAC_means",
+  "All",
+  "Ext6/6a_TMK3_linked_ATAC_matched"
+)
+```
+
+```{r session-info}
+finish_notebook("12")
+sessionInfo()
+```

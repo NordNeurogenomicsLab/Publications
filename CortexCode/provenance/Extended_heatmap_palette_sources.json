@@ -1,0 +1,11 @@
+{
+  "artwork": "Originals/Extended_Data_Figure_5_original.pdf",
+  "artwork_sha256": "9e11e1f26763cb29288d848810fd1655f2e77e4bdd8949ec6f4d5df98ecca173",
+  "palettes": [
+    "Extended5_cluster_colors.csv",
+    "Extended5_marker_palette.csv",
+    "Extended5_RNA_marker_palette.csv",
+    "Extended_ATAC_mean_palette.csv"
+  ],
+  "method": "RGB samples from labeled legend bars and cell-type header strips in the original PDF-compatible artwork. Numerical matrices are not inferred from colors."
+}

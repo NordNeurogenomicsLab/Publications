@@ -1,0 +1,109 @@
+---
+title: "CortexCode: inputs, checkpoints and execution"
+output:
+  html_document:
+    toc: true
+    code_folding: show
+---
+
+This notebook describes the analysis inputs and validates their schemas and file identities. Figure notebooks use the saved numerical tables and fitted objects supplied with this analysis. The methods notebooks in `pipeline/` document upstream procedures with computationally intensive steps disabled by default.
+
+`provenance/source_tables.json` records each table, its source and its data definition. Original histology measurement grids retain their complete layout in `data/raw_sheets/`; mouse identifiers distinguish biological samples from sections and hemispheres.
+
+```{r setup, include=FALSE}
+source("R/common.R")
+knitr::opts_chunk$set(echo = TRUE,
+  message = FALSE,
+  warning = TRUE,
+  error = FALSE)
+```
+
+## Validate bundled tables
+
+Load each standardized table into a figure-specific RDS checkpoint. Preserve irregular histology grids separately.
+
+```{r validate-bundled-tables-2}
+schema <- jsonlite::fromJSON(
+  file.path(REPO, "provenance/source_tables.json"),
+  simplifyVector = FALSE
+)
+for (book in unique(
+  vapply(
+    schema, `[[`, character(1),
+    "book"
+  )
+)) {
+  entries <- Filter(
+    function(s) s$book ==
+      book, schema
+  )
+  tables <- list()
+  for (s in entries) {
+    f <- file.path(REPO, s$file)
+    stopifnot(file.exists(f))
+    x <- if (!is.null(s$layout))
+      read.csv(
+        f,
+        header = FALSE,
+        colClasses = "character",
+        na.strings = "",
+
+        fill = TRUE
+      ) else read.csv(f,
+        check.names = FALSE,
+        na.strings = c("", "NA"))
+    stopifnot(
+      nrow(x) ==
+        s$rows
+    )
+    tables[[s$sheet]] <- x
+  }
+  save_object(tables, paste0("source_tables/", book))
+}
+cat(
+  length(schema),
+  "tables validated and saved as figure-specific RDS objects.\n"
+)
+```
+
+## Input integrity
+
+Check the copied upstream objects against their recorded SHA-256 checksums. Full 2.3 GB cache hashing is opt-in because it adds I/O and does not alter any data.
+
+```{r input-integrity-3}
+manifest <- jsonlite::fromJSON(file.path(REPO, "provenance/copied_files.json"))
+stopifnot(all(file.exists(file.path(REPO, manifest$file))))
+stopifnot(
+  all(
+    file.info(file.path(REPO, manifest$file))$size ==
+      manifest$bytes
+  )
+)
+if (identical(
+  Sys.getenv("CORTEX_VERIFY_HASHES"),
+  "true"
+)) {
+  stopifnot(requireNamespace("digest", quietly = TRUE))
+  observed <- vapply(
+    file.path(REPO, manifest$file),
+    digest::digest, character(1),
+    algo = "sha256",
+    file = TRUE
+  )
+  stopifnot(
+    identical(
+      unname(observed),
+      manifest$sha256
+    )
+  )
+}
+write.csv(
+  manifest, file.path(REPO, "reports/input_manifest.csv"),
+  row.names = FALSE
+)
+```
+
+```{r session-info}
+finish_notebook("00")
+sessionInfo()
+```

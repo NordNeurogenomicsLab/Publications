@@ -1,0 +1,434 @@
+[
+  {
+    "source": "ATAC_FineClusters_rGREAT_GO.csv",
+    "file": "data/upstream/enrichment/ATAC_FineClusters_rGREAT_GO.csv",
+    "sha256": "0e19e799173a48ee2d236fd5e0b6ae0ca5b784ac2ee60a5f237c7fd2c6495914",
+    "bytes": 47908070
+  },
+  {
+    "source": "AC_FineClusters_rGREAT_GO.csv",
+    "file": "data/upstream/enrichment/AC_FineClusters_rGREAT_GO.csv",
+    "sha256": "76017a816adfac92dd390b4d211fceec43ff3368a5283c53b0aabe5ebc8c15f1",
+    "bytes": 59157052
+  },
+  {
+    "source": "ME3_FineClusters_rGREAT_GO.csv",
+    "file": "data/upstream/enrichment/ME3_FineClusters_rGREAT_GO.csv",
+    "sha256": "405b617c29f3de4057cdc5e86181ff732f9c420dd3d5947dace9023a931bc93e",
+    "bytes": 69835809
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/black_summit/knownResults.txt",
+    "sha256": "238470ae23dde5200dbbd22f8cb4766eb0ab4bc2b3d04a7c25e437d51c702637",
+    "bytes": 48342
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/blue_summit/knownResults.txt",
+    "sha256": "7ff60178b0414668b77af7e3a94acd16322ccdc676b84251e1384261ab481f39",
+    "bytes": 48996
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/brown_summit/knownResults.txt",
+    "sha256": "ca235a6bae755fed1fd8329364c9142f5e62b4012e4c8f33aa53bd87fc1bd651",
+    "bytes": 48981
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/Constitutive_strong_summit/knownResults.txt",
+    "sha256": "774d74f01eb506eb5daa82333cd07041eeeee2da235b38eb0d723c096f46957d",
+    "bytes": 48793
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/Constitutive_weak_summit/knownResults.txt",
+    "sha256": "7470b9af754cb4df57ab9034d15e67d082927fed37aa783d42a26166b1d30c9d",
+    "bytes": 49052
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/cyan_summit/knownResults.txt",
+    "sha256": "496208865ec4a70ce4a7a634a0e8835a547a80319ded219b50322f3260d595a4",
+    "bytes": 48393
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/greenyellow_summit/knownResults.txt",
+    "sha256": "b3fd9b1b4415d295e5ca1e9eb2e7880be3af16fa812a2e53cfb056146b3298e9",
+    "bytes": 48139
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/green_summit/knownResults.txt",
+    "sha256": "ed75b3706a500258d8f06d72db76f7633ccecb27454aa43f70848b46ca5a3b94",
+    "bytes": 48726
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/grey_summit/knownResults.txt",
+    "sha256": "456886a0ff83be179ebd54c4e97d9ac1fbff06202964b73fcb9aa652a2836019",
+    "bytes": 48496
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/lightcyan_summit/knownResults.txt",
+    "sha256": "48838fd4e10884b96404110578fa2450e2c6134cac30c8e7452abbba118bb245",
+    "bytes": 48136
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/magenta_summit/knownResults.txt",
+    "sha256": "f851647e356371b8beb665092fa000e14a260737da2527616cbfe629d5cacc2c",
+    "bytes": 48477
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/midnightblue_summit/knownResults.txt",
+    "sha256": "1e96ac42cf18ddc6f69218a11e562a556ec952f43c44edbccfc3f5278aabb54e",
+    "bytes": 48402
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/P2_specific_summit/knownResults.txt",
+    "sha256": "6a20b7003d16d20bb1bf6277e0f96be622db6a3bbaa8eb9ab625e65a0193f8bc",
+    "bytes": 48817
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/pink_summit/knownResults.txt",
+    "sha256": "591edf0dfdb7db1973cb88848e25b240a5050e5a13bcddd8544223b5c53d7ce4",
+    "bytes": 48370
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/purple_summit/knownResults.txt",
+    "sha256": "441671ad7e584689d35692482a488f70ad4bc9b1a65ba396562b24358d48a95f",
+    "bytes": 48431
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/red_summit/knownResults.txt",
+    "sha256": "32ad0fde9881c5f27efdee19d1271b08458539684f6644af4cfe0668318102c0",
+    "bytes": 48685
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/salmon_summit/knownResults.txt",
+    "sha256": "19fa59fd717bdf49cf7060c4b472bddbd0665e5bfd9dc10c24a6ed71363f6072",
+    "bytes": 48474
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/tan_summit/knownResults.txt",
+    "sha256": "9344a4e06e75a959c6522a18dbc53bf84f0bc7e18d05c9b6704f7f0627217fa1",
+    "bytes": 48463
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/turquoise_summit/knownResults.txt",
+    "sha256": "a545721bfcdff71d21374033ceb6ea11700abfa41b47f58d300e08264f47631c",
+    "bytes": 49310
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/Weak_late_summit/knownResults.txt",
+    "sha256": "ab33a2ab487ab1c31d8f30715e188c4eaf7280223ab1e9c5e02b0ca9563b7b43",
+    "bytes": 48946
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/Weak_middle_summit/knownResults.txt",
+    "sha256": "2be5cea9e33456684f34115a83990e7576145a6b1e43211ec2420ee827f9abdc",
+    "bytes": 48420
+  },
+  {
+    "source": "knownResults.txt",
+    "file": "data/upstream/HOMER/results/yellow_summit/knownResults.txt",
+    "sha256": "41193567b6f87317d14b9267776c4132b0b2b1acd6172ff1ed0e1e2250be1737",
+    "bytes": 48673
+  },
+  {
+    "source": "Fine_black_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_black_summit_bg.bed",
+    "sha256": "415a5558354edd9cf981315e1e76734a7d9f5d023a099d21ab9ac0eaaa4fc63b",
+    "bytes": 3446490
+  },
+  {
+    "source": "Fine_black_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_black_summit_targets.bed",
+    "sha256": "9eb4d371c20f5ab8fa3103021f59e6ffa47391cea67ae4cca637ba36bde53635",
+    "bytes": 52986
+  },
+  {
+    "source": "Fine_blue_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_blue_summit_bg.bed",
+    "sha256": "c5d956f4623b742c37e3b3b2b9b521175e88bc6bfa5ad51f449c6c41a689fdaf",
+    "bytes": 3053928
+  },
+  {
+    "source": "Fine_blue_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_blue_summit_targets.bed",
+    "sha256": "051e9edbb4eeed4b7ed2807d776c2a03b939468e9f4a8280d96cb5347edac5ac",
+    "bytes": 445548
+  },
+  {
+    "source": "Fine_brown_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_brown_summit_bg.bed",
+    "sha256": "7e5a1009ed426632ce8ca7f9769884099e8233ccbbf1e6840a1d508ac9b378ab",
+    "bytes": 3305294
+  },
+  {
+    "source": "Fine_brown_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_brown_summit_targets.bed",
+    "sha256": "77787e493b34be95909514579ac30074a3ab420140f077c56d0846b52e311a36",
+    "bytes": 194182
+  },
+  {
+    "source": "Fine_Constitutive_strong_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_Constitutive_strong_summit_bg.bed",
+    "sha256": "2dd06f2d047ca799ec03922ff6df027b25a0afefe2ac62c59a4d644c11d46538",
+    "bytes": 3217520
+  },
+  {
+    "source": "Fine_Constitutive_strong_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_Constitutive_strong_summit_targets.bed",
+    "sha256": "8e04bb8db5cc3be2cfb08dc9085d1caed930c877f728bf34c4a2e9bd674dbbb5",
+    "bytes": 281956
+  },
+  {
+    "source": "Fine_Constitutive_weak_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_Constitutive_weak_summit_bg.bed",
+    "sha256": "75207b5d1d83f2f3f1f16d063a4660affca5c8aba855db1f73a4fd9088c90151",
+    "bytes": 2974968
+  },
+  {
+    "source": "Fine_Constitutive_weak_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_Constitutive_weak_summit_targets.bed",
+    "sha256": "7bada32e8d67f18d2a868117499682864e2a912e3f20fc79fa6ea1f9723e5019",
+    "bytes": 524508
+  },
+  {
+    "source": "Fine_cyan_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_cyan_summit_bg.bed",
+    "sha256": "33bd52ee2acf08f6625f512ca0966ccfd3509da35f565bcaee5369b2fa520c23",
+    "bytes": 3485284
+  },
+  {
+    "source": "Fine_cyan_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_cyan_summit_targets.bed",
+    "sha256": "e739f57f6e17fe865046bb75cc1f839f3477292baef8121e35c5a972cc7edaee",
+    "bytes": 14192
+  },
+  {
+    "source": "Fine_greenyellow_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_greenyellow_summit_bg.bed",
+    "sha256": "e2427f8937e8bad3461269b0bfba70215604aef7df323f5bd9f9690bfb155ce9",
+    "bytes": 3475528
+  },
+  {
+    "source": "Fine_greenyellow_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_greenyellow_summit_targets.bed",
+    "sha256": "925e9d7b6e12c938a9fe9ae35045eca6226ef9036cb5b496e13443f000aaa4fe",
+    "bytes": 23948
+  },
+  {
+    "source": "Fine_green_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_green_summit_bg.bed",
+    "sha256": "f0035218d426765fd153e7c09d2c4c4ba3ff17656ce45f005bb6eb1a700e1719",
+    "bytes": 3441798
+  },
+  {
+    "source": "Fine_green_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_green_summit_targets.bed",
+    "sha256": "261de2cd98bfc4da279441ddebb9b1a02ac4d9a58c8c4f70d4bff3ec5565dfa4",
+    "bytes": 57678
+  },
+  {
+    "source": "Fine_grey_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_grey_summit_bg.bed",
+    "sha256": "b5b42d6136775ac0c4ec9fb5de8cb871dd40d69f1051fbe7c2ed1987fd62b3f1",
+    "bytes": 3438252
+  },
+  {
+    "source": "Fine_grey_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_grey_summit_targets.bed",
+    "sha256": "4d63dc226afde6f70340e9a445a7cd75bd400c5fa76d3212631d5ae948ede73b",
+    "bytes": 61224
+  },
+  {
+    "source": "Fine_lightcyan_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_lightcyan_summit_bg.bed",
+    "sha256": "f8c098b7c1e08a0beb74153e0cb1e6c8d9cfa23e9cd44dc56a3b2ed79947cd0c",
+    "bytes": 3489324
+  },
+  {
+    "source": "Fine_lightcyan_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_lightcyan_summit_targets.bed",
+    "sha256": "c42fefd1f794f5645290822d0963258181162670023b4c355b7569007408c1f4",
+    "bytes": 10152
+  },
+  {
+    "source": "Fine_magenta_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_magenta_summit_bg.bed",
+    "sha256": "fbe2782a7f9bfac54c2403c3e2b69838d81079ea1ca79ed0997593d919d3d34b",
+    "bytes": 3460440
+  },
+  {
+    "source": "Fine_magenta_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_magenta_summit_targets.bed",
+    "sha256": "7a338d273356c7d1ad15d94183ea3d866dc3229ea4577927e8ec6566198e8661",
+    "bytes": 39036
+  },
+  {
+    "source": "Fine_midnightblue_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_midnightblue_summit_bg.bed",
+    "sha256": "8690772608e3671ea572ca50ace25c18c57b4729d954cd5de9f1439ce2fddfd6",
+    "bytes": 3487242
+  },
+  {
+    "source": "Fine_midnightblue_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_midnightblue_summit_targets.bed",
+    "sha256": "8296f6930cab26eeb343edfb2f12fd802d660a4aa4e81f6fe03c45eda6f6b39d",
+    "bytes": 12234
+  },
+  {
+    "source": "Fine_P2_specific_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_P2_specific_summit_bg.bed",
+    "sha256": "eb86aff16c87bad4a6422fb2f2cd093fd93dab30aa40d4738d9e0312fd12d806",
+    "bytes": 3250432
+  },
+  {
+    "source": "Fine_P2_specific_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_P2_specific_summit_targets.bed",
+    "sha256": "3c62510e8a9b8cdd7c07841bdee402c1ebf75a6d5006aad2773e1fde7963e629",
+    "bytes": 249044
+  },
+  {
+    "source": "Fine_pink_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_pink_summit_bg.bed",
+    "sha256": "c06a3874768d8b93f66fafc591ccaf897f268e9f468b0ac8b073a76bdf668351",
+    "bytes": 3452956
+  },
+  {
+    "source": "Fine_pink_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_pink_summit_targets.bed",
+    "sha256": "0f286cfbe6cacd1a9a6dd2e7e447c3c8d6fcf7bc33f87e2f2f74c7935066c256",
+    "bytes": 46520
+  },
+  {
+    "source": "Fine_purple_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_purple_summit_bg.bed",
+    "sha256": "04d3bb1c4e7cff05f51bb1a393a5c6c1b3849eba94768a18704876c71a89ed3f",
+    "bytes": 3471020
+  },
+  {
+    "source": "Fine_purple_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_purple_summit_targets.bed",
+    "sha256": "7c22dca384b6982e4b80be2fdb4ac864c653b662427337ca6e46249dbefbe490",
+    "bytes": 28456
+  },
+  {
+    "source": "Fine_red_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_red_summit_bg.bed",
+    "sha256": "06a469f5fa06b6e38e414ba6143edf9c0d8a6c451e714ca4879558f1880f888a",
+    "bytes": 3441990
+  },
+  {
+    "source": "Fine_red_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_red_summit_targets.bed",
+    "sha256": "9f2d6d2df6e34ae31c9ef665ccf835b4f066874bec141a9945af8816ed686eb1",
+    "bytes": 57486
+  },
+  {
+    "source": "Fine_salmon_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_salmon_summit_bg.bed",
+    "sha256": "0b8372faa0aade35d9d4daebd8a787e5687bb99a282f1d50fe711853d2c373bc",
+    "bytes": 3482722
+  },
+  {
+    "source": "Fine_salmon_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_salmon_summit_targets.bed",
+    "sha256": "4e10e9395c0acc9e7cc89d463164d37db9aa8b89a67aa9ebafca531f5dee188f",
+    "bytes": 16754
+  },
+  {
+    "source": "Fine_tan_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_tan_summit_bg.bed",
+    "sha256": "2642be0df139325de42ebb17626d13c0f9a5cc4045a92f140ccd6b4350dd9f8f",
+    "bytes": 3479252
+  },
+  {
+    "source": "Fine_tan_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_tan_summit_targets.bed",
+    "sha256": "ddd1a3e884464b01055750afc3af59bc7e4b80c55f7c4f9f9118c2432366979a",
+    "bytes": 20224
+  },
+  {
+    "source": "Fine_turquoise_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_turquoise_summit_bg.bed",
+    "sha256": "ea7c6021cd65fdc5e8d0701c1afc6363a8dfb8cfbd55eb0c59c202df11b07e8f",
+    "bytes": 2483718
+  },
+  {
+    "source": "Fine_turquoise_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_turquoise_summit_targets.bed",
+    "sha256": "c2d18e2adf8e415a6e8cec44bdce0426625a581cb5ea27061c9b6df07af44104",
+    "bytes": 1015758
+  },
+  {
+    "source": "Fine_Weak_late_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_Weak_late_summit_bg.bed",
+    "sha256": "3990d85dab4a5310009b681318dc354a00cf708c22ccbbe2ba1af2b977231579",
+    "bytes": 3237264
+  },
+  {
+    "source": "Fine_Weak_late_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_Weak_late_summit_targets.bed",
+    "sha256": "adb7d01f6b777860afd2839676044de7132505a40f6c2a3aed0d6dea206f99a7",
+    "bytes": 262212
+  },
+  {
+    "source": "Fine_Weak_middle_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_Weak_middle_summit_bg.bed",
+    "sha256": "66c02a7ddf689fbc5ed9a39df0873b95d92655950b2a3e5d22e967489ad3c644",
+    "bytes": 3482270
+  },
+  {
+    "source": "Fine_Weak_middle_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_Weak_middle_summit_targets.bed",
+    "sha256": "cb5e504747f4640496bcdae31c55c95b124301226634f10a4d045159c755ff70",
+    "bytes": 17206
+  },
+  {
+    "source": "Fine_yellow_summit_bg.bed",
+    "file": "data/upstream/HOMER/regions/Fine_yellow_summit_bg.bed",
+    "sha256": "a179ccb4dd9a3e0975f265f5819302d760cafecd53c4df303fc14d073b08856f",
+    "bytes": 3431304
+  },
+  {
+    "source": "Fine_yellow_summit_targets.bed",
+    "file": "data/upstream/HOMER/regions/Fine_yellow_summit_targets.bed",
+    "sha256": "bbf055730ec9e200efb1afe79efaeec2d0fe7362f6282a48cd480882df76fa89",
+    "bytes": 68172
+  },
+  {
+    "source": "Global_randomBG_summit_GCmatched.bed",
+    "file": "data/upstream/HOMER/regions/Global_randomBG_summit_GCmatched.bed",
+    "sha256": "46490b013bb00e32f68f103c9c494f45bce73c21de5d0037a4f8f063715d0c37",
+    "bytes": 25720574
+  },
+  {
+    "source": "GEO_submission.Rmd explicit sample table, lines 3540-3556",
+    "file": "data/upstream/RNA/sample_metadata.csv",
+    "bytes": 1189,
+    "sha256": "582537192395b2b44745960c8b07b3e28cfbf62e35eba3572395a675a78646f8"
+  },
+  {
+    "source": "FASTQ_GEO/Kdm6b_RNA_seq/Kdm6b_sorted_final_15samples.txt",
+    "file": "data/upstream/RNA/featureCounts_final_15samples.txt",
+    "bytes": 22259151,
+    "sha256": "b39b39f25ec119d33aa8a4603c2f07537e0a4b49593c143627ef1b99b3de6306"
+  }
+]

@@ -1,0 +1,110 @@
+{
+  "review_date": "2026-11-05",
+  "individual_PDFs": 16,
+  "combined_PDF_pages": 16,
+  "valid_PDFs": 17,
+  "valid_rendered_previews": 16,
+  "Figure5_manuscript_gene_labels": 33,
+  "Ext7j_mouse_blocks": 6,
+  "Ext7j_section_records": 24,
+  "Ext7j_original_micrometre_summary_rows_verified": true,
+  "heavy_analyses_executed": false,
+  "draft_sha256": {
+    "All_figure_drafts.pdf": "82c073bad4c3efe3fe78616696f663aeecc603e9ef8aab9a6f18ea5de25d16d5",
+    "Extended_Data_Figure_1_draft.pdf": "f2b968681a370097b1cd27fae27ce4d78e76b7db06e12c678344a3154b58574d",
+    "Extended_Data_Figure_2_draft.pdf": "71acf49da4ded202501e7701e62d15c1bf4ec2688bf6888122381d3195120f8f",
+    "Extended_Data_Figure_3_draft.pdf": "05b554b3ab2606020b883396c06a08c246fcc09ad3c9f762534afc49b35fc5fc",
+    "Extended_Data_Figure_4_draft.pdf": "c63b9475c0eb18a5133aa7e992f6e6e5202b0ee8b4a0a761e191749f714d0af8",
+    "Extended_Data_Figure_5_draft.pdf": "faa0fdde24f370b4c36cbc384718de1452bef0d827f8437ebbe4785164469a94",
+    "Extended_Data_Figure_6_draft.pdf": "88ef87907a0e21a5fb045bd4cbed53f6e72439a327d18ad1f7163e8dbb07440a",
+    "Extended_Data_Figure_7_draft.pdf": "6fa1d1798d85a7f1a7bce56b9ea33264e003c3717e2f401b83dee1522acb6228",
+    "Extended_Data_Figure_8_draft.pdf": "5cf322fb0d5e1c1e798f5f3ab058438c948eb984791dcc86bbd077ce41d9407f",
+    "Extended_Data_Figure_9_draft.pdf": "0e777b798bc99aacceb618c8f79ecdd5a0ff0ead24acd7ffa341543f1c442573",
+    "Figure_1_draft.pdf": "f3b1a3bf9358027e5c534d98f56e55d3403762eae298c017f5ea4c5f9ede39f4",
+    "Figure_2_draft.pdf": "84ab299d360ba0cbe66e232cd564fe03029c5a98f769ac9a007be4d36569be35",
+    "Figure_3_draft.pdf": "b5dd22d4ceb29f212eb5337e99c4a0506acde5d9e3ae99229f117816f5f70cb5",
+    "Figure_4_draft.pdf": "6c1f7c9f4f24dcafbb4bca21971303ee3076703cf3b278675e3e1dac3cc192ff",
+    "Figure_5_draft.pdf": "a618485243effe0689cce51e54104c8bfa110ab017a46664aecd58a259ef7f85",
+    "Figure_6_draft.pdf": "021ddd9b4180785305de3b9511a0f651559d833e324b81c0deb4b0812ed1769d",
+    "Figure_7_draft.pdf": "668f6b2f9fa708a625ced5d7f457aa742442e1a6ddbc13da8be994b106e4db93"
+  },
+  "source_files": [
+    {
+      "file": "00_inputs_and_provenance.Rmd",
+      "sha256": "6d610832bb0ac82e2b97e265a2a3dda221d29f3558a900453ed3c4ff9e0cb019"
+    },
+    {
+      "file": "01_WGCNA_checkpoints.Rmd",
+      "sha256": "5c71089d8fb5be4f8505683a22dc99b1d1cf1e8d1eac1520294a7fc0c676f4d6"
+    },
+    {
+      "file": "02_Figures_1_2_modules.Rmd",
+      "sha256": "94d85d02aca681e8ffdcf2864ee2549cf55cd462c5ae4ca0433b589ef029cb30"
+    },
+    {
+      "file": "03_Figure_3_multiome.Rmd",
+      "sha256": "8fa4add90ef61133722a25acafdb1224806165879927230ee4d844d907e173ad"
+    },
+    {
+      "file": "04_Figure_4_integration.Rmd",
+      "sha256": "7e09f7923210171de404157e8039800506a6bc03825b69c3283efbca46c660f9"
+    },
+    {
+      "file": "05_Figure_5_RNA_histology.Rmd",
+      "sha256": "37d68f86043f2ef86ff06ce367bd7ba548eddf53f5dbd37a2ccfcb2f0ec891ce"
+    },
+    {
+      "file": "06_Figure_6_epigenomics.Rmd",
+      "sha256": "5a658860cdbd58301fdd656e72970a1468442b29d4e19c84d39f671259e7099b"
+    },
+    {
+      "file": "07_Figure_6_variants.Rmd",
+      "sha256": "c59a6323679e7ec96fa982e88856c1d50874f3685f641905d3d816bf817b245e"
+    },
+    {
+      "file": "08_Figure_7_enhancer_histology.Rmd",
+      "sha256": "a36b79bc8753f40959f4917dff1a29dbe700f40f6079f84c77fee14dccb411b5"
+    },
+    {
+      "file": "10_manuscript_graphics.Rmd",
+      "sha256": "a0db3e9d848e7eaf24e57837d809212b4ae78587f3410d26d941680580f1718a"
+    },
+    {
+      "file": "11_additional_manuscript_panels.Rmd",
+      "sha256": "ad4ab449be32d1b8d3c88f3dfc255f427dc30554f4fe6b07a006906e8301631e"
+    },
+    {
+      "file": "12_Extended_multiome_heatmaps.Rmd",
+      "sha256": "dd9382b241adb85e1b18142609756457cbe1e87d696ed73ac2e00bb56fd6f961"
+    },
+    {
+      "file": "R/common.R",
+      "sha256": "7497e81eae176b2bf739470b60c44420875a13a26b7e99f0197dbde21ce96811"
+    },
+    {
+      "file": "R/extended_multiome_heatmaps.R",
+      "sha256": "61b47504631700feb440490ac945dc8ca0f6edc5dc264efb5c3b21ac3fbfdc21"
+    },
+    {
+      "file": "R/histology.R",
+      "sha256": "07b52db9bccc82dc1cb43c9592abb96bcc4a570d4065f87344e41bc004218da7"
+    },
+    {
+      "file": "R/integration_trajectories.R",
+      "sha256": "f8df1042206a802c07a292ef82702b38dc0125263cbc4662bf9e537563fb44b1"
+    },
+    {
+      "file": "R/manuscript_style.R",
+      "sha256": "5995d1b6083a957a4477542037c8f527fb7d6a7252ae5079f77c468ddbb24ea3"
+    },
+    {
+      "file": "R/program_summary_saved.R",
+      "sha256": "2a5fa684d1b1c12b504e304ed6e9e9540d09ab08494b64d104aae82d4a8d3216"
+    },
+    {
+      "file": "R/variant_analysis.R",
+      "sha256": "fe03fb30428503aaeeb6bbf264fef46a937bfc7427b2f53f0d7c70a8c4cbd974"
+    }
+  ],
+  "qualification": "Ratings are qualitative visual judgments of the regenerated computational panels, not numerical validation scores. Reserved artwork is excluded from a \"close\" rating; overall figures with mostly reserved content are marked limited. Values were not changed to force agreement with Illustrator artwork."
+}
