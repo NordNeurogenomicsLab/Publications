@@ -48,67 +48,55 @@ Athéna R. Ypsilanti<sup>†,*</sup>, Eirene Markenscoff-Papadimitriou<sup>†,*
 
 ### Primary RNA-seq and chromatin count tables
 
-<table width="100%">
-<thead><tr><th width="40%">File name</th><th width="52%">Contents</th><th width="8%">File</th></tr></thead>
-<tbody>
-<tr><td><code>featureCounts_final_15samples.txt</code></td><td>Kdm6b cKO and WT bulk RNA-seq gene counts and feature lengths (15 libraries)</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320512459" title="data/upstream/RNA/featureCounts_final_15samples.txt">File</a></td></tr>
-<tr><td><code>hac_overlap_peaks_merged-mm10.tsv</code></td><td>Developmental H3K27ac ChIP-seq peak-by-sample counts</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575362263134" title="data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv">File</a></td></tr>
-<tr><td><code>htk_overlap_peaks_merged-mm10.tsv</code></td><td>Developmental H3K27me3 ChIP-seq peak-by-sample counts</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575366744761" title="data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv">File</a></td></tr>
-<tr><td><code>atac_idr_peaks_merged_uniform-mm10.tsv</code></td><td>Developmental ATAC-seq peak-by-sample counts</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575367425504" title="data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv">File</a></td></tr>
-</tbody>
-</table>
+| File name | Contents | Repository |
+|---|---|---|
+| <code>featureCounts_final_</code><br><code>15samples.txt</code> | Kdm6b cKO and WT bulk RNA-seq gene counts and feature lengths (15 libraries) | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320512459 "data/upstream/RNA/featureCounts_final_15samples.txt") |
+| <code>hac_overlap_peaks_merged-</code><br><code>mm10.tsv</code> | Developmental H3K27ac ChIP-seq peak-by-sample counts | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575362263134 "data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv") |
+| <code>htk_overlap_peaks_merged-</code><br><code>mm10.tsv</code> | Developmental H3K27me3 ChIP-seq peak-by-sample counts | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575366744761 "data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv") |
+| <code>atac_idr_peaks_merged_</code><br><code>uniform-mm10.tsv</code> | Developmental ATAC-seq peak-by-sample counts | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575367425504 "data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv") |
 
 Kdm6b cKO chromatin and RNA differential results: [ATAC/ChIP-seq and RNA-seq results](#kdm6b-cko-diffbind-and-rna-seq-results).
 
 ### Metadata
 
-<table width="100%">
-<thead><tr><th width="40%">File name</th><th width="52%">Contents</th><th width="8%">File</th></tr></thead>
-<tbody>
-<tr><td><code>sample_metadata.csv</code></td><td>Bulk RNA library IDs, genotype, litter, sex and FlashTag population</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575361884550" title="data/upstream/RNA/sample_metadata.csv">File</a></td></tr>
-<tr><td><code>sample_metadata.csv</code></td><td>ATAC/ChIP-seq sample metadata and BAM basenames for DiffBind</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320687685" title="data/upstream/diffbind/sample_metadata.csv">File</a></td></tr>
-<tr><td><code>multiome_cell_metadata.csv</code></td><td>Multiome cell identities and annotations</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575321679668" title="data/upstream/multiome/multiome_cell_metadata.csv">File</a></td></tr>
-</tbody>
-</table>
+| File name | Contents | Repository |
+|---|---|---|
+| `sample_metadata.csv` | Bulk RNA library IDs, genotype, litter, sex and FlashTag population | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575361884550 "data/upstream/RNA/sample_metadata.csv") |
+| `sample_metadata.csv` | ATAC/ChIP-seq sample metadata and BAM basenames for DiffBind | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320687685 "data/upstream/diffbind/sample_metadata.csv") |
+| `multiome_cell_metadata.csv` | Multiome cell identities and annotations | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575321679668 "data/upstream/multiome/multiome_cell_metadata.csv") |
 
 ### WGCNA annotations and integrated data
 
-<table width="100%">
-<thead><tr><th width="40%">File name</th><th width="52%">Contents</th><th width="8%">File</th></tr></thead>
-<tbody>
-<tr><td><code>Module_renaming_dictionary.csv</code></td><td>Original module labels mapped to manuscript names</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575359049988" title="data/upstream/Module_renaming_dictionary.csv">File</a></td></tr>
-<tr><td><code>atac_modules.csv</code></td><td>ATAC interval-to-module assignments</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575355675103" title="data/upstream/multiome/atac_modules.csv">File</a></td></tr>
-<tr><td><code>Supp_Table_1_ATAC_master.csv</code></td><td>Final annotated ATAC intervals and modules</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575313834073" title="data/upstream/final_tables/Supp_Table_1_ATAC_master.csv">File</a></td></tr>
-<tr><td><code>Supp_Table_2_AC_master.csv</code></td><td>Final annotated H3K27ac intervals and modules</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575321878803" title="data/upstream/final_tables/Supp_Table_2_AC_master.csv">File</a></td></tr>
-<tr><td><code>Supp_Table_3_ME3_master.csv</code></td><td>Final annotated H3K27me3 intervals and modules</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575315736751" title="data/upstream/final_tables/Supp_Table_3_ME3_master.csv">File</a></td></tr>
-<tr><td><code>Supp_Table_4_WGCNA_interactions_and_Programs.csv</code></td><td>Integrated WGCNA interval interactions and developmental programs</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575312699106" title="data/upstream/final_tables/Supp_Table_4_WGCNA_interactions_and_Programs.csv">File</a></td></tr>
-<tr><td><code>all_overlaps_total_aug_with_Programs.csv</code></td><td>Linked ATAC/AC/ME3 interval catalog with program assignments</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575313800586" title="data/upstream/integration/all_overlaps_total_aug_with_Programs.csv">File</a></td></tr>
-<tr><td><code>AC.linked_peaks.csv</code></td><td>H3K27ac peak-to-gene links and statistics</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575360382339" title="data/upstream/multiome/AC.linked_peaks.csv">File</a></td></tr>
-<tr><td><code>ME3.linked_peaks.csv</code></td><td>H3K27me3 peak-to-gene links and statistics</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575360900035" title="data/upstream/multiome/ME3.linked_peaks.csv">File</a></td></tr>
-<tr><td><code>network_nodes.csv</code></td><td>Integrated module-network node annotations</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575360585769" title="data/upstream/network_nodes.csv">File</a></td></tr>
-<tr><td><code>network_edges.csv</code></td><td>Integrated module-network connections</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575366835464" title="data/upstream/network_edges.csv">File</a></td></tr>
-<tr><td><code>4f_Program_counts.csv</code></td><td>Counts assigned to each integrated developmental program</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575361211869" title="data/source_tables/Fig4_KC/4f_Program_counts.csv">File</a></td></tr>
-<tr><td><code>4f_Quantized_trajectories.csv</code></td><td>Quantized ATAC/AC/ME3 program trajectories</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575360362045" title="data/source_tables/Fig4_KC/4f_Quantized_trajectories.csv">File</a></td></tr>
-</tbody>
-</table>
+| File name | Contents | Repository |
+|---|---|---|
+| <code>Module_renaming_</code><br><code>dictionary.csv</code> | Original module labels mapped to manuscript names | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575359049988 "data/upstream/Module_renaming_dictionary.csv") |
+| `atac_modules.csv` | ATAC interval-to-module assignments | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575355675103 "data/upstream/multiome/atac_modules.csv") |
+| `Supp_Table_1_ATAC_master.csv` | Final annotated ATAC intervals and modules | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575313834073 "data/upstream/final_tables/Supp_Table_1_ATAC_master.csv") |
+| `Supp_Table_2_AC_master.csv` | Final annotated H3K27ac intervals and modules | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575321878803 "data/upstream/final_tables/Supp_Table_2_AC_master.csv") |
+| `Supp_Table_3_ME3_master.csv` | Final annotated H3K27me3 intervals and modules | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575315736751 "data/upstream/final_tables/Supp_Table_3_ME3_master.csv") |
+| <code>Supp_Table_4_WGCNA_</code><br><code>interactions_and_</code><br><code>Programs.csv</code> | Integrated WGCNA interval interactions and developmental programs | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575312699106 "data/upstream/final_tables/Supp_Table_4_WGCNA_interactions_and_Programs.csv") |
+| <code>all_overlaps_total_aug_with_</code><br><code>Programs.csv</code> | Linked ATAC/AC/ME3 interval catalog with program assignments | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575313800586 "data/upstream/integration/all_overlaps_total_aug_with_Programs.csv") |
+| `AC.linked_peaks.csv` | H3K27ac peak-to-gene links and statistics | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575360382339 "data/upstream/multiome/AC.linked_peaks.csv") |
+| `ME3.linked_peaks.csv` | H3K27me3 peak-to-gene links and statistics | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575360900035 "data/upstream/multiome/ME3.linked_peaks.csv") |
+| `network_nodes.csv` | Integrated module-network node annotations | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575360585769 "data/upstream/network_nodes.csv") |
+| `network_edges.csv` | Integrated module-network connections | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575366835464 "data/upstream/network_edges.csv") |
+| `4f_Program_counts.csv` | Counts assigned to each integrated developmental program | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575361211869 "data/source_tables/Fig4_KC/4f_Program_counts.csv") |
+| <code>4f_Quantized_</code><br><code>trajectories.csv</code> | Quantized ATAC/AC/ME3 program trajectories | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575360362045 "data/source_tables/Fig4_KC/4f_Quantized_trajectories.csv") |
 
 ### Kdm6b cKO DiffBind and RNA-seq results
 
 These are derived statistical results; the chromatin tables also retain per-sample signal columns. They are not raw read-count matrices.
 
-<table width="100%">
-<thead><tr><th width="40%">File name</th><th width="52%">Contents</th><th width="8%">File</th></tr></thead>
-<tbody>
-<tr><td><code>Ac_FTneg_Modality_H3K27Ac_<br>PeakSet_ac_expand_bed_5000_<br>Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv</code></td><td>H3K27ac Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-negative cells</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575319214240" title="data/upstream/final_tables/Ac_FTneg_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv">File</a></td></tr>
-<tr><td><code>Ac_FTpos_Modality_H3K27Ac_<br>PeakSet_ac_expand_bed_5000_<br>Condition_FlashtagPos__genotype_DBA_DESEQ2.csv</code></td><td>H3K27ac Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-positive cells</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320037788" title="data/upstream/final_tables/Ac_FTpos_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv">File</a></td></tr>
-<tr><td><code>ATAC_FTneg_Modality_ATAC_<br>PeakSet_atac_expand_bed_5000_<br>Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv</code></td><td>ATAC Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-negative cells</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575311270143" title="data/upstream/final_tables/ATAC_FTneg_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv">File</a></td></tr>
-<tr><td><code>ATAC_FTpos_Modality_ATAC_<br>PeakSet_atac_expand_bed_5000_<br>Condition_FlashtagPos__genotype_DBA_DESEQ2.csv</code></td><td>ATAC Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-positive cells</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575321875790" title="data/upstream/final_tables/ATAC_FTpos_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv">File</a></td></tr>
-<tr><td><code>H3K27Me3_FTneg_Modality_H3K27Me3_<br>PeakSet_me3_expand_bed_5000_<br>Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv</code></td><td>H3K27me3 Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-negative cells</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575311414133" title="data/upstream/final_tables/H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv">File</a></td></tr>
-<tr><td><code>H3K27Me3_FTpos_Modality_H3K27Me3_<br>PeakSet_me3_expand_bed_5000_<br>Condition_FlashtagPos__genotype_DBA_DESEQ2.csv</code></td><td>H3K27me3 Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-positive cells</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575311219711" title="data/upstream/final_tables/H3K27Me3_FTpos_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv">File</a></td></tr>
-<tr><td><code>VZ_wt_vs_mut_DE_Litter_Sex_cor.csv</code></td><td>VZ Kdm6b cKO versus WT RNA-seq differential expression, adjusted for litter and sex</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575366734159" title="data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv">File</a></td></tr>
-<tr><td><code>nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv</code></td><td>nonVZ Kdm6b cKO versus WT RNA-seq differential expression, adjusted for litter and sex</td><td><a href="https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575361031850" title="data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv">File</a></td></tr>
-</tbody>
-</table>
+| File name | Contents | Repository |
+|---|---|---|
+| <code>Ac_FTneg_Modality_H3K27Ac_</code><br><code>PeakSet_ac_expand_bed_5000_</code><br><code>Condition_FlashtagNeg__</code><br><code>genotype_DBA_DESEQ2.csv</code> | H3K27ac Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-negative cells | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575319214240 "data/upstream/final_tables/Ac_FTneg_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv") |
+| <code>Ac_FTpos_Modality_H3K27Ac_</code><br><code>PeakSet_ac_expand_bed_5000_</code><br><code>Condition_FlashtagPos__</code><br><code>genotype_DBA_DESEQ2.csv</code> | H3K27ac Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-positive cells | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320037788 "data/upstream/final_tables/Ac_FTpos_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv") |
+| <code>ATAC_FTneg_Modality_ATAC_</code><br><code>PeakSet_atac_expand_bed_</code><br><code>5000_Condition_FlashtagNeg__</code><br><code>genotype_DBA_DESEQ2.csv</code> | ATAC Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-negative cells | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575311270143 "data/upstream/final_tables/ATAC_FTneg_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv") |
+| <code>ATAC_FTpos_Modality_ATAC_</code><br><code>PeakSet_atac_expand_bed_</code><br><code>5000_Condition_FlashtagPos__</code><br><code>genotype_DBA_DESEQ2.csv</code> | ATAC Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-positive cells | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575321875790 "data/upstream/final_tables/ATAC_FTpos_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv") |
+| <code>H3K27Me3_FTneg_Modality_</code><br><code>H3K27Me3_PeakSet_me3_expand_</code><br><code>bed_5000_Condition_</code><br><code>FlashtagNeg__genotype_DBA_</code><br><code>DESEQ2.csv</code> | H3K27me3 Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-negative cells | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575311414133 "data/upstream/final_tables/H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv") |
+| <code>H3K27Me3_FTpos_Modality_</code><br><code>H3K27Me3_PeakSet_me3_expand_</code><br><code>bed_5000_Condition_</code><br><code>FlashtagPos__genotype_DBA_</code><br><code>DESEQ2.csv</code> | H3K27me3 Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-positive cells | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575311219711 "data/upstream/final_tables/H3K27Me3_FTpos_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv") |
+| <code>VZ_wt_vs_mut_DE_Litter_Sex_</code><br><code>cor.csv</code> | VZ Kdm6b cKO versus WT RNA-seq differential expression, adjusted for litter and sex | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575366734159 "data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv") |
+| <code>nonVZ_wt_vs_mut_DE_Litter_</code><br><code>Sex_cor.csv</code> | nonVZ Kdm6b cKO versus WT RNA-seq differential expression, adjusted for litter and sex | [File](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575361031850 "data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv") |
 
 Other figure-level tables, IHC/thickness measurements and saved-object references: [Source_tables](SOURCE_TABLES.md).
 
