@@ -10,20 +10,20 @@ Download the Box release, then merge its `data/` and `objects/` directories into
 
 | Input | Exact location | Meaning |
 |---|---|---|
-| Developmental ATAC intervals | `data/upstream/final_tables/Supp_Table_1_ATAC_master.csv` | Final annotated peak/module catalog, not raw sequencing reads |
-| Developmental H3K27ac intervals | `data/upstream/final_tables/Supp_Table_2_AC_master.csv` | Final H3K27ac catalog |
-| Developmental H3K27me3 intervals | `data/upstream/final_tables/Supp_Table_3_ME3_master.csv` | Final H3K27me3 catalog |
+| Developmental ATAC intervals | [`data/upstream/final_tables/Supp_Table_1_ATAC_master.csv`](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575313834073) | Final annotated peak/module catalog, not raw sequencing reads |
+| Developmental H3K27ac intervals | [`data/upstream/final_tables/Supp_Table_2_AC_master.csv`](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575321878803) | Final H3K27ac catalog |
+| Developmental H3K27me3 intervals | [`data/upstream/final_tables/Supp_Table_3_ME3_master.csv`](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575315736751) | Final H3K27me3 catalog |
 | Original WGCNA raw counts | `data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv`, `hac_overlap_peaks_merged-mm10.tsv`, `htk_overlap_peaks_merged-mm10.tsv` | Original peak-by-sample count tables for optional WGCNA fitting; copied from the project WGCNA_input_data folder |
-| Merged histone input checkpoints | `data/upstream/WGCNA/WGCNA_input_data/data_h3k27ac_merged_by_1kb.RData`, `data_h3k27me3_merged_by_1kb.RData` | Archived intermediate count objects; not replacements for the raw TSVs without checking their schemas |
+| Merged histone input checkpoints | [`data/upstream/WGCNA/WGCNA_input_data/data_h3k27ac_merged_by_1kb.RData`](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575316869726), [`data_h3k27me3_merged_by_1kb.RData`](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320438770) | Archived intermediate count objects; not replacements for the raw TSVs without checking their schemas |
 | Fitted WGCNA networks | `data/upstream/WGCNA/WGCNA_objects/*.Rds` | Three saved networks loaded by notebook 01 |
-| Bulk RNA featureCounts | `data/upstream/RNA/featureCounts_final_15samples.txt` | Original counts and feature lengths for 15 libraries; retained provenance input, not a new DE model fit |
+| Bulk RNA featureCounts | [`data/upstream/RNA/featureCounts_final_15samples.txt`](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320512459) | Original counts and feature lengths for 15 libraries; retained provenance input, not a new DE model fit |
 | Bulk RNA sample sheet | `data/upstream/RNA/sample_metadata.csv` | Library IDs, genotype, litter, sex and FlashTag population |
 | Bulk RNA DE, VZ | `data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv` | Original model result table |
 | Bulk RNA DE, nonVZ | `data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv` | Original model result table |
 | Multiome pseudobulk counts | `data/upstream/multiome/RNA_pseudobulk_counts.csv`, `intervals_pseudobulk_counts.csv` | Aggregated count matrices for optional VST/PCA |
 | Multiome module definitions | `data/upstream/multiome/atac_modules.csv` | Interval-to-module mapping |
 | AC / ME3 peak-to-gene links | `data/upstream/multiome/AC.linked_peaks.csv`, `ME3.linked_peaks.csv` | Saved assay-specific links |
-| DiffBind samples | `data/upstream/diffbind/sample_metadata.csv` | BAM basenames and contrast metadata; BAM files themselves are external |
+| DiffBind samples | [`data/upstream/diffbind/sample_metadata.csv`](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320687685) | BAM basenames and contrast metadata; BAM files themselves are external |
 | Differential peak tables | `data/upstream/final_tables/*Flashtag*DBA_DESEQ2.csv` | Saved ATAC/AC/ME3 statistics by FlashTag population |
 | Numerical figure tables | `data/source_tables/<figure>/*.csv` | Clean exports of manuscript source-data worksheets |
 | Histology measurement grids | `data/raw_sheets/<figure>/*.csv` | Original irregular worksheet grids parsed by `R/histology.R` |

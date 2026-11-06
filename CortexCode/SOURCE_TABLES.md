@@ -135,37 +135,37 @@ Figure-level plotting tables, original measurement grids and supporting derived 
 
 | File name | Contents | Repository |
 |---|---|---|
-| <code>1c_AC_TSS.csv</code> | Extended_Fig1: AC TSS | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig1_KC/1c_AC_TSS.csv") |
-| <code>1c_ATAC_TSS.csv</code> | Extended_Fig1: ATAC TSS | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig1_KC/1c_ATAC_TSS.csv") |
-| <code>1c_ME3_TSS.csv</code> | Extended_Fig1: ME3 TSS | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig1_KC/1c_ME3_TSS.csv") |
-| <code>1d_AC_widths.csv</code> | Extended_Fig1: AC widths | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig1_KC/1d_AC_widths.csv") |
-| <code>1d_ME3_widths.csv</code> | Extended_Fig1: ME3 widths | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig1_KC/1d_ME3_widths.csv") |
-| <code>1e_Significant_intervals.csv</code> | Extended_Fig1: Significant intervals | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig1_KC/1e_Significant_intervals.csv") |
-| <code>1f_Significant_intervals.csv</code> | Extended_Fig1: Significant intervals | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig1_KC/1f_Significant_intervals.csv") |
-| <code>5d_ATAC_cluster_means.csv</code> | Extended_Fig5: ATAC cluster means | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig5_KC/5d_ATAC_cluster_means.csv") |
-| <code>5i_Marker_results.csv</code> | Extended_Fig5: Marker results | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig5_KC/5i_Marker_results.csv") |
-| <code>5k_Marker_results.csv</code> | Extended_Fig5: Marker results | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig5_KC/5k_Marker_results.csv") |
-| <code>5l_Significant_DA_</code><br><code>intervals.csv</code> | Extended_Fig5: Significant DA intervals | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig5_KC/5l_Significant_DA_intervals.csv") |
-| <code>8e_ac_FTneg.csv</code> | Extended_Fig8: ac FTneg | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig8_KC/8e_ac_FTneg.csv") |
-| <code>8e_ac_FTpos.csv</code> | Extended_Fig8: ac FTpos | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig8_KC/8e_ac_FTpos.csv") |
-| <code>8e_atac_FTneg.csv</code> | Extended_Fig8: atac FTneg | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig8_KC/8e_atac_FTneg.csv") |
-| <code>8e_atac_FTpos.csv</code> | Extended_Fig8: atac FTpos | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig8_KC/8e_atac_FTpos.csv") |
-| <code>8e_me3_FTneg.csv</code> | Extended_Fig8: me3 FTneg | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig8_KC/8e_me3_FTneg.csv") |
-| <code>8e_me3_FTpos.csv</code> | Extended_Fig8: me3 FTpos | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig8_KC/8e_me3_FTpos.csv") |
-| <code>8g_GO_all_terms.csv</code> | Extended_Fig8: GO all terms | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Extended_Fig8_KC/8g_GO_all_terms.csv") |
-| <code>1c1.csv</code> | Fig1: 1c1 | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig1_KC/1c1.csv") |
-| <code>c3_Peak_annotations.csv</code> | Fig1: c3 Peak annotations | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig1_KC/c3_Peak_annotations.csv") |
-| <code>d3_Peak_annotations.csv</code> | Fig1: d3 Peak annotations | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig1_KC/d3_Peak_annotations.csv") |
-| <code>e3_Peak_annotations.csv</code> | Fig1: e3 Peak annotations | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig1_KC/e3_Peak_annotations.csv") |
-| <code>3_Module_peak_membership.csv</code> | Fig3: Module peak membership | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig3_KC/3_Module_peak_membership.csv") |
-| <code>3bc_Cell_module_scores.csv</code> | Fig3: Cell module scores | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig3_KC/3bc_Cell_module_scores.csv") |
-| <code>3d_Cell_module_scores.csv</code> | Fig3: Cell module scores | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig3_KC/3d_Cell_module_scores.csv") |
-| <code>3d_Heatmap_values.csv</code> | Fig3: Heatmap values | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig3_KC/3d_Heatmap_values.csv") |
-| <code>5c_VZ_RNA_DE.csv</code> | Fig5: VZ RNA DE | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig5_KC/5c_VZ_RNA_DE.csv") |
-| <code>5c_nonVZ_RNA_DE.csv</code> | Fig5: nonVZ RNA DE | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig5_KC/5c_nonVZ_RNA_DE.csv") |
-| <code>6c_ME3_FTneg.csv</code> | Fig6: ME3 FTneg | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig6_KC/6c_ME3_FTneg.csv") |
-| <code>6c_ME3_FTpos.csv</code> | Fig6: ME3 FTpos | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig6_KC/6c_ME3_FTpos.csv") |
-| <code>6d_GO_all_terms.csv</code> | Fig6: GO all terms | [Box](https://ucdavis.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s "data/source_tables/Fig6_KC/6d_GO_all_terms.csv") |
+| <code>1c_AC_TSS.csv</code> | Extended_Fig1: AC TSS | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575309213357 "data/source_tables/Extended_Fig1_KC/1c_AC_TSS.csv") |
+| <code>1c_ATAC_TSS.csv</code> | Extended_Fig1: ATAC TSS | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575315635943 "data/source_tables/Extended_Fig1_KC/1c_ATAC_TSS.csv") |
+| <code>1c_ME3_TSS.csv</code> | Extended_Fig1: ME3 TSS | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575314129516 "data/source_tables/Extended_Fig1_KC/1c_ME3_TSS.csv") |
+| <code>1d_AC_widths.csv</code> | Extended_Fig1: AC widths | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575312359759 "data/source_tables/Extended_Fig1_KC/1d_AC_widths.csv") |
+| <code>1d_ME3_widths.csv</code> | Extended_Fig1: ME3 widths | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575314988044 "data/source_tables/Extended_Fig1_KC/1d_ME3_widths.csv") |
+| <code>1e_Significant_intervals.csv</code> | Extended_Fig1: Significant intervals | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575315941544 "data/source_tables/Extended_Fig1_KC/1e_Significant_intervals.csv") |
+| <code>1f_Significant_intervals.csv</code> | Extended_Fig1: Significant intervals | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575318158040 "data/source_tables/Extended_Fig1_KC/1f_Significant_intervals.csv") |
+| <code>5d_ATAC_cluster_means.csv</code> | Extended_Fig5: ATAC cluster means | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575315771150 "data/source_tables/Extended_Fig5_KC/5d_ATAC_cluster_means.csv") |
+| <code>5i_Marker_results.csv</code> | Extended_Fig5: Marker results | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575311176873 "data/source_tables/Extended_Fig5_KC/5i_Marker_results.csv") |
+| <code>5k_Marker_results.csv</code> | Extended_Fig5: Marker results | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575312662664 "data/source_tables/Extended_Fig5_KC/5k_Marker_results.csv") |
+| <code>5l_Significant_DA_</code><br><code>intervals.csv</code> | Extended_Fig5: Significant DA intervals | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575313750186 "data/source_tables/Extended_Fig5_KC/5l_Significant_DA_intervals.csv") |
+| <code>8e_ac_FTneg.csv</code> | Extended_Fig8: ac FTneg | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575316221530 "data/source_tables/Extended_Fig8_KC/8e_ac_FTneg.csv") |
+| <code>8e_ac_FTpos.csv</code> | Extended_Fig8: ac FTpos | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575316888899 "data/source_tables/Extended_Fig8_KC/8e_ac_FTpos.csv") |
+| <code>8e_atac_FTneg.csv</code> | Extended_Fig8: atac FTneg | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320750146 "data/source_tables/Extended_Fig8_KC/8e_atac_FTneg.csv") |
+| <code>8e_atac_FTpos.csv</code> | Extended_Fig8: atac FTpos | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575319710893 "data/source_tables/Extended_Fig8_KC/8e_atac_FTpos.csv") |
+| <code>8e_me3_FTneg.csv</code> | Extended_Fig8: me3 FTneg | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320381483 "data/source_tables/Extended_Fig8_KC/8e_me3_FTneg.csv") |
+| <code>8e_me3_FTpos.csv</code> | Extended_Fig8: me3 FTpos | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575312146320 "data/source_tables/Extended_Fig8_KC/8e_me3_FTpos.csv") |
+| <code>8g_GO_all_terms.csv</code> | Extended_Fig8: GO all terms | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575318257546 "data/source_tables/Extended_Fig8_KC/8g_GO_all_terms.csv") |
+| <code>1c1.csv</code> | Fig1: 1c1 | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320239208 "data/source_tables/Fig1_KC/1c1.csv") |
+| <code>c3_Peak_annotations.csv</code> | Fig1: c3 Peak annotations | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575313919912 "data/source_tables/Fig1_KC/c3_Peak_annotations.csv") |
+| <code>d3_Peak_annotations.csv</code> | Fig1: d3 Peak annotations | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320687666 "data/source_tables/Fig1_KC/d3_Peak_annotations.csv") |
+| <code>e3_Peak_annotations.csv</code> | Fig1: e3 Peak annotations | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575321770336 "data/source_tables/Fig1_KC/e3_Peak_annotations.csv") |
+| <code>3_Module_peak_membership.csv</code> | Fig3: Module peak membership | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575316390206 "data/source_tables/Fig3_KC/3_Module_peak_membership.csv") |
+| <code>3bc_Cell_module_scores.csv</code> | Fig3: Cell module scores | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575319857450 "data/source_tables/Fig3_KC/3bc_Cell_module_scores.csv") |
+| <code>3d_Cell_module_scores.csv</code> | Fig3: Cell module scores | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575310718111 "data/source_tables/Fig3_KC/3d_Cell_module_scores.csv") |
+| <code>3d_Heatmap_values.csv</code> | Fig3: Heatmap values | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575314981197 "data/source_tables/Fig3_KC/3d_Heatmap_values.csv") |
+| <code>5c_VZ_RNA_DE.csv</code> | Fig5: VZ RNA DE | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575310361446 "data/source_tables/Fig5_KC/5c_VZ_RNA_DE.csv") |
+| <code>5c_nonVZ_RNA_DE.csv</code> | Fig5: nonVZ RNA DE | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575317184252 "data/source_tables/Fig5_KC/5c_nonVZ_RNA_DE.csv") |
+| <code>6c_ME3_FTneg.csv</code> | Fig6: ME3 FTneg | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575313845567 "data/source_tables/Fig6_KC/6c_ME3_FTneg.csv") |
+| <code>6c_ME3_FTpos.csv</code> | Fig6: ME3 FTpos | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575320632635 "data/source_tables/Fig6_KC/6c_ME3_FTpos.csv") |
+| <code>6d_GO_all_terms.csv</code> | Fig6: GO all terms | [Box](https://ucdavis.app.box.com/s/jrmg33n2dcljxadenvx47ji8c6azg02s/file/2575322539068 "data/source_tables/Fig6_KC/6d_GO_all_terms.csv") |
 
 ## Saved R objects
 

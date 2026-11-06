@@ -15,5 +15,10 @@
   "password_required": false,
   "expiry_reported": false,
   "anonymous_download_file": "RELEASE_MANIFEST.csv",
-  "anonymous_download_sha256": "1b5308899d917fcb65376761974871d8dff291b722779fd7d4d451ac809f5a78"
+  "anonymous_download_sha256": "1b5308899d917fcb65376761974871d8dff291b722779fd7d4d451ac809f5a78",
+  "file_specific_links": 308,
+  "anonymous_file_views_tested": [
+    "data/upstream/diffbind/sample_metadata.csv",
+    "objects/Fig3/exact_V2_cache.rds"
+  ]
 }
