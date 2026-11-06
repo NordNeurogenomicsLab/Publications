@@ -8,7 +8,7 @@ Athéna R. Ypsilanti<sup>†,*</sup>, Eirene Markenscoff-Papadimitriou<sup>†,*
 
 \* Corresponding authors: Athéna R. Ypsilanti, Eirene Markenscoff-Papadimitriou, Alex S. Nord and John Rubenstein.
 
-## Analysis scripts
+## Figure and analysis notebooks
 
 | Notebook | Contents |
 |---|---|
@@ -25,4 +25,17 @@ Athéna R. Ypsilanti<sup>†,*</sup>, Eirene Markenscoff-Papadimitriou<sup>†,*
 | [11_additional_manuscript_panels.Rmd](11_additional_manuscript_panels.Rmd) | Additional computational panels |
 | [12_Extended_multiome_heatmaps.Rmd](12_Extended_multiome_heatmaps.Rmd) | Extended Data multiome heatmaps |
 
-Supporting scripts: [R/](R/) and [pipeline/](pipeline/).
+## Upstream pipeline notebooks
+
+| Notebook | Contents |
+|---|---|
+| [00_sequencing_inputs.Rmd](pipeline/00_sequencing_inputs.Rmd) | Sequencing inputs and processing records |
+| [01_WGCNA_network_generation.Rmd](pipeline/01_WGCNA_network_generation.Rmd) | WGCNA network generation |
+| [02_module_annotation.Rmd](pipeline/02_module_annotation.Rmd) | Module refinement and manuscript nomenclature |
+| [03_multiome_module_scores.Rmd](pipeline/03_multiome_module_scores.Rmd) | Multiome accessibility and linked-gene scores |
+| [04_integration_trajectories.Rmd](pipeline/04_integration_trajectories.Rmd) | Chromatin integration and developmental trajectories |
+| [05_RNA_and_pseudobulk.Rmd](pipeline/05_RNA_and_pseudobulk.Rmd) | RNA results and pseudobulk PCA |
+| [06_epigenomic_statistics.Rmd](pipeline/06_epigenomic_statistics.Rmd) | Differential chromatin statistics and enrichment |
+| [07_variant_enrichment.Rmd](pipeline/07_variant_enrichment.Rmd) | Balanced variant enrichment |
+
+Shared R functions: [R/](R/).
