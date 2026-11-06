@@ -290,6 +290,6 @@ panel_registry[["Ext6/6b_saved_UMAPs"]] <- data.frame(
   width = NA_real_,
   height = NA_real_
 )
-finish_notebook("11")
+finish_notebook("10")
 sessionInfo()
 ```

@@ -538,7 +538,7 @@ export_panel(
 
 ## Extended Figure 5d: available ATAC means
 
-Use five equal-height module strips in manuscript order and the blue/cyan/cream/yellow/red scale. Every saved interval is retained. The explicit display ordering and scaling are documented in notebook 12; the large A1 block does not undergo a new expensive clustering.
+Use five equal-height module strips in manuscript order and the blue/cyan/cream/yellow/red scale. Every saved interval is retained. The explicit display ordering and scaling are documented in notebook 11; the large A1 block does not undergo a new expensive clustering.
 
 ```{r extended-figure-5d-available-atac-means-8}
 plot_extended_atac_mean_heatmap(

@@ -66,15 +66,15 @@
       "sha256": "a36b79bc8753f40959f4917dff1a29dbe700f40f6079f84c77fee14dccb411b5"
     },
     {
-      "file": "10_manuscript_graphics.Rmd",
+      "file": "09_manuscript_graphics.Rmd",
       "sha256": "a0db3e9d848e7eaf24e57837d809212b4ae78587f3410d26d941680580f1718a"
     },
     {
-      "file": "11_additional_manuscript_panels.Rmd",
+      "file": "10_additional_manuscript_panels.Rmd",
       "sha256": "ad4ab449be32d1b8d3c88f3dfc255f427dc30554f4fe6b07a006906e8301631e"
     },
     {
-      "file": "12_Extended_multiome_heatmaps.Rmd",
+      "file": "11_Extended_multiome_heatmaps.Rmd",
       "sha256": "dd9382b241adb85e1b18142609756457cbe1e87d696ed73ac2e00bb56fd6f961"
     },
     {

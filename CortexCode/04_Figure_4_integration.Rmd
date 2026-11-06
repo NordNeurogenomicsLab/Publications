@@ -2983,7 +2983,7 @@ export_panel(p, "Fig4/4f_quantized_trajectories", 14, 10)
 
 ## Extended Figure 6a and c
 
-Plot all saved TMK3-linked ATAC intervals and selected program heatmaps. Panel a uses explicit row z scores, fixed developmental columns and a complete-linkage display dendrogram, as documented in notebook 12. Panel c uses the stored 1–10 quantized values.
+Plot all saved TMK3-linked ATAC intervals and selected program heatmaps. Panel a uses explicit row z scores, fixed developmental columns and a complete-linkage display dendrogram, as documented in notebook 11. Panel c uses the stored 1–10 quantized values.
 
 ```{r extended-figure-6a-and-c-4}
 plot_extended_atac_mean_heatmap(

@@ -21,9 +21,9 @@ Athéna R. Ypsilanti<sup>†,*</sup>, Eirene Markenscoff-Papadimitriou<sup>†,*
 | [06_Figure_6_epigenomics.Rmd](06_Figure_6_epigenomics.Rmd) | Figure 6: differential chromatin analysis |
 | [07_Figure_6_variants.Rmd](07_Figure_6_variants.Rmd) | Figure 6: variant enrichment |
 | [08_Figure_7_enhancer_histology.Rmd](08_Figure_7_enhancer_histology.Rmd) | Figure 7: enhancer reporters and histology |
-| [10_manuscript_graphics.Rmd](10_manuscript_graphics.Rmd) | Panel styling and exports |
-| [11_additional_manuscript_panels.Rmd](11_additional_manuscript_panels.Rmd) | Additional computational panels |
-| [12_Extended_multiome_heatmaps.Rmd](12_Extended_multiome_heatmaps.Rmd) | Extended Data multiome heatmaps |
+| [09_manuscript_graphics.Rmd](09_manuscript_graphics.Rmd) | Panel styling and exports |
+| [10_additional_manuscript_panels.Rmd](10_additional_manuscript_panels.Rmd) | Additional computational panels |
+| [11_Extended_multiome_heatmaps.Rmd](11_Extended_multiome_heatmaps.Rmd) | Extended Data multiome heatmaps |
 
 ## Upstream pipeline notebooks
 
