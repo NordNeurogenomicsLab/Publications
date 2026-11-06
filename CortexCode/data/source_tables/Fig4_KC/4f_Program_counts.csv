@@ -1,0 +1,19 @@
+Program,Count,Denominator,Percent
+1a. VZ/SVZ decommissioning with repression,2769,157984,1.7527091351022888
+1b. H3K27me3-independent decommissioning,8478,157984,5.366366214300182
+1c. Progressive repression,4718,157984,2.986378367429613
+1d. Activation and derepression of SVZ pREs,2302,157984,1.4571095807170347
+1e. Transient activation of SVZ pREs (H3K27me3 independent),4476,157984,2.8331982985618795
+1f. Repression-dominant,1277,157984,0.808309702248329
+2a. Activation with derepression,3051,157984,1.9312082236175816
+2b. Derepression-led activation,2099,157984,1.3286155560056714
+2c. Progressive activation (H3K27me3-independent),6276,157984,3.9725541827020456
+2d. ATAC/H3K27me3 derepression,1519,157984,0.9614897711160624
+3a. Progressive activation with derepression,5153,157984,3.26172270609682
+3b. Repression of embryonic cell fates,3550,157984,2.247062993720883
+3c. Progressive activation (H3K27me3-independent),3912,157984,2.4762001215312943
+4a. Constitutively active,2895,157984,1.8324640469921005
+4b. Constitutively active / bivalent,3406,157984,2.15591452298967
+4c. ATAC-H3K27ac constitutive,3527,157984,2.2325045574235367
+4d. Progressive derepression (non-cortical brain pREs?),2557,157984,1.618518330970225
+,96019,157984,60.777673688474785

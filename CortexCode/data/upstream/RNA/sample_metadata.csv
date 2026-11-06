@@ -1,0 +1,16 @@
+Sample,Genotype,Cells,Age,Litter,Sex,FlashTag_population,DE_population
+Kdm6b_07minus_mut_S21,Mut,VZ_cells,E14.5,Litter_1,F,FlashTagPositive,VZ
+Kdm6b_07plus_mut_S9,Mut,non_VZ_cells,E14.5,Litter_1,F,FlashTagNegative,nonVZ
+Kdm6b_08minus_mut_S22,Mut,VZ_cells,E14.5,Litter_1,M,FlashTagPositive,VZ
+Kdm6b_08plus_mut_S10,Mut,non_VZ_cells,E14.5,Litter_1,M,FlashTagNegative,nonVZ
+Kdm6b_09minus_wt_S17,WT,VZ_cells,E14.5,Litter_1,F,FlashTagPositive,VZ
+Kdm6b_09plus_wt_S5,WT,non_VZ_cells,E14.5,Litter_1,F,FlashTagNegative,nonVZ
+Kdm6b_14minus_mut_S23,Mut,non_VZ_cells,E14.5,Litter_2,F,FlashTagNegative,nonVZ
+Kdm6b_14plus_mut_S11,Mut,VZ_cells,E14.5,Litter_2,F,FlashTagPositive,VZ
+Kdm6b_15minus_mut_S24,Mut,non_VZ_cells,E14.5,Litter_2,F,FlashTagNegative,nonVZ
+Kdm6b_15plus_mut_S12,Mut,VZ_cells,E14.5,Litter_2,F,FlashTagPositive,VZ
+Kdm6b_18plus_wt_S6,WT,VZ_cells,E14.5,Litter_2,M,FlashTagPositive,VZ
+Kdm6b_19minus_wt_S19,WT,non_VZ_cells,E14.5,Litter_2,F,FlashTagNegative,nonVZ
+Kdm6b_19plus_wt_S7,WT,VZ_cells,E14.5,Litter_2,F,FlashTagPositive,VZ
+Kdm6b_24minus_wt_S20,WT,non_VZ_cells,E14.5,Litter_2,M,FlashTagNegative,nonVZ
+Kdm6b_24plus_wt_S8,WT,VZ_cells,E14.5,Litter_2,M,FlashTagPositive,VZ

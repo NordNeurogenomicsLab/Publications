@@ -1,6 +1,6 @@
 # Analysis data
 
-This folder holds numerical inputs in the local reconstruction delivery. Large data files are excluded from Git.
+Selected numerical inputs are included in GitHub. [TABLES_ON_GITHUB.csv](TABLES_ON_GITHUB.csv) lists deposited files, sizes and SHA-256 checksums. Larger data files remain excluded from Git.
 
 | Subdirectory | Contents |
 |---|---|
@@ -16,4 +16,4 @@ This folder holds numerical inputs in the local reconstruction delivery. Large d
 
 [Exact filenames and input requirements](../INPUTS.md) · [Complete inventory](../config/file_inventory.csv)
 
-The input archive has not yet been linked publicly. These directory names do not imply that the files are downloadable from this GitHub folder.
+Files not listed in TABLES_ON_GITHUB.csv still require a separate input archive.

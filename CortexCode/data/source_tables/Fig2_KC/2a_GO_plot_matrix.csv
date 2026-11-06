@@ -1,0 +1,16 @@
+GO_term,turquoise,tan,cyan,salmon,midnightblue,green,red,brown,yellow,magenta,blue,Weak_late,purple,P2_specific,Constitutive_strong,Constitutive_weak
+cell cycle DNA replication,3.907132,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0
+somatic stem cell population maintenance,2.159376,3.327533,0,0,0,2.08613,2.219961,0,0,0,0,0,0,0,0,1.520725
+apoptotic process involved in development,2.071156,0,5,0,0,0,0,0,0,0,0,0,0,0,0,1.678821
+dendrite extension,1.754314,0,0,5,0,0,0,0,0,0,0,1.98854,0,0,0,1.761367
+forebrain reorganization,2.11674,0,0,4.467433,0,3.873914,0,0,0,0,0,0,0,0,0,1.301804
+neuron differentiation,1.253417,0,0,1.879359,1.778061,1.804286,1.447362,1.513651,1.255528,0,1.225355,1.240244,0,0,0,1.120243
+positive regulation of histone methylation,1.482713,0,0,5,0,0,2.923829,0,0,0,0,1.752078,0,0,0,1.558973
+regulation of axon extension,1.181236,0,0,0,3.927308,2.071179,0,2.012745,0,0,1.539631,1.437793,0,0,0,1.434208
+neuron projection guidance,1.431236,0,0,0,2.910286,2.185588,1.485431,1.811653,0,0,0,1.359473,0,0,0,1.142683
+neuron fate commitment,1.712396,0,0,0,0,2.921291,0,1.417963,0,0,0,0,0,0,0,1.384405
+positive regulation of synaptic plasticity,0,0,0,0,0,0,5,0,5,0,4.346404,0,0,0,0,2.011502
+positive regulation of axon guidance,0,5,0,0,0,0,0,3.197867,3.767923,0,0,2.09217,0,0,0,0
+regulation of ion transmembrane transport,0,0,0,0,0,0,0,0,0,1.703204,1.434381,1.163843,0,1.412838,0,1.192676
+negative regulation of cell division,1.362875,0,0,0,0,0,0,0,0,0,1.691108,1.965317,5,0,0,0
+regulation of calcium ion import,0,0,0,0,0,0,0,0,0,0,1.606787,1.358053,0,1.680425,0,1.290262

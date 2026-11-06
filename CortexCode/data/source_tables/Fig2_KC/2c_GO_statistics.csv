@@ -1,0 +1,631 @@
+name,Fine_cluster,FE,adjp
+anterior/posterior pattern specification,Constitutive_medium,2.137469,3.61879837407407e-08
+anterior/posterior pattern specification,Constitutive_strong,1.802869,0.0049748368108108
+anterior/posterior pattern specification,Constitutive_weak,1.457293,1.08515376129032e-05
+anterior/posterior pattern specification,Weak_late,2.306515,1.35416148421053e-14
+anterior/posterior pattern specification,black,1.014819,1
+anterior/posterior pattern specification,blue,1.494757,0.00390011875
+anterior/posterior pattern specification,brown,1.574058,0.0013741317454976
+anterior/posterior pattern specification,cyan,1.858558,1
+anterior/posterior pattern specification,darkgreen,0,1
+anterior/posterior pattern specification,darkgrey,0.8614962,1
+anterior/posterior pattern specification,darkorange,0.9040392,1
+anterior/posterior pattern specification,darkred,2.112322,1
+anterior/posterior pattern specification,darkturquoise,0.7959476,1
+anterior/posterior pattern specification,green,2.267734,6.6638497625e-06
+anterior/posterior pattern specification,greenyellow,4.106197,8.02771963063063e-05
+anterior/posterior pattern specification,grey,1.046476,0.660572779315961
+anterior/posterior pattern specification,grey60,0.9153397,1
+anterior/posterior pattern specification,lightcyan,2.962949,0.80822943313253
+anterior/posterior pattern specification,lightgreen,0.4724334,1
+anterior/posterior pattern specification,lightyellow,1.084847,1
+anterior/posterior pattern specification,magenta,0.8201444,1
+anterior/posterior pattern specification,midnightblue,3.414739,0.215424748
+anterior/posterior pattern specification,orange,0,1
+anterior/posterior pattern specification,pink,3.884731,1.09227363e-15
+anterior/posterior pattern specification,purple,1.084847,1
+anterior/posterior pattern specification,red,1.576418,0.20012341835536
+anterior/posterior pattern specification,royalblue,2.525075,1
+anterior/posterior pattern specification,saddlebrown,1.435827,1
+anterior/posterior pattern specification,salmon,0.6974017,1
+anterior/posterior pattern specification,skyblue,0,1
+anterior/posterior pattern specification,steelblue,0,1
+anterior/posterior pattern specification,tan,1.637669,1
+anterior/posterior pattern specification,turquoise,1.459065,1.80963328333333e-07
+anterior/posterior pattern specification,white,0.93881,1
+anterior/posterior pattern specification,yellow,1.191594,0.905628692921687
+fibroblast growth factor receptor signaling pathway,Constitutive_medium,0.7106475,1
+fibroblast growth factor receptor signaling pathway,Constitutive_strong,1.084026,1
+fibroblast growth factor receptor signaling pathway,Constitutive_weak,1.18025,0.520164233826754
+fibroblast growth factor receptor signaling pathway,Weak_late,0.8611483,1
+fibroblast growth factor receptor signaling pathway,black,1.69809,0.776294007646277
+fibroblast growth factor receptor signaling pathway,blue,1.01111,1
+fibroblast growth factor receptor signaling pathway,brown,0.8281408,1
+fibroblast growth factor receptor signaling pathway,cyan,0,1
+fibroblast growth factor receptor signaling pathway,darkgreen,2.511415,1
+fibroblast growth factor receptor signaling pathway,darkgrey,0,1
+fibroblast growth factor receptor signaling pathway,darkorange,0,1
+fibroblast growth factor receptor signaling pathway,darkred,7.461799,0.562340668702703
+fibroblast growth factor receptor signaling pathway,darkturquoise,2.811692,1
+fibroblast growth factor receptor signaling pathway,green,1.893459,0.255805611111111
+fibroblast growth factor receptor signaling pathway,greenyellow,1.611687,1
+fibroblast growth factor receptor signaling pathway,grey,0.8625604,1
+fibroblast growth factor receptor signaling pathway,grey60,1.616723,1
+fibroblast growth factor receptor signaling pathway,lightcyan,0,1
+fibroblast growth factor receptor signaling pathway,lightgreen,0,1
+fibroblast growth factor receptor signaling pathway,lightyellow,1.916116,1
+fibroblast growth factor receptor signaling pathway,magenta,0.8277622,1
+fibroblast growth factor receptor signaling pathway,midnightblue,8.041731,0.05590988528125
+fibroblast growth factor receptor signaling pathway,orange,6.309163,1
+fibroblast growth factor receptor signaling pathway,pink,1.600999,1
+fibroblast growth factor receptor signaling pathway,purple,1.916116,1
+fibroblast growth factor receptor signaling pathway,red,1.796359,0.513834282632667
+fibroblast growth factor receptor signaling pathway,royalblue,0,1
+fibroblast growth factor receptor signaling pathway,saddlebrown,0,1
+fibroblast growth factor receptor signaling pathway,salmon,0,1
+fibroblast growth factor receptor signaling pathway,skyblue,0,1
+fibroblast growth factor receptor signaling pathway,steelblue,0,1
+fibroblast growth factor receptor signaling pathway,tan,0,1
+fibroblast growth factor receptor signaling pathway,turquoise,0.770162,1
+fibroblast growth factor receptor signaling pathway,white,0,1
+fibroblast growth factor receptor signaling pathway,yellow,0.789247,1
+hindbrain development,Constitutive_medium,1.783552,0.000913946979757
+hindbrain development,Constitutive_strong,1.360321,0.363272551114341
+hindbrain development,Constitutive_weak,1.3906,0.0006568232482678
+hindbrain development,Weak_late,1.930665,3.47672419821958e-07
+hindbrain development,black,1.038716,1
+hindbrain development,blue,1.182413,0.439342704918033
+hindbrain development,brown,1.475016,0.0196717309209979
+hindbrain development,cyan,1.275676,1
+hindbrain development,darkgreen,0.8132954,1
+hindbrain development,darkgrey,1.971045,1
+hindbrain development,darkorange,3.102571,1
+hindbrain development,darkred,3.221901,1
+hindbrain development,darkturquoise,0.9105372,1
+hindbrain development,green,1.415024,0.358266918957346
+hindbrain development,greenyellow,3.131567,0.0309312460323887
+hindbrain development,grey,1.062456,0.590282070984098
+hindbrain development,grey60,0.5235589,1
+hindbrain development,lightcyan,2.421082,1
+hindbrain development,lightgreen,1.080896,1
+hindbrain development,lightyellow,2.482057,1
+hindbrain development,magenta,1.20628,1
+hindbrain development,midnightblue,1.736154,1
+hindbrain development,orange,1.021578,1
+hindbrain development,pink,1.111,1
+hindbrain development,purple,1.241028,1
+hindbrain development,red,2.152409,0.0025144415786407
+hindbrain development,royalblue,2.166451,1
+hindbrain development,saddlebrown,4.927613,1
+hindbrain development,salmon,0.797804,1
+hindbrain development,skyblue,0,1
+hindbrain development,steelblue,0,1
+hindbrain development,tan,0.8029018,1
+hindbrain development,turquoise,1.368552,0.000125672673374
+hindbrain development,white,3.221901,1
+hindbrain development,yellow,1.001058,1
+negative regulation of glial cell differentiation,Constitutive_medium,2.218421,0.0452997677777778
+negative regulation of glial cell differentiation,Constitutive_strong,0.9952921,1
+negative regulation of glial cell differentiation,Constitutive_weak,1.401815,0.170803531184834
+negative regulation of glial cell differentiation,Weak_late,2.530107,0.0005709249261788
+negative regulation of glial cell differentiation,black,1.108687,1
+negative regulation of glial cell differentiation,blue,1.980469,0.0261262738106796
+negative regulation of glial cell differentiation,brown,1.303462,0.783423168768186
+negative regulation of glial cell differentiation,cyan,1.928947,1
+negative regulation of glial cell differentiation,darkgreen,0,1
+negative regulation of glial cell differentiation,darkgrey,0,1
+negative regulation of glial cell differentiation,darkorange,4.691389,1
+negative regulation of glial cell differentiation,darkred,10.96161,0.318584303125
+negative regulation of glial cell differentiation,darkturquoise,0,1
+negative regulation of glial cell differentiation,green,4.493273,4.40105965675676e-06
+negative regulation of glial cell differentiation,greenyellow,0,1
+negative regulation of glial cell differentiation,grey,0.8598366,1
+negative regulation of glial cell differentiation,grey60,2.375016,1
+negative regulation of glial cell differentiation,lightcyan,6.589639,0.815926854787234
+negative regulation of glial cell differentiation,lightgreen,4.903259,1
+negative regulation of glial cell differentiation,lightyellow,2.814834,1
+negative regulation of glial cell differentiation,magenta,0,1
+negative regulation of glial cell differentiation,midnightblue,0,1
+negative regulation of glial cell differentiation,orange,4.634177,1
+negative regulation of glial cell differentiation,pink,1.343952,1
+negative regulation of glial cell differentiation,purple,0.9382779,1
+negative regulation of glial cell differentiation,red,0.791672,1
+negative regulation of glial cell differentiation,royalblue,3.275884,1
+negative regulation of glial cell differentiation,saddlebrown,0,1
+negative regulation of glial cell differentiation,salmon,5.428608,1
+negative regulation of glial cell differentiation,skyblue,0,1
+negative regulation of glial cell differentiation,steelblue,0,1
+negative regulation of glial cell differentiation,tan,2.428131,1
+negative regulation of glial cell differentiation,turquoise,1.102382,0.69365217357002
+negative regulation of glial cell differentiation,white,0,1
+negative regulation of glial cell differentiation,yellow,0.096619,1
+negative regulation of oligodendrocyte differentiation,Constitutive_medium,1.440014,0.847451132243328
+negative regulation of oligodendrocyte differentiation,Constitutive_strong,0.8786426,1
+negative regulation of oligodendrocyte differentiation,Constitutive_weak,1.95398,0.0246363069473684
+negative regulation of oligodendrocyte differentiation,Weak_late,1.073834,1
+negative regulation of oligodendrocyte differentiation,black,1.835152,1
+negative regulation of oligodendrocyte differentiation,blue,1.639084,0.450031364620939
+negative regulation of oligodendrocyte differentiation,brown,1.534259,0.72188468263473
+negative regulation of oligodendrocyte differentiation,cyan,4.25718,1
+negative regulation of oligodendrocyte differentiation,darkgreen,0,1
+negative regulation of oligodendrocyte differentiation,darkgrey,0,1
+negative regulation of oligodendrocyte differentiation,darkorange,0,1
+negative regulation of oligodendrocyte differentiation,darkred,24.19224,0.0946899385384615
+negative regulation of oligodendrocyte differentiation,darkturquoise,0,1
+negative regulation of oligodendrocyte differentiation,green,5.19443,0.0008766922141463
+negative regulation of oligodendrocyte differentiation,greenyellow,0,1
+negative regulation of oligodendrocyte differentiation,grey,0.7990134,1
+negative regulation of oligodendrocyte differentiation,grey60,0,1
+negative regulation of oligodendrocyte differentiation,lightcyan,9.695542,0.998861332793522
+negative regulation of oligodendrocyte differentiation,lightgreen,10.82148,1
+negative regulation of oligodendrocyte differentiation,lightyellow,0,1
+negative regulation of oligodendrocyte differentiation,magenta,0,1
+negative regulation of oligodendrocyte differentiation,midnightblue,0,1
+negative regulation of oligodendrocyte differentiation,orange,0,1
+negative regulation of oligodendrocyte differentiation,pink,0.7415247,1
+negative regulation of oligodendrocyte differentiation,purple,0,1
+negative regulation of oligodendrocyte differentiation,red,1.164812,1
+negative regulation of oligodendrocyte differentiation,royalblue,0,1
+negative regulation of oligodendrocyte differentiation,saddlebrown,0,1
+negative regulation of oligodendrocyte differentiation,salmon,3.99364,1
+negative regulation of oligodendrocyte differentiation,skyblue,0,1
+negative regulation of oligodendrocyte differentiation,steelblue,0,1
+negative regulation of oligodendrocyte differentiation,tan,2.679439,1
+negative regulation of oligodendrocyte differentiation,turquoise,1.152451,0.708343146855624
+negative regulation of oligodendrocyte differentiation,white,0,1
+negative regulation of oligodendrocyte differentiation,yellow,0.2132378,1
+neuron development,Constitutive_medium,1.248517,0.0096064905188916
+neuron development,Constitutive_strong,0.9561665,1
+neuron development,Constitutive_weak,1.029785,0.660155496
+neuron development,Weak_late,0.9501896,1
+neuron development,black,0.8839489,1
+neuron development,blue,0.7992545,1
+neuron development,brown,0.9374556,1
+neuron development,cyan,0.8354223,1
+neuron development,darkgreen,0.2905176,1
+neuron development,darkgrey,0.7040778,1
+neuron development,darkorange,1.847118,1
+neuron development,darkred,1.294759,1
+neuron development,darkturquoise,0.8131334,1
+neuron development,green,1.154137,0.39189472685069
+neuron development,greenyellow,1.677943,0.0688963989020771
+neuron development,grey,0.922965,1
+neuron development,grey60,0.6545724,1
+neuron development,lightcyan,1.21077,1
+neuron development,lightgreen,0.965268,1
+neuron development,lightyellow,1.219098,1
+neuron development,magenta,0.9336072,1
+neuron development,midnightblue,1.395387,1
+neuron development,orange,1.642133,1
+neuron development,pink,1.389013,0.0157799032476636
+neuron development,purple,1.440752,0.400023694057377
+neuron development,red,1.589676,6.01890601052632e-06
+neuron development,royalblue,1.031838,1
+neuron development,saddlebrown,1.760195,1
+neuron development,salmon,0.9261976,1
+neuron development,skyblue,0.723951,1
+neuron development,steelblue,0.6106798,1
+neuron development,tan,0.9082154,1
+neuron development,turquoise,0.8794926,1
+neuron development,white,0.9590804,1
+neuron development,yellow,0.7988679,1
+neuron fate commitment,Constitutive_medium,2.042301,0.0002318417617241
+neuron fate commitment,Constitutive_strong,1.93151,0.0166803465714286
+neuron fate commitment,Constitutive_weak,1.039212,0.901468631862018
+neuron fate commitment,Weak_late,3.045932,2.74426032222222e-19
+neuron fate commitment,black,0.6072979,1
+neuron fate commitment,blue,1.859705,6.25780476763285e-05
+neuron fate commitment,brown,1.849569,0.000225107362388
+neuron fate commitment,cyan,0.6037748,1
+neuron fate commitment,darkgreen,0,1
+neuron fate commitment,darkgrey,2.798674,1
+neuron fate commitment,darkorange,2.93688,1
+neuron fate commitment,darkred,3.431066,1
+neuron fate commitment,darkturquoise,0,1
+neuron fate commitment,green,1.875238,0.0408054676422764
+neuron fate commitment,greenyellow,4.07595,0.0072323919642857
+neuron fate commitment,grey,0.9773861,0.980611131910766
+neuron fate commitment,grey60,0.7433977,1
+neuron fate commitment,lightcyan,0.6875355,1
+neuron fate commitment,lightgreen,0.7673783,1
+neuron fate commitment,lightyellow,1.762128,1
+neuron fate commitment,magenta,0.7612393,1
+neuron fate commitment,midnightblue,2.465153,1
+neuron fate commitment,orange,0,1
+neuron fate commitment,pink,2.524003,0.0021713687817891
+neuron fate commitment,purple,1.46844,1
+neuron fate commitment,red,1.734595,0.22219661969697
+neuron fate commitment,royalblue,1.025376,1
+neuron fate commitment,saddlebrown,0,1
+neuron fate commitment,salmon,0.5663983,1
+neuron fate commitment,skyblue,1.918446,1
+neuron fate commitment,steelblue,0,1
+neuron fate commitment,tan,1.520046,1
+neuron fate commitment,turquoise,1.416536,0.0003454341071059
+neuron fate commitment,white,0,1
+neuron fate commitment,yellow,0.1209699,1
+pattern specification process,Constitutive_medium,1.946741,1.43257153925926e-13
+pattern specification process,Constitutive_strong,1.822236,5.70629349230769e-07
+pattern specification process,Constitutive_weak,1.316405,1.78985715914634e-06
+pattern specification process,Weak_late,1.996095,6.6453211846153804e-21
+pattern specification process,black,0.7752884,1
+pattern specification process,blue,1.398902,0.0001486808432765
+pattern specification process,brown,1.524676,8.34490679e-07
+pattern specification process,cyan,1.635011,1
+pattern specification process,darkgreen,0.6254312,1
+pattern specification process,darkgrey,0.7578755,1
+pattern specification process,darkorange,1.988254,1
+pattern specification process,darkred,1.548544,1
+pattern specification process,darkturquoise,1.050317,1
+pattern specification process,green,1.795474,6.21929845121951e-06
+pattern specification process,greenyellow,3.812987,9.030614437209301e-10
+pattern specification process,grey,1.031846,0.643906765957447
+pattern specification process,grey60,0.603932,1
+pattern specification process,lightcyan,2.420383,0.612183634492754
+pattern specification process,lightgreen,0.4156091,1
+pattern specification process,lightyellow,0.7157713,1
+pattern specification process,magenta,0.6184264,1
+pattern specification process,midnightblue,2.837125,0.05590988528125
+pattern specification process,orange,1.178404,1
+pattern specification process,pink,3.075728,5.62679124e-21
+pattern specification process,purple,1.272482,1
+pattern specification process,red,1.274968,0.427182709589041
+pattern specification process,royalblue,2.221359,1
+pattern specification process,saddlebrown,1.263126,1
+pattern specification process,salmon,0.6135183,1
+pattern specification process,skyblue,0.5195114,1
+pattern specification process,steelblue,0.657341,1
+pattern specification process,tan,1.543596,1
+pattern specification process,turquoise,1.39668,7.78085941111111e-13
+pattern specification process,white,0.412945,1
+pattern specification process,yellow,1.334905,0.0034699390152777
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",Constitutive_medium,1.056979,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",Constitutive_strong,1.612322,0.968522138112256
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",Constitutive_weak,2.689185,0.0042415160957446
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",Weak_late,1.970501,0.540740445774392
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",black,1.12251,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",blue,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",brown,0.7038468,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",cyan,7.811985,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",darkgreen,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",darkgrey,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",darkorange,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",darkred,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",darkturquoise,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",green,1.733064,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",greenyellow,4.794271,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",grey,0.5498253,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",grey60,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",lightcyan,17.79146,0.707255608888889
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",lightgreen,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",lightyellow,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",magenta,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",midnightblue,23.92167,0.0884005185
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",orange,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",pink,4.082125,0.465443622181146
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",purple,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",red,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",royalblue,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",saddlebrown,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",salmon,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",skyblue,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",steelblue,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",tan,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",turquoise,0.3524607,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",white,0,1
+"positive regulation of Wnt signaling pathway, planar cell polarity pathway",yellow,8.217183,3.042766409375e-11
+regionalization,Constitutive_medium,2.13755,2.7587560427777802e-14
+regionalization,Constitutive_strong,1.969509,3.606025346e-07
+regionalization,Constitutive_weak,1.31803,3.95542762403101e-05
+regionalization,Weak_late,2.225172,4.29757311097561e-23
+regionalization,black,0.8836533,1
+regionalization,blue,1.496841,3.50496123278689e-05
+regionalization,brown,1.461616,0.0003801871020805
+regionalization,cyan,1.272349,1
+regionalization,darkgreen,0.4055871,1
+regionalization,darkgrey,0.9829523,1
+regionalization,darkorange,1.54724,1
+regionalization,darkred,2.008436,1
+regionalization,darkturquoise,0.9081624,1
+regionalization,green,2.093478,7.20980936666667e-08
+regionalization,greenyellow,4.164533,4.87869334615385e-09
+regionalization,grey,1.007447,0.845124023259174
+regionalization,grey60,0.5221934,1
+regionalization,lightcyan,2.656244,0.612183634492754
+regionalization,lightgreen,0.5390383,1
+regionalization,lightyellow,0.6188959,1
+regionalization,magenta,0.534726,1
+regionalization,midnightblue,3.246798,0.0513606749526316
+regionalization,orange,0.509457,1
+regionalization,pink,3.730612,2.6065420612e-25
+regionalization,purple,1.44409,1
+regionalization,red,1.421526,0.201238589489051
+regionalization,royalblue,2.520934,1
+regionalization,saddlebrown,1.638254,1
+regionalization,salmon,0.5967925,1
+regionalization,skyblue,0,1
+regionalization,steelblue,0,1
+regionalization,tan,1.601616,1
+regionalization,turquoise,1.518064,3.9902615900000003e-16
+regionalization,white,0.535583,1
+regionalization,yellow,0.732903,1
+regulation of axon extension,Constitutive_medium,1.811727,0.0289245
+regulation of axon extension,Constitutive_strong,0.9499939,1
+regulation of axon extension,Constitutive_weak,1.568486,0.000573853896
+regulation of axon extension,Weak_late,1.519902,0.100826239985694
+regulation of axon extension,black,1.563291,0.736229427067138
+regulation of axon extension,blue,1.253062,0.461745403628118
+regulation of axon extension,brown,0.7540229,1
+regulation of axon extension,cyan,0.8368889,1
+regulation of axon extension,darkgreen,0,1
+regulation of axon extension,darkgrey,0,1
+regulation of axon extension,darkorange,4.070793,1
+regulation of axon extension,darkred,0,1
+regulation of axon extension,darkturquoise,0,1
+regulation of axon extension,green,1.949442,0.0750624510810811
+regulation of axon extension,greenyellow,1.540814,1
+regulation of axon extension,grey,1.315481,0.0300529978853047
+regulation of axon extension,grey60,1.030419,1
+regulation of axon extension,lightcyan,0.9529891,1
+regulation of axon extension,lightgreen,0,1
+regulation of axon extension,lightyellow,2.442476,1
+regulation of axon extension,magenta,1.318937,1
+regulation of axon extension,midnightblue,0,1
+regulation of axon extension,orange,4.021149,1
+regulation of axon extension,pink,1.603482,0.789598105263158
+regulation of axon extension,purple,3.663714,0.0881131711428572
+regulation of axon extension,red,2.976767,0.0003422910645
+regulation of axon extension,royalblue,2.842537,1
+regulation of axon extension,saddlebrown,0,1
+regulation of axon extension,salmon,0,1
+regulation of axon extension,skyblue,0,1
+regulation of axon extension,steelblue,0,1
+regulation of axon extension,tan,1.580196,1
+regulation of axon extension,turquoise,1.06983,0.670725867153285
+regulation of axon extension,white,0,1
+regulation of axon extension,yellow,0.7126217,1
+regulation of cell fate commitment,Constitutive_medium,3.647835,2.06079531538462e-05
+regulation of cell fate commitment,Constitutive_strong,3.145113,0.0118401680992556
+regulation of cell fate commitment,Constitutive_weak,1.927915,0.0015889123471264
+regulation of cell fate commitment,Weak_late,2.247146,0.0163622287046632
+regulation of cell fate commitment,black,1.010608,1
+regulation of cell fate commitment,blue,2.407024,0.0034316013395348
+regulation of cell fate commitment,brown,2.217883,0.0215490759757085
+regulation of cell fate commitment,cyan,0,1
+regulation of cell fate commitment,darkgreen,0,1
+regulation of cell fate commitment,darkgrey,0,1
+regulation of cell fate commitment,darkorange,0,1
+regulation of cell fate commitment,darkred,4.440843,1
+regulation of cell fate commitment,darkturquoise,0,1
+regulation of cell fate commitment,green,4.420839,6.8034242699187e-05
+regulation of cell fate commitment,greenyellow,2.877556,1
+regulation of cell fate commitment,grey,1.540042,0.0322809819900498
+regulation of cell fate commitment,grey60,2.886548,1
+regulation of cell fate commitment,lightcyan,2.66964,1
+regulation of cell fate commitment,lightgreen,0,1
+regulation of cell fate commitment,lightyellow,0,1
+regulation of cell fate commitment,magenta,0,1
+regulation of cell fate commitment,midnightblue,0,1
+regulation of cell fate commitment,orange,5.632289,1
+regulation of cell fate commitment,pink,2.041767,0.849952304652645
+regulation of cell fate commitment,purple,4.561459,0.362671480769231
+regulation of cell fate commitment,red,1.28291,1
+regulation of cell fate commitment,royalblue,0,1
+regulation of cell fate commitment,saddlebrown,9.055837,1
+regulation of cell fate commitment,salmon,2.199275,1
+regulation of cell fate commitment,skyblue,0,1
+regulation of cell fate commitment,steelblue,0,1
+regulation of cell fate commitment,tan,2.951103,1
+regulation of cell fate commitment,turquoise,2.327044,5.33373704460967e-08
+regulation of cell fate commitment,white,0,1
+regulation of cell fate commitment,yellow,1.878862,0.176467238550725
+regulation of histone methylation,Constitutive_medium,1.356463,0.692960391683629
+regulation of histone methylation,Constitutive_strong,1.551868,0.572770312520647
+regulation of histone methylation,Constitutive_weak,2.204895,3.79706846315789e-07
+regulation of histone methylation,Weak_late,1.348706,0.630330280939775
+regulation of histone methylation,black,1.680656,0.900674865879828
+regulation of histone methylation,blue,1.215171,0.731280824367816
+regulation of histone methylation,brown,0.7527291,1
+regulation of histone methylation,cyan,5.012718,1
+regulation of histone methylation,darkgreen,3.19581,1
+regulation of histone methylation,darkgrey,0,1
+regulation of histone methylation,darkorange,4.063808,1
+regulation of histone methylation,darkred,6.330163,1
+regulation of histone methylation,darkturquoise,0,1
+regulation of histone methylation,green,3.336167,0.0008982453315533
+regulation of histone methylation,greenyellow,1.025447,1
+regulation of histone methylation,grey,1.587629,0.0029261834538461
+regulation of histone methylation,grey60,0,1
+regulation of histone methylation,lightcyan,3.805416,1
+regulation of histone methylation,lightgreen,2.123667,1
+regulation of histone methylation,lightyellow,2.438285,1
+regulation of histone methylation,magenta,0.5266695,1
+regulation of histone methylation,midnightblue,1.705536,1
+regulation of histone methylation,orange,4.014249,1
+regulation of histone methylation,pink,0.5820839,1
+regulation of histone methylation,purple,0.8127616,1
+regulation of histone methylation,red,0.9143568,1
+regulation of histone methylation,royalblue,5.675318,1
+regulation of histone methylation,saddlebrown,0,1
+regulation of histone methylation,salmon,3.134938,1
+regulation of histone methylation,skyblue,0,1
+regulation of histone methylation,steelblue,0,1
+regulation of histone methylation,tan,1.051656,1
+regulation of histone methylation,turquoise,1.181076,0.428958853242321
+regulation of histone methylation,white,0,1
+regulation of histone methylation,yellow,4.435781,1.51248097e-16
+regulation of synapse structural plasticity,Constitutive_medium,1.533515,0.916945977099237
+regulation of synapse structural plasticity,Constitutive_strong,1.559488,0.989266237026359
+regulation of synapse structural plasticity,Constitutive_weak,4.913122,3.16277361147541e-11
+regulation of synapse structural plasticity,Weak_late,2.287116,0.324866006164384
+regulation of synapse structural plasticity,black,2.171454,1
+regulation of synapse structural plasticity,blue,0.9697273,1
+regulation of synapse structural plasticity,brown,1.701957,0.759421250582363
+regulation of synapse structural plasticity,cyan,0,1
+regulation of synapse structural plasticity,darkgreen,14.45176,1
+regulation of synapse structural plasticity,darkgrey,0,1
+regulation of synapse structural plasticity,darkorange,0,1
+regulation of synapse structural plasticity,darkred,0,1
+regulation of synapse structural plasticity,darkturquoise,0,1
+regulation of synapse structural plasticity,green,0.8381371,1
+regulation of synapse structural plasticity,greenyellow,0,1
+regulation of synapse structural plasticity,grey,2.127233,0.0182612563554604
+regulation of synapse structural plasticity,grey60,0,1
+regulation of synapse structural plasticity,lightcyan,0,1
+regulation of synapse structural plasticity,lightgreen,0,1
+regulation of synapse structural plasticity,lightyellow,0,1
+regulation of synapse structural plasticity,magenta,2.38165,1
+regulation of synapse structural plasticity,midnightblue,7.712598,1
+regulation of synapse structural plasticity,orange,0,1
+regulation of synapse structural plasticity,pink,1.31612,1
+regulation of synapse structural plasticity,purple,0,1
+regulation of synapse structural plasticity,red,2.067405,1
+regulation of synapse structural plasticity,royalblue,12.83217,1
+regulation of synapse structural plasticity,saddlebrown,0,1
+regulation of synapse structural plasticity,salmon,0,1
+regulation of synapse structural plasticity,skyblue,0,1
+regulation of synapse structural plasticity,steelblue,0,1
+regulation of synapse structural plasticity,tan,0,1
+regulation of synapse structural plasticity,turquoise,0.4545481,1
+regulation of synapse structural plasticity,white,0,1
+regulation of synapse structural plasticity,yellow,18.92361,9.873415412903229e-43
+regulation of transcription involved in cell fate commitment,Constitutive_medium,3.211223,0.0027812323
+regulation of transcription involved in cell fate commitment,Constitutive_strong,2.449209,0.187649875268817
+regulation of transcription involved in cell fate commitment,Constitutive_weak,1.077993,0.938593767930237
+regulation of transcription involved in cell fate commitment,Weak_late,5.387947,1.59749749133333e-13
+regulation of transcription involved in cell fate commitment,black,1.278868,1
+regulation of transcription involved in cell fate commitment,blue,3.934358,4.01355198275862e-08
+regulation of transcription involved in cell fate commitment,brown,4.009439,9.56964957666667e-08
+regulation of transcription involved in cell fate commitment,cyan,8.900141,0.8633514175
+regulation of transcription involved in cell fate commitment,darkgreen,0,1
+regulation of transcription involved in cell fate commitment,darkgrey,0,1
+regulation of transcription involved in cell fate commitment,darkorange,0,1
+regulation of transcription involved in cell fate commitment,darkred,5.61964,1
+regulation of transcription involved in cell fate commitment,darkturquoise,0,1
+regulation of transcription involved in cell fate commitment,green,2.303546,0.330494656887937
+regulation of transcription involved in cell fate commitment,greenyellow,1.820693,1
+regulation of transcription involved in cell fate commitment,grey,0.9048176,1
+regulation of transcription involved in cell fate commitment,grey60,0,1
+regulation of transcription involved in cell fate commitment,lightcyan,0,1
+regulation of transcription involved in cell fate commitment,lightgreen,3.770597,1
+regulation of transcription involved in cell fate commitment,lightyellow,0,1
+regulation of transcription involved in cell fate commitment,magenta,0.9351081,1
+regulation of transcription involved in cell fate commitment,midnightblue,0,1
+regulation of transcription involved in cell fate commitment,orange,0,1
+regulation of transcription involved in cell fate commitment,pink,14.98571,3.8231584844444404e-21
+regulation of transcription involved in cell fate commitment,purple,0,1
+regulation of transcription involved in cell fate commitment,red,1.623452,1
+regulation of transcription involved in cell fate commitment,royalblue,10.0766,1
+regulation of transcription involved in cell fate commitment,saddlebrown,11.45966,1
+regulation of transcription involved in cell fate commitment,salmon,0,1
+regulation of transcription involved in cell fate commitment,skyblue,0,1
+regulation of transcription involved in cell fate commitment,steelblue,0,1
+regulation of transcription involved in cell fate commitment,tan,3.734457,1
+regulation of transcription involved in cell fate commitment,turquoise,2.00778,0.0002958553573684
+regulation of transcription involved in cell fate commitment,white,0,1
+regulation of transcription involved in cell fate commitment,yellow,0,1
+rostrocaudal neural tube patterning,Constitutive_medium,3.286447,0.0602623746369427
+rostrocaudal neural tube patterning,Constitutive_strong,0.6266457,1
+rostrocaudal neural tube patterning,Constitutive_weak,3.832327,2.42122395754717e-08
+rostrocaudal neural tube patterning,Weak_late,3.063423,0.0251679100951475
+rostrocaudal neural tube patterning,black,2.617651,0.840798667451442
+rostrocaudal neural tube patterning,blue,0.7793268,1
+rostrocaudal neural tube patterning,brown,1.641345,0.738144197241379
+rostrocaudal neural tube patterning,cyan,12.14484,1
+rostrocaudal neural tube patterning,darkgreen,0,1
+rostrocaudal neural tube patterning,darkgrey,0,1
+rostrocaudal neural tube patterning,darkorange,0,1
+rostrocaudal neural tube patterning,darkred,23.00513,0.373332817177419
+rostrocaudal neural tube patterning,darkturquoise,0,1
+rostrocaudal neural tube patterning,green,2.694294,0.460054735946991
+rostrocaudal neural tube patterning,greenyellow,7.453374,0.50453971971831
+rostrocaudal neural tube patterning,grey,1.567099,0.218033847095319
+rostrocaudal neural tube patterning,grey60,0,1
+rostrocaudal neural tube patterning,lightcyan,13.82967,0.782709222893082
+rostrocaudal neural tube patterning,lightgreen,0,1
+rostrocaudal neural tube patterning,lightyellow,0,1
+rostrocaudal neural tube patterning,magenta,1.914027,1
+rostrocaudal neural tube patterning,midnightblue,6.198272,1
+rostrocaudal neural tube patterning,orange,0,1
+rostrocaudal neural tube patterning,pink,5.288535,0.0648277631325301
+rostrocaudal neural tube patterning,purple,0,1
+rostrocaudal neural tube patterning,red,4.153703,0.169045017272727
+rostrocaudal neural tube patterning,royalblue,10.31264,1
+rostrocaudal neural tube patterning,saddlebrown,0,1
+rostrocaudal neural tube patterning,salmon,5.696508,1
+rostrocaudal neural tube patterning,skyblue,0,1
+rostrocaudal neural tube patterning,steelblue,0,1
+rostrocaudal neural tube patterning,tan,0,1
+rostrocaudal neural tube patterning,turquoise,1.461201,0.306306340796668
+rostrocaudal neural tube patterning,white,0,1
+rostrocaudal neural tube patterning,yellow,6.69155,3.9549650411764703e-10
+spinal cord association neuron differentiation,Constitutive_medium,6.6949,9.21626047692308e-08
+spinal cord association neuron differentiation,Constitutive_strong,5.10622,0.0039545316384364
+spinal cord association neuron differentiation,Constitutive_weak,2.313163,0.0066321662552301
+spinal cord association neuron differentiation,Weak_late,3.050947,0.0171952284892086
+spinal cord association neuron differentiation,black,0,1
+spinal cord association neuron differentiation,blue,2.351978,0.1114087296875
+spinal cord association neuron differentiation,brown,1.238379,1
+spinal cord association neuron differentiation,cyan,0,1
+spinal cord association neuron differentiation,darkgreen,0,1
+spinal cord association neuron differentiation,darkgrey,0,1
+spinal cord association neuron differentiation,darkorange,0,1
+spinal cord association neuron differentiation,darkred,0,1
+spinal cord association neuron differentiation,darkturquoise,0,1
+spinal cord association neuron differentiation,green,4.26892,0.040679606
+spinal cord association neuron differentiation,greenyellow,6.7482,0.566129786690648
+spinal cord association neuron differentiation,grey,1.225356,0.621788127098321
+spinal cord association neuron differentiation,grey60,13.53858,1
+spinal cord association neuron differentiation,lightcyan,0,1
+spinal cord association neuron differentiation,lightgreen,0,1
+spinal cord association neuron differentiation,lightyellow,0,1
+spinal cord association neuron differentiation,magenta,3.465875,1
+spinal cord association neuron differentiation,midnightblue,0,1
+spinal cord association neuron differentiation,orange,0,1
+spinal cord association neuron differentiation,pink,5.745814,0.0215432145167785
+spinal cord association neuron differentiation,purple,10.69715,0.0692618195840708
+spinal cord association neuron differentiation,red,5.265002,0.0261874693377193
+spinal cord association neuron differentiation,royalblue,0,1
+spinal cord association neuron differentiation,saddlebrown,21.23698,1
+spinal cord association neuron differentiation,salmon,5.157553,1
+spinal cord association neuron differentiation,skyblue,0,1
+spinal cord association neuron differentiation,steelblue,0,1
+spinal cord association neuron differentiation,tan,3.460339,1
+spinal cord association neuron differentiation,turquoise,4.713024,1.16920562956522e-18
+spinal cord association neuron differentiation,white,0,1
+spinal cord association neuron differentiation,yellow,0,1
+stem cell population maintenance,Constitutive_medium,1.620565,0.0380026373404255
+stem cell population maintenance,Constitutive_strong,1.437221,0.333212804106776
+stem cell population maintenance,Constitutive_weak,1.097355,0.600845022670653
+stem cell population maintenance,Weak_late,3.203857,1.0515326221794901e-23
+stem cell population maintenance,black,1.200724,1
+stem cell population maintenance,blue,1.239262,0.363808876844106
+stem cell population maintenance,brown,1.455586,0.0689078157449664
+stem cell population maintenance,cyan,1.114174,1
+stem cell population maintenance,darkgreen,0,1
+stem cell population maintenance,darkgrey,1.291131,1
+stem cell population maintenance,darkorange,0,1
+stem cell population maintenance,darkred,3.165755,1
+stem cell population maintenance,darkturquoise,0,1
+stem cell population maintenance,green,2.039202,0.006233124416129
+stem cell population maintenance,greenyellow,1.025665,1
+stem cell population maintenance,grey,1.104389,0.440613317414836
+stem cell population maintenance,grey60,0.6859135,1
+stem cell population maintenance,lightcyan,1.268742,1
+stem cell population maintenance,lightgreen,1.41608,1
+stem cell population maintenance,lightyellow,1.625869,1
+stem cell population maintenance,magenta,1.229157,1
+stem cell population maintenance,midnightblue,1.705899,1
+stem cell population maintenance,orange,0,1
+stem cell population maintenance,pink,0.776277,1
+stem cell population maintenance,purple,0.5419564,1
+stem cell population maintenance,red,1.219402,1
+stem cell population maintenance,royalblue,0.9460876,1
+stem cell population maintenance,saddlebrown,0,1
+stem cell population maintenance,salmon,2.090403,1
+stem cell population maintenance,skyblue,1.770099,1
+stem cell population maintenance,steelblue,0,1
+stem cell population maintenance,tan,2.10376,1
+stem cell population maintenance,turquoise,1.441052,7.08192152380952e-05
+stem cell population maintenance,white,0,1
+stem cell population maintenance,yellow,0.6138865,1

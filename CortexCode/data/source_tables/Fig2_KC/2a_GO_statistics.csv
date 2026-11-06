@@ -1,0 +1,331 @@
+name,Fine_cluster,FE,adjp
+apoptotic process involved in development,Constitutive_strong,1.728427,0.239183674474053
+apoptotic process involved in development,Constitutive_weak,1.678821,0.0149393783
+apoptotic process involved in development,P2_specific,0.6468777,1
+apoptotic process involved in development,Weak_late,0.6161347,1
+apoptotic process involved in development,Weak_middle,1.336364,1
+apoptotic process involved in development,black,0,1
+apoptotic process involved in development,blue,1.197614,0.539636350205454
+apoptotic process involved in development,brown,1.424507,0.646478694274029
+apoptotic process involved in development,cyan,9.845859,0.0378366637
+apoptotic process involved in development,green,2.003346,0.707120491
+apoptotic process involved in development,greenyellow,0,1
+apoptotic process involved in development,grey,0.3766629,1
+apoptotic process involved in development,lightcyan,0,1
+apoptotic process involved in development,magenta,0.5888464,1
+apoptotic process involved in development,midnightblue,5.698029,0.6462533
+apoptotic process involved in development,pink,0.5032081,1
+apoptotic process involved in development,purple,1.623075,1
+apoptotic process involved in development,red,2.019663,0.541721966627405
+apoptotic process involved in development,salmon,1.386166,1
+apoptotic process involved in development,tan,1.150375,1
+apoptotic process involved in development,turquoise,2.071156,7.761296754716981e-09
+apoptotic process involved in development,yellow,0,1
+cell cycle DNA replication,Constitutive_strong,7.064611,2.3939250825e-05
+cell cycle DNA replication,Constitutive_weak,1.166794,0.725634971283575
+cell cycle DNA replication,P2_specific,2.440604,0.512600811198885
+cell cycle DNA replication,Weak_late,2.324614,0.415803742032333
+cell cycle DNA replication,Weak_middle,0,1
+cell cycle DNA replication,black,0,1
+cell cycle DNA replication,blue,0,1
+cell cycle DNA replication,brown,0,1
+cell cycle DNA replication,cyan,0,1
+cell cycle DNA replication,green,0,1
+cell cycle DNA replication,greenyellow,6.505584,1
+cell cycle DNA replication,grey,0,1
+cell cycle DNA replication,lightcyan,0,1
+cell cycle DNA replication,magenta,0,1
+cell cycle DNA replication,midnightblue,0,1
+cell cycle DNA replication,pink,3.322469,1
+cell cycle DNA replication,purple,0,1
+cell cycle DNA replication,red,0,1
+cell cycle DNA replication,salmon,0,1
+cell cycle DNA replication,tan,0,1
+cell cycle DNA replication,turquoise,3.907132,1.98446095107914e-07
+cell cycle DNA replication,yellow,2.242793,1
+dendrite extension,Constitutive_strong,0.8750429,1
+dendrite extension,Constitutive_weak,1.761367,0.0198998450191571
+dendrite extension,P2_specific,1.596523,0.47102121190234
+dendrite extension,Weak_late,1.98854,0.0772339881771721
+dendrite extension,Weak_middle,3.551915,1
+dendrite extension,black,0.5747769,1
+dendrite extension,blue,1.314772,0.409069470332536
+dendrite extension,brown,2.050853,0.141872927777778
+dendrite extension,cyan,2.180771,1
+dendrite extension,green,0.5324683,1
+dendrite extension,greenyellow,0,1
+dendrite extension,grey,0,1
+dendrite extension,lightcyan,2.980752,1
+dendrite extension,magenta,0.7825458,1
+dendrite extension,midnightblue,5.048253,1
+dendrite extension,pink,2.006211,1
+dendrite extension,purple,1.07849,1
+dendrite extension,red,3.220831,0.142392570253165
+dendrite extension,salmon,11.05285,0.004143129375
+dendrite extension,tan,1.528788,1
+dendrite extension,turquoise,1.754314,0.0005254428570895
+dendrite extension,yellow,2.708538,0.364020922222222
+forebrain regionalization,Constitutive_strong,1.17473,1
+forebrain regionalization,Constitutive_weak,1.301804,0.098447458524173
+forebrain regionalization,P2_specific,0.9785805,1
+forebrain regionalization,Weak_late,1.134698,0.701684076103795
+forebrain regionalization,Weak_middle,3.076376,1
+forebrain regionalization,black,0.3982595,1
+forebrain regionalization,blue,1.030866,0.810115542484577
+forebrain regionalization,brown,1.14775,0.925693573253012
+forebrain regionalization,cyan,1.511043,1
+forebrain regionalization,green,3.873914,2.278476e-05
+forebrain regionalization,greenyellow,0.9072932,1
+forebrain regionalization,grey,0.3468387,1
+forebrain regionalization,lightcyan,1.032673,1
+forebrain regionalization,magenta,0.5422214,1
+forebrain regionalization,midnightblue,0.8744762,1
+forebrain regionalization,pink,0.231682,1
+forebrain regionalization,purple,0.3736398,1
+forebrain regionalization,red,1.859746,0.342202083287216
+forebrain regionalization,salmon,4.467433,0.0774894766321244
+forebrain regionalization,tan,0.5296441,1
+forebrain regionalization,turquoise,2.11674,6.6858387037037e-20
+forebrain regionalization,yellow,0.6255766,1
+negative regulation of cell division,Constitutive_strong,1.253012,1
+negative regulation of cell division,Constitutive_weak,1.210646,0.415417476608187
+negative regulation of cell division,P2_specific,0.9378999,1
+negative regulation of cell division,Weak_late,1.965317,0.0400976276957494
+negative regulation of cell division,Weak_middle,1.356304,1
+negative regulation of cell division,black,1.316877,1
+negative regulation of cell division,blue,1.691108,0.0278409167482916
+negative regulation of cell division,brown,1.204802,0.960638187157221
+negative regulation of cell division,cyan,0,1
+negative regulation of cell division,green,0.8132956,1
+negative regulation of cell division,greenyellow,0,1
+negative regulation of cell division,grey,0,1
+negative regulation of cell division,lightcyan,0,1
+negative regulation of cell division,magenta,1.792898,1
+negative regulation of cell division,midnightblue,1.927684,1
+negative regulation of cell division,pink,1.021433,1
+negative regulation of cell division,purple,6.589173,0.0722951163
+negative regulation of cell division,red,0.8199198,1
+negative regulation of cell division,salmon,1.40685,1
+negative regulation of cell division,tan,0,1
+negative regulation of cell division,turquoise,1.362875,0.0637108655870445
+negative regulation of cell division,yellow,0.6895063,1
+neuron differentiation,Constitutive_strong,0.8037153,1
+neuron differentiation,Constitutive_weak,1.120243,2.29380933382625e-05
+neuron differentiation,P2_specific,1.082869,0.179598832464455
+neuron differentiation,Weak_late,1.240244,1.8712303188679203e-09
+neuron differentiation,Weak_middle,1.358878,0.888298964951456
+neuron differentiation,black,0.6073318,1
+neuron differentiation,blue,1.225355,2.4800613516949203e-14
+neuron differentiation,brown,1.513651,1.8689857494000002e-29
+neuron differentiation,cyan,1.112415,1
+neuron differentiation,green,1.804286,2.652414919e-19
+neuron differentiation,greenyellow,0.5725201,1
+neuron differentiation,grey,0.5593143,1
+neuron differentiation,lightcyan,0.5792331,1
+neuron differentiation,magenta,1.016953,1
+neuron differentiation,midnightblue,1.778061,0.0046667071733333
+neuron differentiation,pink,0.5522958,1
+neuron differentiation,purple,1.19197,0.975607017534722
+neuron differentiation,red,1.447362,8.8119098375e-07
+neuron differentiation,salmon,1.879359,5.55455723307692e-06
+neuron differentiation,tan,1.151188,0.924068416934619
+neuron differentiation,turquoise,1.253417,1.64104262903226e-41
+neuron differentiation,yellow,1.255528,0.0114901182758621
+neuron fate commitment,Constitutive_strong,0.7533114,1
+neuron fate commitment,Constitutive_weak,1.384405,0.0001083831300451
+neuron fate commitment,P2_specific,0.7884564,1
+neuron fate commitment,Weak_late,1.105996,0.593806592083818
+neuron fate commitment,Weak_middle,2.695002,0.650884000344828
+neuron fate commitment,black,0.2012814,1
+neuron fate commitment,blue,1.02585,0.76673505046344
+neuron fate commitment,brown,1.417963,0.0375251067723343
+neuron fate commitment,cyan,1.272809,1
+neuron fate commitment,green,2.921291,1.96794560381679e-08
+neuron fate commitment,greenyellow,0.6113979,1
+neuron fate commitment,grey,0.1752932,1
+neuron fate commitment,lightcyan,0.3479438,1
+neuron fate commitment,magenta,1.096161,1
+neuron fate commitment,midnightblue,2.651776,0.441316145676856
+neuron fate commitment,pink,0.3122472,1
+neuron fate commitment,purple,0.8812467,1
+neuron fate commitment,red,1.315889,0.598461331189711
+neuron fate commitment,salmon,1.720269,1
+neuron fate commitment,tan,0.8922785,1
+neuron fate commitment,turquoise,1.712396,2.31958632983425e-26
+neuron fate commitment,yellow,1.159283,1
+neuron projection guidance,Constitutive_strong,0.7163286,1
+neuron projection guidance,Constitutive_weak,1.142683,0.0228984547407407
+neuron projection guidance,P2_specific,1.087471,0.626014419939577
+neuron projection guidance,Weak_late,1.359473,6.14538386590038e-05
+neuron projection guidance,Weak_middle,1.392406,1
+neuron projection guidance,black,0.4241347,1
+neuron projection guidance,blue,1.094651,0.191734391973244
+neuron projection guidance,brown,1.811653,5.57575458611111e-16
+neuron projection guidance,cyan,1.206913,1
+neuron projection guidance,green,2.185588,1.60699159310345e-09
+neuron projection guidance,greenyellow,0.1811701,1
+neuron projection guidance,grey,0.3232014,1
+neuron projection guidance,lightcyan,0.8248249,1
+neuron projection guidance,magenta,0.9383562,1
+neuron projection guidance,midnightblue,2.910286,0.001806844606875
+neuron projection guidance,pink,0.3701018,1
+neuron projection guidance,purple,0.9947888,1
+neuron projection guidance,red,1.485431,0.0390813942391304
+neuron projection guidance,salmon,1.699173,0.474265541269841
+neuron projection guidance,tan,0.9165902,1
+neuron projection guidance,turquoise,1.431236,7.54412810344828e-27
+neuron projection guidance,yellow,1.37408,0.1659525686
+positive regulation of axon guidance,Constitutive_strong,0.391274,1
+positive regulation of axon guidance,Constitutive_weak,1.540181,0.129364733209382
+positive regulation of axon guidance,P2_specific,1.317937,0.841446001285677
+positive regulation of axon guidance,Weak_late,2.09217,0.0777620354761905
+positive regulation of axon guidance,Weak_middle,0,1
+positive regulation of axon guidance,black,2.741446,1
+positive regulation of axon guidance,blue,1.320192,0.446876815800416
+positive regulation of axon guidance,brown,3.197867,0.0014231751136842
+positive regulation of axon guidance,cyan,0,1
+positive regulation of axon guidance,green,2.539652,0.597084898728814
+positive regulation of axon guidance,greenyellow,0,1
+positive regulation of axon guidance,grey,0.5968717,1
+positive regulation of axon guidance,lightcyan,0,1
+positive regulation of axon guidance,magenta,0.9331042,1
+positive regulation of axon guidance,midnightblue,0,1
+positive regulation of axon guidance,pink,0,1
+positive regulation of axon guidance,purple,1.285987,1
+positive regulation of axon guidance,red,0,1
+positive regulation of axon guidance,salmon,4.393124,1
+positive regulation of axon guidance,tan,9.1146,0.0261399080697674
+positive regulation of axon guidance,turquoise,1.154116,0.565810980991427
+positive regulation of axon guidance,yellow,3.767923,0.0932000916
+positive regulation of histone methylation,Constitutive_strong,1.191529,1
+positive regulation of histone methylation,Constitutive_weak,1.558973,0.0345125633734382
+positive regulation of histone methylation,P2_specific,1.170591,0.925785387663215
+positive regulation of histone methylation,Weak_late,1.752078,0.0988291560587326
+positive regulation of histone methylation,Weak_middle,0,1
+positive regulation of histone methylation,black,0.7826626,1
+positive regulation of histone methylation,blue,0.8009235,1
+positive regulation of histone methylation,brown,1.288895,0.822863038344828
+positive regulation of histone methylation,cyan,0,1
+positive regulation of histone methylation,green,1.450104,1
+positive regulation of histone methylation,greenyellow,0.8915097,1
+positive regulation of histone methylation,grey,1.022415,1
+positive regulation of histone methylation,lightcyan,2.029417,1
+positive regulation of histone methylation,magenta,0.5327888,1
+positive regulation of histone methylation,midnightblue,5.155582,0.722612655989583
+positive regulation of histone methylation,pink,3.187122,0.344490424640288
+positive regulation of histone methylation,purple,0.7342798,1
+positive regulation of histone methylation,red,2.923829,0.0988694
+positive regulation of histone methylation,salmon,8.779433,0.0039021994846153
+positive regulation of histone methylation,tan,0,1
+positive regulation of histone methylation,turquoise,1.482713,0.0067950400789049
+positive regulation of histone methylation,yellow,2.766123,0.153846966472795
+positive regulation of synaptic plasticity,Constitutive_strong,2.810557,0.136454880983607
+positive regulation of synaptic plasticity,Constitutive_weak,2.011502,0.0846245038860972
+positive regulation of synaptic plasticity,P2_specific,0,1
+positive regulation of synaptic plasticity,Weak_late,2.003767,0.384713575758645
+positive regulation of synaptic plasticity,Weak_middle,0,1
+positive regulation of synaptic plasticity,black,0,1
+positive regulation of synaptic plasticity,blue,4.346404,7.66454822222222e-07
+positive regulation of synaptic plasticity,brown,1.801614,0.735115933110368
+positive regulation of synaptic plasticity,cyan,0,1
+positive regulation of synaptic plasticity,green,1.520213,1
+positive regulation of synaptic plasticity,greenyellow,11.21534,0.476784601232877
+positive regulation of synaptic plasticity,grey,0,1
+positive regulation of synaptic plasticity,lightcyan,0,1
+positive regulation of synaptic plasticity,magenta,0,1
+positive regulation of synaptic plasticity,midnightblue,0,1
+positive regulation of synaptic plasticity,pink,0,1
+positive regulation of synaptic plasticity,purple,0,1
+positive regulation of synaptic plasticity,red,12.26076,3.59404500858896e-05
+positive regulation of synaptic plasticity,salmon,0,1
+positive regulation of synaptic plasticity,tan,4.364734,1
+positive regulation of synaptic plasticity,turquoise,1.554398,0.179880481413911
+positive regulation of synaptic plasticity,yellow,6.444128,0.0515470774358974
+regulation of axon extension,Constitutive_strong,1.055152,1
+regulation of axon extension,Constitutive_weak,1.434208,0.0001878461156558
+regulation of axon extension,P2_specific,1.127373,0.748517227004717
+regulation of axon extension,Weak_late,1.437793,0.0213633742838542
+regulation of axon extension,Weak_middle,1.657935,1
+regulation of axon extension,black,0.5365799,1
+regulation of axon extension,blue,1.539631,1.87341600058594e-05
+regulation of axon extension,brown,2.012745,6.874264075e-07
+regulation of axon extension,cyan,2.714463,0.594989300438596
+regulation of axon extension,green,2.071179,0.02659431005
+regulation of axon extension,greenyellow,0.8149381,1
+regulation of axon extension,grey,0.3894166,1
+regulation of axon extension,lightcyan,0,1
+regulation of axon extension,magenta,1.095812,1
+regulation of axon extension,midnightblue,3.927308,0.07363664
+regulation of axon extension,pink,0.8323945,1
+regulation of axon extension,purple,0.8390158,1
+regulation of axon extension,red,1.753961,0.134172991181989
+regulation of axon extension,salmon,1.719722,1
+regulation of axon extension,tan,1.665057,0.924415239700374
+regulation of axon extension,turquoise,1.181236,0.0294434801894918
+regulation of axon extension,yellow,1.755931,0.149118662
+regulation of calcium ion import,Constitutive_strong,1.028017,1
+regulation of calcium ion import,Constitutive_weak,1.290262,0.0091484807323568
+regulation of calcium ion import,P2_specific,1.680425,0.0001392117600851
+regulation of calcium ion import,Weak_late,1.358053,0.0545008296491228
+regulation of calcium ion import,Weak_middle,1.227311,1
+regulation of calcium ion import,black,0.4766535,1
+regulation of calcium ion import,blue,1.606787,2.18238895416667e-07
+regulation of calcium ion import,brown,1.373675,0.109489450583333
+regulation of calcium ion import,cyan,0,1
+regulation of calcium ion import,green,1.398298,0.66326132079314
+regulation of calcium ion import,greenyellow,0.723924,1
+regulation of calcium ion import,grey,0.5534811,1
+regulation of calcium ion import,lightcyan,0.8239638,1
+regulation of calcium ion import,magenta,2.163177,0.18178231443299
+regulation of calcium ion import,midnightblue,0.6977395,1
+regulation of calcium ion import,pink,0.4621443,1
+regulation of calcium ion import,purple,1.490625,1
+regulation of calcium ion import,red,1.409686,0.498376435223881
+regulation of calcium ion import,salmon,1.01844,1
+regulation of calcium ion import,tan,1.9017,0.636241943333333
+regulation of calcium ion import,turquoise,0.8277452,1
+regulation of calcium ion import,yellow,1.185467,1
+regulation of ion transmembrane transport,Constitutive_strong,0.8351184,1
+regulation of ion transmembrane transport,Constitutive_weak,1.192676,0.0001969760593314
+regulation of ion transmembrane transport,P2_specific,1.412838,1.66949481078947e-07
+regulation of ion transmembrane transport,Weak_late,1.163843,0.0651853007068803
+regulation of ion transmembrane transport,Weak_middle,1.227097,1
+regulation of ion transmembrane transport,black,0.3177135,1
+regulation of ion transmembrane transport,blue,1.434381,6.83008062616822e-16
+regulation of ion transmembrane transport,brown,1.133629,0.280698495
+regulation of ion transmembrane transport,cyan,1.506803,1
+regulation of ion transmembrane transport,green,1.011749,1
+regulation of ion transmembrane transport,greenyellow,0.6333229,1
+regulation of ion transmembrane transport,grey,0.4323317,1
+regulation of ion transmembrane transport,lightcyan,0.7208424,1
+regulation of ion transmembrane transport,magenta,1.703204,0.0313441195375
+regulation of ion transmembrane transport,midnightblue,1.308033,1
+regulation of ion transmembrane transport,pink,0.3465477,1
+regulation of ion transmembrane transport,purple,0.9314782,1
+regulation of ion transmembrane transport,red,1.205442,0.441233552521981
+regulation of ion transmembrane transport,salmon,0.9546205,1
+regulation of ion transmembrane transport,tan,1.267579,0.952545248587571
+regulation of ion transmembrane transport,turquoise,0.8725335,1
+regulation of ion transmembrane transport,yellow,1.169664,0.721646574167154
+somatic stem cell population maintenance,Constitutive_strong,1.237992,0.648827841549766
+somatic stem cell population maintenance,Constitutive_weak,1.520725,0.0001877492960396
+somatic stem cell population maintenance,P2_specific,0.8286452,1
+somatic stem cell population maintenance,Weak_late,0.9674846,1
+somatic stem cell population maintenance,Weak_middle,0.7731034,1
+somatic stem cell population maintenance,black,0.2502098,1
+somatic stem cell population maintenance,blue,1.189869,0.251073568660352
+somatic stem cell population maintenance,brown,1.373492,0.25700139556804
+somatic stem cell population maintenance,cyan,1.423988,1
+somatic stem cell population maintenance,green,2.08613,0.0862821073972603
+somatic stem cell population maintenance,greenyellow,0.5700144,1
+somatic stem cell population maintenance,grey,0.9805692,1
+somatic stem cell population maintenance,lightcyan,0,1
+somatic stem cell population maintenance,magenta,0.6813101,1
+somatic stem cell population maintenance,midnightblue,1.648191,1
+somatic stem cell population maintenance,pink,0.1455561,1
+somatic stem cell population maintenance,purple,0.2347423,1
+somatic stem cell population maintenance,red,2.219961,0.0301871677720207
+somatic stem cell population maintenance,salmon,1.202872,1
+somatic stem cell population maintenance,tan,3.327533,0.0683220237623762
+somatic stem cell population maintenance,turquoise,2.159376,1.0843043619047599e-33
+somatic stem cell population maintenance,yellow,1.375583,0.865892089405454

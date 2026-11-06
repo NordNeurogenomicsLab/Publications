@@ -1,3 +1,5 @@
+Selected compact numerical tables and original WGCNA count TSVs are now deposited in GitHub; see [the exact deposited-file list](data/TABLES_ON_GITHUB.csv). Larger inputs and R objects still require a separate archive.
+
 # Data availability and historical execution details
 
 The local delivery includes final plotting CSVs, upstream count tables and catalogs, original differential statistics, full GREAT results, original HOMER known-motif tables/BEDs, saved WGCNA networks, selected integration bundles, compact multiome assays and score/control checkpoints, and original resampling distributions. These large files are excluded from ordinary Git commits and need an accompanying archived data release.

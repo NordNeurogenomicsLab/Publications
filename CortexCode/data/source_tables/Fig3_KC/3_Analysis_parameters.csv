@@ -1,0 +1,26 @@
+Parameter,Value
+ATAC assay,intervals
+Linked-gene expression assay,SCT
+Scoring data layer,data
+AddModuleScore nbin,24
+AddModuleScore ctrl per feature,100
+Random seed reset per module,1
+Dot size definition,100 * number(raw module score >0) / cluster cell count
+Dot color definition,"z-score(log1p(mean(expm1(raw score)))) across clusters, clipped [-2.5,2.5]"
+FeaturePlot min.cutoff,0
+Link selection,zscore>=0; minimum pvalue per interval; with_ties=FALSE; unique genes per module
+ScaleData do.center,True
+ScaleData do.scale,True
+ScaleData upper cap,10
+DoHeatmap lower display limit,-2.5
+DoHeatmap upper display limit,2.5
+DoHeatmap separator width (synthetic columns),35
+Total biological nuclei,13625
+Observed clusters,16
+Source modules,18
+Visible panel b modules,15
+Visible panel c modules,6
+Runtime Seurat version,5.4.0
+Runtime Matrix version,1.6-5
+Native scoring cross-check,Independent implementation agrees with native Seurat for ATAC and SCT cyan modules to <1e-14
+Notebook SHA256,f38c02363467c316e68cb4bb889077d6fe41b2d2287f0f8df5e9553c608f5f29

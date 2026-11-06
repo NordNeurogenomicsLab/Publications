@@ -1,0 +1,7 @@
+group,k,MinMutPerRegion,mean_n_regions,median_n_regions,sd_n_regions,min_n_regions,max_n_regions
+case,0,1,165.787,166,8.30774636406587,141,193
+control,0,1,140.182,140,4.80561858348849,122,154
+case,1,2,13.186,13,2.9336001789627,4,25
+control,1,2,10.233,10,1.92884199234448,5,15
+case,2,3,1.111,1,0.976541157674695,0,5
+control,2,3,0,0,0,0,0

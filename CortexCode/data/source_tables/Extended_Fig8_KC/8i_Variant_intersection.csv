@@ -1,0 +1,3 @@
+Group,ATAC_AND_GENOA_filtered_variants,Variants_in_ME3_regions,Fraction_in_ME3_regions,Fisher_two_sided_P
+case,3260,391,0.11993865030674847,0.03129130884387694
+control,1880,188,0.1,0.03129130884387694

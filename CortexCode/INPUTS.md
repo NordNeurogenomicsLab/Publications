@@ -1,10 +1,7 @@
 # Input files and execution map
 
 All paths below are relative to `CortexCode/`, the folder containing `run_all.R`.
-The Git repository contains code, catalogs and environment records. The large
-`data/` and `objects/` files listed here exist in the local reconstruction delivery
-but have **not been deposited in a linked public data archive**. A fresh clone
-alone cannot reproduce the figures. No download URL is implied by a local path.
+The repository includes selected compact plotting tables, histology grids, metadata and original WGCNA count tables. [TABLES_ON_GITHUB.csv](data/TABLES_ON_GITHUB.csv) lists every deposited table with size and SHA-256. Larger matrices and binary objects remain outside Git and require a separate input archive; a fresh clone cannot yet reproduce every panel. The file inventory marks each file's availability.
 
 ## Locate the biological inputs
 

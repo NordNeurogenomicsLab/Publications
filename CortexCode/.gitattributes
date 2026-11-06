@@ -1,0 +1,3 @@
+# Preserve deposited table bytes so published SHA-256 checksums work on all platforms.
+data/**/*.csv -text
+data/**/*.tsv -text

@@ -1,0 +1,5 @@
+RNA_direction,Peak_class,Gene_peak_overlap_count,Group_overlap_total,Fraction
+Downregulated,Fold <= 0.5,171,484,0.35330578512396693
+Downregulated,Fold > 0.5,313,484,0.6466942148760331
+Upregulated,Fold <= 0.5,73,250,0.292
+Upregulated,Fold > 0.5,177,250,0.708

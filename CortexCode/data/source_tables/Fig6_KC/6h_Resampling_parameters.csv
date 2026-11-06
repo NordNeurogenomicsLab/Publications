@@ -1,0 +1,16 @@
+Parameter,Value
+ME3 nominal P threshold,0.05
+ME3 Fold threshold,0
+Merge overlapping ME3 regions,True
+Maximum merged region size bp,50000
+Variant filter,Overlap ATAC AND strong GENOA
+Filtered case variants,3260
+Filtered control variants,1880
+Downsample fraction,0.8
+Configured maximum variants per group,5000
+Effective variants per group per replicate,1504
+Resampling replicates,1000
+Random seed,1234
+Primary region threshold,>0 mutations
+One-sided tail calculation,(number of replicates with n_case - n_ctrl <=0 +1)/(1000+1)
+Primary one-sided tail fraction,0.003996003996003996

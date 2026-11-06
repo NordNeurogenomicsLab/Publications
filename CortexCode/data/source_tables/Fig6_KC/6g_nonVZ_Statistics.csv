@@ -1,0 +1,2 @@
+Population,Observed_ASD_overlap,Null_replicates,Null_mean,Null_sample_SD,Original_Z_score,One_sided_normal_tail_P,DE_genes_P05,ASD_genes_tested
+nonVZ,44,10000,24.9685,4.632888312425797,4.10791254107204,1.9962561155449832e-05,2118,175

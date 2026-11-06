@@ -1,0 +1,523 @@
+name,Fine_cluster,FE,adjp
+actin cytoskeleton reorganization,Constitutive_strong_1,1.633855,0.0042430110196078
+actin cytoskeleton reorganization,Constitutive_strong_2,1.256153,1
+actin cytoskeleton reorganization,Grey,2.037061,3.75030849487179e-09
+actin cytoskeleton reorganization,Strong_late_1,1.849901,0.356413319770774
+actin cytoskeleton reorganization,Strong_late_2,1.441974,1
+actin cytoskeleton reorganization,Weak_VZ,0.6713323,1
+actin cytoskeleton reorganization,Weak_early_VZ,1.809343,1.14466521304348e-06
+actin cytoskeleton reorganization,Weak_late_VZ,1.740669,1
+actin cytoskeleton reorganization,black,0.5445668,1
+actin cytoskeleton reorganization,blue,1.474158,0.235397098359621
+actin cytoskeleton reorganization,brown,1.150222,0.929541788598575
+actin cytoskeleton reorganization,cyan,0,1
+actin cytoskeleton reorganization,darkred,4.641783,1
+actin cytoskeleton reorganization,green,2.11776,0.200874209349904
+actin cytoskeleton reorganization,greenyellow,1.608539,1
+actin cytoskeleton reorganization,grey60,0,1
+actin cytoskeleton reorganization,lightcyan,1.408634,1
+actin cytoskeleton reorganization,lightgreen,0,1
+actin cytoskeleton reorganization,lightyellow,0,1
+actin cytoskeleton reorganization,magenta,1.100197,1
+actin cytoskeleton reorganization,midnightblue,1.262661,1
+actin cytoskeleton reorganization,pink,3.63229,0.0364946437889908
+actin cytoskeleton reorganization,purple,2.059383,1
+actin cytoskeleton reorganization,red,3.236917,0.08507416148
+actin cytoskeleton reorganization,royalblue,0,1
+actin cytoskeleton reorganization,salmon,2.309892,1
+actin cytoskeleton reorganization,tan,0,1
+actin cytoskeleton reorganization,turquoise,1.562898,0.0035092264468085
+actin cytoskeleton reorganization,yellow,1.254767,1
+cell cycle DNA replication,Constitutive_strong_1,4.377187,0.0150357301554404
+cell cycle DNA replication,Constitutive_strong_2,0,1
+cell cycle DNA replication,Grey,3.219865,0.0384682580645161
+cell cycle DNA replication,Strong_late_1,2.784792,1
+cell cycle DNA replication,Strong_late_2,0,1
+cell cycle DNA replication,Weak_VZ,15.15909,1
+cell cycle DNA replication,Weak_early_VZ,2.002748,0.334492721698113
+cell cycle DNA replication,Weak_late_VZ,0,1
+cell cycle DNA replication,black,0,1
+cell cycle DNA replication,blue,0,1
+cell cycle DNA replication,brown,8.657566,0.0044742038771929
+cell cycle DNA replication,cyan,0,1
+cell cycle DNA replication,darkred,52.40714,1
+cell cycle DNA replication,green,0,1
+cell cycle DNA replication,greenyellow,0,1
+cell cycle DNA replication,grey60,0,1
+cell cycle DNA replication,lightcyan,0,1
+cell cycle DNA replication,lightgreen,0,1
+cell cycle DNA replication,lightyellow,94.87499,0.0947962964666667
+cell cycle DNA replication,magenta,0,1
+cell cycle DNA replication,midnightblue,0,1
+cell cycle DNA replication,pink,0,1
+cell cycle DNA replication,purple,0,1
+cell cycle DNA replication,red,0,1
+cell cycle DNA replication,royalblue,0,1
+cell cycle DNA replication,salmon,0,1
+cell cycle DNA replication,tan,0,1
+cell cycle DNA replication,turquoise,0.5347147,1
+cell cycle DNA replication,yellow,0,1
+central nervous system development,Constitutive_strong_1,1.129842,0.0056268324740904
+central nervous system development,Constitutive_strong_2,0.9077076,1
+central nervous system development,Grey,1.367827,2.17872008869565e-25
+central nervous system development,Strong_late_1,1.08997,0.959046191153239
+central nervous system development,Strong_late_2,0.8416024,1
+central nervous system development,Weak_VZ,1.156803,1
+central nervous system development,Weak_early_VZ,1.092498,0.0131094457229833
+central nervous system development,Weak_late_VZ,0.8708008,1
+central nervous system development,black,1.89187,2.1774269902e-08
+central nervous system development,blue,1.2376,0.0001712115836824
+central nervous system development,brown,1.270184,0.0003529633691549
+central nervous system development,cyan,0.9296131,1
+central nervous system development,darkred,1.290075,1
+central nervous system development,green,0.8240146,1
+central nervous system development,greenyellow,1.296462,1
+central nervous system development,grey60,1.404137,1
+central nervous system development,lightcyan,1.25279,1
+central nervous system development,lightgreen,1.120329,1
+central nervous system development,lightyellow,0.2335481,1
+central nervous system development,magenta,1.284251,0.954749779310345
+central nervous system development,midnightblue,1.263338,1
+central nervous system development,pink,1.633571,0.0012900180771739
+central nervous system development,purple,0.6486716,1
+central nervous system development,red,0.9767363,1
+central nervous system development,royalblue,1.060105,1
+central nervous system development,salmon,1.540753,0.977084035474006
+central nervous system development,tan,0.9871426,1
+central nervous system development,turquoise,1.072764,0.0878729662139781
+central nervous system development,yellow,0.9017242,1
+cortical cytoskeleton organization,Constitutive_strong_1,1.769567,0.035995794519812
+cortical cytoskeleton organization,Constitutive_strong_2,2.972927,1
+cortical cytoskeleton organization,Grey,1.446329,0.130922057291667
+cortical cytoskeleton organization,Strong_late_1,4.378146,0.000724700992931
+cortical cytoskeleton organization,Strong_late_2,3.981494,0.354093663
+cortical cytoskeleton organization,Weak_VZ,3.177674,1
+cortical cytoskeleton organization,Weak_early_VZ,1.889187,0.0011743500800259
+cortical cytoskeleton organization,Weak_late_VZ,0,1
+cortical cytoskeleton organization,black,0,1
+cortical cytoskeleton organization,blue,2.646736,0.0016671256706278
+cortical cytoskeleton organization,brown,2.177776,0.0885386169822847
+cortical cytoskeleton organization,cyan,2.827195,1
+cortical cytoskeleton organization,darkred,5.492836,1
+cortical cytoskeleton organization,green,2.506043,0.355749180769231
+cortical cytoskeleton organization,greenyellow,0,1
+cortical cytoskeleton organization,grey60,3.516755,1
+cortical cytoskeleton organization,lightcyan,3.333802,1
+cortical cytoskeleton organization,lightgreen,0,1
+cortical cytoskeleton organization,lightyellow,0,1
+cortical cytoskeleton organization,magenta,0,1
+cortical cytoskeleton organization,midnightblue,2.988331,1
+cortical cytoskeleton organization,pink,2.344503,1
+cortical cytoskeleton organization,purple,0,1
+cortical cytoskeleton organization,red,2.735995,0.99049887061144
+cortical cytoskeleton organization,royalblue,0,1
+cortical cytoskeleton organization,salmon,0,1
+cortical cytoskeleton organization,tan,7.005034,1
+cortical cytoskeleton organization,turquoise,1.569229,0.0713857816019587
+cortical cytoskeleton organization,yellow,2.757529,0.066414645
+dendrite extension,Constitutive_strong_1,3.054296,1.48869750079787e-05
+dendrite extension,Constitutive_strong_2,0,1
+dendrite extension,Grey,3.209635,1.36394659643705e-08
+dendrite extension,Strong_late_1,1.943161,0.99455790443686
+dendrite extension,Strong_late_2,1.893337,1
+dendrite extension,Weak_VZ,0,1
+dendrite extension,Weak_early_VZ,1.467343,0.217201252329957
+dendrite extension,Weak_late_VZ,0,1
+dendrite extension,black,0,1
+dendrite extension,blue,1.802106,0.43214282890625
+dendrite extension,brown,1.812313,0.496123578475336
+dendrite extension,cyan,0,1
+dendrite extension,darkred,0,1
+dendrite extension,green,0,1
+dendrite extension,greenyellow,0,1
+dendrite extension,grey60,0,1
+dendrite extension,lightcyan,5.54868,1
+dendrite extension,lightgreen,0,1
+dendrite extension,lightyellow,0,1
+dendrite extension,magenta,2.166866,1
+dendrite extension,midnightblue,0,1
+dendrite extension,pink,11.70636,8.348445952e-05
+dendrite extension,purple,0,1
+dendrite extension,red,2.732225,1
+dendrite extension,royalblue,0,1
+dendrite extension,salmon,0,1
+dendrite extension,tan,0,1
+dendrite extension,turquoise,0.6529444,1
+dendrite extension,yellow,1.765211,0.895939043062201
+fasciculation of sensory neuron axon,Constitutive_strong_1,1.109401,0.939666344890511
+fasciculation of sensory neuron axon,Constitutive_strong_2,0,1
+fasciculation of sensory neuron axon,Grey,2.244212,0.00450136465625
+fasciculation of sensory neuron axon,Strong_late_1,1.235163,1
+fasciculation of sensory neuron axon,Strong_late_2,1.203492,1
+fasciculation of sensory neuron axon,Weak_VZ,0,1
+fasciculation of sensory neuron axon,Weak_early_VZ,1.421274,0.331976064531435
+fasciculation of sensory neuron axon,Weak_late_VZ,0,1
+fasciculation of sensory neuron axon,black,14.99861,3.7481906e-07
+fasciculation of sensory neuron axon,blue,0.7636679,1
+fasciculation of sensory neuron axon,brown,0.3839966,1
+fasciculation of sensory neuron axon,cyan,0,1
+fasciculation of sensory neuron axon,darkred,0,1
+fasciculation of sensory neuron axon,green,0,1
+fasciculation of sensory neuron axon,greenyellow,0,1
+fasciculation of sensory neuron axon,grey60,0,1
+fasciculation of sensory neuron axon,lightcyan,0,1
+fasciculation of sensory neuron axon,lightgreen,0,1
+fasciculation of sensory neuron axon,lightyellow,0,1
+fasciculation of sensory neuron axon,magenta,2.754721,1
+fasciculation of sensory neuron axon,midnightblue,0,1
+fasciculation of sensory neuron axon,pink,0,1
+fasciculation of sensory neuron axon,purple,0,1
+fasciculation of sensory neuron axon,red,1.157819,1
+fasciculation of sensory neuron axon,royalblue,0,1
+fasciculation of sensory neuron axon,salmon,0,1
+fasciculation of sensory neuron axon,tan,0,1
+fasciculation of sensory neuron axon,turquoise,0.8300835,1
+fasciculation of sensory neuron axon,yellow,0.8976398,1
+long term synaptic depression,Constitutive_strong_1,1.056658,0.979115307344633
+long term synaptic depression,Constitutive_strong_2,0,1
+long term synaptic depression,Grey,1.101146,0.747468426825588
+long term synaptic depression,Strong_late_1,3.529324,0.0745278285022026
+long term synaptic depression,Strong_late_2,3.82092,0.67959793411215
+long term synaptic depression,Weak_VZ,0,1
+long term synaptic depression,Weak_early_VZ,1.353704,0.293798422982456
+long term synaptic depression,Weak_late_VZ,0,1
+long term synaptic depression,black,0.8657907,1
+long term synaptic depression,blue,2.101267,0.121222585964912
+long term synaptic depression,brown,0.7314814,1
+long term synaptic depression,cyan,0,1
+long term synaptic depression,darkred,0,1
+long term synaptic depression,green,0.4809948,1
+long term synaptic depression,greenyellow,2.557369,1
+long term synaptic depression,grey60,0,1
+long term synaptic depression,lightcyan,0,1
+long term synaptic depression,lightgreen,0,1
+long term synaptic depression,lightyellow,0,1
+long term synaptic depression,magenta,0,1
+long term synaptic depression,midnightblue,0,1
+long term synaptic depression,pink,1.049977,1
+long term synaptic depression,purple,2.182768,1
+long term synaptic depression,red,1.470366,1
+long term synaptic depression,royalblue,0,1
+long term synaptic depression,salmon,0,1
+long term synaptic depression,tan,3.137177,1
+long term synaptic depression,turquoise,1.280051,0.469854895348837
+long term synaptic depression,yellow,3.989834,0.0047233074942307
+negative regulation of cell cycle process,Constitutive_strong_1,2.11639,6.823276201459851e-14
+negative regulation of cell cycle process,Constitutive_strong_2,2.014011,1
+negative regulation of cell cycle process,Grey,1.79633,1.3414470831831801e-10
+negative regulation of cell cycle process,Strong_late_1,0.6591061,1
+negative regulation of cell cycle process,Strong_late_2,0.642206,1
+negative regulation of cell cycle process,Weak_VZ,1.076358,1
+negative regulation of cell cycle process,Weak_early_VZ,1.734882,3.21421232130178e-10
+negative regulation of cell cycle process,Weak_late_VZ,0.9302812,1
+negative regulation of cell cycle process,black,0.8731131,1
+negative regulation of cell cycle process,blue,1.304024,0.31382256237402
+negative regulation of cell cycle process,brown,3.44245,2.75457535742574e-19
+negative regulation of cell cycle process,cyan,0,1
+negative regulation of cell cycle process,darkred,0,1
+negative regulation of cell cycle process,green,1.940251,0.0838115126851852
+negative regulation of cell cycle process,greenyellow,0.4298329,1
+negative regulation of cell cycle process,grey60,1.588285,1
+negative regulation of cell cycle process,lightcyan,1.505657,1
+negative regulation of cell cycle process,lightgreen,1.958487,1
+negative regulation of cell cycle process,lightyellow,0,1
+negative regulation of cell cycle process,magenta,1.763964,1
+negative regulation of cell cycle process,midnightblue,3.374077,0.718812624444444
+negative regulation of cell cycle process,pink,0.8823806,1
+negative regulation of cell cycle process,purple,0.3668715,1
+negative regulation of cell cycle process,red,0.8649674,1
+negative regulation of cell cycle process,royalblue,2.265033,1
+negative regulation of cell cycle process,salmon,1.851745,1
+negative regulation of cell cycle process,tan,1.05457,1
+negative regulation of cell cycle process,turquoise,1.83507,7.187323039145911e-10
+negative regulation of cell cycle process,yellow,1.197493,1
+neuron migration,Constitutive_strong_1,1.107345,0.404031673524635
+neuron migration,Constitutive_strong_2,0.3371147,1
+neuron migration,Grey,1.301117,0.0005638518675044
+neuron migration,Strong_late_1,1.290795,0.703348540923318
+neuron migration,Strong_late_2,1.031957,1
+neuron migration,Weak_VZ,0.360332,1
+neuron migration,Weak_early_VZ,1.018755,0.778130662128163
+neuron migration,Weak_late_VZ,0,1
+neuron migration,black,2.338333,0.0020380468146067
+neuron migration,blue,1.773474,1.09299422222222e-07
+neuron migration,brown,0.7614253,1
+neuron migration,cyan,0.3205895,1
+neuron migration,darkred,1.868579,1
+neuron migration,green,0.6901331,1
+neuron migration,greenyellow,1.510897,1
+neuron migration,grey60,2.392692,1
+neuron migration,lightcyan,0.3780362,1
+neuron migration,lightgreen,0.4917313,1
+neuron migration,lightyellow,0,1
+neuron migration,magenta,2.509716,0.1639958560625
+neuron migration,midnightblue,1.355446,1
+neuron migration,pink,2.835784,0.0001203832135
+neuron migration,purple,0.5526782,1
+neuron migration,red,1.178942,1
+neuron migration,royalblue,0.5686979,1
+neuron migration,salmon,1.239815,1
+neuron migration,tan,1.323892,1
+neuron migration,turquoise,0.7499009,1
+neuron migration,yellow,0.7456447,1
+neuronal action potential propagation,Constitutive_strong_1,0.345939,1
+neuronal action potential propagation,Constitutive_strong_2,0,1
+neuronal action potential propagation,Grey,1.272366,0.722916689122373
+neuronal action potential propagation,Strong_late_1,0,1
+neuronal action potential propagation,Strong_late_2,0,1
+neuronal action potential propagation,Weak_VZ,0,1
+neuronal action potential propagation,Weak_early_VZ,0.8863774,1
+neuronal action potential propagation,Weak_late_VZ,21.74474,1
+neuronal action potential propagation,black,3.401411,1
+neuronal action potential propagation,blue,3.175076,0.198137544806517
+neuronal action potential propagation,brown,0,1
+neuronal action potential propagation,cyan,0,1
+neuronal action potential propagation,darkred,0,1
+neuronal action potential propagation,green,0,1
+neuronal action potential propagation,greenyellow,0,1
+neuronal action potential propagation,grey60,0,1
+neuronal action potential propagation,lightcyan,0,1
+neuronal action potential propagation,lightgreen,0,1
+neuronal action potential propagation,lightyellow,0,1
+neuronal action potential propagation,magenta,0,1
+neuronal action potential propagation,midnightblue,0,1
+neuronal action potential propagation,pink,0,1
+neuronal action potential propagation,purple,0,1
+neuronal action potential propagation,red,0,1
+neuronal action potential propagation,royalblue,0,1
+neuronal action potential propagation,salmon,0,1
+neuronal action potential propagation,tan,0,1
+neuronal action potential propagation,turquoise,0.887454,1
+neuronal action potential propagation,yellow,7.837382,0.0073778395945205
+positive regulation of synaptic plasticity,Constitutive_strong_1,2.264972,0.240420700487805
+positive regulation of synaptic plasticity,Constitutive_strong_2,0,1
+positive regulation of synaptic plasticity,Grey,4.165291,8.69083651735722e-05
+positive regulation of synaptic plasticity,Strong_late_1,1.681153,1
+positive regulation of synaptic plasticity,Strong_late_2,3.276093,1
+positive regulation of synaptic plasticity,Weak_VZ,0,1
+positive regulation of synaptic plasticity,Weak_early_VZ,3.868928,0.0001646216393127
+positive regulation of synaptic plasticity,Weak_late_VZ,0,1
+positive regulation of synaptic plasticity,black,0,1
+positive regulation of synaptic plasticity,blue,9.701172,5.65694957413793e-08
+positive regulation of synaptic plasticity,brown,0,1
+positive regulation of synaptic plasticity,cyan,0,1
+positive regulation of synaptic plasticity,darkred,0,1
+positive regulation of synaptic plasticity,green,2.062047,1
+positive regulation of synaptic plasticity,greenyellow,0,1
+positive regulation of synaptic plasticity,grey60,0,1
+positive regulation of synaptic plasticity,lightcyan,0,1
+positive regulation of synaptic plasticity,lightgreen,0,1
+positive regulation of synaptic plasticity,lightyellow,28.63757,1
+positive regulation of synaptic plasticity,magenta,0,1
+positive regulation of synaptic plasticity,midnightblue,0,1
+positive regulation of synaptic plasticity,pink,18.00519,0.0137433380604938
+positive regulation of synaptic plasticity,purple,0,1
+positive regulation of synaptic plasticity,red,0,1
+positive regulation of synaptic plasticity,royalblue,0,1
+positive regulation of synaptic plasticity,salmon,15.74388,1
+positive regulation of synaptic plasticity,tan,0,1
+positive regulation of synaptic plasticity,turquoise,2.582418,0.0662737704724409
+positive regulation of synaptic plasticity,yellow,1.221757,1
+protein acylation,Constitutive_strong_1,2.046257,4.66742498582996e-08
+protein acylation,Constitutive_strong_2,6.257522,0.0617054691458333
+protein acylation,Grey,1.403754,0.013025676316894
+protein acylation,Strong_late_1,1.638272,0.540298113793104
+protein acylation,Strong_late_2,1.396732,1
+protein acylation,Weak_VZ,1.114747,1
+protein acylation,Weak_early_VZ,1.634754,2.6637258279476e-05
+protein acylation,Weak_late_VZ,1.44519,1
+protein acylation,black,0.6781895,1
+protein acylation,blue,1.856981,0.0030120634336633
+protein acylation,brown,2.41926,2.8590387574171e-05
+protein acylation,cyan,1.983594,1
+protein acylation,darkred,1.926919,1
+protein acylation,green,0.376772,1
+protein acylation,greenyellow,2.003233,1
+protein acylation,grey60,0,1
+protein acylation,lightcyan,0,1
+protein acylation,lightgreen,0,1
+protein acylation,lightyellow,5.232583,1
+protein acylation,magenta,1.370157,1
+protein acylation,midnightblue,3.144972,1
+protein acylation,pink,1.096621,1
+protein acylation,purple,5.129405,0.025272342375
+protein acylation,red,1.151764,1
+protein acylation,royalblue,3.518723,1
+protein acylation,salmon,0,1
+protein acylation,tan,0.8191358,1
+protein acylation,turquoise,1.12065,0.512225141165587
+protein acylation,yellow,1.41383,0.691158971932974
+regulation of G0 to G1 transition,Constitutive_strong_1,2.536485,0.231782149009901
+regulation of G0 to G1 transition,Constitutive_strong_2,0,1
+regulation of G0 to G1 transition,Grey,2.985347,0.0352981820680851
+regulation of G0 to G1 transition,Strong_late_1,0,1
+regulation of G0 to G1 transition,Strong_late_2,0,1
+regulation of G0 to G1 transition,Weak_VZ,0,1
+regulation of G0 to G1 transition,Weak_early_VZ,2.59963,0.078043723231441
+regulation of G0 to G1 transition,Weak_late_VZ,0,1
+regulation of G0 to G1 transition,black,0,1
+regulation of G0 to G1 transition,blue,0.9312086,1
+regulation of G0 to G1 transition,brown,1.404724,1
+regulation of G0 to G1 transition,cyan,0,1
+regulation of G0 to G1 transition,darkred,0,1
+regulation of G0 to G1 transition,green,16.62649,0.0006225222440425
+regulation of G0 to G1 transition,greenyellow,0,1
+regulation of G0 to G1 transition,grey60,0,1
+regulation of G0 to G1 transition,lightcyan,25.8047,1
+regulation of G0 to G1 transition,lightgreen,33.56552,1
+regulation of G0 to G1 transition,lightyellow,0,1
+regulation of G0 to G1 transition,magenta,0,1
+regulation of G0 to G1 transition,midnightblue,0,1
+regulation of G0 to G1 transition,pink,0,1
+regulation of G0 to G1 transition,purple,0,1
+regulation of G0 to G1 transition,red,0,1
+regulation of G0 to G1 transition,royalblue,0,1
+regulation of G0 to G1 transition,salmon,0,1
+regulation of G0 to G1 transition,tan,18.07374,1
+regulation of G0 to G1 transition,turquoise,5.205574,8.30312934641256e-05
+regulation of G0 to G1 transition,yellow,1.641859,1
+regulation of histone methylation,Constitutive_strong_1,2.24433,9.20646597260274e-07
+regulation of histone methylation,Constitutive_strong_2,1.696745,1
+regulation of histone methylation,Grey,1.981119,2.39672357003257e-06
+regulation of histone methylation,Strong_late_1,0.6663329,1
+regulation of histone methylation,Strong_late_2,0.3246237,1
+regulation of histone methylation,Weak_VZ,0.9068001,1
+regulation of histone methylation,Weak_early_VZ,1.725151,0.0002717443755663
+regulation of histone methylation,Weak_late_VZ,0,1
+regulation of histone methylation,black,0,1
+regulation of histone methylation,blue,1.716565,0.0940984476433121
+regulation of histone methylation,brown,1.553659,0.334984903699422
+regulation of histone methylation,cyan,0,1
+regulation of histone methylation,darkred,0,1
+regulation of histone methylation,green,1.430279,0.967561623670213
+regulation of histone methylation,greenyellow,1.086365,1
+regulation of histone methylation,grey60,0,1
+regulation of histone methylation,lightcyan,1.902708,1
+regulation of histone methylation,lightgreen,2.474951,1
+regulation of histone methylation,lightyellow,2.837659,1
+regulation of histone methylation,magenta,2.229132,1
+regulation of histone methylation,midnightblue,1.705536,1
+regulation of histone methylation,pink,4.906305,0.0047234652725806
+regulation of histone methylation,purple,0,1
+regulation of histone methylation,red,0.9369121,1
+regulation of histone methylation,royalblue,0,1
+regulation of histone methylation,salmon,1.56004,1
+regulation of histone methylation,tan,1.332666,1
+regulation of histone methylation,turquoise,1.151498,0.52541231467639
+regulation of histone methylation,yellow,0.7263739,1
+ribonucleoprotein complex subunit organization,Constitutive_strong_1,1.781995,2.55776250512821e-07
+ribonucleoprotein complex subunit organization,Constitutive_strong_2,4.795165,0.0872709002792793
+ribonucleoprotein complex subunit organization,Grey,1.166424,0.221633856702899
+ribonucleoprotein complex subunit organization,Strong_late_1,1.883121,0.0812540492735043
+ribonucleoprotein complex subunit organization,Strong_late_2,0.9174181,1
+ribonucleoprotein complex subunit organization,Weak_VZ,1.098302,1
+ribonucleoprotein complex subunit organization,Weak_early_VZ,1.015718,0.831800931570762
+ribonucleoprotein complex subunit organization,Weak_late_VZ,0.9492469,1
+ribonucleoprotein complex subunit organization,black,1.039399,1
+ribonucleoprotein complex subunit organization,blue,1.746424,0.0009214931134474
+ribonucleoprotein complex subunit organization,brown,2.843559,7.37745324324324e-12
+ribonucleoprotein complex subunit organization,cyan,1.302888,1
+ribonucleoprotein complex subunit organization,darkred,0,1
+ribonucleoprotein complex subunit organization,green,0.8249197,1
+ribonucleoprotein complex subunit organization,greenyellow,0.8771919,1
+ribonucleoprotein complex subunit organization,grey60,2.430998,1
+ribonucleoprotein complex subunit organization,lightcyan,1.536353,1
+ribonucleoprotein complex subunit organization,lightgreen,0,1
+ribonucleoprotein complex subunit organization,lightyellow,2.291286,1
+ribonucleoprotein complex subunit organization,magenta,0.5999755,1
+ribonucleoprotein complex subunit organization,midnightblue,0,1
+ribonucleoprotein complex subunit organization,pink,1.620665,1
+ribonucleoprotein complex subunit organization,purple,3.743509,0.088226743171875
+ribonucleoprotein complex subunit organization,red,0.6304297,1
+ribonucleoprotein complex subunit organization,royalblue,3.466815,1
+ribonucleoprotein complex subunit organization,salmon,1.889496,1
+ribonucleoprotein complex subunit organization,tan,0.5380347,1
+ribonucleoprotein complex subunit organization,turquoise,1.058921,0.674762193611473
+ribonucleoprotein complex subunit organization,yellow,1.270783,0.837479814814815
+somatic stem cell population maintenance,Constitutive_strong_1,1.562033,0.0118210498554328
+somatic stem cell population maintenance,Constitutive_strong_2,2.486144,1
+somatic stem cell population maintenance,Grey,1.894898,3.00537656679389e-07
+somatic stem cell population maintenance,Strong_late_1,1.220425,1
+somatic stem cell population maintenance,Strong_late_2,1.902611,1
+somatic stem cell population maintenance,Weak_VZ,3.986049,0.607108189285714
+somatic stem cell population maintenance,Weak_early_VZ,1.492084,0.0041032736877593
+somatic stem cell population maintenance,Weak_late_VZ,0,1
+somatic stem cell population maintenance,black,0.808344,1
+somatic stem cell population maintenance,blue,1.156985,0.965815779600766
+somatic stem cell population maintenance,brown,4.704742,1.96492597446808e-20
+somatic stem cell population maintenance,cyan,2.364274,1
+somatic stem cell population maintenance,darkred,0,1
+somatic stem cell population maintenance,green,1.496933,0.78191178041415
+somatic stem cell population maintenance,greenyellow,0.7958943,1
+somatic stem cell population maintenance,grey60,2.940926,1
+somatic stem cell population maintenance,lightcyan,2.78793,1
+somatic stem cell population maintenance,lightgreen,1.813203,1
+somatic stem cell population maintenance,lightyellow,0,1
+somatic stem cell population maintenance,magenta,2.17748,1
+somatic stem cell population maintenance,midnightblue,2.499026,1
+somatic stem cell population maintenance,pink,1.633848,1
+somatic stem cell population maintenance,purple,1.358625,1
+somatic stem cell population maintenance,red,1.372804,1
+somatic stem cell population maintenance,royalblue,10.48504,0.112447376066667
+somatic stem cell population maintenance,salmon,1.142919,1
+somatic stem cell population maintenance,tan,0,1
+somatic stem cell population maintenance,turquoise,1.898128,2.42143711764706e-06
+somatic stem cell population maintenance,yellow,0.7095431,1
+stem cell population maintenance,Constitutive_strong_1,1.558894,5.73766034004474e-05
+stem cell population maintenance,Constitutive_strong_2,1.697106,1
+stem cell population maintenance,Grey,1.632936,2.09147327922374e-08
+stem cell population maintenance,Strong_late_1,0.999712,1
+stem cell population maintenance,Strong_late_2,1.082309,1
+stem cell population maintenance,Weak_VZ,2.720979,0.657435941555556
+stem cell population maintenance,Weak_early_VZ,1.493852,4.72460073369565e-06
+stem cell population maintenance,Weak_late_VZ,0.7839012,1
+stem cell population maintenance,black,0.6131071,1
+stem cell population maintenance,blue,1.167512,0.700099241011036
+stem cell population maintenance,brown,3.280644,1.9086388247311802e-20
+stem cell population maintenance,cyan,2.689857,0.876683038768719
+stem cell population maintenance,darkred,1.045202,1
+stem cell population maintenance,green,0.8855991,1
+stem cell population maintenance,greenyellow,0.7243971,1
+stem cell population maintenance,grey60,2.676736,1
+stem cell population maintenance,lightcyan,1.903113,1
+stem cell population maintenance,lightgreen,0.8251591,1
+stem cell population maintenance,lightyellow,0,1
+stem cell population maintenance,magenta,0.990936,1
+stem cell population maintenance,midnightblue,2.274532,1
+stem cell population maintenance,pink,1.635783,1
+stem cell population maintenance,purple,0.9274324,1
+stem cell population maintenance,red,1.353605,1
+stem cell population maintenance,royalblue,7.634516,0.0704046398
+stem cell population maintenance,salmon,1.560372,1
+stem cell population maintenance,tan,0.8886329,1
+stem cell population maintenance,turquoise,1.844921,8.8397365e-12
+stem cell population maintenance,yellow,0.6861658,1
+synapse maturation,Constitutive_strong_1,2.226495,0.131010627876106
+synapse maturation,Constitutive_strong_2,0,1
+synapse maturation,Grey,2.911667,0.0019109879933432
+synapse maturation,Strong_late_1,2.203458,1
+synapse maturation,Strong_late_2,0,1
+synapse maturation,Weak_VZ,0,1
+synapse maturation,Weak_early_VZ,1.426201,0.477518024466627
+synapse maturation,Weak_late_VZ,0,1
+synapse maturation,black,4.864842,0.993601814754098
+synapse maturation,blue,4.087015,0.0095669443913043
+synapse maturation,brown,0.6850273,1
+synapse maturation,cyan,0,1
+synapse maturation,darkred,0,1
+synapse maturation,green,0,1
+synapse maturation,greenyellow,0,1
+synapse maturation,grey60,0,1
+synapse maturation,lightcyan,0,1
+synapse maturation,lightgreen,0,1
+synapse maturation,lightyellow,0,1
+synapse maturation,magenta,4.914259,1
+synapse maturation,midnightblue,0,1
+synapse maturation,pink,29.49887,2.43770270333333e-08
+synapse maturation,purple,0,1
+synapse maturation,red,2.065481,1
+synapse maturation,royalblue,0,1
+synapse maturation,salmon,0,1
+synapse maturation,tan,0,1
+synapse maturation,turquoise,0.8461828,1
+synapse maturation,yellow,4.804009,0.08528336025

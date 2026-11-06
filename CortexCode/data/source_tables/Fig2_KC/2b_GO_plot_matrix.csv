@@ -1,0 +1,19 @@
+GO_term,turquoise,Weak_early_VZ,brown,black,pink,blue,yellow,red,Strong_late_1,purple,Constitutive_strong_1,Constitutive_strong_2
+regulation of G0 to G1 transition,5,2.59963,0,0,0,0,0,0,0,0,0,0
+stem cell population maintenance,1.844921,1.493852,3.280644,0,0,0,0,0,0,0,1.558894,0
+negative regulation of cell cycle process,1.83507,1.734882,3.44245,0,0,0,0,0,0,0,2.11639,0
+somatic stem cell population maintenance,1.898128,1.492084,4.704742,0,0,0,0,0,0,0,1.562033,0
+cell cycle DNA replication,0,0,5,0,0,0,0,0,0,0,4.377187,0
+central nervous system development,1.072764,1.092498,1.270184,1.89187,1.633571,1.2376,0,0,0,0,1.129842,0
+neuron migration,0,0,0,2.338333,2.835784,1.773474,0,0,0,0,0,0
+axonal fasciculation,0,0,0,5,0,0,0,0,0,0,0,0
+regulation of histone methylation,0,1.725151,0,0,4.906305,1.716565,0,0,0,0,2.24433,0
+dendrite extension,0,0,0,0,5,0,0,0,0,0,3.054296,0
+positive regulation of synaptic plasticity,2.582418,3.868928,0,0,5,5,0,0,0,0,0,0
+synapse maturation,0,0,0,0,5,4.087015,4.804009,0,0,0,0,0
+cortical cytoskeleton organization,1.569229,1.889187,2.177776,0,0,2.646736,2.757529,0,4.378146,0,1.769567,0
+long term synaptic depression,0,0,0,0,0,0,3.989834,0,3.529324,0,0,0
+neuronal action potential propagation,0,0,0,0,0,0,5,0,0,0,0,0
+actin cytoskeleton reorganization,1.562898,1.809343,0,0,3.63229,0,0,3.236917,0,0,1.633855,0
+protein acylation,0,1.634754,2.41926,0,0,1.856981,0,0,0,5,2.046257,5
+ribonucleoprotein complex subunit organization,0,0,2.843559,0,0,1.746424,0,0,1.883121,3.743509,1.781995,4.795165

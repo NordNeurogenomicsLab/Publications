@@ -1,4 +1,4 @@
-# Local large data and generated products are saved in this delivery but excluded from ordinary Git commits.
+# Selected reviewed tables are tracked explicitly; other data and generated products remain excluded.
 data/*
 !data/README.md
 objects/*

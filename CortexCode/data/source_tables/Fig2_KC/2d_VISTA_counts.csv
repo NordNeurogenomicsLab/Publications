@@ -1,0 +1,11 @@
+Fine_clusters,VISTA_class,n,class_total,pct,Module
+turquoise,VZ,19,23,82.6086956521739,A1
+turquoise,non-VZ,5,16,31.25,A1
+green,VZ,2,23,8.69565217391304,A6
+green,non-VZ,2,16,12.5,A6
+brown,VZ,0,23,0,A9
+brown,non-VZ,7,16,43.75,A9
+blue,VZ,0,23,0,A12
+blue,non-VZ,1,16,6.25,A12
+Constitutive_weak,VZ,2,23,8.69565217391304,A17
+Constitutive_weak,non-VZ,1,16,6.25,A17

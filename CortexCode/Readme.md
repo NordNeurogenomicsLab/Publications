@@ -10,7 +10,7 @@ Athéna R. Ypsilanti<sup>†,*</sup>, Eirene Markenscoff-Papadimitriou<sup>†,*
 
 ## Inputs and environment
 
-[Input files and run order](INPUTS.md) · [Saved RDS/RData objects](SAVED_OBJECTS.md) · [R session and package versions](environment/README.md)
+[Tables on GitHub](data/TABLES_ON_GITHUB.csv) � [Input files and run order](INPUTS.md) · [Saved RDS/RData objects](SAVED_OBJECTS.md) · [R session and package versions](environment/README.md)
 
 ## Figure and analysis notebooks
 

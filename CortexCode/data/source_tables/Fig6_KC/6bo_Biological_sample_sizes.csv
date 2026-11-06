@@ -1,0 +1,33 @@
+Gene,RNA_population,Genotype,Biological_samples_n,Sample_IDs
+Bcl11b,VZ,Mut,4,Kdm6b_07minus_mut_S21; Kdm6b_08minus_mut_S22; Kdm6b_14plus_mut_S11; Kdm6b_15plus_mut_S12
+Bcl11b,VZ,WT,4,Kdm6b_09minus_wt_S17; Kdm6b_18plus_wt_S6; Kdm6b_19plus_wt_S7; Kdm6b_24plus_wt_S8
+Bcl11b,nonVZ,Mut,4,Kdm6b_07plus_mut_S9; Kdm6b_08plus_mut_S10; Kdm6b_14minus_mut_S23; Kdm6b_15minus_mut_S24
+Bcl11b,nonVZ,WT,3,Kdm6b_09plus_wt_S5; Kdm6b_19minus_wt_S19; Kdm6b_24minus_wt_S20
+Neurod2,VZ,Mut,4,Kdm6b_07minus_mut_S21; Kdm6b_08minus_mut_S22; Kdm6b_14plus_mut_S11; Kdm6b_15plus_mut_S12
+Neurod2,VZ,WT,4,Kdm6b_09minus_wt_S17; Kdm6b_18plus_wt_S6; Kdm6b_19plus_wt_S7; Kdm6b_24plus_wt_S8
+Neurod2,nonVZ,Mut,4,Kdm6b_07plus_mut_S9; Kdm6b_08plus_mut_S10; Kdm6b_14minus_mut_S23; Kdm6b_15minus_mut_S24
+Neurod2,nonVZ,WT,3,Kdm6b_09plus_wt_S5; Kdm6b_19minus_wt_S19; Kdm6b_24minus_wt_S20
+Nrxn2,VZ,Mut,4,Kdm6b_07minus_mut_S21; Kdm6b_08minus_mut_S22; Kdm6b_14plus_mut_S11; Kdm6b_15plus_mut_S12
+Nrxn2,VZ,WT,4,Kdm6b_09minus_wt_S17; Kdm6b_18plus_wt_S6; Kdm6b_19plus_wt_S7; Kdm6b_24plus_wt_S8
+Nrxn2,nonVZ,Mut,4,Kdm6b_07plus_mut_S9; Kdm6b_08plus_mut_S10; Kdm6b_14minus_mut_S23; Kdm6b_15minus_mut_S24
+Nrxn2,nonVZ,WT,3,Kdm6b_09plus_wt_S5; Kdm6b_19minus_wt_S19; Kdm6b_24minus_wt_S20
+Ppp1r1b,VZ,Mut,4,Kdm6b_07minus_mut_S21; Kdm6b_08minus_mut_S22; Kdm6b_14plus_mut_S11; Kdm6b_15plus_mut_S12
+Ppp1r1b,VZ,WT,4,Kdm6b_09minus_wt_S17; Kdm6b_18plus_wt_S6; Kdm6b_19plus_wt_S7; Kdm6b_24plus_wt_S8
+Ppp1r1b,nonVZ,Mut,4,Kdm6b_07plus_mut_S9; Kdm6b_08plus_mut_S10; Kdm6b_14minus_mut_S23; Kdm6b_15minus_mut_S24
+Ppp1r1b,nonVZ,WT,3,Kdm6b_09plus_wt_S5; Kdm6b_19minus_wt_S19; Kdm6b_24minus_wt_S20
+Shank1,VZ,Mut,4,Kdm6b_07minus_mut_S21; Kdm6b_08minus_mut_S22; Kdm6b_14plus_mut_S11; Kdm6b_15plus_mut_S12
+Shank1,VZ,WT,4,Kdm6b_09minus_wt_S17; Kdm6b_18plus_wt_S6; Kdm6b_19plus_wt_S7; Kdm6b_24plus_wt_S8
+Shank1,nonVZ,Mut,4,Kdm6b_07plus_mut_S9; Kdm6b_08plus_mut_S10; Kdm6b_14minus_mut_S23; Kdm6b_15minus_mut_S24
+Shank1,nonVZ,WT,3,Kdm6b_09plus_wt_S5; Kdm6b_19minus_wt_S19; Kdm6b_24minus_wt_S20
+Slc17a6,VZ,Mut,4,Kdm6b_07minus_mut_S21; Kdm6b_08minus_mut_S22; Kdm6b_14plus_mut_S11; Kdm6b_15plus_mut_S12
+Slc17a6,VZ,WT,4,Kdm6b_09minus_wt_S17; Kdm6b_18plus_wt_S6; Kdm6b_19plus_wt_S7; Kdm6b_24plus_wt_S8
+Slc17a6,nonVZ,Mut,4,Kdm6b_07plus_mut_S9; Kdm6b_08plus_mut_S10; Kdm6b_14minus_mut_S23; Kdm6b_15minus_mut_S24
+Slc17a6,nonVZ,WT,3,Kdm6b_09plus_wt_S5; Kdm6b_19minus_wt_S19; Kdm6b_24minus_wt_S20
+Tbr1,VZ,Mut,4,Kdm6b_07minus_mut_S21; Kdm6b_08minus_mut_S22; Kdm6b_14plus_mut_S11; Kdm6b_15plus_mut_S12
+Tbr1,VZ,WT,4,Kdm6b_09minus_wt_S17; Kdm6b_18plus_wt_S6; Kdm6b_19plus_wt_S7; Kdm6b_24plus_wt_S8
+Tbr1,nonVZ,Mut,4,Kdm6b_07plus_mut_S9; Kdm6b_08plus_mut_S10; Kdm6b_14minus_mut_S23; Kdm6b_15minus_mut_S24
+Tbr1,nonVZ,WT,3,Kdm6b_09plus_wt_S5; Kdm6b_19minus_wt_S19; Kdm6b_24minus_wt_S20
+Wnt7b,VZ,Mut,4,Kdm6b_07minus_mut_S21; Kdm6b_08minus_mut_S22; Kdm6b_14plus_mut_S11; Kdm6b_15plus_mut_S12
+Wnt7b,VZ,WT,4,Kdm6b_09minus_wt_S17; Kdm6b_18plus_wt_S6; Kdm6b_19plus_wt_S7; Kdm6b_24plus_wt_S8
+Wnt7b,nonVZ,Mut,4,Kdm6b_07plus_mut_S9; Kdm6b_08plus_mut_S10; Kdm6b_14minus_mut_S23; Kdm6b_15minus_mut_S24
+Wnt7b,nonVZ,WT,3,Kdm6b_09plus_wt_S5; Kdm6b_19minus_wt_S19; Kdm6b_24minus_wt_S20
