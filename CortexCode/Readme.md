@@ -44,53 +44,59 @@ Athéna R. Ypsilanti<sup>†,*</sup>, Eirene Markenscoff-Papadimitriou<sup>†,*
 
 ## Input data tables
 
+File links retain the full repository path; **Path** links point to the inventory for inputs not yet deposited.
+
 ### Primary RNA-seq and chromatin count tables
 
-| File name | Contents | GitHub repository path |
+| File name | Contents | Repository |
 |---|---|---|
-| `featureCounts_final_15samples.txt` | Bulk RNA-seq gene counts and feature lengths for 15 libraries | **Not deposited**; expected path: `data/upstream/RNA/featureCounts_final_15samples.txt` |
-| `hac_overlap_peaks_merged-mm10.tsv` | H3K27ac ChIP-seq peak-by-sample counts | [data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv](data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv) |
-| `htk_overlap_peaks_merged-mm10.tsv` | H3K27me3 ChIP-seq peak-by-sample counts | [data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv](data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv) |
-| `atac_idr_peaks_merged_uniform-mm10.tsv` | ATAC-seq peak-by-sample counts | [data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv](data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv) |
+| <code>featureCounts_final_</code><br><code>15samples.txt</code> | Kdm6b cKO and WT bulk RNA-seq gene counts and feature lengths (15 libraries) | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/RNA/featureCounts_final_15samples.txt") |
+| <code>hac_overlap_peaks_merged-</code><br><code>mm10.tsv</code> | Developmental H3K27ac ChIP-seq peak-by-sample counts | [File](data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv "data/upstream/WGCNA/WGCNA_input_data/hac_overlap_peaks_merged-mm10.tsv") |
+| <code>htk_overlap_peaks_merged-</code><br><code>mm10.tsv</code> | Developmental H3K27me3 ChIP-seq peak-by-sample counts | [File](data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv "data/upstream/WGCNA/WGCNA_input_data/htk_overlap_peaks_merged-mm10.tsv") |
+| <code>atac_idr_peaks_merged_</code><br><code>uniform-mm10.tsv</code> | Developmental ATAC-seq peak-by-sample counts | [File](data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv "data/upstream/WGCNA/WGCNA_input_data/atac_idr_peaks_merged_uniform-mm10.tsv") |
+
+Kdm6b cKO chromatin and RNA differential results: [ATAC/ChIP-seq and RNA-seq results](#kdm6b-cko-diffbind-and-rna-seq-results).
 
 ### Metadata
 
-| File name | Contents | GitHub repository path |
+| File name | Contents | Repository |
 |---|---|---|
-| `sample_metadata.csv` | Bulk RNA library IDs, genotype, litter, sex and FlashTag population | [data/upstream/RNA/sample_metadata.csv](data/upstream/RNA/sample_metadata.csv) |
-| `sample_metadata.csv` | ATAC/ChIP-seq sample metadata and BAM basenames for DiffBind | **Not deposited**; expected path: `data/upstream/diffbind/sample_metadata.csv` |
-| `multiome_cell_metadata.csv` | Multiome cell identities and annotations | **Not deposited**; expected path: `data/upstream/multiome/multiome_cell_metadata.csv` |
+| `sample_metadata.csv` | Bulk RNA library IDs, genotype, litter, sex and FlashTag population | [File](data/upstream/RNA/sample_metadata.csv "data/upstream/RNA/sample_metadata.csv") |
+| `sample_metadata.csv` | ATAC/ChIP-seq sample metadata and BAM basenames for DiffBind | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/diffbind/sample_metadata.csv") |
+| `multiome_cell_metadata.csv` | Multiome cell identities and annotations | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/multiome/multiome_cell_metadata.csv") |
 
 ### WGCNA annotations and integrated data
 
-| File name | Contents | GitHub repository path |
+| File name | Contents | Repository |
 |---|---|---|
-| `Module_renaming_dictionary.csv` | Original module labels mapped to manuscript names | [data/upstream/Module_renaming_dictionary.csv](data/upstream/Module_renaming_dictionary.csv) |
-| `atac_modules.csv` | ATAC interval-to-module assignments | [data/upstream/multiome/atac_modules.csv](data/upstream/multiome/atac_modules.csv) |
-| `Supp_Table_1_ATAC_master.csv` | Final annotated ATAC intervals and modules | **Not deposited**; expected path: `data/upstream/final_tables/Supp_Table_1_ATAC_master.csv` |
-| `Supp_Table_2_AC_master.csv` | Final annotated H3K27ac intervals and modules | **Not deposited**; expected path: `data/upstream/final_tables/Supp_Table_2_AC_master.csv` |
-| `Supp_Table_3_ME3_master.csv` | Final annotated H3K27me3 intervals and modules | **Not deposited**; expected path: `data/upstream/final_tables/Supp_Table_3_ME3_master.csv` |
-| `Supp_Table_4_WGCNA_interactions_and_Programs.csv` | Integrated WGCNA interval interactions and developmental programs | **Not deposited**; expected path: `data/upstream/final_tables/Supp_Table_4_WGCNA_interactions_and_Programs.csv` |
-| `all_overlaps_total_aug_with_Programs.csv` | Linked ATAC/AC/ME3 interval catalog with program assignments | **Not deposited**; expected path: `data/upstream/integration/all_overlaps_total_aug_with_Programs.csv` |
-| `AC.linked_peaks.csv` | H3K27ac peak-to-gene links and statistics | [data/upstream/multiome/AC.linked_peaks.csv](data/upstream/multiome/AC.linked_peaks.csv) |
-| `ME3.linked_peaks.csv` | H3K27me3 peak-to-gene links and statistics | [data/upstream/multiome/ME3.linked_peaks.csv](data/upstream/multiome/ME3.linked_peaks.csv) |
-| `network_nodes.csv` | Integrated module-network node annotations | [data/upstream/network_nodes.csv](data/upstream/network_nodes.csv) |
-| `network_edges.csv` | Integrated module-network connections | [data/upstream/network_edges.csv](data/upstream/network_edges.csv) |
-| `4f_Program_counts.csv` | Counts assigned to each integrated developmental program | [data/source_tables/Fig4_KC/4f_Program_counts.csv](data/source_tables/Fig4_KC/4f_Program_counts.csv) |
-| `4f_Quantized_trajectories.csv` | Quantized ATAC/AC/ME3 program trajectories | [data/source_tables/Fig4_KC/4f_Quantized_trajectories.csv](data/source_tables/Fig4_KC/4f_Quantized_trajectories.csv) |
+| <code>Module_renaming_</code><br><code>dictionary.csv</code> | Original module labels mapped to manuscript names | [File](data/upstream/Module_renaming_dictionary.csv "data/upstream/Module_renaming_dictionary.csv") |
+| `atac_modules.csv` | ATAC interval-to-module assignments | [File](data/upstream/multiome/atac_modules.csv "data/upstream/multiome/atac_modules.csv") |
+| `Supp_Table_1_ATAC_master.csv` | Final annotated ATAC intervals and modules | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/final_tables/Supp_Table_1_ATAC_master.csv") |
+| `Supp_Table_2_AC_master.csv` | Final annotated H3K27ac intervals and modules | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/final_tables/Supp_Table_2_AC_master.csv") |
+| `Supp_Table_3_ME3_master.csv` | Final annotated H3K27me3 intervals and modules | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/final_tables/Supp_Table_3_ME3_master.csv") |
+| <code>Supp_Table_4_WGCNA_</code><br><code>interactions_and_</code><br><code>Programs.csv</code> | Integrated WGCNA interval interactions and developmental programs | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/final_tables/Supp_Table_4_WGCNA_interactions_and_Programs.csv") |
+| <code>all_overlaps_total_aug_with_</code><br><code>Programs.csv</code> | Linked ATAC/AC/ME3 interval catalog with program assignments | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/integration/all_overlaps_total_aug_with_Programs.csv") |
+| `AC.linked_peaks.csv` | H3K27ac peak-to-gene links and statistics | [File](data/upstream/multiome/AC.linked_peaks.csv "data/upstream/multiome/AC.linked_peaks.csv") |
+| `ME3.linked_peaks.csv` | H3K27me3 peak-to-gene links and statistics | [File](data/upstream/multiome/ME3.linked_peaks.csv "data/upstream/multiome/ME3.linked_peaks.csv") |
+| `network_nodes.csv` | Integrated module-network node annotations | [File](data/upstream/network_nodes.csv "data/upstream/network_nodes.csv") |
+| `network_edges.csv` | Integrated module-network connections | [File](data/upstream/network_edges.csv "data/upstream/network_edges.csv") |
+| `4f_Program_counts.csv` | Counts assigned to each integrated developmental program | [File](data/source_tables/Fig4_KC/4f_Program_counts.csv "data/source_tables/Fig4_KC/4f_Program_counts.csv") |
+| <code>4f_Quantized_</code><br><code>trajectories.csv</code> | Quantized ATAC/AC/ME3 program trajectories | [File](data/source_tables/Fig4_KC/4f_Quantized_trajectories.csv "data/source_tables/Fig4_KC/4f_Quantized_trajectories.csv") |
 
-### DiffBind and RNA differential-expression results
+### Kdm6b cKO DiffBind and RNA-seq results
 
-| File name | Contents | GitHub repository path |
+These are derived statistical results; the chromatin tables also retain per-sample signal columns. They are not raw read-count matrices.
+
+| File name | Contents | Repository |
 |---|---|---|
-| `Ac_FTneg_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv` | H3K27ac DiffBind/DESeq2 results, FlashTag-negative cells | **Not deposited**; expected path: `data/upstream/final_tables/Ac_FTneg_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv` |
-| `Ac_FTpos_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv` | H3K27ac DiffBind/DESeq2 results, FlashTag-positive cells | **Not deposited**; expected path: `data/upstream/final_tables/Ac_FTpos_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv` |
-| `ATAC_FTneg_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv` | ATAC DiffBind/DESeq2 results, FlashTag-negative cells | **Not deposited**; expected path: `data/upstream/final_tables/ATAC_FTneg_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv` |
-| `ATAC_FTpos_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv` | ATAC DiffBind/DESeq2 results, FlashTag-positive cells | **Not deposited**; expected path: `data/upstream/final_tables/ATAC_FTpos_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv` |
-| `H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv` | H3K27me3 DiffBind/DESeq2 results, FlashTag-negative cells | **Not deposited**; expected path: `data/upstream/final_tables/H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv` |
-| `H3K27Me3_FTpos_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv` | H3K27me3 DiffBind/DESeq2 results, FlashTag-positive cells | **Not deposited**; expected path: `data/upstream/final_tables/H3K27Me3_FTpos_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv` |
-| `VZ_wt_vs_mut_DE_Litter_Sex_cor.csv` | VZ RNA-seq differential expression, adjusted for litter and sex | [data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv](data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv) |
-| `nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv` | nonVZ RNA-seq differential expression, adjusted for litter and sex | [data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv](data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv) |
+| <code>Ac_FTneg_Modality_H3K27Ac_</code><br><code>PeakSet_ac_expand_bed_5000_</code><br><code>Condition_FlashtagNeg__</code><br><code>genotype_DBA_DESEQ2.csv</code> | H3K27ac Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-negative cells | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/final_tables/Ac_FTneg_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv") |
+| <code>Ac_FTpos_Modality_H3K27Ac_</code><br><code>PeakSet_ac_expand_bed_5000_</code><br><code>Condition_FlashtagPos__</code><br><code>genotype_DBA_DESEQ2.csv</code> | H3K27ac Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-positive cells | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/final_tables/Ac_FTpos_Modality_H3K27Ac_PeakSet_ac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv") |
+| <code>ATAC_FTneg_Modality_ATAC_</code><br><code>PeakSet_atac_expand_bed_</code><br><code>5000_Condition_FlashtagNeg__</code><br><code>genotype_DBA_DESEQ2.csv</code> | ATAC Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-negative cells | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/final_tables/ATAC_FTneg_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv") |
+| <code>ATAC_FTpos_Modality_ATAC_</code><br><code>PeakSet_atac_expand_bed_</code><br><code>5000_Condition_FlashtagPos__</code><br><code>genotype_DBA_DESEQ2.csv</code> | ATAC Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-positive cells | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/final_tables/ATAC_FTpos_Modality_ATAC_PeakSet_atac_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv") |
+| <code>H3K27Me3_FTneg_Modality_</code><br><code>H3K27Me3_PeakSet_me3_expand_</code><br><code>bed_5000_Condition_</code><br><code>FlashtagNeg__genotype_DBA_</code><br><code>DESEQ2.csv</code> | H3K27me3 Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-negative cells | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/final_tables/H3K27Me3_FTneg_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagNeg__genotype_DBA_DESEQ2.csv") |
+| <code>H3K27Me3_FTpos_Modality_</code><br><code>H3K27Me3_PeakSet_me3_expand_</code><br><code>bed_5000_Condition_</code><br><code>FlashtagPos__genotype_DBA_</code><br><code>DESEQ2.csv</code> | H3K27me3 Kdm6b cKO versus WT DiffBind/DESeq2 results, FlashTag-positive cells | Not deposited<br>[Path](config/file_inventory.csv "data/upstream/final_tables/H3K27Me3_FTpos_Modality_H3K27Me3_PeakSet_me3_expand_bed_5000_Condition_FlashtagPos__genotype_DBA_DESEQ2.csv") |
+| <code>VZ_wt_vs_mut_DE_Litter_Sex_</code><br><code>cor.csv</code> | VZ Kdm6b cKO versus WT RNA-seq differential expression, adjusted for litter and sex | [File](data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv "data/upstream/RNA/VZ_wt_vs_mut_DE_Litter_Sex_cor.csv") |
+| <code>nonVZ_wt_vs_mut_DE_Litter_</code><br><code>Sex_cor.csv</code> | nonVZ Kdm6b cKO versus WT RNA-seq differential expression, adjusted for litter and sex | [File](data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv "data/upstream/RNA/nonVZ_wt_vs_mut_DE_Litter_Sex_cor.csv") |
 
 Other figure-level tables, IHC/thickness measurements and saved-object references: [Source_tables](SOURCE_TABLES.md).
 
