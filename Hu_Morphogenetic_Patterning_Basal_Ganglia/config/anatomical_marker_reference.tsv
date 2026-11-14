@@ -1,0 +1,617 @@
+source_row	marker_as_written	region	annotation_as_written
+4	Lhx8	BSTL	
+4	Lhx8	BSTM	
+4	Lhx8	BSTP	
+4	Lhx8	BSTA	
+4	Lhx8	GPe	Lhx8
+4	Lhx8	GPi	Lhx8
+4	Lhx8	SI-p	Lhx8
+4	Lhx8	Si-d	Lhx8
+4	Lhx8	Vpal-Str	Lhx8
+4	Lhx8	Vpal-Se	Lhx8
+4	Lhx8	Vpal-Pse	Lhx8
+4	Lhx8	Vpal-Pallidal (Vpal-P)	Lhx8
+4	Lhx8	Vpal-Diagonal (Vpal-D)	Lhx8
+4	Lhx8	Diagonal Band (DB)(Dg to Septum)	Lhx8
+4	Lhx8	Supra-diagonal stream (sud; LPO to septum)	Lhx8
+4	Lhx8	Spm (subpial migration (MPO to septum))	
+4	Lhx8	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+4	Lhx8	SIN (migrating to become striatal Ins)	Lhx8
+4	Lhx8	LPO	Lhx8
+4	Lhx8	MPO1	
+4	Lhx8	MPO2	
+4	Lhx8	MPO3	
+5	Nkx2.1	BSTL	Nkx2.1
+5	Nkx2.1	BSTM	Nkx2.1
+5	Nkx2.1	BSTP	Nkx2.1
+5	Nkx2.1	BSTA	
+5	Nkx2.1	GPe	Nkx2.1
+5	Nkx2.1	GPi	Nkx2.1 (weak)
+5	Nkx2.1	SI-p	Nkx2.1
+5	Nkx2.1	Si-d	Nkx2.1
+5	Nkx2.1	Vpal-Str	
+5	Nkx2.1	Vpal-Se	Nkx2.1
+5	Nkx2.1	Vpal-Pse	Nkx2.1
+5	Nkx2.1	Vpal-Pallidal (Vpal-P)	Nkx2.1 (weak)
+5	Nkx2.1	Vpal-Diagonal (Vpal-D)	Nkx2.1 (weak)
+5	Nkx2.1	Diagonal Band (DB)(Dg to Septum)	
+5	Nkx2.1	Supra-diagonal stream (sud; LPO to septum)	Nkx2.1
+5	Nkx2.1	Spm (subpial migration (MPO to septum))	
+5	Nkx2.1	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+5	Nkx2.1	SIN (migrating to become striatal Ins)	Nkx2.1
+5	Nkx2.1	LPO	Nkx2.1
+5	Nkx2.1	MPO1	Nkx2.1
+5	Nkx2.1	MPO2	Nkx2.1
+5	Nkx2.1	MPO3	Nkx2.1
+6	Gbx1	BSTL	
+6	Gbx1	BSTM	
+6	Gbx1	BSTP	Gbx1
+6	Gbx1	BSTA	
+6	Gbx1	GPe	Gbx1
+6	Gbx1	GPi	Gbx1
+6	Gbx1	SI-p	Gbx1
+6	Gbx1	Si-d	Gbx1
+6	Gbx1	Vpal-Str	Gbx1
+6	Gbx1	Vpal-Se	Gbx1
+6	Gbx1	Vpal-Pse	Gbx1
+6	Gbx1	Vpal-Pallidal (Vpal-P)	Gbx1
+6	Gbx1	Vpal-Diagonal (Vpal-D)	Gbx1
+6	Gbx1	Diagonal Band (DB)(Dg to Septum)	Gbx1
+6	Gbx1	Supra-diagonal stream (sud; LPO to septum)	
+6	Gbx1	Spm (subpial migration (MPO to septum))	
+6	Gbx1	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+6	Gbx1	SIN (migrating to become striatal Ins)	
+6	Gbx1	LPO	Gbx1
+6	Gbx1	MPO1	
+6	Gbx1	MPO2	
+6	Gbx1	MPO3	
+7	Gbx2	BSTL	
+7	Gbx2	BSTM	
+7	Gbx2	BSTP	
+7	Gbx2	BSTA	
+7	Gbx2	GPe	
+7	Gbx2	GPi	
+7	Gbx2	SI-p	Gbx2
+7	Gbx2	Si-d	Gbx2
+7	Gbx2	Vpal-Str	Gbx2
+7	Gbx2	Vpal-Se	Gbx2
+7	Gbx2	Vpal-Pse	Gbx2
+7	Gbx2	Vpal-Pallidal (Vpal-P)	Gbx2 (light)
+7	Gbx2	Vpal-Diagonal (Vpal-D)	Gbx2 (light)
+7	Gbx2	Diagonal Band (DB)(Dg to Septum)	
+7	Gbx2	Supra-diagonal stream (sud; LPO to septum)	Gbx2
+7	Gbx2	Spm (subpial migration (MPO to septum))	
+7	Gbx2	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+7	Gbx2	SIN (migrating to become striatal Ins)	Gbx2
+7	Gbx2	LPO	Gbx2 (paraseptal-LPO???)
+7	Gbx2	MPO1	
+7	Gbx2	MPO2	Gbx2
+7	Gbx2	MPO3	
+8	Zic1	BSTL	
+8	Zic1	BSTM	Zic1
+8	Zic1	BSTP	
+8	Zic1	BSTA	
+8	Zic1	GPe	Zic1
+8	Zic1	GPi	Zic1
+8	Zic1	SI-p	Zic1
+8	Zic1	Si-d	Zic1
+8	Zic1	Vpal-Str	Zic1
+8	Zic1	Vpal-Se	Zic1
+8	Zic1	Vpal-Pse	Zic1? (based on unpublished confocal images)
+8	Zic1	Vpal-Pallidal (Vpal-P)	Zic1 (migrate from Se?)
+8	Zic1	Vpal-Diagonal (Vpal-D)	Zic1 (migrate from Se?)
+8	Zic1	Diagonal Band (DB)(Dg to Septum)	Zic1 ???(see light in horizontal DB @ E13 Allen)
+8	Zic1	Supra-diagonal stream (sud; LPO to septum)	Zic1
+8	Zic1	Spm (subpial migration (MPO to septum))	Zic1
+8	Zic1	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	Zic1
+8	Zic1	SIN (migrating to become striatal Ins)	Zic1 (fewer than Gbx2)
+8	Zic1	LPO	Zic1 (septal-LPO)
+8	Zic1	MPO1	
+8	Zic1	MPO2	
+8	Zic1	MPO3	Zic1
+9	Id4	BSTL	Id4
+9	Id4	BSTM	Id4
+9	Id4	BSTP	Id4
+9	Id4	BSTA	
+9	Id4	GPe	
+9	Id4	GPi	Id4 (need to in drawing)
+9	Id4	SI-p	Id4
+9	Id4	Si-d	Id4
+9	Id4	Vpal-Str	Id4
+9	Id4	Vpal-Se	
+9	Id4	Vpal-Pse	Id4
+9	Id4	Vpal-Pallidal (Vpal-P)	
+9	Id4	Vpal-Diagonal (Vpal-D)	
+9	Id4	Diagonal Band (DB)(Dg to Septum)	
+9	Id4	Supra-diagonal stream (sud; LPO to septum)	Id4
+9	Id4	Spm (subpial migration (MPO to septum))	Id4
+9	Id4	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+9	Id4	SIN (migrating to become striatal Ins)	
+9	Id4	LPO	Id4
+9	Id4	MPO1	
+9	Id4	MPO2	
+9	Id4	MPO3	Id4
+10	Isl1	BSTL	Isl1
+10	Isl1	BSTM	Isl1
+10	Isl1	BSTP	Isl1
+10	Isl1	BSTA	
+10	Isl1	GPe	
+10	Isl1	GPi	Isl1
+10	Isl1	SI-p	Isl1
+10	Isl1	Si-d	Isl1
+10	Isl1	Vpal-Str	
+10	Isl1	Vpal-Se	Isl1
+10	Isl1	Vpal-Pse	Isl1
+10	Isl1	Vpal-Pallidal (Vpal-P)	
+10	Isl1	Vpal-Diagonal (Vpal-D)	
+10	Isl1	Diagonal Band (DB)(Dg to Septum)	
+10	Isl1	Supra-diagonal stream (sud; LPO to septum)	Isl1
+10	Isl1	Spm (subpial migration (MPO to septum))	Isl1
+10	Isl1	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+10	Isl1	SIN (migrating to become striatal Ins)	
+10	Isl1	LPO	Isl1
+10	Isl1	MPO1	
+10	Isl1	MPO2	Isl1
+10	Isl1	MPO3	Isl1
+11	Pnoc (only see at E13.5)	BSTL	
+11	Pnoc (only see at E13.5)	BSTM	
+11	Pnoc (only see at E13.5)	BSTP	
+11	Pnoc (only see at E13.5)	BSTA	
+11	Pnoc (only see at E13.5)	GPe	
+11	Pnoc (only see at E13.5)	GPi	
+11	Pnoc (only see at E13.5)	SI-p	
+11	Pnoc (only see at E13.5)	Si-d	
+11	Pnoc (only see at E13.5)	Vpal-Str	
+11	Pnoc (only see at E13.5)	Vpal-Se	Pnoc
+11	Pnoc (only see at E13.5)	Vpal-Pse	Pnoc
+11	Pnoc (only see at E13.5)	Vpal-Pallidal (Vpal-P)	
+11	Pnoc (only see at E13.5)	Vpal-Diagonal (Vpal-D)	
+11	Pnoc (only see at E13.5)	Diagonal Band (DB)(Dg to Septum)	negative (need to update in schema)
+11	Pnoc (only see at E13.5)	Supra-diagonal stream (sud; LPO to septum)	
+11	Pnoc (only see at E13.5)	Spm (subpial migration (MPO to septum))	
+11	Pnoc (only see at E13.5)	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+11	Pnoc (only see at E13.5)	SIN (migrating to become striatal Ins)	
+11	Pnoc (only see at E13.5)	LPO	
+11	Pnoc (only see at E13.5)	MPO1	
+11	Pnoc (only see at E13.5)	MPO2	Pnoc
+11	Pnoc (only see at E13.5)	MPO3	Pnoc
+12	Peg10	BSTL	Peg10
+12	Peg10	BSTM	Peg10
+12	Peg10	BSTP	Peg10
+12	Peg10	BSTA	Peg10
+12	Peg10	GPe	
+12	Peg10	GPi	
+12	Peg10	SI-p	Peg10
+12	Peg10	Si-d	Peg10
+12	Peg10	Vpal-Str	
+12	Peg10	Vpal-Se	
+12	Peg10	Vpal-Pse	
+12	Peg10	Vpal-Pallidal (Vpal-P)	
+12	Peg10	Vpal-Diagonal (Vpal-D)	
+12	Peg10	Diagonal Band (DB)(Dg to Septum)	
+12	Peg10	Supra-diagonal stream (sud; LPO to septum)	Peg10
+12	Peg10	Spm (subpial migration (MPO to septum))	Peg10
+12	Peg10	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+12	Peg10	SIN (migrating to become striatal Ins)	
+12	Peg10	LPO	Peg10
+12	Peg10	MPO1	Peg10
+12	Peg10	MPO2	Peg10
+12	Peg10	MPO3	Peg10
+13	Shh	BSTL	
+13	Shh	BSTM	
+13	Shh	BSTP	
+13	Shh	BSTA	
+13	Shh	GPe	Shh (see Pierre's paper)
+13	Shh	GPi	Shh (see Pierre's paper)
+13	Shh	SI-p	
+13	Shh	Si-d	
+13	Shh	Vpal-Str	
+13	Shh	Vpal-Se	
+13	Shh	Vpal-Pse	Shh
+13	Shh	Vpal-Pallidal (Vpal-P)	
+13	Shh	Vpal-Diagonal (Vpal-D)	
+13	Shh	Diagonal Band (DB)(Dg to Septum)	
+13	Shh	Supra-diagonal stream (sud; LPO to septum)	
+13	Shh	Spm (subpial migration (MPO to septum))	
+13	Shh	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+13	Shh	SIN (migrating to become striatal Ins)	
+13	Shh	LPO	Shh
+13	Shh	MPO1	
+13	Shh	MPO2	
+13	Shh	MPO3	
+14	Etv1	BSTL	Etv1
+14	Etv1	BSTM	Etv1
+14	Etv1	BSTP	
+14	Etv1	BSTA	
+14	Etv1	GPe	Etv1
+14	Etv1	GPi	
+14	Etv1	SI-p	Etv1
+14	Etv1	Si-d	Etv1
+14	Etv1	Vpal-Str	Etv1 (may have Pal and Dg components)
+14	Etv1	Vpal-Se	
+14	Etv1	Vpal-Pse	
+14	Etv1	Vpal-Pallidal (Vpal-P)	Etv1
+14	Etv1	Vpal-Diagonal (Vpal-D)	
+14	Etv1	Diagonal Band (DB)(Dg to Septum)	
+14	Etv1	Supra-diagonal stream (sud; LPO to septum)	
+14	Etv1	Spm (subpial migration (MPO to septum))	
+14	Etv1	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+14	Etv1	SIN (migrating to become striatal Ins)	
+14	Etv1	LPO	Etv1 (intraseptal only at E15.5)
+14	Etv1	MPO1	
+14	Etv1	MPO2	
+14	Etv1	MPO3	
+15	Cntnap3	BSTL	
+15	Cntnap3	BSTM	
+15	Cntnap3	BSTP	
+15	Cntnap3	BSTA	
+15	Cntnap3	GPe	Cntnap3
+15	Cntnap3	GPi	Cntnap3
+15	Cntnap3	SI-p	
+15	Cntnap3	Si-d	
+15	Cntnap3	Vpal-Str	Cntnap3???
+15	Cntnap3	Vpal-Se	
+15	Cntnap3	Vpal-Pse	
+15	Cntnap3	Vpal-Pallidal (Vpal-P)	
+15	Cntnap3	Vpal-Diagonal (Vpal-D)	
+15	Cntnap3	Diagonal Band (DB)(Dg to Septum)	
+15	Cntnap3	Supra-diagonal stream (sud; LPO to septum)	
+15	Cntnap3	Spm (subpial migration (MPO to septum))	
+15	Cntnap3	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+15	Cntnap3	SIN (migrating to become striatal Ins)	
+15	Cntnap3	LPO	
+15	Cntnap3	MPO1	
+15	Cntnap3	MPO2	
+15	Cntnap3	MPO3	
+16	Nfib	BSTL	Nfib
+16	Nfib	BSTM	Nfib
+16	Nfib	BSTP	Nfib
+16	Nfib	BSTA	
+16	Nfib	GPe	
+16	Nfib	GPi	Nfib
+16	Nfib	SI-p	
+16	Nfib	Si-d	Nfib
+16	Nfib	Vpal-Str	
+16	Nfib	Vpal-Se	
+16	Nfib	Vpal-Pse	
+16	Nfib	Vpal-Pallidal (Vpal-P)	
+16	Nfib	Vpal-Diagonal (Vpal-D)	
+16	Nfib	Diagonal Band (DB)(Dg to Septum)	
+16	Nfib	Supra-diagonal stream (sud; LPO to septum)	
+16	Nfib	Spm (subpial migration (MPO to septum))	
+16	Nfib	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+16	Nfib	SIN (migrating to become striatal Ins)	
+16	Nfib	LPO	
+16	Nfib	MPO1	
+16	Nfib	MPO2	
+16	Nfib	MPO3	
+17	Nr2f1	BSTL	Nr2f1
+17	Nr2f1	BSTM	Nr2f1
+17	Nr2f1	BSTP	Nr2f1
+17	Nr2f1	BSTA	
+17	Nr2f1	GPe	
+17	Nr2f1	GPi	
+17	Nr2f1	SI-p	Nr2f1 (E15.5)
+17	Nr2f1	Si-d	Nr2f1 (E15.5)
+17	Nr2f1	Vpal-Str	
+17	Nr2f1	Vpal-Se	
+17	Nr2f1	Vpal-Pse	
+17	Nr2f1	Vpal-Pallidal (Vpal-P)	
+17	Nr2f1	Vpal-Diagonal (Vpal-D)	
+17	Nr2f1	Diagonal Band (DB)(Dg to Septum)	
+17	Nr2f1	Supra-diagonal stream (sud; LPO to septum)	Nr2f1
+17	Nr2f1	Spm (subpial migration (MPO to septum))	
+17	Nr2f1	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+17	Nr2f1	SIN (migrating to become striatal Ins)	
+17	Nr2f1	LPO	Nr2f1
+17	Nr2f1	MPO1	
+17	Nr2f1	MPO2	Nr2f1
+17	Nr2f1	MPO3	
+18	Nr2f2	BSTL	
+18	Nr2f2	BSTM	
+18	Nr2f2	BSTP	Nr2f2
+18	Nr2f2	BSTA	
+18	Nr2f2	GPe	
+18	Nr2f2	GPi	
+18	Nr2f2	SI-p	Nr2f2 (E15.5)
+18	Nr2f2	Si-d	Nr2f2 (E15.5)
+18	Nr2f2	Vpal-Str	
+18	Nr2f2	Vpal-Se	
+18	Nr2f2	Vpal-Pse	
+18	Nr2f2	Vpal-Pallidal (Vpal-P)	
+18	Nr2f2	Vpal-Diagonal (Vpal-D)	
+18	Nr2f2	Diagonal Band (DB)(Dg to Septum)	
+18	Nr2f2	Supra-diagonal stream (sud; LPO to septum)	
+18	Nr2f2	Spm (subpial migration (MPO to septum))	
+18	Nr2f2	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+18	Nr2f2	SIN (migrating to become striatal Ins)	
+18	Nr2f2	LPO	
+18	Nr2f2	MPO1	
+18	Nr2f2	MPO2	
+18	Nr2f2	MPO3	
+19	FoxP2	BSTL	
+19	FoxP2	BSTM	
+19	FoxP2	BSTP	
+19	FoxP2	BSTA	
+19	FoxP2	GPe	
+19	FoxP2	GPi	
+19	FoxP2	SI-p	
+19	FoxP2	Si-d	
+19	FoxP2	Vpal-Str	
+19	FoxP2	Vpal-Se	
+19	FoxP2	Vpal-Pse	FoxP2
+19	FoxP2	Vpal-Pallidal (Vpal-P)	
+19	FoxP2	Vpal-Diagonal (Vpal-D)	
+19	FoxP2	Diagonal Band (DB)(Dg to Septum)	
+19	FoxP2	Supra-diagonal stream (sud; LPO to septum)	
+19	FoxP2	Spm (subpial migration (MPO to septum))	
+19	FoxP2	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+19	FoxP2	SIN (migrating to become striatal Ins)	
+19	FoxP2	LPO	FoxP2
+19	FoxP2	MPO1	
+19	FoxP2	MPO2	
+19	FoxP2	MPO3	
+20	Calb1	BSTL	
+20	Calb1	BSTM	
+20	Calb1	BSTP	Calb1
+20	Calb1	BSTA	Calb1
+20	Calb1	GPe	
+20	Calb1	GPi	
+20	Calb1	SI-p	
+20	Calb1	Si-d	
+20	Calb1	Vpal-Str	Calb1(not in E13.5 but in E15.5)
+20	Calb1	Vpal-Se	
+20	Calb1	Vpal-Pse	
+20	Calb1	Vpal-Pallidal (Vpal-P)	
+20	Calb1	Vpal-Diagonal (Vpal-D)	
+20	Calb1	Diagonal Band (DB)(Dg to Septum)	
+20	Calb1	Supra-diagonal stream (sud; LPO to septum)	
+20	Calb1	Spm (subpial migration (MPO to septum))	
+20	Calb1	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+20	Calb1	SIN (migrating to become striatal Ins)	
+20	Calb1	LPO	Calb1
+20	Calb1	MPO1	
+20	Calb1	MPO2	
+20	Calb1	MPO3	Calb1
+21	Cdh4	BSTL	
+21	Cdh4	BSTM	
+21	Cdh4	BSTP	Cdh4
+21	Cdh4	BSTA	
+21	Cdh4	GPe	Cdh4
+21	Cdh4	GPi	Cdh4
+21	Cdh4	SI-p	Cdh4
+21	Cdh4	Si-d	
+21	Cdh4	Vpal-Str	
+21	Cdh4	Vpal-Se	
+21	Cdh4	Vpal-Pse	
+21	Cdh4	Vpal-Pallidal (Vpal-P)	
+21	Cdh4	Vpal-Diagonal (Vpal-D)	
+21	Cdh4	Diagonal Band (DB)(Dg to Septum)	
+21	Cdh4	Supra-diagonal stream (sud; LPO to septum)	
+21	Cdh4	Spm (subpial migration (MPO to septum))	
+21	Cdh4	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+21	Cdh4	SIN (migrating to become striatal Ins)	
+21	Cdh4	LPO	
+21	Cdh4	MPO1	
+21	Cdh4	MPO2	
+21	Cdh4	MPO3	
+22	Cdh8	BSTL	
+22	Cdh8	BSTM	
+22	Cdh8	BSTP	
+22	Cdh8	BSTA	
+22	Cdh8	GPe	Cdh8
+22	Cdh8	GPi	
+22	Cdh8	SI-p	Cdh8
+22	Cdh8	Si-d	
+22	Cdh8	Vpal-Str	Cdh8
+22	Cdh8	Vpal-Se	
+22	Cdh8	Vpal-Pse	Cdh8
+22	Cdh8	Vpal-Pallidal (Vpal-P)	Cdh8
+22	Cdh8	Vpal-Diagonal (Vpal-D)	
+22	Cdh8	Diagonal Band (DB)(Dg to Septum)	Cdh8
+22	Cdh8	Supra-diagonal stream (sud; LPO to septum)	
+22	Cdh8	Spm (subpial migration (MPO to septum))	
+22	Cdh8	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+22	Cdh8	SIN (migrating to become striatal Ins)	
+22	Cdh8	LPO	Cdh8
+22	Cdh8	MPO1	
+22	Cdh8	MPO2	
+22	Cdh8	MPO3	
+23	Six3	BSTL	Six3
+23	Six3	BSTM	Six3
+23	Six3	BSTP	Six3
+23	Six3	BSTA	
+23	Six3	GPe	
+23	Six3	GPi	Six3
+23	Six3	SI-p	
+23	Six3	Si-d	Six3
+23	Six3	Vpal-Str	
+23	Six3	Vpal-Se	
+23	Six3	Vpal-Pse	
+23	Six3	Vpal-Pallidal (Vpal-P)	
+23	Six3	Vpal-Diagonal (Vpal-D)	
+23	Six3	Diagonal Band (DB)(Dg to Septum)	Six3
+23	Six3	Supra-diagonal stream (sud; LPO to septum)	Six3
+23	Six3	Spm (subpial migration (MPO to septum))	Six3
+23	Six3	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+23	Six3	SIN (migrating to become striatal Ins)	
+23	Six3	LPO	Six3
+23	Six3	MPO1	
+23	Six3	MPO2	Six3
+23	Six3	MPO3	
+24	Th	BSTL	Th
+24	Th	BSTM	Th
+24	Th	BSTP	
+24	Th	BSTA	
+24	Th	GPe	
+24	Th	GPi	
+24	Th	SI-p	
+24	Th	Si-d	
+24	Th	Vpal-Str	Th
+24	Th	Vpal-Se	
+24	Th	Vpal-Pse	
+24	Th	Vpal-Pallidal (Vpal-P)	
+24	Th	Vpal-Diagonal (Vpal-D)	
+24	Th	Diagonal Band (DB)(Dg to Septum)	
+24	Th	Supra-diagonal stream (sud; LPO to septum)	
+24	Th	Spm (subpial migration (MPO to septum))	
+24	Th	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+24	Th	SIN (migrating to become striatal Ins)	
+24	Th	LPO	Th
+24	Th	MPO1	Th
+24	Th	MPO2	Th
+24	Th	MPO3	
+25	Alcam	BSTL	Alcam
+25	Alcam	BSTM	Alcam
+25	Alcam	BSTP	
+25	Alcam	BSTA	
+25	Alcam	GPe	
+25	Alcam	GPi	Alcam
+25	Alcam	SI-p	Alcam
+25	Alcam	Si-d	Alcam
+25	Alcam	Vpal-Str	
+25	Alcam	Vpal-Se	
+25	Alcam	Vpal-Pse	
+25	Alcam	Vpal-Pallidal (Vpal-P)	
+25	Alcam	Vpal-Diagonal (Vpal-D)	Alcam
+25	Alcam	Diagonal Band (DB)(Dg to Septum)	Alcam
+25	Alcam	Supra-diagonal stream (sud; LPO to septum)	
+25	Alcam	Spm (subpial migration (MPO to septum))	
+25	Alcam	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+25	Alcam	SIN (migrating to become striatal Ins)	
+25	Alcam	LPO	Alcam
+25	Alcam	MPO1	
+25	Alcam	MPO2	
+25	Alcam	MPO3	
+26	Gabrg1	BSTL	
+26	Gabrg1	BSTM	
+26	Gabrg1	BSTP	
+26	Gabrg1	BSTA	
+26	Gabrg1	GPe	Gabrg1
+26	Gabrg1	GPi	
+26	Gabrg1	SI-p	Gabrg1
+26	Gabrg1	Si-d	
+26	Gabrg1	Vpal-Str	
+26	Gabrg1	Vpal-Se	
+26	Gabrg1	Vpal-Pse	
+26	Gabrg1	Vpal-Pallidal (Vpal-P)	
+26	Gabrg1	Vpal-Diagonal (Vpal-D)	
+26	Gabrg1	Diagonal Band (DB)(Dg to Septum)	
+26	Gabrg1	Supra-diagonal stream (sud; LPO to septum)	
+26	Gabrg1	Spm (subpial migration (MPO to septum))	
+26	Gabrg1	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+26	Gabrg1	SIN (migrating to become striatal Ins)	
+26	Gabrg1	LPO	
+26	Gabrg1	MPO1	
+26	Gabrg1	MPO2	
+26	Gabrg1	MPO3	
+27	Fgf14	BSTL	
+27	Fgf14	BSTM	
+27	Fgf14	BSTP	
+27	Fgf14	BSTA	
+27	Fgf14	GPe	
+27	Fgf14	GPi	Fgf14
+27	Fgf14	SI-p	
+27	Fgf14	Si-d	
+27	Fgf14	Vpal-Str	
+27	Fgf14	Vpal-Se	
+27	Fgf14	Vpal-Pse	
+27	Fgf14	Vpal-Pallidal (Vpal-P)	
+27	Fgf14	Vpal-Diagonal (Vpal-D)	
+27	Fgf14	Diagonal Band (DB)(Dg to Septum)	Fgf14
+27	Fgf14	Supra-diagonal stream (sud; LPO to septum)	Fgf14
+27	Fgf14	Spm (subpial migration (MPO to septum))	Fgf14
+27	Fgf14	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+27	Fgf14	SIN (migrating to become striatal Ins)	
+27	Fgf14	LPO	Fgf14
+27	Fgf14	MPO1	
+27	Fgf14	MPO2	
+27	Fgf14	MPO3	Fgf14
+28	Adcy2	BSTL	
+28	Adcy2	BSTM	
+28	Adcy2	BSTP	
+28	Adcy2	BSTA	
+28	Adcy2	GPe	Adcy2
+28	Adcy2	GPi	
+28	Adcy2	SI-p	Adcy2
+28	Adcy2	Si-d	
+28	Adcy2	Vpal-Str	Adcy2
+28	Adcy2	Vpal-Se	
+28	Adcy2	Vpal-Pse	
+28	Adcy2	Vpal-Pallidal (Vpal-P)	
+28	Adcy2	Vpal-Diagonal (Vpal-D)	
+28	Adcy2	Diagonal Band (DB)(Dg to Septum)	
+28	Adcy2	Supra-diagonal stream (sud; LPO to septum)	
+28	Adcy2	Spm (subpial migration (MPO to septum))	
+28	Adcy2	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+28	Adcy2	SIN (migrating to become striatal Ins)	
+28	Adcy2	LPO	Adcy2
+28	Adcy2	MPO1	
+28	Adcy2	MPO2	
+28	Adcy2	MPO3	
+29	Cdh13	BSTL	
+29	Cdh13	BSTM	
+29	Cdh13	BSTP	
+29	Cdh13	BSTA	
+29	Cdh13	GPe	Cdh13
+29	Cdh13	GPi	Cdh13
+29	Cdh13	SI-p	Cdh13
+29	Cdh13	Si-d	Cdh13
+29	Cdh13	Vpal-Str	
+29	Cdh13	Vpal-Se	
+29	Cdh13	Vpal-Pse	
+29	Cdh13	Vpal-Pallidal (Vpal-P)	
+29	Cdh13	Vpal-Diagonal (Vpal-D)	
+29	Cdh13	Diagonal Band (DB)(Dg to Septum)	
+29	Cdh13	Supra-diagonal stream (sud; LPO to septum)	
+29	Cdh13	Spm (subpial migration (MPO to septum))	Cdh13
+29	Cdh13	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+29	Cdh13	SIN (migrating to become striatal Ins)	
+29	Cdh13	LPO	Cdh13
+29	Cdh13	MPO1	Cdh13
+29	Cdh13	MPO2	Cdh13
+29	Cdh13	MPO3	Cdh13
+30	Dlk1	BSTL	
+30	Dlk1	BSTM	
+30	Dlk1	BSTP	
+30	Dlk1	BSTA	
+30	Dlk1	GPe	
+30	Dlk1	GPi	Dlk1
+30	Dlk1	SI-p	
+30	Dlk1	Si-d	
+30	Dlk1	Vpal-Str	
+30	Dlk1	Vpal-Se	
+30	Dlk1	Vpal-Pse	
+30	Dlk1	Vpal-Pallidal (Vpal-P)	
+30	Dlk1	Vpal-Diagonal (Vpal-D)	
+30	Dlk1	Diagonal Band (DB)(Dg to Septum)	
+30	Dlk1	Supra-diagonal stream (sud; LPO to septum)	Dlk1???
+30	Dlk1	Spm (subpial migration (MPO to septum))	Dlk1
+30	Dlk1	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+30	Dlk1	SIN (migrating to become striatal Ins)	
+30	Dlk1	LPO	Dlk1
+30	Dlk1	MPO1	Dlk1
+30	Dlk1	MPO2	Dlk1
+30	Dlk1	MPO3	Dlk1
+31	Epha5	BSTL	Epha5
+31	Epha5	BSTM	Epha5
+31	Epha5	BSTP	
+31	Epha5	BSTA	Epha5
+31	Epha5	GPe	
+31	Epha5	GPi	Epha5
+31	Epha5	SI-p	
+31	Epha5	Si-d	Epha5
+31	Epha5	Vpal-Str	
+31	Epha5	Vpal-Se	
+31	Epha5	Vpal-Pse	
+31	Epha5	Vpal-Pallidal (Vpal-P)	
+31	Epha5	Vpal-Diagonal (Vpal-D)	
+31	Epha5	Diagonal Band (DB)(Dg to Septum)	Epha5
+31	Epha5	Supra-diagonal stream (sud; LPO to septum)	
+31	Epha5	Spm (subpial migration (MPO to septum))	
+31	Epha5	Se-MGE stream (Septal-MGE stream) (Septal & paraseptal to MGE migration (there are 2 streams))	
+31	Epha5	SIN (migrating to become striatal Ins)	
+31	Epha5	LPO	
+31	Epha5	MPO1	
+31	Epha5	MPO2	
+31	Epha5	MPO3	

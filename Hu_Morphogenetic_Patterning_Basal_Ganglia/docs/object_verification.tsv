@@ -1,0 +1,5 @@
+object	cells	RNA_genes	E11_cells	E13_cells	mean_detected_genes	clusters	SCT_methods
+global	7785	32285	3064	4721	4613.95761078998	17	poisson;poisson
+MZ	4047	32285	878	3169	4628.57005189029	15	glmGamPoi_offset
+progenitor	3294	32285	2185	1109	4920.13114754098	10	poisson;poisson
+progenitor_markers	3294	32285	2185	1109	4920.13114754098	10	glmGamPoi_offset

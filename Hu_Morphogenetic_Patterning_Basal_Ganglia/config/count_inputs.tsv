@@ -1,0 +1,4 @@
+dataset	age	path	format	selection
+1538TE10H11	E11	counts/1538TE10H11	10x	curated
+1538TE10H13	E13	counts/1538TE10H13	10x	curated
+JH4327_01_TE10H13	E13	counts/JH4327_01_TE10H13	10x	curated

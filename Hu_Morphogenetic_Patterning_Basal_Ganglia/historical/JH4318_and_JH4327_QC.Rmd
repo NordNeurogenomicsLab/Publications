@@ -1,0 +1,169 @@
+---
+title: "JH4318_and_JH4327_QC.Rmd"
+author: "Karol Cichewicz"
+date: "2023-08-29"
+output: html_document
+---
+
+# Fastq files
+
+ 1078564 -rwxrwxr-x 1 kcichewicz kcichewicz  1104442205 Aug 28 22:47 JH4318_01_S20_L007_I1_001.fastq.gz
+ 1113652 -rwxrwxr-x 1 kcichewicz kcichewicz  1140373861 Aug 28 22:48 JH4318_01_S20_L007_I2_001.fastq.gz
+ 3792004 -rwxrwxr-x 1 kcichewicz kcichewicz  3883006487 Aug 28 22:52 JH4318_01_S20_L007_R1_001.fastq.gz
+ 8422968 -rwxrwxr-x 1 kcichewicz kcichewicz  8625113427 Aug 28 23:04 JH4318_01_S20_L007_R2_001.fastq.gz
+ 1046696 -rwxrwxr-x 1 kcichewicz kcichewicz  1071811299 Aug 28 23:05 JH4318_01_S20_L008_I1_001.fastq.gz
+ 1079000 -rwxrwxr-x 1 kcichewicz kcichewicz  1104888569 Aug 28 23:05 JH4318_01_S20_L008_I2_001.fastq.gz
+ 3650756 -rwxrwxr-x 1 kcichewicz kcichewicz  3738369132 Aug 28 23:08 JH4318_01_S20_L008_R1_001.fastq.gz
+ 8060736 -rwxrwxr-x 1 kcichewicz kcichewicz  8254186116 Aug 28 23:15 JH4318_01_S20_L008_R2_001.fastq.gz
+ 
+  417460 -rwxrwxr-x 1 kcichewicz kcichewicz   427474594 Aug 28 23:15 JH4318_02_S21_L007_I1_001.fastq.gz
+  475140 -rwxrwxr-x 1 kcichewicz kcichewicz   486536413 Aug 28 23:16 JH4318_02_S21_L007_I2_001.fastq.gz
+ 1305948 -rwxrwxr-x 1 kcichewicz kcichewicz  1337283019 Aug 28 23:17 JH4318_02_S21_L007_R1_001.fastq.gz
+ 2850740 -rwxrwxr-x 1 kcichewicz kcichewicz  2919153322 Aug 28 23:19 JH4318_02_S21_L007_R2_001.fastq.gz
+  406068 -rwxrwxr-x 1 kcichewicz kcichewicz   415813614 Aug 28 23:19 JH4318_02_S21_L008_I1_001.fastq.gz
+  461516 -rwxrwxr-x 1 kcichewicz kcichewicz   472588330 Aug 28 23:19 JH4318_02_S21_L008_I2_001.fastq.gz
+ 1253456 -rwxrwxr-x 1 kcichewicz kcichewicz  1283532927 Aug 28 23:19 JH4318_02_S21_L008_R1_001.fastq.gz
+ 2722128 -rwxrwxr-x 1 kcichewicz kcichewicz  2787451713 Aug 28 23:21 JH4318_02_S21_L008_R2_001.fastq.gz
+ 
+ 1245432 -rwxrwxr-x 1 kcichewicz kcichewicz  1275317128 Aug 28 23:21 JH4318_03_S22_L007_I1_001.fastq.gz
+ 1275932 -rwxrwxr-x 1 kcichewicz kcichewicz  1306547662 Aug 28 23:22 JH4318_03_S22_L007_I2_001.fastq.gz
+ 4666208 -rwxrwxr-x 1 kcichewicz kcichewicz  4778189799 Aug 28 23:26 JH4318_03_S22_L007_R1_001.fastq.gz
+10390676 -rwxrwxr-x 1 kcichewicz kcichewicz 10640044411 Aug 28 23:33 JH4318_03_S22_L007_R2_001.fastq.gz
+ 1193656 -rwxrwxr-x 1 kcichewicz kcichewicz  1222299266 Aug 28 23:34 JH4318_03_S22_L008_I1_001.fastq.gz
+ 1226996 -rwxrwxr-x 1 kcichewicz kcichewicz  1256435980 Aug 28 23:36 JH4318_03_S22_L008_I2_001.fastq.gz
+ 4437136 -rwxrwxr-x 1 kcichewicz kcichewicz  4543621539 Aug 28 23:42 JH4318_03_S22_L008_R1_001.fastq.gz
+ 9824208 -rwxrwxr-x 1 kcichewicz kcichewicz 10059983028 Aug 28 23:55 JH4318_03_S22_L008_R2_001.fastq.gz
+ 
+  580968 -rwxrwxr-x 1 kcichewicz kcichewicz   594906876 Aug 28 23:56 JH4318_04_S23_L007_I1_001.fastq.gz
+  560788 -rwxrwxr-x 1 kcichewicz kcichewicz   574240862 Aug 28 23:57 JH4318_04_S23_L007_I2_001.fastq.gz
+ 1590436 -rwxrwxr-x 1 kcichewicz kcichewicz  1628600948 Aug 28 23:58 JH4318_04_S23_L007_R1_001.fastq.gz
+ 3861624 -rwxrwxr-x 1 kcichewicz kcichewicz  3954298358 Aug 29 00:02 JH4318_04_S23_L007_R2_001.fastq.gz
+  563756 -rwxrwxr-x 1 kcichewicz kcichewicz   577278895 Aug 29 00:03 JH4318_04_S23_L008_I1_001.fastq.gz
+  538060 -rwxrwxr-x 1 kcichewicz kcichewicz   550968191 Aug 29 00:03 JH4318_04_S23_L008_I2_001.fastq.gz
+ 1516872 -rwxrwxr-x 1 kcichewicz kcichewicz  1553270206 Aug 29 00:04 JH4318_04_S23_L008_R1_001.fastq.gz
+ 3658928 -rwxrwxr-x 1 kcichewicz kcichewicz  3746734322 Aug 29 00:05 JH4318_04_S23_L008_R2_001.fastq.gz
+ 
+ 1341068 -rwxrwxr-x 1 kcichewicz kcichewicz  1373246624 Aug 29 00:06 JH4327_01_S24_L007_I1_001.fastq.gz
+ 1360364 -rwxrwxr-x 1 kcichewicz kcichewicz  1393005100 Aug 29 00:07 JH4327_01_S24_L007_I2_001.fastq.gz
+ 5147016 -rwxrwxr-x 1 kcichewicz kcichewicz  5270540121 Aug 29 00:09 JH4327_01_S24_L007_R1_001.fastq.gz
+11458340 -rwxrwxr-x 1 kcichewicz kcichewicz 11733334253 Aug 29 00:20 JH4327_01_S24_L007_R2_001.fastq.gz
+ 1287552 -rwxrwxr-x 1 kcichewicz kcichewicz  1318448095 Aug 29 00:21 JH4327_01_S24_L008_I1_001.fastq.gz
+ 1302736 -rwxrwxr-x 1 kcichewicz kcichewicz  1333994411 Aug 29 00:21 JH4327_01_S24_L008_I2_001.fastq.gz
+ 4904584 -rwxrwxr-x 1 kcichewicz kcichewicz  5022286426 Aug 29 00:23 JH4327_01_S24_L008_R1_001.fastq.gz
+10854872 -rwxrwxr-x 1 kcichewicz kcichewicz 11115381689 Aug 29 00:28 JH4327_01_S24_L008_R2_001.fastq.gz
+
+ 1298468 -rwxrwxr-x 1 kcichewicz kcichewicz  1329625897 Aug 29 00:28 JH4327_02_S25_L007_I1_001.fastq.gz
+ 1298652 -rwxrwxr-x 1 kcichewicz kcichewicz  1329815207 Aug 29 00:28 JH4327_02_S25_L007_I2_001.fastq.gz
+ 4330336 -rwxrwxr-x 1 kcichewicz kcichewicz  4434258444 Aug 29 00:30 JH4327_02_S25_L007_R1_001.fastq.gz
+ 9622652 -rwxrwxr-x 1 kcichewicz kcichewicz  9853589388 Aug 29 00:36 JH4327_02_S25_L007_R2_001.fastq.gz
+ 1262944 -rwxrwxr-x 1 kcichewicz kcichewicz  1293247441 Aug 29 00:37 JH4327_02_S25_L008_I1_001.fastq.gz
+ 1262180 -rwxrwxr-x 1 kcichewicz kcichewicz  1292467649 Aug 29 00:38 JH4327_02_S25_L008_I2_001.fastq.gz
+ 4163756 -rwxrwxr-x 1 kcichewicz kcichewicz  4263681329 Aug 29 00:40 JH4327_02_S25_L008_R1_001.fastq.gz
+ 9200352 -rwxrwxr-x 1 kcichewicz kcichewicz  9421153278 Aug 29 00:45 JH4327_02_S25_L008_R2_001.fastq.gz
+ 
+  684304 -rwxrwxr-x 1 kcichewicz kcichewicz   700721494 Aug 29 00:45 JH4327_04_S26_L007_I1_001.fastq.gz
+  801524 -rwxrwxr-x 1 kcichewicz kcichewicz   820756327 Aug 29 00:45 JH4327_04_S26_L007_I2_001.fastq.gz
+ 2317624 -rwxrwxr-x 1 kcichewicz kcichewicz  2373241660 Aug 29 00:46 JH4327_04_S26_L007_R1_001.fastq.gz
+ 5141860 -rwxrwxr-x 1 kcichewicz kcichewicz  5265257677 Aug 29 00:50 JH4327_04_S26_L007_R2_001.fastq.gz
+  656616 -rwxrwxr-x 1 kcichewicz kcichewicz   672370687 Aug 29 00:51 JH4327_04_S26_L008_I1_001.fastq.gz
+  772572 -rwxrwxr-x 1 kcichewicz kcichewicz   791106103 Aug 29 00:51 JH4327_04_S26_L008_I2_001.fastq.gz
+ 2199116 -rwxrwxr-x 1 kcichewicz kcichewicz  2251887769 Aug 29 00:52 JH4327_04_S26_L008_R1_001.fastq.gz
+ 4850536 -rwxrwxr-x 1 kcichewicz kcichewicz  4966941145 Aug 29 00:54 JH4327_04_S26_L008_R2_001.fastq.gz
+ 
+ 
+```{bash}
+
+#!/bin/bash
+
+Reference=/mnt/disks/data1/References/Cell_Ranger/refdata-gex-mm10-2020-A
+THREADS=15
+MEM=120
+
+files_dir=/mnt/disks/data4/Jia_E13_1538_Aug_2023/gi_JH4327/
+
+sample=JH4318_01
+
+cellranger count --id=$sample \
+--fastqs=${files_dir} \
+--sample=$sample \
+--transcriptome=$Reference \
+--localcores=${THREADS} \
+--localmem=${MEM}
+
+
+sample=JH4318_02
+
+cellranger count --id=$sample \
+--fastqs=${files_dir} \
+--sample=$sample \
+--transcriptome=$Reference \
+--localcores=${THREADS} \
+--localmem=${MEM}
+
+
+sample=JH4318_03
+
+cellranger count --id=$sample \
+--fastqs=${files_dir} \
+--sample=$sample \
+--transcriptome=$Reference \
+--localcores=${THREADS} \
+--localmem=${MEM}
+
+
+sample=JH4318_04
+
+cellranger count --id=$sample \
+--fastqs=${files_dir} \
+--sample=$sample \
+--transcriptome=$Reference \
+--localcores=${THREADS} \
+--localmem=${MEM}
+
+
+sample=JH4327_01
+
+cellranger count --id=$sample \
+--fastqs=${files_dir} \
+--sample=$sample \
+--transcriptome=$Reference \
+--localcores=${THREADS} \
+--localmem=${MEM}
+
+
+sample=JH4327_02
+
+cellranger count --id=$sample \
+--fastqs=${files_dir} \
+--sample=$sample \
+--transcriptome=$Reference \
+--localcores=${THREADS} \
+--localmem=${MEM}
+
+
+sample=JH4327_04
+
+cellranger count --id=$sample \
+--fastqs=${files_dir} \
+--sample=$sample \
+--transcriptome=$Reference \
+--localcores=${THREADS} \
+--localmem=${MEM}
+
+```
+
+```{bash}
+
+
+fastqc \
+--threads 1 \
+--outdir /mnt/disks/data4/Jia_E13_1538_Aug_2023/gi_JH4327/fastQC_out/ \
+/mnt/disks/data4/Jia_E13_1538_Aug_2023/gi_JH4327/JH*gz
+
+
+
+```
+
+
+
+

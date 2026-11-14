@@ -1,0 +1,3 @@
+dataset	original_cells	retained_cells	shared_genes	differing_gene_cell_entries	max_total_UMI_difference
+1538TE10H11	5111	3064	32285	0	0
+1538TE10H13	4099	1374	32285	0	0

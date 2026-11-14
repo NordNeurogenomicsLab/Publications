@@ -15,3 +15,8 @@ logs/
 .env*
 *credentials*
 *token*
+
+renv/library/
+renv/staging/
+renv/cache/
+renv/local/

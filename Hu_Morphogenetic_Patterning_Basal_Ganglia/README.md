@@ -1,29 +1,55 @@
-# Hu: Morphogenetic Patterning in the Embryonic Basal Ganglia
+# Morphogenetic Patterning During Regional and Cell Type Specification in the Embryonic Basal Ganglia
 
-Code for *Morphogenetic Patterning During Regional and Cell Type Specification in the Embryonic Basal Ganglia*.
+**Jia Sheng Hu, Karol Cichewicz, Jonathan W. C. Lim, Linda J. Richards, Luis Puelles, Alex S. Nord, and John L. Rubenstein**
 
-## Status
-Project folder prepared for Publications; scientific review remains in progress. Raw and processed GEO copies are verified; metadata remains a draft. No accession or license is invented. Confirm author ownership, contributors and license before public release.
+Correspondence: John L. Rubenstein (john.rubenstein@ucsf.edu).
 
-## Recreate saved panels
-Set JIA_WORK_DIR to the directory containing inputs/, figures/, and audit/. On sclab this is /mnt/disks/data1/Jia_GEO_submission/codex_review. Required saved objects and DE tables are listed in config/inputs.md.
+[Manuscript](https://doi.org/10.64898/2026.04.14.718571) · [Author affiliations](docs/authors.md)
 
+## Abstract
+
+Cell type specification in the embryonic brain and spinal cord is thought to begin within molecularly defined progenitor domains that do not intermix. Our data provide an alternative model that is spatially and temporally dynamic within a basal ganglia anlage, the medial ganglionic eminence (MGE). MGE progenitor cells are progressively displaced ventrally and caudally from a rostral growth zone (the MGE/LGE sulcus). Progenitors that leave the MGE/LGE sulcus early occupy caudoventral MGE regions, while ones that leave later reside in rostrodorsal MGE regions. As they change position, their transcriptional states and cell type output change. Transcriptional analyses showed an upregulation of the Nfi TFs during the period of progenitor movement. Nfia and Nfib double mutants alter the repertoire of cortical interneuron subtypes. Overall, we present a mechanism that synchronizes regional patterning with tissue growth and links spatial and temporal specification in producing diverse neuronal subtypes.
+
+## Single-cell RNA-seq analysis
+
+The analysis compares E11.5 and E13.5 medial ganglionic eminence (MGE) cells labeled by the 1538 lineage following E10.5 tamoxifen administration. It includes count-matrix import, quality control, MGE cell selection, SCT normalization and integration, dimensionality reduction and clustering, developmental-stage differential expression, and gene-expression and cell-composition figures.
+
+| Script | Scientific content |
+| --- | --- |
+| `scripts/00_tissue_selection_from_counts.R` | Pre-exclusion QC, preliminary integration, and POA/septum classifier fitting for the older libraries |
+| `scripts/01_count_matrix_integration.R` | Import count matrices, apply documented QC and retained-cell annotations, combine the earlier libraries, and integrate the additional E13.5 library |
+| `scripts/02_neuronal_progenitor_subclustering.R` | MZ analysis with the 52-gene neuronal panel and VZ/SVZ analysis with the progenitor panel; preserve full-gene expression for marker analysis |
+| `scripts/03_developmental_differential_expression.R` | SCT-based E11.5 versus E13.5 tests within developmental compartments and neuronal/progenitor clusters |
+| `scripts/04_developmental_expression_figures.R` | Global and compartment UMAPs, expression maps, cluster proportions, and marker heatmaps |
+| `scripts/05_developmental_volcano_plots.R` | Developmental differential-expression volcano plots with an explicit fold-change convention |
+| `scripts/export_analysis_inputs.R` | Export the original RNA count matrices and curated cell annotations from the supplied manuscript objects |
+| `scripts/tissue_identity_classification.R` | Document the marker-guided POA/septum classification procedure and its train/test split |
+
+Methods, parameters, gene lists, and reasons for the analysis choices are given in the scripts and [scientific methods](docs/scientific_methods.md). [Data inputs and execution](config/inputs.md) describe both a count-matrix workflow and entry points using saved Seurat objects. Script output directories are separate from the original data.
+
+```bash
+export JIA_DATA_DIR=/path/to/analysis_inputs
+export JIA_OUTPUT_DIR=/path/to/analysis_outputs
+Rscript scripts/01_count_matrix_integration.R
+Rscript scripts/02_neuronal_progenitor_subclustering.R
+Rscript scripts/03_developmental_differential_expression.R
+Rscript scripts/04_developmental_expression_figures.R
+Rscript scripts/05_developmental_volcano_plots.R
 ```
-Rscript scripts/recreate_saved_panels.R
-Rscript scripts/recreate_VZ_documented_clusters.R
-Rscript scripts/recreate_volcano.R
+
+For figures from the supplied manuscript objects, set `JIA_ANALYSIS_MODE=saved` and run scripts 04–05. Script 03 can also analyze those objects. The saved objects retain the manuscript cell identities and embeddings; the count workflow calculates new embeddings and clusters and retains the manuscript annotations in separate columns for comparison. A fresh run is evaluated against the reference cell assignments rather than assuming numeric cluster IDs remain identical.
+
+## Computational environment
+
+`renv.lock` pins the R 4.4.0 environment used to execute the structured workflow, including Seurat, glmGamPoi, and scAnnotatR. It records the executable environment for these scripts; historical object versions are documented separately.
+
+```bash
+Rscript -e 'if (!requireNamespace("renv", quietly=TRUE)) install.packages("renv", repos="https://cloud.r-project.org"); renv::restore(lockfile="renv.lock", library="renv/library", prompt=FALSE)'
+export JIA_R_LIBRARY="$PWD/renv/library"
 ```
 
-The documented VZ cluster script supersedes the first script's VZ plots based on incomplete Dev_classes metadata. Do not run alignment, normalization, integration or clustering to recreate these saved plots.
+[Computational verification](docs/computational_verification.md) records the execution checks, input identity tests, and annotation requirements.
 
-The review environment is R 4.4.0 with Seurat, SeuratObject, ggplot2, patchwork, ggrepel and dependencies. Exact review environment versions are in docs/review_environment.txt. These are review versions, not claims about the historical manuscript environment.
+## Data availability
 
-## Provenance and limitations
-Historical Rmd files preserve original exploratory code and absolute paths. They are evidence, not a turnkey pipeline; do not execute them blindly. Exact historical Cell Ranger settings for two older libraries remain unresolved. The eight named Figure 4D groups are not stored as a recoverable mapping. Candidate marker-based assignments require review. Manual image annotations and plot styling differ.
-
-Large data, credentials and original manuscript images are excluded. Link the final GEO accession after approval and deposition. The working GEO audit is maintained separately from this publication folder.
-
-## Manuscript
-Hu et al., bioRxiv v1 (2026), https://doi.org/10.64898/2026.04.14.718571
-
-Historical VZ/MZ DE tables are included under tables/. No new DE tests were run. Provisional marker-based annotations are not a recovered manuscript key.
+Count matrices and Seurat objects are external data dependencies listed in [config/inputs.md](config/inputs.md). Large data files are not stored in Git. A GEO accession has not yet been assigned in this repository. The original analysis notebooks are retained in `historical/`; the structured scripts describe the methods used in the single-cell analyses.

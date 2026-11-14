@@ -1,0 +1,18 @@
+{
+  "count_pipeline_exit": 0,
+  "classifier_checkpoint_exit": 0,
+  "count_object_validation": "passed",
+  "saved_figure_count": 24,
+  "count_figure_count": 26,
+  "classifier_retained_MGE_cells": 4398,
+  "classifier_selection_differences_vs_manuscript": 40,
+  "classifier_AUCs_in_log_order": [
+    "0.988952364532183",
+    "0.988942402550767",
+    "0.986230651969981",
+    "0.98624640259158"
+  ],
+  "preselection_validation_entry": "original historical normalized checkpoint; full count preparation supplied in script 00",
+  "original_count_identity": "zero gene-cell and total-UMI differences for all retained cells in two original matrices",
+  "anatomical_aggregation": "Figure 4D final per-cell/eight-group key remains required"
+}

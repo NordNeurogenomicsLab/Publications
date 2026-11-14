@@ -1,0 +1,2194 @@
+---
+title: "1st comparison 1538TE10H11 vs 1538TE10HE13"
+author: "Karol Cichewicz"
+date: "2023-05-19"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# 6. DE between datasets
+
+```{r}
+
+# Read clustered datasets
+# 1056, E12, E13, MGE: JH3830_01 <- readRDS(paste0("Clustered Seurat objects/", "JH3830_01", "_clustered_Seurat.RDS"))
+# 1056, E12, E13, MGE: JH3830_02 <- readRDS(paste0("Clustered Seurat objects/", "JH3830_02", "_clustered_Seurat.RDS"))
+# 1538, E11, E14, MGE: JH3899_01 <- readRDS(paste0("Clustered Seurat objects/", "JH3899_01", "_clustered_Seurat.RDS"))
+# 1538, E12, E13, MGE: JH3899_02 <- readRDS(paste0("Clustered Seurat objects/", "JH3899_02", "_clustered_Seurat.RDS"))
+# 1056, E10, E13, MGE: JH3909_01 <- readRDS(paste0("Clustered Seurat objects/", "JH3909_01", "_clustered_Seurat.RDS"))
+# 1056, E10, E13, MGE: JH3909_02 <- readRDS(paste0("Clustered Seurat objects/", "JH3909_02", "_clustered_Seurat.RDS"))
+# 1538, E11, E14, MGE: JH4060_01 <- readRDS(paste0("Clustered Seurat objects/", "JH4060_01", "_clustered_Seurat.RDS"))
+# 1538, E11, E14, POA: JH4060_02 <- readRDS(paste0("Clustered Seurat objects/", "JH4060_02", "_clustered_Seurat.RDS"))
+# 1538, E12, E15, MGE: JH4061_01 <- readRDS(paste0("Clustered Seurat objects/", "JH4061_01", "_clustered_Seurat.RDS"))
+# 1538, E11, E12, MGE: JH4061_02 <- readRDS(paste0("Clustered Seurat objects/", "JH4061_02", "_clustered_Seurat.RDS"))
+
+# Three extra datasets from previous studies:
+# 1538, E10, E11, MGE: 
+# Ex1_1538CreTE10HE11MGE <- readRDS(paste0("./Clustered Seurat objects/", "1538CreTE10HE11MGE", "_QCed_clustered_Seurat.RDS"))
+
+# 1056, E10, E11, MGE: 
+# Ex2_1056CreTE10HE11MGE <- readRDS(paste0("./Clustered Seurat objects/", "1056CreTE10HE11MGE", "_QCed_clustered_Seurat.RDS"))
+
+# 1538, E10, E13, MGE: 
+# EX3_Pool22_MGE_1538CreTE10HE13 <- readRDS(paste0("./Clustered Seurat objects/", "1538CreTE10HE13_Pool22_MGE", "_QCed_clustered_Seurat.RDS"))
+
+```
+
+
+## 6.1 1538TE10H11 vs 1538TE10HE13
+
+Are there progenitor and neuronal output differences across time in the dorsal MGE one day after tamoxifen
+
+```{r}
+
+library(Seurat)
+library(Signac)
+library(GenomicRanges)
+library(EnsDb.Mmusculus.v79)
+library(BSgenome.Mmusculus.UCSC.mm10)
+library(patchwork)
+library(ggplot2)
+library(cowplot)
+library(DT)
+library(tidyverse)
+library(glmGamPoi)
+library(future)
+library(scCustomize)
+library(SeuratWrappers)
+library(monocle3)
+
+
+metadata <- read.csv("metadata_Jia_1058_1538_CreER.csv")
+
+
+# 1538TE10H11
+d1 <- readRDS(paste0("./Clustered Seurat objects/", "1538CreTE10HE11MGE", "_QCed_clustered_Seurat.RDS"))
+
+# 1538TE10HE13 - a subset of MGE POA and Septum cells  
+d2 <- readRDS(paste0("Clustered Seurat objects/", "1538CreTE10HE13_Pool22_MGE_QCed_clustered_Seurat.RDS"))    
+
+
+# Add dataset IDs
+d1$dataset <- "1538TE10H11"
+d2$dataset <- "1538TE10HE13"
+
+
+# Create a list of objects and merge metadata 
+ifnb.list <- list(d1, d2)
+
+
+gc()
+
+# Check the number of cells. If few cells are present adjust the k.weight parameter accordingly.
+
+sapply(ifnb.list, function(x) ncol(x))
+
+
+
+plan("multicore", workers = 4) # Decrease the number of cores if running out of memory or "Error 2 (The system cannot find the file specified)" ?? I'm not sure what this error means, but it's triggered by FindIntegrationAnchors.
+
+options(future.globals.maxSize = 30000 * 1024^2) # for 30 Gb RAM
+
+features <- SelectIntegrationFeatures(object.list = ifnb.list, nfeatures = 3000) # originally 3000
+ifnb.list <- PrepSCTIntegration(object.list = ifnb.list, anchor.features = features)
+
+
+RNA.anchors <- FindIntegrationAnchors(object.list = ifnb.list, 
+                                         normalization.method = "SCT",
+                                         anchor.features = features)
+
+# k.weight adjustment: https://github.com/satijalab/seurat/issues/3930
+RNA_integrated <- IntegrateData(anchorset = RNA.anchors, 
+                                normalization.method = "SCT",
+                                k.weight = 100)
+
+RNA_integrated <- RunPCA(RNA_integrated, verbose = TRUE, npcs = 30)
+
+source("data_dims_simple.R")
+data_dims_scree(RNA_integrated)
+
+PCs = 25 # Determined empirically
+
+pbmc <- RNA_integrated
+rm(RNA_integrated)
+
+pbmc <- RunPCA(pbmc, verbose = FALSE, npcs = PCs)
+pbmc <- RunUMAP(pbmc, dims = 1:PCs, verbose = FALSE)
+
+# Recluster
+pbmc <- FindNeighbors(pbmc, dims = 1:PCs, verbose = FALSE)
+pbmc <- FindClusters(pbmc, verbose = FALSE, graph.name = "integrated_snn")
+
+
+
+DimPlot(pbmc)
+
+DimPlot(pbmc, split.by = "dataset")
+
+```
+
+
+DE between datasets all cells in one dataset vs the other
+
+```{r, eval=FALSE}
+
+id1 <- rownames(filter(pbmc@meta.data, dataset == "1538TE10H11"))
+id2 <- rownames(filter(pbmc@meta.data, dataset == "1538TE10HE13"))
+
+DefaultAssay(pbmc) <- "SCT"
+plan("multisession", workers = 1)
+
+pbmc <- PrepSCTFindMarkers(pbmc)
+DE_genes <- FindMarkers(pbmc, ident.1 = id1, ident.2 = id2, min.pct = 0.25, logfc.threshold = 0.25)
+
+
+DE_signature_genes <- rownames(DE_genes)[DE_genes$p_val_adj < 0.05 & DE_genes$avg_log2FC > 1 | DE_genes$avg_log2FC < -1]
+
+write.csv(DE_genes, file = "./DE_signatures/1st_comparison_1538TE10H11_vs_1538TE10HE13_Wilcoxon_min.pct_0.25_logfc_025.csv")
+
+
+```
+
+
+
+Quickly annotate using scType: 
+
+```{r}
+
+# Quick annotations with scType
+
+source("scType_quick_annotations.R")
+
+pbmc <- scType_annotations(pbmc)
+
+pbmc@meta.data$customclassif_cl <- factor(pbmc@meta.data$customclassif_cl, 
+                                          levels = c("Radial glial cells_0",
+                                                     "Neuroblasts_1",
+                                                     "Mature neurons_2",
+                                                     "GABAergic neurons_3",
+                                                     "Radial glial cells_4",
+                                                     "Radial glial cells_5",
+                                                     "Radial glial cells_6",
+                                                     "Radial glial cells_7",
+                                                     "GABAergic neurons_8",
+                                                     "Neuroblasts_9",
+                                                     "Radial glial cells_10",
+                                                     "Neuroblasts_11"
+                                                     ))
+
+
+DimPlot(pbmc, reduction = "umap", label = TRUE, repel = TRUE, 
+        group.by = 'customclassif_cl', split.by = "dataset")
+
+
+DimPlot(pbmc, reduction = "umap", label = TRUE, repel = TRUE)
+
+
+```
+
+
+Count cell types:
+```{r}
+
+# Count cell types
+
+library(tidyverse)
+df <- pbmc@meta.data
+
+
+cluster_split <- df %>%
+  group_by(customclassif_cl, dataset) %>%
+  summarize(n = n()) %>% 
+  spread(dataset, n)  
+
+colnames(cluster_split) <- c("customclassif_cl", "Counts_1538TE10H11", "Counts_1538TE10HE13")
+
+df <- as.data.frame(cluster_split)
+
+df[,2] <- ifelse(is.na(df[,2]), 0, df[,2])
+df[,3] <- ifelse(is.na(df[,3]), 0, df[,3])
+
+
+df$Prop_1538TE10H11 <- round(df[,2] / sum(df[,2]), 3)
+df$Prop_1538TE10HE13 <- round(df[,3] / sum(df[,3]), 3)
+
+df$log_Prop_ratio <- round(log2(df$Prop_1538TE10H11 / df$Prop_1538TE10HE13), 2)
+    
+    
+```
+
+
+Split cells by enrichment:
+```{r, eval = FALSE}
+
+p1 <- DimPlot(pbmc, reduction = "umap", label = TRUE, repel = TRUE, group.by = 'customclassif_cl', split.by = "dataset")+
+               labs(title = "All cells")+
+    NoLegend()
+
+
+p2 <- DimPlot(subset(pbmc, customclassif_cl %in% c("")), 
+                    reduction = "umap", label = TRUE, repel = TRUE, group.by = 'customclassif_cl', split.by = "dataset")+
+     labs(title = "Enriched in 1538TE10H11")+
+     NoLegend()
+
+p3 <- DimPlot(subset(pbmc, customclassif_cl %in% c("")), 
+                    reduction = "umap", label = TRUE, repel = TRUE, group.by = 'customclassif_cl', split.by = "dataset")+
+     labs(title = "Enriched in 1538TE10HE13")+
+     NoLegend()
+
+p1 + p2 + p3
+
+
+```
+
+
+
+
+
+```{r, eval=FALSE}
+
+DefaultAssay(pbmc) <- "SCT"
+plan("multisession", workers = 1)
+    
+allmarkers_rna <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+    
+write.csv(allmarkers_rna, file = paste0("./DE_signatures/Integrated_cluster_markers_1st_comparison_1538TE10H11_vs_1538TE10HE13_Wilcoxon_min.pct_0.25_logfc_025.csv"))
+
+```
+
+
+# Neuronal vs Progenitor clusters
+
+```{r}
+
+# Nes - Progenitors
+# Dcx - Neurons
+
+# 
+test_genes <- c("Nes", "Dcx", "Hes1", "Mki67", "Vim", "Mapt")
+
+
+plot_grid(
+    FeaturePlot(pbmc, features = test_genes), 
+    VlnPlot(pbmc, features = test_genes)
+)
+
+```
+
+## DE between neuronal and progenitor markers 
+
+```{r}
+
+progenitors <- rownames(filter(pbmc@meta.data, seurat_clusters %in% c(6, 0, 7, 5, 4, 10)))
+#interneurons <- 
+neurons <- rownames(filter(pbmc@meta.data, seurat_clusters %in% c(2,3)))
+
+
+DefaultAssay(pbmc) <- "SCT"
+plan("multisession", workers = 1)
+
+pbmc <- PrepSCTFindMarkers(pbmc)
+DE_genes <- FindMarkers(pbmc, ident.1 = progenitors, ident.2 = neurons, min.pct = 0.25, logfc.threshold = 0.25)
+
+
+DE_signature_genes <- rownames(DE_genes)[DE_genes$p_val_adj < 0.05 & DE_genes$avg_log2FC > 1 | DE_genes$avg_log2FC < -1]
+
+write.csv(DE_genes, file = "./DE_signatures/1st_comparison_Neurons_vs_progenitors_Wilcoxon_min.pct_0.25_logfc_025.csv")
+
+
+```
+
+########################
+
+```{r}
+
+markers_df <- read.csv(paste0("./DE_signatures/Integrated_cluster_markers_1st_comparison_1538TE10H11_vs_1538TE10HE13_Wilcoxon_min.pct_0.25_logfc_025.csv"))
+
+
+last_cluster <- max(as.numeric(as.character(pbmc@meta.data$seurat_clusters)))
+
+ call_markers <- function(markers_df){
+    
+        markers <- lapply(0:last_cluster, function(x){
+        
+            dplyr::filter(markers_df, 
+                      p_val_adj < 0.1, 
+                      avg_log2FC > 0,
+                      cluster == x)[1:50, "gene"]
+    })
+    
+        markers <- do.call(cbind, markers)
+        colnames(markers) <- paste0("Cluster_", 0:last_cluster)
+        markers <- as.data.frame(markers)
+        markers
+    
+    }
+
+ 
+top_markers_Wilcoxon_full <- call_markers(markers_df)
+top_markers_Wilcoxon_full <- top_markers_Wilcoxon_full[1:15,]
+
+
+# Count the number of non NA gene markers across cell clusters.
+non_NAs <- as.numeric(sapply(top_markers_Wilcoxon_full, function(y) sum(length(which(!is.na(y))))))
+
+
+##########################################################################
+
+top_cluster_genes <- function(cluster, n_top_genes){
+    
+    DefaultAssay(pbmc) <- "SCT"
+    
+    gc(verbose = FALSE)
+    try(dev.off(), silent = TRUE)
+    
+    FeaturePlot(pbmc, features = top_markers_Wilcoxon_full[1:n_top_genes, cluster], 
+                reduction = 'umap', max.cutoff = 15, ncol = 5)&
+        labs(x = "", y = "")&
+        NoLegend()&
+        plot_annotation(title = paste0("Cluster: ", cluster -1), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+}
+
+# Plot 15 genes for each cluster, which does not contain only NAs. 
+# If contains NAs, plot the allowed number. 
+
+pl <- lapply(which(non_NAs > 0), function(x){
+        
+        try(top_cluster_genes(x, non_NAs[x]))
+        
+        })
+
+names(pl) <- paste0("Cluster_", c(which(non_NAs > 0) - 1))
+
+
+# Create output directory
+try(dir.create(paste0("1st_comparison", "_feature_plots")))
+
+
+
+# Export png plots
+lapply(1:length(pl), function(y){
+    
+    lapply(pl[y], function(x){ggsave(plot = x,
+                              filename = paste0("1st_comparison", "_feature_plots", "/", names(pl)[y], ".png"), 
+                              
+                              device = "png", width = 14, height = 9, dpi = 300)
+        }
+        )
+    }
+)
+
+```
+
+
+
+## H11 vs H13 Neurons
+
+```{r}
+
+H11_neurons <- rownames(filter(pbmc@meta.data, dataset == "1538TE10H11", seurat_clusters %in% c(2,3)))
+
+H13_neurons <- rownames(filter(pbmc@meta.data, dataset == "1538TE10HE13", seurat_clusters %in% c(2,3)))
+
+
+DimPlot(subset(pbmc, seurat_clusters %in% c(2,3)), split.by = "dataset")
+
+
+DimPlot(subset(pbmc, seurat_clusters %in% c(2, 3)), group.by = "dataset")
+
+
+
+DefaultAssay(pbmc) <- "SCT"
+plan("multisession", workers = 1)
+
+pbmc <- PrepSCTFindMarkers(pbmc)
+DE_genes <- FindMarkers(pbmc, ident.1 = H11_neurons, ident.2 = H13_neurons, min.pct = 0.25, logfc.threshold = 0.25)
+
+
+#DE_signature_genes <- rownames(DE_genes)[DE_genes$p_val_adj < 0.05 & DE_genes$avg_log2FC > 1 | DE_genes$avg_log2FC < -1]
+
+write.csv(DE_genes, file = "./DE_signatures/1st_comparison_H11_vs_H13_Neurons_Wilcoxon_min.pct_0.25_logfc_025.csv")
+
+```
+
+```{r}
+
+
+FeaturePlot(subset(pbmc, seurat_clusters %in% c(2, 3)), 
+            features = rownames(DE_genes)[6:10], 
+                reduction = 'umap', max.cutoff = 7, ncol = 5, split.by = "dataset")&
+        labs(x = "", y = "")&
+        NoLegend()&
+        plot_annotation(title = paste0("H11 vs H13 Neuronal markers"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+
+
+FeaturePlot(subset(pbmc, seurat_clusters %in% c(2, 3)), 
+            features = rownames(DE_genes)[1:15], 
+                reduction = 'umap', max.cutoff = 7, ncol = 5)&
+        labs(x = "", y = "")&
+        NoLegend()&
+        plot_annotation(title = paste0("H11 vs H13 Neuronal markers"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+# Top 100 genes characteristic of H11
+rownames(filter(DE_genes, p_val_adj < 0.05, avg_log2FC > 0))[1:100]
+
+
+
+FeaturePlot(subset(pbmc, seurat_clusters %in% c(2, 3)), 
+            features = rownames(filter(DE_genes, p_val_adj < 0.05, avg_log2FC > 0))[1:5], 
+                reduction = 'umap', max.cutoff = 7, ncol = 5, split.by = "dataset")&
+        labs(x = "", y = "")&
+        NoLegend()&
+        plot_annotation(title = paste0("H11 vs H13 Neuronal markers"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+
+
+
+
+# Top 100 genes characteristic of H13
+rownames(filter(DE_genes, p_val_adj < 0.05, avg_log2FC < 0))[1:100]
+
+
+FeaturePlot(subset(pbmc, seurat_clusters %in% c(2, 3)), 
+            features = rownames(filter(DE_genes, p_val_adj < 0.05, avg_log2FC < 0))[1:5], 
+                reduction = 'umap', max.cutoff = 7, ncol = 5, split.by = "dataset")&
+        labs(x = "", y = "")&
+        NoLegend()&
+        plot_annotation(title = paste0("H11 vs H13 Neuronal markers"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+
+```
+
+
+## H11 vs H13 Progenitors
+
+```{r}
+
+#6, 0, 7, 5, 4, 10
+
+
+
+H11_progenitors <- rownames(filter(pbmc@meta.data, dataset == "1538TE10H11", seurat_clusters %in% c(6, 0, 7, 5, 4, 10)))
+
+H13_progenitors <- rownames(filter(pbmc@meta.data, dataset == "1538TE10HE13", seurat_clusters %in% c(6, 0, 7, 5, 4, 10)))
+
+
+
+DimPlot(subset(pbmc, seurat_clusters %in% c(6, 0, 7, 5, 4, 10)), split.by = "dataset")
+
+
+DimPlot(subset(pbmc, seurat_clusters %in% c(6, 0, 7, 5, 4, 10)), group.by = "dataset")
+
+
+
+DefaultAssay(pbmc) <- "SCT"
+plan("multisession", workers = 1)
+
+pbmc <- PrepSCTFindMarkers(pbmc)
+DE_genes <- FindMarkers(pbmc, ident.1 = H11_progenitors, ident.2 = H13_progenitors, min.pct = 0.25, logfc.threshold = 0.25)
+
+
+#DE_signature_genes <- rownames(DE_genes)[DE_genes$p_val_adj < 0.05 & DE_genes$avg_log2FC > 1 | DE_genes$avg_log2FC < -1]
+
+write.csv(DE_genes, file = "./DE_signatures/1st_comparison_H11_vs_H13_Progenitors_Wilcoxon_min.pct_0.25_logfc_025.csv")
+
+
+
+
+```
+
+
+
+```{r}
+
+
+FeaturePlot(subset(pbmc, seurat_clusters %in% c(6, 0, 7, 5, 4, 10)), 
+            features = rownames(DE_genes)[1:5], 
+                reduction = 'umap', max.cutoff = 7, ncol = 5, split.by = "dataset")&
+        labs(x = "", y = "")&
+        NoLegend()&
+        plot_annotation(title = paste0("H11 vs H13 Neuronal markers"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+
+
+FeaturePlot(subset(pbmc, seurat_clusters %in% c(6, 0, 7, 5, 4, 10)), 
+            features = rownames(DE_genes)[1:15], 
+                reduction = 'umap', max.cutoff = 7, ncol = 5)&
+        labs(x = "", y = "")&
+        NoLegend()&
+        plot_annotation(title = paste0("H11 vs H13 Neuronal markers"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+# Top 100 genes characteristic of H11
+rownames(filter(DE_genes, p_val_adj < 0.05, avg_log2FC > 0))[1:100]
+
+
+
+FeaturePlot(subset(pbmc, seurat_clusters %in% c(6, 0, 7, 5, 4, 10)), 
+            features = rownames(filter(DE_genes, p_val_adj < 0.05, avg_log2FC > 0))[1:5], 
+                reduction = 'umap', max.cutoff = 7, ncol = 5, split.by = "dataset")&
+        labs(x = "", y = "")&
+        NoLegend()&
+        plot_annotation(title = paste0("H11 vs H13 Neuronal markers"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+
+
+
+
+# Top 100 genes characteristic of H13
+rownames(filter(DE_genes, p_val_adj < 0.05, avg_log2FC < 0))[1:100]
+
+
+FeaturePlot(subset(pbmc, seurat_clusters %in% c(6, 0, 7, 5, 4, 10)), 
+            features = rownames(filter(DE_genes, p_val_adj < 0.05, avg_log2FC < 0))[1:5], 
+                reduction = 'umap', max.cutoff = 7, ncol = 5, split.by = "dataset")&
+        labs(x = "", y = "")&
+        NoLegend()&
+        plot_annotation(title = paste0("H11 vs H13 Neuronal markers"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+
+
+pbmc2 <- pbmc
+DefaultAssay(pbmc2) <- "SCT"
+
+plan("multisession", workers = 2)
+pbmc2 <- ScaleData(pbmc2)
+
+DoHeatmap(subset(pbmc2, seurat_clusters %in% c(6, 0, 7, 5, 4, 10)), 
+          features = unique(c(rownames(filter(DE_genes, p_val_adj < 0.05 & avg_log2FC > 0))[1:100],
+                            rownames(filter(DE_genes, p_val_adj < 0.05 & avg_log2FC < 0))[1:100])), group.by = "dataset") + NoLegend()
+
+
+
+
+#saveRDS(pbmc, file = "1st_comparison_1538TE10H11_1538TE10HE13_4712_cells_5_24_23.Rds")
+
+```
+
+
+```{r}
+
+
+CorticalInterneuronGenes <- c("Lhx6","Maf","Mafb","Zeb2","Nxph1","Erbb4","Cxcr4","Ackr3","Sst")
+
+ProjectionNeuronGenes <- c("Nkx2-1","Lhx8","Zic1","Gbx1","Gbx2","Etv1","Lmo3","Kcnmb4", "Kctd12", "Chat","Th")
+
+GlobusPallidusGenes <- c("Nkx2-1","Lmo3","Kcnmb4","Kctd12","Cntnap3")
+
+VentralPallidalGenes <- c("Gbx2","Asic2","Esrrg","Lmo4")
+
+ProgenitorGenes <- c("Nkx2-1","Nkx6-2","Tcf7l2","Id4","Ptch1","Dlx2","Hes1","Hes5","Hes6","Aurka","Mcm5","Jag1","Ascl1","Dll1","Dlx5","Dlx6","Dlx1","Sall3")
+
+
+###
+
+pbmc@meta.data$seurat_clusters <- factor(pbmc@meta.data$seurat_clusters, levels = 0:12)
+
+DefaultAssay(pbmc)
+
+plot_grid(
+    FeaturePlot(pbmc, features = CorticalInterneuronGenes), 
+    VlnPlot(pbmc, features = CorticalInterneuronGenes)
+)&
+plot_annotation(title = paste0("Cortical Interneuron Genes"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")))
+
+###
+
+plot_grid(
+    FeaturePlot(pbmc, features = ProjectionNeuronGenes), 
+    VlnPlot(pbmc, features = ProjectionNeuronGenes)
+)&
+plot_annotation(title = paste0("Projection Neuron Genes"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")))
+
+###
+
+
+plot_grid(
+    FeaturePlot(pbmc, features = GlobusPallidusGenes), 
+    VlnPlot(pbmc, features = GlobusPallidusGenes)
+)&
+plot_annotation(title = paste0("Globus Pallidus Genes"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")))
+
+
+######
+
+
+plot_grid(
+    FeaturePlot(pbmc, features = VentralPallidalGenes), 
+    VlnPlot(pbmc, features = VentralPallidalGenes)
+)&
+plot_annotation(title = paste0("Ventral Pallidal Genes"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")))
+
+
+#####
+
+
+
+plot_grid(
+    FeaturePlot(pbmc, features = ProgenitorGenes[1:9]), 
+    VlnPlot(pbmc, features = ProgenitorGenes[1:9])
+)&
+plot_annotation(title = paste0("Progenitor Genes 1"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")))
+
+###
+
+plot_grid(
+    FeaturePlot(pbmc, features = ProgenitorGenes[10:18]), 
+    VlnPlot(pbmc, features = ProgenitorGenes[10:18])
+)&
+plot_annotation(title = paste0("Progenitor Genes 2"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")))
+
+
+```
+
+```{r}
+
+POAGenes <- c("Hmx3","Dbx1","Shh","Nkx2-2")
+SeptumGenes <- c("Fgf17","Isl1","Six3","Slit2","Sox14","Zic1","Zic4")
+
+### POA ###
+
+plot_grid(
+    FeaturePlot(pbmc, features = POAGenes), 
+    VlnPlot(pbmc, features = POAGenes)
+)&
+plot_annotation(title = paste0("POA Genes"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")))
+
+
+FeaturePlot(pbmc, features = POAGenes, split.by = "dataset")&
+plot_annotation(title = paste0("POA Genes"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")))
+
+
+
+### SeptumGenes ###
+
+
+plot_grid(
+    FeaturePlot(pbmc, features = SeptumGenes), 
+    VlnPlot(pbmc, features = SeptumGenes)
+)&
+plot_annotation(title = paste0("Septum Genes"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")))
+
+
+FeaturePlot(pbmc, features = SeptumGenes, split.by = "dataset")&
+plot_annotation(title = paste0("Septum Genes"), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")))
+
+
+
+
+
+```
+
+
+
+
+# Rescue cells 1538 MGE cells from a MULTI-seq experiment, ignoring poorly performing LMO barcodes, and filtering out cells originating from POA, and Septum using cell markers.
+
+Original analysis including demultiplexing: G:\Shared drives\Nord Lab - Computational Projects\DLXP01
+```{r}
+
+    # Load RNA counts
+    counts <- Read10X("G:/Shared drives/Nord Lab - Computational Projects/DLXP01/CellRanger_outs/122220_1538Cre/filtered_feature_bc_matrix")
+    
+    # Create a Seurat object containing the RNA data
+    pbmc <- CreateSeuratObject(
+        counts = counts,
+        assay = "RNA"
+    )
+    
+    # Check names of the mitochondrial genes
+    # rownames(pbmc)[grepl("^mt-", rownames(pbmc), ignore.case = TRUE)]
+    
+    # Mitochondrial genes: 
+    DefaultAssay(pbmc) <- "RNA"
+    pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
+    
+    # Violin plot - pre-filtering        
+    p1 <- VlnPlot(
+        object = pbmc,
+        features = c("nCount_RNA", "nFeature_RNA", "percent.mt"),
+        ncol = 3,
+        pt.size = 0.1)& 
+        theme(axis.text.x = element_blank())&
+        plot_annotation(title = paste0("Cellranger filtered cells.", " Features: ", nrow(pbmc),
+                                       " Cells: ", ncol(pbmc)), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+    
+    
+    p3 <- ggplot(pbmc@meta.data, aes(x = log2(nFeature_RNA),  y = log(nCount_RNA)))+
+        geom_point(alpha = 0.2)+
+        theme_bw()+
+        labs(title = "Cellranger filtered cells")
+    
+    
+    
+    
+    # Define QC filtering thresholds using 3 median absolute deviations. 
+    # This idea borrowed from the scater package
+    
+    mad_distance = 5
+    
+    count_threshold_high <- median(pbmc@meta.data$nCount_RNA) + mad_distance*mad(pbmc@meta.data$nCount_RNA)
+    features_threshold_high <- median(pbmc@meta.data$nFeature_RNA) + mad_distance*mad(pbmc@meta.data$nFeature_RNA)
+    mito_threshold_high <- median(pbmc@meta.data$percent.mt) + mad_distance*mad(pbmc@meta.data$percent.mt)
+    
+    
+    ## Filter out low quality cells
+    pbmc <- subset(
+        x = pbmc,
+        subset =
+            #nCount_RNA < count_threshold_high &
+            nCount_RNA > 1000 &
+            #nFeature_RNA < features_threshold_high &  
+            #nFeature_RNA > 200 &
+            percent.mt < 20 
+    )
+    
+    
+    # Violin plot - post-filtering    
+    p2 <- VlnPlot(
+        object = pbmc,
+        features = c("nCount_RNA", "nFeature_RNA", "percent.mt"),
+        ncol = 3,
+        pt.size = 0.1)& 
+        theme(axis.text.x = element_blank())&
+        plot_annotation(title = paste0("Quality filtered cells.", " Features: ", nrow(pbmc),
+                                       " Cells: ", ncol(pbmc)), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+    
+    
+    p4 <- ggplot(pbmc@meta.data, aes(x = log2(nFeature_RNA),  y = log(nCount_RNA)))+
+        geom_point(alpha = 0.1)+
+        theme_bw()+
+        labs(title = "Quality filtered cells")
+    
+    
+    
+    # Save post filtering object    
+saveRDS(pbmc, file = paste0("./QCed Seurat objects/", "MGE_POA_Septum_1538_Pool22_1681cells", "_QCed_Seurat_obj.rds"))
+    
+    
+   top <-  plot_grid(p1, p2, ncol = 1)
+    
+   bottom <- plot_grid(p3, p4, ncol = 2)
+   
+   plot_grid(top, bottom, ncol = 1)
+    
+
+```
+
+# Integrate
+
+```{r}
+
+metadata <- read.csv("metadata_Jia_1058_1538_CreER.csv")
+
+# 1538TE10H11
+d1 <- readRDS(paste0("./Clustered Seurat objects/", "1538CreTE10HE11MGE", "_QCed_clustered_Seurat.RDS"))
+
+# 1538TE10HE13 - a subset of MGE POA and Septum cells  
+d2 <- readRDS(paste0("./QCed Seurat objects/", "MGE_POA_Septum_1538_Pool22_1681cells", "_QCed_Seurat_obj.rds"))    
+d2 <- SCTransform(d2, method = "glmGamPoi", verbose = FALSE)
+
+
+# Add dataset IDs
+d1$dataset <- "1538TE10H11"
+d2$dataset <- "1538TE10HE13"
+
+
+# Create a list of objects and merge metadata 
+ifnb.list <- list(d1, d2)
+
+
+gc()
+
+# Check the number of cells. If few cells are present adjust the k.weight parameter accordingly.
+
+sapply(ifnb.list, function(x) ncol(x))
+
+
+
+plan("multicore", workers = 1) # Decrease the number of cores if running out of memory or "Error 2 (The system cannot find the file specified)" ?? I'm not sure what this error means, but it's triggered by FindIntegrationAnchors.
+
+options(future.globals.maxSize = 30000 * 1024^2) # for 30 Gb RAM
+
+features <- SelectIntegrationFeatures(object.list = ifnb.list, nfeatures = 3000) # originally 3000
+ifnb.list <- PrepSCTIntegration(object.list = ifnb.list, anchor.features = features)
+
+
+RNA.anchors <- FindIntegrationAnchors(object.list = ifnb.list, 
+                                         normalization.method = "SCT",
+                                         anchor.features = features)
+
+# k.weight adjustment: https://github.com/satijalab/seurat/issues/3930
+RNA_integrated <- IntegrateData(anchorset = RNA.anchors, 
+                                normalization.method = "SCT",
+                                k.weight = 100)
+
+RNA_integrated <- RunPCA(RNA_integrated, verbose = TRUE, npcs = 30)
+
+source("data_dims_simple.R")
+data_dims_scree(RNA_integrated)
+
+PCs = 25 # Determined empirically
+
+pbmc <- RNA_integrated
+rm(RNA_integrated)
+
+pbmc <- RunPCA(pbmc, verbose = FALSE, npcs = PCs)
+pbmc <- RunUMAP(pbmc, dims = 1:PCs, verbose = FALSE)
+
+# Recluster
+pbmc <- FindNeighbors(pbmc, dims = 1:PCs, verbose = FALSE)
+pbmc <- FindClusters(pbmc, verbose = FALSE, graph.name = "integrated_snn")
+
+DimPlot(pbmc)
+
+DimPlot(pbmc, split.by = "dataset")
+
+```
+
+
+DE between datasets all cells in one dataset vs the other
+
+```{r, eval=FALSE}
+
+id1 <- rownames(filter(pbmc@meta.data, dataset == "1538TE10H11"))
+id2 <- rownames(filter(pbmc@meta.data, dataset == "1538TE10HE13"))
+
+DefaultAssay(pbmc) <- "SCT"
+plan("multisession", workers = 1)
+
+pbmc <- PrepSCTFindMarkers(pbmc)
+DE_genes <- FindMarkers(pbmc, ident.1 = id1, ident.2 = id2, min.pct = 0.25, logfc.threshold = 0.25)
+
+
+DE_signature_genes <- rownames(DE_genes)[DE_genes$p_val_adj < 0.05 & DE_genes$avg_log2FC > 1 | DE_genes$avg_log2FC < -1]
+
+write.csv(DE_genes, file = "./DE_signatures/1st_comparison_1538TE10H11_vs_1538TE10HE13_MGE_POA_Septum_Wilcoxon_min.pct_0.25_logfc_025.csv")
+
+
+```
+
+
+
+Quickly annotate using scType: 
+
+```{r}
+
+# Quick annotations with scType
+
+source("scType_quick_annotations.R")
+
+pbmc <- scType_annotations(pbmc)
+
+DimPlot(pbmc, reduction = "umap", label = TRUE, repel = TRUE, group.by = 'customclassif_cl', split.by = "dataset")
+DimPlot(pbmc, reduction = "umap", label = TRUE, repel = TRUE, split.by = 'dataset')
+
+
+```
+
+
+Count cell types:
+```{r}
+
+# Count cell types
+
+library(tidyverse)
+df <- pbmc@meta.data
+
+
+cluster_split <- df %>%
+  group_by(customclassif_cl, dataset) %>%
+  summarize(n = n()) %>% 
+  spread(dataset, n)  
+
+colnames(cluster_split) <- c("customclassif_cl", "Counts_1538TE10H11", "Counts_1538TE10HE13")
+
+df <- as.data.frame(cluster_split)
+
+df[,2] <- ifelse(is.na(df[,2]), 0, df[,2])
+df[,3] <- ifelse(is.na(df[,3]), 0, df[,3])
+
+
+df$Prop_1538TE10H11 <- round(df[,2] / sum(df[,2]), 3)
+df$Prop_1538TE10HE13 <- round(df[,3] / sum(df[,3]), 3)
+
+df$log_Prop_ratio <- round(log2(df$Prop_1538TE10H11 / df$Prop_1538TE10HE13), 2)
+    
+    
+```
+
+Stopped here:
+```{r, eval=FALSE}
+
+DefaultAssay(pbmc) <- "SCT"
+plan("multisession", workers = 1)
+
+pbmc <- PrepSCTFindMarkers(pbmc)    
+allmarkers_rna <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+    
+write.csv(allmarkers_rna, file = paste0("./DE_signatures/Integrated_cluster_markers_1st_comparison_1538TE10H11_vs_1538TE10HE13_MGE_POA_Septum_Wilcoxon_min.pct_0.25_logfc_025.csv"))
+
+```
+
+
+```{r}
+
+markers_df <- allmarkers_rna
+
+last_cluster <- max(as.numeric(as.character(pbmc@meta.data$seurat_clusters)))
+
+ call_markers <- function(markers_df){
+    
+        markers <- lapply(0:last_cluster, function(x){
+        
+            dplyr::filter(markers_df, 
+                      p_val_adj < 0.1, 
+                      avg_log2FC > 0,
+                      cluster == x)[1:50, "gene"]
+    })
+    
+        markers <- do.call(cbind, markers)
+        colnames(markers) <- paste0("Cluster_", 0:last_cluster)
+        markers <- as.data.frame(markers)
+        markers
+    
+    }
+
+ 
+top_markers_Wilcoxon_full <- call_markers(markers_df)
+top_markers_Wilcoxon_full <- top_markers_Wilcoxon_full[1:15,]
+
+
+# Count the number of non NA gene markers across cell clusters.
+non_NAs <- as.numeric(sapply(top_markers_Wilcoxon_full, function(y) sum(length(which(!is.na(y))))))
+
+
+##########################################################################
+
+top_cluster_genes <- function(cluster, n_top_genes){
+    
+    DefaultAssay(pbmc) <- "SCT"
+    
+    gc(verbose = FALSE)
+    try(dev.off(), silent = TRUE)
+    
+    FeaturePlot(pbmc, features = top_markers_Wilcoxon_full[1:n_top_genes, cluster], 
+                reduction = 'umap', max.cutoff = 12, ncol = 5)&
+        labs(x = "", y = "")&
+        NoLegend()&
+        plot_annotation(title = paste0("Cluster: ", cluster -1), 
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+}
+
+# Plot 15 genes for each cluster, which does not contain only NAs. 
+# If contains NAs, plot the allowed number. 
+
+pl <- lapply(which(non_NAs > 0), function(x){
+        
+        try(top_cluster_genes(x, non_NAs[x]))
+        
+        })
+
+names(pl) <- paste0("Cluster_", c(which(non_NAs > 0) - 1))
+
+
+# Create output directory
+try(dir.create(paste0("1st_comparison_w_MGE_POA_Sep_at_E13", "_feature_plots")))
+
+
+
+
+
+# Export png plots
+lapply(1:length(pl), function(y){
+    
+    lapply(pl[y], function(x){ggsave(plot = x,
+                              filename = paste0("1st_comparison_w_MGE_POA_Sep_at_E13", "_feature_plots", "/", names(pl)[y], ".png"), 
+                              
+                              device = "png", width = 14, height = 9, dpi = 300)
+        }
+        )
+    }
+)
+
+
+#saveRDS(pbmc, file = "1st_comparison_1538TE10H11_1538TE10HE13_4712_cells_5_24_23.Rds")
+
+#saveRDS(pbmc, file = "1st_comparison_1538TE10H11_1538TE10HE13_5969_MGE_POA_Septum_cells_5_25_23.Rds")
+
+```
+
+
+## Cluster Heatmap
+
+```{r}
+
+call_markers(markers_df)
+
+
+unique(as.character(unlist(call_markers(markers_df))))
+
+DoHeatmap(pbmc, features = unique(as.character(unlist(call_markers(markers_df)))))
+
+```
+
+
+## Update June 12th 2023.
+
+* POA genes - Igfbp5 (positive in POA), Dbx1 (positive in POA), Hmx3 (positive in POA) - genes specifically expressed in POA. Cells must be negative for all 3 to be considered as non POA.
+
+* Septum - Spry1 (positive in Septum), Fgf8 (positive in Septum) - Cells need to be negative for both.
+
+* MGE progenitor cells need to be positive for Gsx2 and Olig2. Some Olig2 is expressed in septum, but that shouldn't be used as a criterion for excluding cells.
+
+
+* Single genes are not necessarily captured well by single cell data. Inclusion or exclusion criteria shouldn't be based on single genes. 
+
+    ** Make a slide demonstrating the expression of these genes.
+    
+* Dissections aren't perfect, and some septum cells migrate to MGE. 
+
+* Neuronal markers: Hes1 (MGE VZ), Ascl1 (MGE SVZ), Gad1 (Mantle zone neurons) 
+
+To Do list:
+
+* 1. To do: Discover septum cell markers and Septum cells? DE for Spry1 & Fgf8 pos vs neg to identify other markers. This may find more Septum markers. 
+* 2. Progenitors within ages: Hes1 (VZ) vs Ascl1 (SVZ) for each age separately. 
+* 3. Progenitors vs Neurons within ages: Ascl1 (SVZ) vs Gad1 (Mantle zone).
+* 4. VZ cells between ages, E11 vs E13, using Hes1 to mark VZ.
+* 5. SVZ cells between ages, Ascl1 positive & Hes1 negative.
+* 6. Mantle zone Gad1 positive vs Hes1 and Ascl1 negative.
+
+* More detailed analysis
+* Assign cell cycle.  
+* 7. Many cell fate decisions in the MGE progenitors are made in the G1. E11 vs E13. Mcm5 (G1/S) positive, and likewise for Aurka (G2/M) positive cells. DE between timepoints for the progenitors in the G1/S and G2/M.
+* 8. Radial glia (Nes positive) E11 vs E13. At E13 they start to express Dlx1. 
+* 9. Subcluster Zic1 and Ggx1 cells - they have overlapping expression in the brain. Shaved vs divergent between two clusters. Positive for Zic1, positive for Gbx1, and positive for both. Jia expects these populations to be different . 
+
+
+```{r}
+
+library(Seurat)
+library(Signac)
+library(GenomicRanges)
+library(EnsDb.Mmusculus.v79)
+library(BSgenome.Mmusculus.UCSC.mm10)
+library(patchwork)
+library(ggplot2)
+library(cowplot)
+library(DT)
+library(tidyverse)
+library(glmGamPoi)
+library(future)
+library(scCustomize)
+library(SeuratWrappers)
+library(monocle3)
+
+
+pbmc <- readRDS("G:/Shared drives/Nord Lab - Computational Projects2/Jia_1056_1538_CreER/1st_comparison_1538TE10H11_1538TE10HE13_5969_MGE_POA_Septum_cells_5_25_23.Rds")
+
+```
+
+
+```{r}
+# mantle zone markers curated by Jia.
+# Hmx2 (this is a POA-derived neuronal marker)
+# Dbx1  (this is a POA-derived marker expressed in progenitors)
+
+mz_markers <- c("Calb1", "Gbx1", "Gbx2", "Lmo3", "Zic1", "Th", "FoxP2", "Nr2f2", "Nkx2-1", 
+"Maf", "MafB", "Lhx6", "Lhx8", "Hmx2", "Dbx1", "Er81", "Kcnmb4", "Npy", "Sst", "Cntnap3", "Asic2", "Sphkap")
+
+
+```
+
+
+## POA cells and putative markers
+
+```{r}
+
+DimPlot(pbmc)
+
+DefaultAssay(pbmc) <- "SCT"
+
+plot_grid(
+    FeaturePlot(pbmc, features = c("Igfbp5" ,"Dbx1" ,"Hmx3"), ncol = 3),
+    VlnPlot(pbmc, features = c("Igfbp5" ,"Dbx1" ,"Hmx3"), ncol = 3), 
+    ncol = 1
+    )
+
+######
+# When identifying cells expressing a particular gene, 
+# the quant parameter sets the minimum quantile of non-zero gene distribution for considering a gene to be expressed in a cell. 
+
+cells_expressing_gene <- function(gene, quant){
+    
+    expr <- pbmc@assays$SCT@data[rownames(pbmc@assays$SCT@data) %in% gene,]
+    
+    # Remove 0s
+    expr <- expr[expr > 0]
+    
+    # Keeping only the top 20% of the gene distribution% ?? 
+    expr <- expr[expr > quantile(expr, quant)]
+    
+    names(expr)
+    
+    }
+
+#####
+
+POA_cells <- unique(c(cells_expressing_gene("Igfbp5", 0.8),
+                      cells_expressing_gene("Dbx1", 0.8),
+                      cells_expressing_gene("Hmx3", 0.8))
+                    )
+
+
+length(POA_cells) # 5969 all cells, 1659 at quant of 0
+
+
+
+non_POA_cells <- setdiff(colnames(pbmc), POA_cells)
+
+
+length(POA_cells)
+length(non_POA_cells)
+
+
+DimPlot(pbmc, cells.highlight = POA_cells, split.by = "dataset")
+
+
+
+POA_vs_non_POA_markers <- FindMarkers(pbmc, ident.1 = POA_cells,
+                                            ident.2 = non_POA_cells, 
+                                            min.pct = 0.25, logfc.threshold = 0.25)
+
+
+#which(rownames(POA_vs_non_POA_markers) == "Hmx3")
+# 
+top_POA_markers <- rownames(POA_vs_non_POA_markers)[1:10]
+
+head(POA_vs_non_POA_markers, 20)
+
+write.csv(POA_vs_non_POA_markers, "DE_tables2/POA_vs_non_POA_markers.csv")
+
+
+FeaturePlot(pbmc, features = top_POA_markers)
+
+
+```
+
+
+Train SVM to detect POA cells
+```{r}
+
+# Backup data:
+#load("G:/Shared drives/Nord Lab - Computational #Projects2/Jia_1056_1538_CreER/Temp_workspace_7_17_2023.RData")
+
+# Based on the tutorial here: https://bioconductor.org/packages/release/bioc/vignettes/scAnnotatR/inst/doc/training-basic-model.html
+
+POA_markers <- c("Igfbp5" ,"Dbx1" ,"Hmx3")
+
+#BiocManager::install("scAnnotatR")
+library("scAnnotatR")
+
+# Add POA cell annotation - preclassified cells, based on the "Igfbp5" ,"Dbx1" ,"Hmx3" expression.
+pbmc@meta.data$Most_likely_cell_type <- ifelse(Cells(pbmc) %in% POA_cells, "POA", "MGE")
+
+
+# The original tutorial was splitting the data, but was not sampling it randomly. 
+# It's not ideal because datasets are ordered sequentially in the Seurat object.
+
+# Pivot point - not exactly a pivot point of for splitting. Just a halfpoint of the data.
+pivot = ncol(pbmc)%/%2
+
+set.seed(1234)
+sampling_vector <- sample(x = 1:ncol(pbmc),
+                          size = pivot, 
+                          replace = FALSE)
+
+
+train_set <- pbmc[, sampling_vector]
+test_set <- pbmc[, setdiff(1:ncol(pbmc), sampling_vector)]
+
+
+# I'm building the model on RNA counts instead of SCT normnalized data here.
+# When using RNA counts, the model detects fewer cells due to deemphasis of low values in the matrix 
+
+classifier_POA <- train_classifier(train_obj = train_set,
+                                 tag_slot = "Most_likely_cell_type",
+                                 cell_type = "POA", 
+                                 marker_genes = POA_markers,
+                                 assay = 'RNA')
+
+
+classifier_POA
+caret_model(classifier_POA)
+
+
+
+classifier_POA_test <- test_classifier(classifier = classifier_POA, 
+                                       test_obj = test_set,  
+                                       assay = 'RNA', 
+                                       tag_slot = 'Most_likely_cell_type')
+
+
+classifier_POA_test # Area under the curve: 0.9817
+
+roc_curve <- plot_roc_curve(test_result = classifier_POA_test)
+plot(roc_curve)  # AUC = 0.9817
+
+
+###
+
+classifier_POA_total <- test_classifier(classifier = classifier_POA, 
+                                       test_obj = pbmc,  
+                                       assay = 'RNA', 
+                                       tag_slot = 'Most_likely_cell_type')
+
+
+classifier_POA@caret_model
+
+roc_curve <- plot_roc_curve(test_result = classifier_POA_total)
+plot(roc_curve)  # AUC = 0.98
+
+
+table(classifier_POA_total$pred$class)
+
+
+DimPlot(pbmc, cells.highlight = POA_cells, split.by = "dataset")
+
+
+# 728 POA cells
+DimPlot(pbmc, 
+        cells.highlight = rownames(filter(classifier_POA_total$pred, class == 1)), 
+        split.by = "dataset")
+
+
+
+table(classifier_POA_total$pred$class)
+
+
+pbmc@meta.data$SVM_cell_type <- ifelse(
+    Cells(pbmc) %in% rownames(filter(classifier_POA_total$pred, class == 1)), "POA", "MGE")
+
+```
+
+
+
+## Septum cells and putative markers
+
+```{r}
+
+# https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8694698/
+# Nes - radial glia
+# Ascl1 - intermediate progenitors
+# Dcx - newborn neurons
+# Lhx6 - MGE/PoA-derived neurons 
+# Gbx2 - newborn cholinergic neurons
+# Dner - general marker for septal neurons
+# Tbr1 - pallium-derived neurons
+# Trp73 - Cajal-Retzius cells
+# Isl1 <- LGE-derived neurons expressing
+# Prkcd -  potential LS marker gene
+# Zic4  - general septal marker (Rubin et al., 2010)
+# 
+
+DimPlot(pbmc)
+
+DefaultAssay(pbmc) <- "SCT"
+
+plot_grid(
+    FeaturePlot(pbmc, features = c("Spry1", "Fgf8", "Zic4"), ncol = 3, max.cutoff = 2),
+    VlnPlot(pbmc, features = c("Spry1", "Fgf8", "Zic4"), ncol = 3), 
+    ncol = 1
+    )
+
+
+
+######
+# Cell set remains the same up to 0.5 quantile inclusion threshold. 
+
+Septum_cells <- unique(c(cells_expressing_gene("Spry1", 0.5),
+                      cells_expressing_gene("Fgf8", 0.5),
+                      cells_expressing_gene("Zic4", 0.5)
+                        ))
+
+
+
+# 650 cells
+length(Septum_cells)
+
+
+
+non_Septum_cells <- setdiff(colnames(pbmc), Septum_cells)
+
+
+length(Septum_cells)
+length(non_Septum_cells)
+
+
+DimPlot(pbmc, cells.highlight = Septum_cells, split.by = "dataset")
+
+
+
+Septum_vs_non_Septum_markers <- FindMarkers(pbmc, ident.1 = Septum_cells,
+                                            ident.2 = non_Septum_cells, 
+                                            only.pos = TRUE,
+                                            min.pct = 0.25, logfc.threshold = 0.25)
+
+
+# which(rownames(Septum_vs_non_Septum_markers) == "Spry1")
+# 
+top_Septum_markers <- rownames(Septum_vs_non_Septum_markers)[1:12]
+
+FeaturePlot(pbmc, features = top_Septum_markers)&NoLegend()
+
+
+
+write.csv(Septum_vs_non_Septum_markers, "DE_tables2/Septum_vs_non_Septum_markers.csv")
+
+```
+
+
+### Detect Septum cells using SVM
+
+```{r}
+
+# I'm using the more stringent classification from above as the basis
+
+Septum_markers <- c("Spry1", "Fgf8", "Zic4")
+
+#BiocManager::install("scAnnotatR")
+library("scAnnotatR")
+
+# Add Septum cell annotation
+pbmc@meta.data$Most_likely_cell_type <- ifelse(Cells(pbmc) %in% Septum_cells, 
+                                               "Septum", pbmc@meta.data$Most_likely_cell_type)
+
+
+table(pbmc@meta.data$Most_likely_cell_type)
+
+
+pivot = ncol(pbmc)%/%2
+
+set.seed(1234)
+sampling_vector <- sample(x = 1:ncol(pbmc),
+                          size = pivot, 
+                          replace = FALSE)
+
+
+train_set <- pbmc[, sampling_vector]
+test_set <- pbmc[, setdiff(1:ncol(pbmc), sampling_vector)]
+
+#################
+
+
+classifier_Septum <- train_classifier(train_obj = train_set,
+                                 tag_slot = "Most_likely_cell_type",
+                                 cell_type = "Septum", 
+                                 marker_genes = Septum_markers,
+                                 assay = 'RNA')
+
+
+classifier_Septum
+caret_model(classifier_Septum)
+
+
+
+classifier_Septum_test <- test_classifier(classifier = classifier_Septum, 
+                                       test_obj = test_set,  
+                                       assay = 'RNA', 
+                                       tag_slot = 'Most_likely_cell_type')
+
+
+classifier_Septum_test$overall_roc
+
+roc_curve <- plot_roc_curve(test_result = classifier_Septum_test)
+plot(roc_curve)  # AUC = 0.986
+
+
+###
+
+classifier_Septum_total <- test_classifier(classifier = classifier_Septum, 
+                                       test_obj = pbmc,  
+                                       assay = 'RNA', 
+                                       tag_slot = 'Most_likely_cell_type')
+
+
+
+roc_curve <- plot_roc_curve(test_result = classifier_Septum_total)
+plot(roc_curve)  # AUC = 0.945
+
+classifier_Septum@caret_model
+
+
+table(classifier_Septum_total$pred$class) #860 cells
+
+
+################
+
+
+DimPlot(pbmc, cells.highlight = Septum_cells, split.by = "dataset")
+
+
+# 860 Septum cells
+DimPlot(pbmc, 
+        cells.highlight = rownames(filter(classifier_Septum_total$pred, class == 1)), 
+        split.by = "dataset")
+
+
+pbmc@meta.data$SVM_cell_type <- ifelse(
+    Cells(pbmc) %in% rownames(filter(classifier_Septum_total$pred, class == 1)), 
+        "Septum", pbmc@meta.data$SVM_cell_type)
+
+
+caret_model(classifier_Septum)
+
+```
+
+```{r}
+
+
+# Are SVM-classified POA and Septum cells mutualy exclusive?
+# 57 POA and Septum cells intersect
+
+POA_or_Septum <- intersect(
+    rownames(filter(classifier_Septum_total$pred, class == 1)),
+    rownames(filter(classifier_POA_total$pred, class == 1))                  
+    )
+
+
+
+# Let's reassign identities in SVM_cell_type to indicate ambigouous identity
+pbmc@meta.data$SVM_cell_type <- ifelse(
+    Cells(pbmc) %in%
+        rownames(filter(classifier_Septum_total$pred, class == 1)), 
+        "Septum", "MGE")
+
+
+
+pbmc@meta.data$SVM_cell_type <- ifelse(
+    Cells(pbmc) %in%
+        rownames(filter(classifier_POA_total$pred, class == 1)), 
+        "POA", pbmc@meta.data$SVM_cell_type)
+
+
+pbmc@meta.data$SVM_cell_type <- ifelse(
+    Cells(pbmc) %in%
+        POA_or_Septum, 
+        "POA_or_Septum", pbmc@meta.data$SVM_cell_type)
+
+
+table(pbmc@meta.data$SVM_cell_type)
+
+####
+
+
+DimPlot(pbmc, split.by = "SVM_cell_type")
+
+
+```
+
+
+
+## Remove POA and Septum cells
+```{r}
+
+#setwd("G:/Shared drives/Nord Lab - Computational Projects2/Jia_1056_1538_CreER")
+
+#saveRDS(pbmc, "./Seurat_objects/MGE_with_POA_and_Septum_H11_and_H13_7_20_2023.Rds")
+
+#pbmc_wo_POA_and_Septum <- subset(pbmc, SVM_cell_type == "MGE")
+
+#saveRDS(pbmc_wo_POA_and_Septum, "./Seurat_objects/MGE_without_POA_and_Septum_H11_and_H13_7_20_2023.Rds")
+
+
+#rm(pbmc)
+#pbmc <- pbmc_wo_POA_and_Septum
+
+
+```
+
+
+## Recluster
+
+Work zone
+```{r}
+
+# Rerun the integration pipeline to insure that all object slots are updated
+
+# Add dataset IDs
+#d1$dataset <- "1538TE10H11"
+#d2$dataset <- "1538TE10HE13"
+
+setwd("G:/Shared drives/Nord Lab - Computational Projects2/Jia_1056_1538_CreER")
+#pbmc <- readRDS("./Seurat_objects/MGE_without_POA_and_Septum_H11_and_H13_7_20_2023.Rds")
+
+
+d1 <- subset(pbmc, dataset == "1538TE10H11")
+d2 <- subset(pbmc, dataset == "1538TE10HE13")
+
+#d1 <- RunPCA(d1)
+#d2 <- RunPCA(d2)
+
+# Create a list of objects and merge metadata 
+ifnb.list <- list(d1, d2)
+
+ifnb.list <- lapply(X = ifnb.list, FUN = SCTransform)
+features <- SelectIntegrationFeatures(object.list = ifnb.list, nfeatures = 3000)
+ifnb.list <- PrepSCTIntegration(object.list = ifnb.list, anchor.features = features)
+
+
+gc()
+
+# Check the number of cells. If few cells are present adjust the k.weight parameter accordingly.
+sapply(ifnb.list, function(x) ncol(x))
+
+
+plan("multicore", workers = 1) # Decrease the number of cores if running out of memory or "Error 2 (The system cannot find the file specified)" ?? I'm not sure what this error means, but it's triggered by FindIntegrationAnchors.
+
+options(future.globals.maxSize = 30000 * 1024^2) # for 30 Gb RAM
+
+RNA.anchors <- FindIntegrationAnchors(object.list = ifnb.list, 
+                                         normalization.method = "SCT",
+                                         anchor.features = features)
+
+# k.weight adjustment: https://github.com/satijalab/seurat/issues/3930
+RNA_integrated <- IntegrateData(anchorset = RNA.anchors, 
+                                normalization.method = "SCT",
+                                k.weight = 100)
+
+RNA_integrated <- RunPCA(RNA_integrated, verbose = TRUE, npcs = 30)
+
+source("data_dims_simple.R")
+data_dims_scree(RNA_integrated)
+
+PCs = 25 # Determined empirically
+
+pbmc <- RNA_integrated
+rm(RNA_integrated)
+
+pbmc <- RunPCA(pbmc, verbose = FALSE, npcs = PCs)
+pbmc <- RunUMAP(pbmc, dims = 1:PCs, verbose = FALSE)
+
+# Recluster
+pbmc <- FindNeighbors(pbmc, dims = 1:PCs, verbose = FALSE)
+pbmc <- FindClusters(pbmc, verbose = FALSE, graph.name = "integrated_snn")
+
+DimPlot(pbmc)
+
+DimPlot(pbmc, split.by = "dataset", label = TRUE, label.size = 8, pt.size = 1.1)
+
+
+#saveRDS(pbmc, "./Seurat_objects/Reclustered_MGE_without_POA_and_Septum_H11_and_H13_7_20_2023.Rds")
+
+```
+
+
+```{r}
+# Orient reclustered UMAP
+
+DefaultAssay(pbmc) <- "SCT"
+
+diag_genes <- c("Hes1", "Ascl1", "Dcx")
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, pt.size = 1.1)&NoLegend()
+
+
+plot_grid(
+    FeaturePlot(pbmc, features = diag_genes, ncol = 3)&NoLegend(),
+    VlnPlot(pbmc, features = diag_genes,  ncol = 3),
+    plot_grid(DimPlot(pbmc, label = T, ncol = 3, label.size = 6)+NoLegend()),
+    nrow = 3
+    )
+
+DefaultAssay(pbmc) <- "SCT"
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, split.by = "dataset", max.cutoff = 3)
+
+DefaultAssay(pbmc) <- "RNA"
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, max.cutoff = 3, pt.size = 1.1)&NoLegend()
+
+
+
+cluster_split <- pbmc@meta.data %>%
+  group_by(seurat_clusters, dataset) %>%
+  summarize(n = n()) %>% 
+  spread(dataset, n)  
+
+
+```
+
+```{r}
+
+# Cluster locations in a UMAP
+
+
+cluster_cells <- lapply(0:13, function(x) {
+    
+    rownames(filter(pbmc@meta.data, seurat_clusters == x))
+    
+})
+
+
+cluster_pos_map <- lapply(1:14, function(x){
+    
+    DimPlot(pbmc, cells.highlight = cluster_cells[[x]], split.by = "dataset")+
+        labs(title = paste0("Cluster_", x -1))&NoLegend()
+    
+    })
+
+
+plot_grid(plotlist = cluster_pos_map[1:14])
+
+
+
+```
+
+
+```{r}
+
+pbmc <- PrepSCTFindMarkers(pbmc)
+
+
+plan("multicore", workers = 4)
+
+## Cluster characterization
+DefaultAssay(pbmc) <- "SCT"
+all_markers_SCT <- FindAllMarkers(pbmc,
+                                 assay = "SCT",
+                                 min.pct = 0.25,
+                                 logfc.threshold = 0.25,
+                                 only.pos = FALSE)
+
+
+DefaultAssay(pbmc) <- "RNA"
+all_markers_RNA <- FindAllMarkers(pbmc,
+                                 assay = "RNA",
+                                 min.pct = 0.25,
+                                 logfc.threshold = 0.25,
+                                 only.pos = FALSE)
+
+
+# Run this later
+write.csv(all_markers_SCT, "DE_tables2/cluster_markers_SCT.csv")
+write.csv(all_markers_RNA, "DE_tables2/cluster_markers_RNA.csv")
+
+
+```
+
+
+
+
+# H11 vs H13 VZ progenitors
+
+## Using Hes1 expression to guide cell selection
+
+### VZ H11 vs H13 - Top priority
+
+Using Hes1 as the marker and robust rank aggregation
+
+```{r}
+
+
+cells_expressing_gene2 <- function(gene, dataset_name, bottom_trim){
+  
+    expr <- pbmc@assays$SCT@data[rownames(pbmc@assays$SCT@data) %in% gene,]
+    
+    # Remove 0s
+    expr <- expr[expr > 0]
+    
+    # Filter cells in a data set
+    expr <- expr[names(expr) %in% rownames(dplyr::filter(pbmc@meta.data, dataset == dataset_name))]
+    
+    
+    # Removing bottom X%  of non 0 distribution, per dataset, to reduce noise 
+    expr <- expr[expr >= quantile(expr, bottom_trim)]
+    
+    # Print a vector of cell names
+    names(expr)
+    
+    # earlier version had dataset filtering after quantile thresholding.
+    # pbmc@meta.data$cell_name <- rownames(pbmc@meta.data) 
+    # rownames(dplyr::filter(pbmc@meta.data, cell_name %in% names(expr) & dataset == dataset_name))
+    
+    }
+
+
+```
+
+```{r}
+
+# Fix the issue with dataset nomenclature
+pbmc@meta.data$dataset <- ifelse(pbmc@meta.data$dataset == "1538TE10HE13", "1538TE10H13",
+                                 pbmc@meta.data$dataset)
+
+DefaultAssay(pbmc) <- "SCT"
+FeaturePlot(pbmc, features = "Hes1", split.by = "dataset")
+
+
+# Sweep every 10th percentile
+gene_ranks <- sapply(seq(0, 0.90, 0.1), function(trim_val){
+    
+    VZ_cells_H11 <- cells_expressing_gene2("Hes1", 
+                                           dataset = "1538TE10H11", 
+                                           bottom_trim = trim_val)
+    
+    VZ_cells_H13 <- cells_expressing_gene2("Hes1", 
+                                            dataset = "1538TE10H13", 
+                                            bottom_trim = trim_val)
+
+
+    markers <- FindMarkers(pbmc, ident.1 = VZ_cells_H11,
+                                 ident.2 = VZ_cells_H13, 
+                                    min.pct = 0.25, 
+                                    logfc.threshold = 0.25,
+                                    only.pos = FALSE)
+
+    rownames(markers)
+
+})
+
+
+
+
+
+
+# This cbind implementation turns the recycling off. 
+maxlength <- max(unlist(lapply(gene_ranks, length)))
+
+ranked_genes <- sapply(gene_ranks, function(x){
+    
+    length(x) <- maxlength
+    cbind(x)
+    })
+
+
+
+colnames(ranked_genes) <- paste0("Quant_cut_", seq(0, 0.90, 0.1))
+
+
+view(head(ranked_genes, 20))
+
+
+
+
+
+# Robust aggregation of gene ranks
+library(RobustRankAggreg)
+
+
+ranks_rra <- aggregateRanks(gene_ranks,
+                    full = TRUE,
+                    method = "RRA")
+
+rownames(ranks_rra) <- NULL
+
+
+write.csv(ranks_rra, "DE_tables2/VZ_H11_vs_VZ_H13_markers_RRA.csv")
+write.csv(ranked_genes, "DE_tables2/VZ_H11_vs_VZ_H13_markers_quantile_sweep.csv")
+
+
+head(ranks_rra, 24)
+
+
+# Plot markers
+FeaturePlot(pbmc, split.by = "dataset", 
+            features = ranks_rra$Name[1:4])&
+    NoLegend()
+
+
+# Plot markers
+FeaturePlot(pbmc, split.by = "dataset", 
+            features = ranks_rra$Name[5:8])&
+    NoLegend()
+
+
+
+# Plot markers
+FeaturePlot(pbmc, split.by = "dataset", 
+            features = ranks_rra$Name[9:12])&
+    NoLegend()
+
+
+# Plot markers
+FeaturePlot(pbmc, split.by = "dataset", 
+            features = ranks_rra$Name[13:16])&
+    NoLegend()
+
+
+# Plot markers
+FeaturePlot(pbmc, split.by = "dataset", 
+            features = ranks_rra$Name[17:20])&
+    NoLegend()
+
+
+# Plot markers
+FeaturePlot(pbmc, split.by = "dataset", 
+            features = ranks_rra$Name[21:24])&
+    NoLegend()
+
+
+
+# I'm omitting mitochondrial genes
+VZ_H11_vs_H13_selected_markers <- ranks_rra$Name[1:50][!grepl("mt-", ranks_rra$Name[1:50])]
+
+# Doble check those
+# Reorder clusters, VZ -> SVZ -> MZ. Work this out with pseudotime
+VZ_clusters <- c(0, 12, 5, 7, 2, 8, 13)
+SVZ_clusters <- c(9, 3, 10, 4)
+MZ_clusters <- c(11, 1, 6) 
+
+
+pbmc@meta.data$seurat_clusters <- factor(pbmc@meta.data$seurat_clusters, levels = c(VZ_clusters, SVZ_clusters, MZ_clusters))
+
+
+pbmc@meta.data$Dev_classes <- ifelse(pbmc@meta.data$seurat_clusters %in% VZ_clusters, "VZ", "")
+pbmc@meta.data$Dev_classes <- ifelse(pbmc@meta.data$seurat_clusters %in% SVZ_clusters, "SVZ", pbmc@meta.data$Dev_classes)
+pbmc@meta.data$Dev_classes <- ifelse(pbmc@meta.data$seurat_clusters %in% MZ_clusters, "MZ", pbmc@meta.data$Dev_classes)
+
+pbmc@meta.data$Dev_classes <- factor(pbmc@meta.data$Dev_classes, levels = c("VZ", "SVZ", "MZ"))
+
+
+DefaultAssay(pbmc) <- "SCT"
+
+plot_grid(
+    DimPlot(pbmc, split.by = "Dev_classes"),
+    FeaturePlot(pbmc, features = c("Hes1", "Ascl1", "Dcx"), ncol = 3)&NoLegend(), ncol = 1
+)
+
+
+# I'm omitting mitochondrial genes
+VZ_H11_vs_H13_selected_markers <- ranks_rra$Name[1:50][!grepl("mt-", ranks_rra$Name[1:50])]
+
+
+VlnPlot(pbmc, group.by = "seurat_clusters", split.by = "dataset", 
+            features = VZ_H11_vs_H13_selected_markers[1:12])+
+    NoLegend()
+
+
+
+
+VlnPlot(pbmc, group.by = "seurat_clusters", split.by = "dataset", 
+            features = VZ_H11_vs_H13_selected_markers[13:24])+
+    NoLegend()
+
+
+VlnPlot(pbmc, group.by = "seurat_clusters", split.by = "dataset", 
+            features = VZ_H11_vs_H13_selected_markers[25:36])+
+    NoLegend()
+
+
+```
+
+
+```{r}
+# Heatmap of the top 50 markers
+
+VZ_H11_vs_H13_selected_markers <- ranks_rra$Name[1:50][!grepl("mt-", ranks_rra$Name[1:50])]
+
+
+```
+
+
+
+```{r}
+
+# Cluster genes
+d <- subset(pbmc, dataset %in% c("1538TE10H11", "1538TE10H13"))@assays$SCT@counts
+d <- d[rownames(d) %in% ranks_rra$Name[1:70], ]
+d <- as.matrix(d)
+
+
+paletteLength <- 100
+test <- as.matrix(d)
+
+myBreaks <- c(seq(min(test), 0, length.out=ceiling(paletteLength/2) + 1), 
+              seq(max(test)/paletteLength, max(test), length.out=floor(paletteLength/2)))
+
+myColor <- colorRampPalette(c("#9E0041", "#fea11d","#fea11d", 
+                              "white", 
+                              "#43abea", "#0a48aa", "#13008e"))(paletteLength)
+
+# Cluster annotation
+anno <- subset(pbmc, dataset %in% c("1538TE10H11", "1538TE10H13"))@meta.data
+anno <- as.data.frame(anno[,c("dataset", "Dev_classes", "seurat_clusters")])
+
+
+anno$seurat_clusters <- factor(anno$seurat_clusters, levels = 0:max(as.numeric(pbmc@meta.data$seurat_clusters))) 
+
+
+d2 <- lapply(c("VZ", "SVZ", "MZ"), function(y){
+        
+        lapply(c("1538TE10H11", "1538TE10H13"), function(x){
+    
+    cells <- rownames(filter(anno, Dev_classes == y, dataset == x))
+    as.data.frame(d)[, cells]
+    
+    })
+    })
+    
+
+d21 <- do.call(cbind, d2[[1]])
+
+# Work Zone
+library(pheatmap)
+
+d3 <- t(scale(t(d21)))
+d3 <- ifelse(d3 > 3, 3, d3)
+d3 <- ifelse(d3 < -3, -3, d3)
+
+# VZ
+VZ_pheatmap <- pheatmap(d3,
+        fontsize = 10,
+         show_rownames = T,
+         show_colnames = F,
+         labels_col = F,
+         cluster_cols = F,
+         clustering_distance_rows = "correlation",
+         clustering_distance_cols = "correlation",
+         method = "average",
+         color = rev(myColor),
+         annotation_col = anno,
+         main = "VZ")
+
+
+########################################################
+
+# SVZ
+d21 <- do.call(cbind, d2[[2]])
+
+# Work Zone
+library(pheatmap)
+
+d3 <- t(scale(t(d21)))
+d3 <- ifelse(d3 > 3, 3, d3)
+d3 <- ifelse(d3 < -3, -3, d3)
+
+# VZ
+SVZ_pheatmap <- pheatmap(d3,
+        fontsize = 10,
+         show_rownames = T,
+         show_colnames = F,
+         labels_col = F,
+         cluster_cols = F,
+         clustering_distance_rows = "correlation",
+         clustering_distance_cols = "correlation",
+         method = "average",
+         color = rev(myColor),
+         annotation_col = anno,
+         main = "SVZ")
+
+
+
+######################################################
+
+# MZ
+d21 <- do.call(cbind, d2[[3]])
+
+# Work Zone
+library(pheatmap)
+
+d3 <- t(scale(t(d21)))
+d3 <- ifelse(d3 > 3, 3, d3)
+d3 <- ifelse(d3 < -3, -3, d3)
+
+# VZ
+MZ_pheatmap <- pheatmap(d3,
+        fontsize = 10,
+         show_rownames = T,
+         show_colnames = F,
+         labels_col = F,
+         cluster_cols = F,
+         clustering_distance_rows = "correlation",
+         clustering_distance_cols = "correlation",
+         method = "average",
+         color = rev(myColor),
+         annotation_col = anno,
+         main = "MZ")
+
+
+
+VZ_pheatmap
+SVZ_pheatmap
+MZ_pheatmap
+
+
+
+############# All clusters ##################
+
+# SVZ
+d2_VZ <- do.call(cbind, d2[[1]])
+d2_SVZ <- do.call(cbind, d2[[2]])
+d2_MZ <- do.call(cbind, d2[[3]])
+
+d21 <- cbind(d2_VZ, d2_SVZ, d2_MZ)
+
+# Work Zone
+library(pheatmap)
+
+d3 <- t(scale(t(d21)))
+d3 <- ifelse(d3 > 3, 3, d3)
+d3 <- ifelse(d3 < -3, -3, d3)
+
+# VZ
+Combined_pheatmap <- pheatmap(d3,
+        fontsize = 10,
+         show_rownames = T,
+         show_colnames = F,
+         labels_col = F,
+         cluster_cols = F,
+         clustering_distance_rows = "correlation",
+         clustering_distance_cols = "correlation",
+         method = "average",
+         color = rev(myColor),
+         annotation_col = anno,
+         main = "")
+
+
+```
+
+
+
+
+```{r}
+
+start <- Sys.time()
+load("G:/Shared drives/Nord Lab - Computational Projects2/Jia_1056_1538_CreER/Temp_workspace_7_26_2023.RData")
+end <- Sys.time()
+end - start
+
+# It took 6.913178 mins to load this environment at home, at 350 Mbit/s. I couldn't load it at the CNS where internet speed reaches 75 Mbit/s, and often drops to 50 Mbit/s.
+
+```
+
+
+## Test how aggregated markers identified based on Hes1 expression compare with markers guided by Seurat clusters
+```{r}
+
+# H11 vs H13 aggregated markers guided on Hes1: 
+ranks_rra
+
+
+head(pbmc@meta.data)
+
+# DE along cell clusters
+# H11: 1884 cells
+# H13: 334 cells
+
+
+markers <- FindMarkers(pbmc, ident.1 = rownames(filter(pbmc@meta.data, 
+                                              Dev_classes == "VZ", dataset == "1538TE10H11")),
+                                 ident.2 = rownames(filter(pbmc@meta.data, 
+                                              Dev_classes == "VZ", dataset == "1538TE10H13")), 
+                                    min.pct = 0.25, 
+                                    logfc.threshold = 0.25,
+                                    only.pos = FALSE)
+
+
+sum(rownames(markers)[1:100] %in% ranks_rra$Name[1:100])
+
+
+
+# Plot VZ clusters
+
+VZ_clusters <- c(0, 12, 5, 7, 2, 8, 13)
+
+cluster_pos_map <- lapply(1:14, function(x){
+    
+    DimPlot(pbmc, cells.highlight = cluster_cells[[x]], split.by = "dataset", pt.size = 0.1)+
+        labs(title = paste0("Cluster_", x -1))&NoLegend()
+    
+    })
+
+
+plot_grid(plotlist = cluster_pos_map[VZ_clusters + 1])
+
+
+# 45 concordant
+sum(rownames(markers)[1:100] %in% ranks_rra$Name[1:100])
+
+intersect(rownames(markers)[1:100], ranks_rra$Name[1:100])
+
+# 55 discordant
+setdiff(rownames(markers)[1:100], ranks_rra$Name[1:100])
+
+
+source("G:/Shared drives/Nord Lab - Computational Projects2/Jia_1056_1538_CreER/combined_pheatmap.R")
+
+plot_pheatmap_genes(genes = intersect(rownames(markers)[1:100], ranks_rra$Name[1:100]),
+                    title = "H11 vs H13 highly concordant markers across both DE methods")
+
+
+plot_pheatmap_genes(genes = setdiff(rownames(markers)[1:100], ranks_rra$Name[1:100]),
+                    title = "H11 vs H13 markers discordant within top 100 genes")
+
+```
+
+```{r}
+
+# Vz H11 vs VZ H13 markers\
+VZ_H11_vz_H13_markers_DE_by_cluster <- markers
+VZ_H11_vz_H13_markers_DE_by_Hes1_coexpr_RRA <- ranks_rra
+
+saveRDS(pbmc, file = "G:/Shared drives/Nord Lab - Computational Projects2/Jia_1056_1538_CreER/Seurat_objects/MGE_without_POA_and_Septum_H11_and_H13_8_18_2023.Rds")
+
+
+write.csv(VZ_H11_vz_H13_markers_DE_by_cluster, 
+          file = "./DE_tables_H11_vs_H13/VZ_H11_vz_H13_markers_DE_by_cluster.csv")
+
+
+write.csv(VZ_H11_vz_H13_markers_DE_by_Hes1_coexpr_RRA, 
+          file = "./DE_tables_H11_vs_H13/VZ_H11_vz_H13_markers_DE_by_Hes1_coexpr_RRA.csv")
+
+
+```
+
+
+New E13 1538 sample. No POA and Septum. Standard scRNA-seq. 
+
+```{r}
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
