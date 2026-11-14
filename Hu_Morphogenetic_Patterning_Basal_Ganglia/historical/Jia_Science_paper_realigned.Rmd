@@ -1,0 +1,369 @@
+---
+title: "Jia's Science paper"
+author: "Karol Cichewicz"
+date: "2025-03-12"
+output: html_document
+editor_options:
+  chunk_output_type: console
+---
+
+
+# Alignment
+
+```{bash, eval=FALSE}
+
+##########################################################################################################################################
+#!/bin/bash
+set -euo pipefail
+
+# =======================
+# Configuration
+# =======================
+
+REFERENCE=/mnt/disks/data1/References/Cell_Ranger/refdata-gex-mm10-2020-A
+FASTQ_DIR=/mnt/disks/data1/Jia_GEO_submission
+SAMPLE=1538CreTE10HE13_cDNA
+THREADS=15
+MEM=120
+
+# =======================
+# Logging & checks
+# =======================
+
+echo "======================================"
+echo "Starting Cell Ranger run"
+echo "Sample:        ${SAMPLE}"
+echo "FASTQ dir:     ${FASTQ_DIR}"
+echo "Reference:     ${REFERENCE}"
+echo "Cores:         ${THREADS}"
+echo "Memory (GB):   ${MEM}"
+echo "======================================"
+date
+
+# Sanity check FASTQs
+ls -lh ${FASTQ_DIR}/*1538CreTE10HE13*_R1_*.fastq.gz
+ls -lh ${FASTQ_DIR}/*1538CreTE10HE13*_R2_*.fastq.gz
+
+# =======================
+# Cell Ranger count
+# =======================
+
+cellranger count \
+  --id=${SAMPLE} \
+  --fastqs=${FASTQ_DIR} \
+  --sample=122220_1538CreTE10HE13_cDNA \
+  --transcriptome=${REFERENCE} \
+  --localcores=${THREADS} \
+  --localmem=${MEM}
+
+echo "======================================"
+echo "Cell Ranger completed successfully"
+date
+
+
+##########################################################################################################################################
+
+#!/bin/bash
+set -euo pipefail
+
+# -------- configuration --------
+REFERENCE=/mnt/disks/data1/References/Cell_Ranger/refdata-gex-mm10-2020-A
+FASTQ_DIR=/mnt/disks/data1/Jia_GEO_submission
+SAMPLE=Rubenstein-JH-3829-GEX-02
+THREADS=15
+MEM=120
+# --------------------------------
+
+echo "Starting Cell Ranger for ${SAMPLE}"
+echo "FASTQs directory: ${FASTQ_DIR}"
+echo "Reference: ${REFERENCE}"
+echo "Cores: ${THREADS}, Memory: ${MEM} GB"
+echo "Date: $(date)"
+echo "------------------------------------"
+
+cellranger count \
+  --id=${SAMPLE} \
+  --fastqs=${FASTQ_DIR} \
+  --sample=${SAMPLE} \
+  --transcriptome=${REFERENCE} \
+  --localcores=${THREADS} \
+  --localmem=${MEM}
+
+echo "------------------------------------"
+echo "Cell Ranger run completed for ${SAMPLE}"
+echo "Date: $(date)"
+
+
+##########################################################################################################################################
+
+#!/bin/bash
+set -euo pipefail
+
+# -------- configuration --------
+REFERENCE=/mnt/disks/data1/References/Cell_Ranger/refdata-gex-mm10-2020-A
+FASTQ_DIR=/mnt/disks/data1/Jia_GEO_submission
+SAMPLE=JH4327_01
+THREADS=15
+MEM=120
+# --------------------------------
+
+echo "Starting Cell Ranger for ${SAMPLE}"
+echo "FASTQs: ${FASTQ_DIR}"
+echo "Reference: ${REFERENCE}"
+echo "Cores: ${THREADS}, Memory: ${MEM} GB"
+
+cellranger count \
+  --id=${SAMPLE} \
+  --fastqs=${FASTQ_DIR} \
+  --sample=${SAMPLE} \
+  --transcriptome=${REFERENCE} \
+  --localcores=${THREADS} \
+  --localmem=${MEM}
+
+echo "Cell Ranger run completed for ${SAMPLE}"
+
+```
+
+
+# Cell IDs sanity check
+
+```{r}
+
+# Full Integrated Seurat object from the original submission
+# Full original integrated UMAP
+pbmc <- readRDS("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/MGE_1538_E11_and_E13_with_new_E13.Rds")
+
+DimPlot(pbmc, label = T, label.size = 10)
+
+# Task: Check if cell IDs in the Seurat object match the realigned datasets. This is a sanity check making sure that we are uploading correct files to GEO.
+
+cell_ids_by_dataset <- split(
+  colnames(pbmc),
+  pbmc$dataset
+)
+
+cell_ids_by_dataset
+
+
+
+list.files("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/GEO_submission/cellranger_rerun_Jan_2026")
+
+
+```
+
+
+```{r}
+
+base_dir <- "C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/GEO_submission/cellranger_rerun_Jan_2026"
+
+datasets <- list.files(base_dir)
+datasets
+# [1] "1538CreTE10HE13_cDNA" "JH4327_01" "Rubenstein-JH-3829-GEX-02"
+
+
+library(Seurat)
+
+seurat_cr <- lapply(datasets, function(ds) {
+
+  message("Reading: ", ds)
+
+  data_dir <- file.path(
+    base_dir,
+    ds,
+    "outs",
+    "filtered_feature_bc_matrix"
+  )
+
+  counts <- Read10X(data.dir = data_dir)
+
+  CreateSeuratObject(
+    counts = counts,
+    project = ds,
+    assay = "RNA"
+  )
+})
+
+names(seurat_cr) <- datasets
+
+```
+
+
+```{r}
+
+cell_ids_cellranger <- lapply(seurat_cr, colnames)
+
+names(cell_ids_cellranger)
+# "1538CreTE10HE13_cDNA"
+# "JH4327_01"
+# "Rubenstein-JH-3829-GEX-02"
+
+length(cell_ids_cellranger$JH4327_01)
+head(cell_ids_cellranger$JH4327_01)
+
+```
+
+
+Cell ID matching
+```{r}
+#### JH4327_01 ###
+
+JH4327_01_Seurat_IDs <- cell_ids_by_dataset$JH4327_01_TE10H13
+JH4327_01_realigned_IDs <- cell_ids_cellranger$JH4327_01
+
+head(JH4327_01_Seurat_IDs)
+head(JH4327_01_realigned_IDs)
+
+
+length(JH4327_01_Seurat_IDs)
+length(JH4327_01_realigned_IDs)
+
+any(duplicated(JH4327_01_Seurat_IDs))
+any(duplicated(JH4327_01_realigned_IDs))
+
+####
+
+ids_seurat <- unique(JH4327_01_Seurat_IDs)
+ids_realigned <- unique(JH4327_01_realigned_IDs)
+
+overlap_ids <- intersect(ids_seurat, ids_realigned)
+
+length(ids_seurat)
+length(ids_realigned)
+length(overlap_ids)
+
+# proportions
+length(overlap_ids) / length(ids_seurat)
+length(overlap_ids) / length(ids_realigned)
+
+library(eulerr)
+
+euler_obj <- euler(
+  list(
+    "Seurat (integrated)" = ids_seurat,
+    "Cell Ranger (realigned)" = ids_realigned
+  )
+)
+
+
+plot(
+  euler_obj,
+  fills = c("#4C72B0", "#DD8452"),
+  edges = TRUE,
+  quantities = TRUE,
+  main = "JH4327_01: Seurat vs Realigned Cell Ranger Barcodes"
+)
+
+```
+
+```{r}
+
+### TE10H13 ###
+
+
+TE10H13_Seurat_IDs <- cell_ids_by_dataset$`1538TE10H13`
+TE10H13_realigned_IDs <- cell_ids_cellranger$`1538CreTE10HE13_cDNA`
+
+head(TE10H13_Seurat_IDs)
+head(TE10H13_realigned_IDs)
+
+TE10H13_Seurat_IDs_clean <- sub("_\\d+$", "", TE10H13_Seurat_IDs)
+
+head(TE10H13_Seurat_IDs_clean)
+
+length(TE10H13_Seurat_IDs_clean)
+length(TE10H13_realigned_IDs)
+
+any(duplicated(TE10H13_Seurat_IDs_clean))
+any(duplicated(TE10H13_realigned_IDs))
+
+
+ids_seurat <- unique(TE10H13_Seurat_IDs_clean)
+ids_realigned <- unique(TE10H13_realigned_IDs)
+
+overlap_ids <- intersect(ids_seurat, ids_realigned)
+
+length(ids_seurat)
+length(ids_realigned)
+length(overlap_ids)
+
+length(overlap_ids) / length(ids_seurat)
+length(overlap_ids) / length(ids_realigned)
+
+
+library(eulerr)
+
+euler_obj <- euler(
+  list(
+    "Seurat (integrated)" = ids_seurat,
+    "Cell Ranger (realigned)" = ids_realigned
+  )
+)
+
+plot(
+  euler_obj,
+  fills = c("#4C72B0", "#DD8452"),
+  edges = TRUE,
+  quantities = TRUE,
+  main = "1538TE10H13: Seurat vs Realigned Cell Ranger Barcodes"
+)
+
+```
+
+
+```{r}
+### TE10H11 ###
+
+TE10H11_Seurat_IDs <- cell_ids_by_dataset$`1538TE10H11`
+TE10H11_realigned_IDs <- cell_ids_cellranger$`Rubenstein-JH-3829-GEX-02`
+
+head(TE10H11_Seurat_IDs)
+head(TE10H11_realigned_IDs)
+
+## Strip Seurat merge suffix (_1)
+TE10H11_Seurat_IDs_clean <- sub("_\\d+$", "", TE10H11_Seurat_IDs)
+
+head(TE10H11_Seurat_IDs_clean)
+
+## Basic checks
+length(TE10H11_Seurat_IDs_clean)
+length(TE10H11_realigned_IDs)
+
+any(duplicated(TE10H11_Seurat_IDs_clean))
+any(duplicated(TE10H11_realigned_IDs))
+
+## Define unique sets
+ids_seurat <- unique(TE10H11_Seurat_IDs_clean)
+ids_realigned <- unique(TE10H11_realigned_IDs)
+
+## Overlap
+overlap_ids <- intersect(ids_seurat, ids_realigned)
+
+length(ids_seurat)
+length(ids_realigned)
+length(overlap_ids)
+
+## Proportions
+length(overlap_ids) / length(ids_seurat)
+length(overlap_ids) / length(ids_realigned)
+
+## Euler diagram
+library(eulerr)
+
+euler_obj <- euler(
+  list(
+    "Seurat (integrated)" = ids_seurat,
+    "Cell Ranger (realigned)" = ids_realigned
+  )
+)
+
+plot(
+  euler_obj,
+  fills = c("#4C72B0", "#DD8452"),
+  edges = TRUE,
+  quantities = TRUE,
+  main = "1538TE10H11: Seurat vs Realigned Cell Ranger Barcodes"
+)
+
+
+
+```

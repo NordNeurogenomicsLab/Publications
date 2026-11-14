@@ -1,0 +1,17 @@
+inputs/
+data/
+figures/
+output/
+logs/
+*.fastq*
+*.bam*
+*.h5
+*.Rds
+*.RDS
+*.rds
+*.RData
+.Rhistory
+.Rproj.user/
+.env*
+*credentials*
+*token*

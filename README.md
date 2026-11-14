@@ -20,3 +20,5 @@
 
 [**Nord_BMC_Genomics_2011**](https://github.com/NordNeurogenomicsLab/Publications/tree/master/Nord_BMC_Genomics_2011)
 
+
+[**Hu_Morphogenetic_Patterning_Basal_Ganglia**](./Hu_Morphogenetic_Patterning_Basal_Ganglia/) — embryonic MGE analysis and saved-result validation (review in progress).
