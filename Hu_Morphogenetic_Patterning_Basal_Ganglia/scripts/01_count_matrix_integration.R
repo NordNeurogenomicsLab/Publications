@@ -1,9 +1,8 @@
 # Count import, quality control, tissue selection, and global SCT integration.
-# Earlier E11.5/E13.5 MULTI-seq-derived libraries were curated together; JH4327_01
-# was added as a separate integration unit. Preserve that two-unit design rather
-# than silently changing to three independent global integration batches.
-# The older libraries form an established MGE reference containing age variation;
-# anchors align the additional E13.5 library to that reference's shared cell states.
+# 1538TE10H11 and 1538TE10H13 form the curated MGE reference.
+# JH4327_01_TE10H13 is integrated with this reference as a separate unit.
+# This two-unit design retains developmental-age variation within the reference
+# while aligning shared cell states in JH4327_01_TE10H13.
 # Source: Jia_1538_Aug_2023 datasets.Rmd, integration section.
 source("scripts/analysis_common.R")
 ref <- reference()

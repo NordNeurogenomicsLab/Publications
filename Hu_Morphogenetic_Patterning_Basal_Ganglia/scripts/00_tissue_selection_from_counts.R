@@ -1,4 +1,4 @@
-# Optional pre-exclusion analysis for the two older libraries.
+# Optional pre-exclusion analysis for 1538TE10H11 and 1538TE10H13.
 # Use original pre-exclusion count matrices, not matrices exported from retained
 # cells. The classifier must see the contaminating populations to learn exclusion.
 # Source: VZ H11 vs H13 notebook, E13 cell rescue and SVM sections (2023).

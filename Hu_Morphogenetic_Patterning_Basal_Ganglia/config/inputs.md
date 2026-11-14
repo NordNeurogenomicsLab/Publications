@@ -2,6 +2,15 @@
 
 Run commands from this project folder. Set `JIA_DATA_DIR` to a data directory and `JIA_OUTPUT_DIR` to a separate output directory. Nothing writes to the supplied manuscript objects.
 
+## Download the analysis inputs
+
+```bash
+python3 scripts/download_public_data.py --include data --output /path/to/jia_release
+export JIA_DATA_DIR=/path/to/jia_release/data
+```
+
+The [public data index](../docs/public_data.md) links count matrices, annotations, and saved objects individually. The release already includes the count manifests and curated annotations needed by scripts 00–05.
+
 ## Saved-object entry point
 
 Place these three supplied files in `$JIA_DATA_DIR/objects/`:
@@ -11,7 +20,6 @@ Place these three supplied files in `$JIA_DATA_DIR/objects/`:
 - `VZ_SVZ_reintegrated_on_221_progenitor_genes_08_15_2025.rds`: 3,294 progenitor cells, with full-gene expression and the progenitor-panel embedding.
 
 ```bash
-Rscript scripts/export_analysis_inputs.R
 export JIA_ANALYSIS_MODE=saved
 Rscript scripts/04_developmental_expression_figures.R
 Rscript scripts/05_developmental_volcano_plots.R
@@ -41,7 +49,7 @@ cp config/cell_annotations.tsv "$JIA_DATA_DIR/cell_annotations.tsv"
 cp config/count_inputs.tsv "$JIA_DATA_DIR/count_inputs.tsv"
 ```
 
-The January 2026 reprocessed matrices are not interchangeable with the original quantification for the two older libraries. Some retained cells are absent from the reprocessed filtered matrices and occur only in the raw matrices; the script stops on missing retained barcodes. A barcode match alone does not establish matching UMI values.
+The January 2026 reprocessed matrices are not interchangeable with the original quantification for 1538TE10H11 and 1538TE10H13. Some retained cells are absent from the reprocessed filtered matrices and occur only in the raw matrices; the script stops on missing retained barcodes. A barcode match alone does not establish matching UMI values.
 
 ## Software
 
@@ -50,9 +58,9 @@ The original global object was saved with Seurat 4.1.3; the methods document lis
 
 ## Pre-exclusion tissue-classifier entry point
 
-To refit the original tissue-selection method, provide both older libraries' **original, pre-exclusion** matrices and a `count_inputs_preselection.tsv` following `count_inputs_preselection.example.tsv`. Run script 00 before the downstream analyses. The supplied curated count exports have already excluded contaminants and cannot be used to train the original exclusion models. Script 00 saves the classifications and their comparison to the accepted manuscript cell selection. Review any differences before replacing the supplied cell annotation table. The code specifies marker quantiles, RNA-count classifier input, train/test sampling, and overlap handling; the original 2023 notebook is included in `historical/`.
+To refit the original tissue-selection method, provide **original, pre-exclusion** matrices for 1538TE10H11 and 1538TE10H13 and a `count_inputs_preselection.tsv` following `count_inputs_preselection.example.tsv`. Run script 00 before the downstream analyses. The supplied curated count exports have already excluded contaminants and cannot be used to train the original exclusion models. Script 00 saves the classifications and their comparison to the accepted manuscript cell selection. Review any differences before replacing the supplied cell annotation table. The code specifies marker quantiles, RNA-count classifier input, train/test sampling, and overlap handling; the original 2023 notebook is included in `historical/`.
 
-The two original pre-exclusion count matrices were recovered from the archived source folders and verified against all retained cells in the manuscript RNA assay: 3,064 E11.5 and 1,374 older-library E13.5 cells, 32,285 shared genes, zero differing gene–cell entries, and zero total-UMI differences. These count versions support the historical R quantification. The recovered folders contain 5,111 and 4,099 Cell Ranger-called cells respectively, before the analysis QC and tissue-selection steps.
+The two original pre-exclusion count matrices were recovered from the archived source folders and verified against all retained cells in the manuscript RNA assay: 3,064 E11.5 and 1,374 E13.5 cells from 1538TE10H13, 32,285 shared genes, zero differing gene–cell entries, and zero total-UMI differences. These count versions support the historical R quantification. The recovered folders contain 5,111 and 4,099 Cell Ranger-called cells respectively, before the analysis QC and tissue-selection steps.
 
 An optional `JIA_R_LIBRARY` environment variable prepends a project-specific R library. The workflow stops if glmGamPoi is unavailable for a stage that requires it; it does not silently substitute Seurat's slower native estimator.
 

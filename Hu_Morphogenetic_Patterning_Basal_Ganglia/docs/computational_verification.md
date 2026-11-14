@@ -4,7 +4,7 @@ The structured workflow was executed with R 4.4.0, Seurat 5.3.0, glmGamPoi 1.16.
 
 ## Count inputs and analysis objects
 
-The two recovered original Cell Ranger count matrices agree exactly with all retained cells' RNA counts in the manuscript object: zero differing gene–cell entries and zero total-UMI differences. The comparison covers 3,064 E11.5 and 1,374 older-library E13.5 cells and 32,285 genes. See `count_matrix_verification.tsv` and `config/count_matrix_checksums.tsv`.
+The two recovered original Cell Ranger count matrices agree exactly with all retained cells' RNA counts in the manuscript object: zero differing gene–cell entries and zero total-UMI differences. The comparison covers 3,064 E11.5 and 1,374 E13.5 cells from 1538TE10H13 and 32,285 genes. See `count_matrix_verification.tsv` and `config/count_matrix_checksums.tsv`.
 
 Count import, global integration, both cell-state subclustering analyses, developmental differential expression, marker testing, and figure generation completed successfully. Serialized objects passed Seurat validity checks, cell-ID/embedding alignment checks, and the intended model-type checks:
 
@@ -19,7 +19,7 @@ The global and MZ means of detected genes are 4,613.958 and 4,628.570, matching 
 
 ## Tissue-selection check
 
-The classifier module was executed on the original 5,969-cell normalized checkpoint. The current refit produced held-out AUCs of 0.988952 (POA) and 0.986231 (septum). It retained 4,398 MGE cells, differing at 40 cell labels from the manuscript's accepted 4,438-cell older-library selection. The recovered July 18 workspace contains an earlier classifier state and is not treated as the final selection model.
+The classifier module was executed on the original 5,969-cell normalized checkpoint. The current refit produced held-out AUCs of 0.988952 (POA) and 0.986231 (septum). It retained 4,398 MGE cells, differing at 40 cell labels from the manuscript's accepted 4,438-cell selection from 1538TE10H11 and 1538TE10H13. The recovered July 18 workspace contains an earlier classifier state and is not treated as the final selection model.
 
 The main count workflow uses the explicit accepted cell annotation table, preserving the manuscript selection. A classifier refit is compared to that table and does not overwrite it. The final fitted historical models or any intervening annotation decisions are needed to explain the 40-cell difference. No thresholds were tuned to force agreement.
 

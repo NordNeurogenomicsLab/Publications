@@ -16,16 +16,13 @@ The analysis compares E11.5 and E13.5 medial ganglionic eminence (MGE) cells lab
 
 | Script | Scientific content |
 | --- | --- |
-| `scripts/00_tissue_selection_from_counts.R` | Pre-exclusion QC, preliminary integration, and POA/septum classifier fitting for the older libraries |
-| `scripts/01_count_matrix_integration.R` | Import count matrices, apply documented QC and retained-cell annotations, combine the earlier libraries, and integrate the additional E13.5 library |
+| `scripts/00_tissue_selection_from_counts.R` | Quality control and POA/septum cell exclusion in 1538TE10H11 (E11.5) and 1538TE10H13 (E13.5) |
+| `scripts/01_count_matrix_integration.R` | SCT integration of 1538TE10H11 (E11.5), 1538TE10H13 (E13.5), and JH4327_01_TE10H13 (E13.5) |
 | `scripts/02_neuronal_progenitor_subclustering.R` | MZ analysis with the 52-gene neuronal panel and VZ/SVZ analysis with the progenitor panel; preserve full-gene expression for marker analysis |
 | `scripts/03_developmental_differential_expression.R` | SCT-based E11.5 versus E13.5 tests within developmental compartments and neuronal/progenitor clusters |
 | `scripts/04_developmental_expression_figures.R` | Global and compartment UMAPs, expression maps, cluster proportions, and marker heatmaps |
-| `scripts/05_developmental_volcano_plots.R` | Developmental differential-expression volcano plots with an explicit fold-change convention |
-| `scripts/export_analysis_inputs.R` | Export the original RNA count matrices and curated cell annotations from the supplied manuscript objects |
+| `scripts/05_developmental_volcano_plots.R` | Volcano plots of E11.5 versus E13.5 differential expression |
 | `scripts/tissue_identity_classification.R` | Document the marker-guided POA/septum classification procedure and its train/test split |
-
-Methods, parameters, gene lists, and reasons for the analysis choices are given in the scripts and [scientific methods](docs/scientific_methods.md). [Data inputs and execution](config/inputs.md) describe both a count-matrix workflow and entry points using saved Seurat objects. Script output directories are separate from the original data.
 
 ```bash
 export JIA_DATA_DIR=/path/to/analysis_inputs
@@ -37,19 +34,28 @@ Rscript scripts/04_developmental_expression_figures.R
 Rscript scripts/05_developmental_volcano_plots.R
 ```
 
-For figures from the supplied manuscript objects, set `JIA_ANALYSIS_MODE=saved` and run scripts 04–05. Script 03 can also analyze those objects. The saved objects retain the manuscript cell identities and embeddings; the count workflow calculates new embeddings and clusters and retains the manuscript annotations in separate columns for comparison. A fresh run is evaluated against the reference cell assignments rather than assuming numeric cluster IDs remain identical.
+## R session information
 
-## Computational environment
-
-`renv.lock` pins the R 4.4.0 environment used to execute the structured workflow, including Seurat, glmGamPoi, and scAnnotatR. It records the executable environment for these scripts; historical object versions are documented separately.
-
-```bash
-Rscript -e 'if (!requireNamespace("renv", quietly=TRUE)) install.packages("renv", repos="https://cloud.r-project.org"); renv::restore(lockfile="renv.lock", library="renv/library", prompt=FALSE)'
-export JIA_R_LIBRARY="$PWD/renv/library"
+```r
+sessionInfo()
 ```
 
-[Computational verification](docs/computational_verification.md) records the execution checks, input identity tests, and annotation requirements.
+[Session details](docs/sessionInfo.txt).
 
 ## Data availability
 
-Count matrices and Seurat objects are external data dependencies listed in [config/inputs.md](config/inputs.md). Large data files are not stored in Git. A GEO accession has not yet been assigned in this repository. The original analysis notebooks are retained in `historical/`; the structured scripts describe the methods used in the single-cell analyses.
+The [public data release](docs/public_data.md) contains **46 files (4.41 GB)**: count matrices, cell annotations, manuscript Seurat objects, analysis checkpoints, result tables, and Tables S1–S4. Each file has a direct download URL and SHA-256 checksum in the [file manifest](config/PUBLIC_DATA_FILES.tsv). No sign-in is required.
+
+| Data | Download |
+| --- | --- |
+| Cell annotations: library, age, compartment, and cluster assignments | [Annotations](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/cell_annotations.tsv) |
+| 1538TE10H11 (E11.5), accepted MGE cells | [UMI count matrix](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/counts/1538TE10H11/matrix.mtx) |
+| 1538TE10H13 (E13.5), accepted MGE cells | [UMI count matrix](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/counts/1538TE10H13/matrix.mtx) |
+| JH4327_01_TE10H13 (E13.5), accepted MGE cells | [UMI count matrix](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/counts/JH4327_01_TE10H13/matrix.mtx) |
+| Global MGE Seurat object: 7,785 cells | [RDS](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/objects/MGE_1538_E11_and_E13_with_new_E13.Rds) |
+| MZ Seurat object: 4,047 cells | [RDS](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/objects/MZ_reintegrated_on_52_PN_genes_08_15_2025.rds) |
+| VZ/SVZ Seurat object: 3,294 cells | [RDS](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/objects/VZ_SVZ_reintegrated_on_221_progenitor_genes_08_15_2025.rds) |
+
+Count-matrix feature and barcode files, pre-exclusion matrices, differential-expression tables, supplementary tables, and calculated checkpoints are linked in the [complete data index](docs/public_data.md). [Download instructions](docs/public_data.md#download) preserve the directory layout used by the scripts.
+
+Raw sequencing reads will be linked through GEO/SRA once an accession is assigned.
