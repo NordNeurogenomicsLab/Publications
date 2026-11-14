@@ -1,0 +1,1986 @@
+---
+title: "Jia_1538_new_datasets_Aud_2023"
+author: "Karol Cichewicz"
+date: "2023-09-08"
+output: html_document
+editor_options:
+  chunk_output_type: console
+---
+
+
+Communications with Jia on August 28 2023
+
+"That's correct. My dataset is in the gi_JH4327 directory; it should contain JH4318 and JH4327.
+
+JH4318 and JH4327 are not replicates. JH4318 contains four different datasets that were done on July 11, 2023. JH4327 contains another three unique datasets that were done on July 26, 2023. In total, there should be seven (4+3) datasets that were sequenced. I updated the metafile on Google drive detailing each dataset. Plese download all of them.
+
+Out of these seven datasets, JH4327_01 is the most important one because it is the replicate for the 1538Cre TE10 HE13 dataset. The 1538Cre TE10 HE13 dataset that you have been analyzing has MGE, POA, and Septum mixed together (which you computationally filtered) and were done with the MULTIseq method. This JH4327_01 dataset contains only MGE cells and was done with just the 10x scRNAseq method (not MULTIseq).
+"
+
+Dataset info:
+There are 3 datasets in this analysis: "1538TE10H11", "1538TE10H13", "JH4327_01_TE10H13", comparing 1538 cells treated with tamoxifen at E10, and harvested at E11 vs E13.The first two datasets are from a MULTIseq experiment.
+
+Go to the line ~270 to load the integrated object:
+pbmc <- readRDS("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/MGE_1538_E11_and_E13_with_new_E13.Rds")
+
+
+Three extra datasets from previous MULTIseq experiment:
+ POA and Septum cells were removed from this object
+ 1538, E10, E11, MGE:
+ Ex1_1538CreTE10HE11MGE <- readRDS(paste0("./Clustered Seurat objects/", "1538CreTE10HE11MGE", "_QCed_clustered_Seurat.RDS"))
+
+ 1538, E10, E13, MGE:
+ EX3_Pool22_MGE_1538CreTE10HE13 <- readRDS(paste0("./Clustered Seurat objects/", "1538CreTE10HE13_Pool22_MGE", "_QCed_clustered_Seurat.RDS"))
+
+
+
+```{r}
+
+# Load previously QCed dataset containing 4438 MGE cells, 3064 at H11 + 1374 at H13
+
+library(Seurat)
+library(Signac)
+library(GenomicRanges)
+library(EnsDb.Mmusculus.v79)
+library(BSgenome.Mmusculus.UCSC.mm10)
+library(patchwork)
+library(ggplot2)
+library(cowplot)
+library(DT)
+library(tidyverse)
+library(glmGamPoi)
+library(future)
+library(scCustomize)
+library(SeuratWrappers)
+library(monocle3)
+
+# Loading 4438 MGE cells without POA and Septum cells.
+# The first part of this analysis is in "VZ H11 vz H13 1538TE10H11.... Rmd" file.
+
+pbmc_old <- readRDS("G:/Shared drives/Nord Lab - Computational Projects2/Jia_1056_1538_CreER/Seurat_objects/MGE_without_POA_and_Septum_H11_and_H13_8_18_2023.Rds")
+
+```
+
+
+
+```{r}
+# Load new datasets H13 dataset JH4327_01 containing 3525 cells (QCed by cell ranger) and perform basic QC
+
+
+ # Load RNA counts
+counts <- Read10X("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/JH4327_01/outs/filtered_feature_bc_matrix")
+
+sample = "JH4327_01"
+
+    # Create a Seurat object containing the RNA data
+    pbmc <- CreateSeuratObject(
+        counts = counts,
+        assay = "RNA"
+    )
+
+    # Check names of the mitochondrial genes
+    # rownames(pbmc)[grepl("^mt-", rownames(pbmc), ignore.case = TRUE)]
+
+    # Mitochondrial genes:
+    DefaultAssay(pbmc) <- "RNA"
+    pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
+
+    # Violin plot - pre-filtering
+    p1 <- VlnPlot(
+        object = pbmc,
+        features = c("nCount_RNA", "nFeature_RNA", "percent.mt"),
+        ncol = 3,
+        pt.size = 0.1)&
+        theme(axis.text.x = element_blank())&
+        plot_annotation(title = paste0(sample, ", Cellranger filtered cells.", " Features: ", nrow(pbmc),
+                                       " Cells: ", ncol(pbmc)),
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+    p3 <- ggplot(pbmc@meta.data, aes(x = log2(nFeature_RNA),  y = log(nCount_RNA)))+
+        geom_point(alpha = 0.1)+
+        theme_bw()+
+        labs(title = "Cellranger filtered cells")
+
+
+
+
+    # Define QC filtering thresholds using 3 median absolute deviations.
+    # This idea borrowed from the scater package
+
+    #count_threshold_high <- median(pbmc@meta.data$nCount_RNA) + mad_distance*mad(pbmc@meta.data$nCount_RNA)
+    #features_threshold_high <- median(pbmc@meta.data$nFeature_RNA) + mad_distance*mad(pbmc@meta.data$nFeature_RNA)
+    #mito_threshold_high <- median(pbmc@meta.data$percent.mt) + mad_distance*mad(pbmc@meta.data$percent.mt)
+
+    # This approach to filtering is not used here. To keep consistent criteria across multiple datasets
+    # we decided to keep cells with > 1000 reads and < 20% mito reads
+    mad_distance = 5
+
+    pbmc[["nCount_RNA_abv_1000"]] <- pbmc@meta.data$nCount_RNA > 1000
+    pbmc[["nCount_RNA_less_than_5_MADs"]] <- pbmc@meta.data$nCount_RNA <
+                                             median(pbmc@meta.data$nCount_RNA) + mad_distance*mad(pbmc@meta.data$nCount_RNA)
+
+    pbmc[["nCount_RNA_abv_1000_and_less_than_5_MADs"]] <- pbmc[["nCount_RNA_abv_1000"]] &
+                                                          pbmc[["nCount_RNA_less_than_5_MADs"]]
+
+
+    pbmc[["nFeature_RNA_abv_200"]] <- pbmc@meta.data$nFeature_RNA > 200
+    pbmc[["nFeature_RNA_less_than_5_MADs"]] <- pbmc@meta.data$nFeature_RNA <
+                                               median(pbmc@meta.data$nFeature_RNA) + mad_distance*mad(pbmc@meta.data$nFeature_RNA)
+
+    pbmc[["nFeature_RNA_abv_200_and_less_than_5_MADs"]] <- pbmc[["nFeature_RNA_abv_200"]] &
+                                                           pbmc[["nFeature_RNA_less_than_5_MADs"]]
+
+    pbmc[["percent.mt_less_than_15"]] <- pbmc@meta.data$percent.mt < 15
+
+
+    ######
+    pbmc[["Cell_passing_QC"]] <- pbmc[["nCount_RNA_abv_1000_and_less_than_5_MADs"]] &
+                                 pbmc[["nFeature_RNA_abv_200_and_less_than_5_MADs"]] &
+                                 pbmc[["percent.mt_less_than_15"]]
+
+
+    # Perform manual QC
+    ## Filter out low quality cells
+    pbmc <- subset(
+        x = pbmc,
+        subset =
+            #nCount_RNA < count_threshold_high &
+            nCount_RNA > 1000 &
+            #nFeature_RNA < features_threshold_high &
+            #nFeature_RNA > 200 &
+            percent.mt < 20
+    )
+
+
+    # Violin plot - post-filtering
+    p2 <- VlnPlot(
+        object = pbmc,
+        features = c("nCount_RNA", "nFeature_RNA", "percent.mt"),
+        ncol = 3,
+        pt.size = 0.1)&
+        theme(axis.text.x = element_blank())&
+        plot_annotation(title = paste0(sample, ", Quality filtered cells.", " Features: ", nrow(pbmc),
+                                       " Cells: ", ncol(pbmc)),
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+    p4 <- ggplot(pbmc@meta.data, aes(x = log2(nFeature_RNA),  y = log(nCount_RNA)))+
+        geom_point(alpha = 0.1)+
+        theme_bw()+
+        labs(title = "Quality filtered cells")
+
+
+
+    # Save post filtering object
+# saveRDS(pbmc, file = paste0("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/", sample, "_QCed_Seurat_obj.rds"))
+
+
+   top <-  plot_grid(p1, p2, ncol = 1)
+
+   bottom <- plot_grid(p3, p4, ncol = 2)
+
+   plot_grid(top, bottom, ncol = 1)
+
+
+```
+
+Integrate and cluster data
+```{r}
+
+# Rerun the integration pipeline to insure that all object slots are updated
+
+
+# Add dataset IDs
+pbmc_old$age <- ifelse(pbmc_old$dataset == "1538TE10H11", "E11", "E13")
+
+pbmc$dataset <- "JH4327_01_TE10H13"
+pbmc$age <- "E13"
+
+
+# Initial clustering in the new data
+
+pbmc <- SCTransform(pbmc, method = "glmGamPoi", verbose = FALSE)
+pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+
+
+pbmc <- RunUMAP(pbmc, dims = 1:25, verbose = FALSE)
+pbmc <- FindNeighbors(pbmc, dims = 1:25, verbose = FALSE)
+pbmc <- FindClusters(pbmc, verbose = FALSE)
+
+DimPlot(pbmc)
+
+```
+
+
+
+
+```{r}
+
+# Create a list of objects and integrate
+ifnb.list <- list(pbmc_old, pbmc)
+ifnb.list <- lapply(X = ifnb.list, FUN = SCTransform)
+
+features <- SelectIntegrationFeatures(object.list = ifnb.list, nfeatures = 3000)
+ifnb.list <- PrepSCTIntegration(object.list = ifnb.list, anchor.features = features)
+
+
+gc()
+
+# Check the number of cells. If few cells are present adjust the k.weight parameter accordingly.
+sapply(ifnb.list, function(x) ncol(x)) # 4438 + 3347 cells
+
+
+plan("multicore", workers = 1) # Decrease the number of cores if running out of memory or "Error 2 (The system cannot find the file specified)" ?? I'm not sure what this error means, but it's triggered by FindIntegrationAnchors.
+options(future.globals.maxSize = 30000 * 1024^2) # for 30 Gb RAM
+
+RNA.anchors <- FindIntegrationAnchors(object.list = ifnb.list,
+                                         normalization.method = "SCT",
+                                         anchor.features = features)
+
+# k.weight adjustment: https://github.com/satijalab/seurat/issues/3930
+RNA_integrated <- IntegrateData(anchorset = RNA.anchors,
+                                normalization.method = "SCT",
+                                k.weight = 100)  # 100 is the default value
+
+RNA_integrated <- RunPCA(RNA_integrated, verbose = TRUE, npcs = 30)
+
+source("data_dims_simple.R")
+data_dims_scree(RNA_integrated)
+
+
+PCs = 25 # Determined empirically
+
+pbmc <- RNA_integrated
+rm(RNA_integrated)
+rm(pbmc_old)
+
+pbmc <- RunPCA(pbmc, verbose = FALSE, npcs = PCs)
+pbmc <- RunUMAP(pbmc, dims = 1:PCs, verbose = FALSE)
+
+# Recluster
+pbmc <- FindNeighbors(pbmc, dims = 1:PCs, verbose = FALSE)
+pbmc <- FindClusters(pbmc, verbose = FALSE, graph.name = "integrated_snn")
+
+DimPlot(pbmc)
+
+DimPlot(pbmc, split.by = "dataset", label = TRUE, label.size = 8, pt.size = 1.1)
+
+#saveRDS(pbmc, "C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/MGE_1538_E11_and_E13_with_new_E13.Rds")
+
+pbmc <- readRDS("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/MGE_1538_E11_and_E13_with_new_E13.Rds")
+
+```
+
+
+
+```{r}
+
+DimPlot(pbmc, split.by = "age", label = TRUE, label.size = 8, pt.size = 1.1)
+
+DimPlot(pbmc, group.by = "age")
+
+```
+
+
+
+```{r}
+
+# Orient reclustered UMAP
+
+DefaultAssay(pbmc) <- "SCT"
+
+diag_genes <- c("Hes1", "Ascl1", "Dcx")
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, pt.size = 1.1)&NoLegend()
+
+
+plot_grid(
+    FeaturePlot(pbmc, features = diag_genes, ncol = 3)&NoLegend(),
+    VlnPlot(pbmc, features = diag_genes,  ncol = 3),
+    plot_grid(DimPlot(pbmc, label = T, ncol = 3, label.size = 6)+NoLegend()),
+    nrow = 3
+    )
+
+
+DefaultAssay(pbmc) <- "SCT"
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, split.by = "age", max.cutoff = 3)
+
+
+DefaultAssay(pbmc) <- "RNA"
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, max.cutoff = 3, pt.size = 1.1)&NoLegend()
+
+
+cluster_split <- pbmc@meta.data %>%
+  group_by(seurat_clusters, age) %>%
+  summarize(n = n()) %>%
+  spread(age, n) %>%
+  replace(is.na(.), 0)
+
+
+cluster_split <- as.data.frame(cluster_split)
+
+
+cluster_split$Frac_E11 <- round(cluster_split[,2] / sum(cluster_split[,2]), 2)
+cluster_split$Frac_E13 <- round(cluster_split[,3] / sum(cluster_split[,3]), 2)
+
+
+#cluster_split$log2_Frac_1056_1538_ratios <- round(log2(cluster_split$Frac_1056/ cluster_split$Frac_1538),2)
+
+knitr::kable(cluster_split)
+
+
+knitr::kable(cluster_split)
+
+
+```
+
+```{r}
+
+setwd("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023")
+
+# Figure 2a
+
+DefaultAssay(pbmc) <- "SCT"
+
+a1 <- DimPlot(pbmc, group.by = "age", pt.size = 1.1) + ggtitle(NULL)+
+    theme(legend.position = "top", legend.text = element_text(size = 16, face = "bold"))
+a2 <- FeaturePlot(pbmc, features = "Hes1", pt.size = 1.1)&NoLegend()
+a3 <- FeaturePlot(pbmc, features = "Ascl1", pt.size = 1.1)&NoLegend()
+a4 <- FeaturePlot(pbmc, features = "Dcx", pt.size = 1.1)&NoLegend()
+
+
+a2 <- a2+labs(title = "Het1 (VZ)")+theme(plot.title = element_text(hjust = 0))
+a3 <- a3+labs(title = "Ascl1 (SVZ)")+theme(plot.title = element_text(hjust = 0))
+a4 <- a4+labs(title = "Dcx (MZ)")+theme(plot.title = element_text(hjust = 0))
+
+
+plot_grid(a1, a2, a3, a4)
+
+ggsave(plot_grid(a1, a2, a3, a4), file = "./Jia_1st_paper_figures/Fig_2a.png", width = 10, height = 8)
+
+```
+
+
+```{r}
+
+VZ_clusters <- c(2, 15, 5, 12, 7, 14)
+SVZ_clusters <- c(9, 11, 1)
+MZ_clusters <- c(3, 8, 4, 0, 6, 16, 13, 10)
+
+
+pbmc@meta.data$seurat_clusters <- factor(pbmc@meta.data$seurat_clusters, levels = c(VZ_clusters, SVZ_clusters, MZ_clusters))
+
+
+pbmc@meta.data$Dev_classes <- ifelse(pbmc@meta.data$seurat_clusters %in% VZ_clusters, "VZ", "")
+pbmc@meta.data$Dev_classes <- ifelse(pbmc@meta.data$seurat_clusters %in% SVZ_clusters, "SVZ", pbmc@meta.data$Dev_classes)
+pbmc@meta.data$Dev_classes <- ifelse(pbmc@meta.data$seurat_clusters %in% MZ_clusters, "MZ", pbmc@meta.data$Dev_classes)
+
+pbmc@meta.data$Dev_classes <- factor(pbmc@meta.data$Dev_classes, levels = c("VZ", "SVZ", "MZ"))
+
+DefaultAssay(pbmc) <- "SCT"
+DimPlot(pbmc, ncol = 3, split.by = "Dev_classes", label = TRUE, label.size = 7, pt.size = 1.1)
+
+
+DefaultAssay(pbmc) <- "SCT"
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, split.by = "Dev_classes", max.cutoff = 3, pt.size = 1.1)
+
+```
+
+H11 vs H13 VZ cells
+
+```{r}
+
+pbmc <- PrepSCTFindMarkers(pbmc)
+
+VZ_markers <- FindMarkers(pbmc, ident.1 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "VZ", age == "E11")),
+                                ident.2 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "VZ", age == "E13")),
+                                    min.pct = 0.25,
+                                    logfc.threshold = 0.25,
+                                    only.pos = FALSE)
+
+
+SVZ_markers <- FindMarkers(pbmc, ident.1 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "SVZ", age == "E11")),
+                             ident.2 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "SVZ", age == "E13")),
+                                    min.pct = 0.25,
+                                    logfc.threshold = 0.25,
+                                    only.pos = FALSE)
+
+
+MZ_markers <- FindMarkers(pbmc, ident.1 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "MZ", age == "E11")),
+                             ident.2 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "MZ", age == "E13")),
+                                    min.pct = 0.25,
+                                    logfc.threshold = 0.25,
+                                    only.pos = FALSE)
+
+VZ_markers$gene_name <- rownames(VZ_markers)
+SVZ_markers$gene_name <- rownames(SVZ_markers)
+MZ_markers$gene_name <- rownames(MZ_markers)
+
+
+VZ_markers <- VZ_markers[,c(6, 1:5)]
+SVZ_markers <- SVZ_markers[,c(6, 1:5)]
+MZ_markers <- MZ_markers[,c(6, 1:5)]
+
+rownames(VZ_markers) <- NULL
+rownames(SVZ_markers) <- NULL
+rownames(MZ_markers) <- NULL
+
+
+
+write.csv(VZ_markers, file = "./Jia_1st_paper_supp_tables/VZ_markers.csv", row.names = F)
+write.csv(SVZ_markers, file = "./Jia_1st_paper_supp_tables/SVZ_markers.csv", row.names = F)
+write.csv(MZ_markers, file = "./Jia_1st_paper_supp_tables/MZ_markers.csv", row.names = F)
+
+
+
+#write.csv(VZ_markers, file = "C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/DE_tables/VZ_markers.csv", row.names = F)
+#write.csv(SVZ_markers, file = "C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/DE_tables/SVZ_markers.csv", row.names = F)
+#write.csv(MZ_markers, file = "C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/DE_tables/MZ_markers.csv", row.names = F)
+
+```
+
+
+```{r}
+
+library(ggrepel)
+
+# Reverse the direction to plot genes expressed at E11 on the left, and genes expresed at E13.5 on the right.
+# Consider changing the dir in the DE analysis
+
+VZ_markers$avg_log2FC <- VZ_markers$avg_log2FC * -1
+SVZ_markers$avg_log2FC <- SVZ_markers$avg_log2FC * -1
+MZ_markers$avg_log2FC <- MZ_markers$avg_log2FC * -1
+
+```
+
+
+```{r}
+
+VZ_markers$DE_Dir <- ifelse(VZ_markers$avg_log2FC > 0, "High at E13.5", "High at E11.5")
+SVZ_markers$DE_Dir <- ifelse(SVZ_markers$avg_log2FC > 0, "High at E13.5", "High at E11.5")
+MZ_markers$DE_Dir <- ifelse(MZ_markers$avg_log2FC > 0, "High at E13.5", "High at E11.5")
+
+
+volcano_plot_text <- function(x, title) {
+
+
+ggplot(x, aes(x = avg_log2FC, y=-log10(p_val), color = DE_Dir, label = gene_name)) +
+        geom_point(size=1, alpha=0.5, stroke = 0.5)+
+        theme_light()+
+        #geom_vline(xintercept = 1.5, linetype = 2)+
+        #geom_vline(xintercept = -1.5, linetype = 2)+
+        geom_text_repel(data = VZ_markers[1:50,], show.legend = FALSE)+
+
+        labs(title= title, y="-log10(P)", x="logFC")+
+        theme(plot.title = element_text(size = rel(2), hjust=0.5))+
+        theme(axis.text=element_text(size=14))+
+        theme(legend.title=element_blank())+
+        theme(axis.text=element_text(size=14))+
+        theme(axis.title = element_text(size=14, face = "bold"))+
+       theme(legend.position = c(0.87, 0.08),
+          legend.background = element_rect(color = "black", size = 0, linetype = "solid"),
+          legend.key.size = unit(0.5, "lines"),
+          legend.key.height = unit(1.2, "lines"),
+          legend.key.width = unit(1.2, "lines"),
+          legend.margin = margin(1, 3, 1, 2)) +
+    guides(color = guide_legend(override.aes = list(size = 3)))
+
+}
+
+
+#FeaturePlot(pbmc, features = c("Fgf14", "Rpl41"), split.by = "age")
+
+fig2b1 <- volcano_plot_text(VZ_markers, "H11 vs H13 VZ markers")
+fig2b2 <- volcano_plot_text(SVZ_markers, "H11 vs H13 SVZ markers")
+fig2b3 <- volcano_plot_text(MZ_markers, "H11 vs H13 MZ markers")
+
+
+plot_grid(fig2b1,fig2b2, fig2b3, nrow = 1)
+
+ggsave(plot_grid(fig2b1,fig2b2, fig2b3, nrow = 1),
+       file = "./Jia_1st_paper_figures/Fig_2b_extra.png", width = 16, height = 6)
+
+
+ggsave(fig2b1,
+       file = "./Jia_1st_paper_figures/Fig_2b.png", width = 16/3, height = 6)
+
+```
+
+```{r}
+
+plot_grid(
+    DimPlot(pbmc, split.by = "dataset", pt.size = 1.1),
+    DimPlot(pbmc, split.by = "dataset", pt.size = 1.1, group.by = "Dev_classes"), ncol = 1
+)
+```
+
+
+GSEA
+
+```{r}
+
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(enrichplot)
+library(BiocParallel)
+
+
+gsea_plot <- function(data, title){
+
+  df <- data
+
+  # Rank usign a combination of P values and logFC
+  # rank from lowest to highest values
+  #df$Rank <- -log10(df$PValue) * df$logFC
+
+  df$Rank <- -log10(df$avg_log2FC)
+
+  # Create a named vector of log2 fold changes
+  gene_list <- df$Rank
+  names(gene_list) <- df$gene_name
+  gene_list <- sort(gene_list, decreasing = TRUE)
+
+
+  param <- MulticoreParam(workers = 12)
+
+  gsea_result <- gseGO(
+    geneList = gene_list,
+    OrgDb = org.Mm.eg.db,
+    keyType = "SYMBOL",
+    ont = "BP",    # Set the parameter to All
+    minGSSize = 10,
+    maxGSSize = 2000,
+    pvalueCutoff = 1,
+    verbose = TRUE,
+    seed = 123,
+    BPPARAM = param)
+
+
+  #gsea_result
+  p1 <- dotplot(gsea_result, showCategory = 30) +
+    aes(fill = ifelse(NES > 0, "positive", "negative")) +
+    geom_point(aes(color = ifelse(NES > 0, "positive", "negative")), size = 3, stroke = 1.5) +
+    scale_fill_manual(values = c("positive" = "red", "negative" = "blue")) +
+    scale_color_manual(values = c("positive" = "red", "negative" = "blue")) +
+    theme_minimal() +
+    labs(fill = "NES Direction", color = "NES Direction") +
+    ggtitle(title)+
+    theme(plot.title = element_text(hjust = 0.5, size = rel(2)))
+
+
+  list(gsea_result, p1)
+
+}
+
+
+VZ_GSEA <- gsea_plot(VZ_markers, "VZ")
+SVZ_GSEA <- gsea_plot(SVZ_markers, "SVZ")
+MZ_GSEA <- gsea_plot(MZ_markers, "MZ")
+
+
+write.csv(as.data.frame(VZ_GSEA[[1]]), file = "./Jia_1st_paper_supp_tables/VZ_GSEA_E11_vs_E13.csv", row.names = F)
+write.csv(as.data.frame(SVZ_GSEA[[1]]), file = "./Jia_1st_paper_supp_tables/SVZ_GSEA_E11_vs_E13.csv", row.names = F)
+write.csv(as.data.frame(MZ_GSEA[[1]]), file = "./Jia_1st_paper_supp_tables/MZ_GSEA_E11_vs_E13.csv", row.names = F)
+
+
+df_list2 <- list(as.data.frame(VZ_GSEA[[1]]), as.data.frame(SVZ_GSEA[[1]]), as.data.frame(MZ_GSEA[[1]]))
+
+
+suffixes <- c("_VZ", "_SVZ", "_MZ")
+
+
+
+
+for (i in 1:length(df_list2)) {
+  colnames(df_list2[[i]]) <- ifelse(
+    colnames(df_list2[[i]]) %in% c("ID", "Description"),
+    colnames(df_list2[[i]]),
+    paste0(colnames(df_list2[[i]]), suffixes[i])
+  )
+}
+
+
+
+# ReAssign the modified dataframes
+df1 <- df_list2[[1]]
+df2 <- df_list2[[2]]
+df3 <- df_list2[[3]]
+
+
+
+merged_GO2 <- Reduce(function(x, y) merge(x, y, by = c("ID", "Description"), all = TRUE), df_list2)
+
+# Positive NES values indicate enrichment at E11.5
+# Negative NES values indicate enrichment at E13.5
+
+```
+
+
+
+```{r}
+
+# Term selection
+top_n_term = 50
+
+sel_terms <- list(
+
+       grep("GO", arrange(filter(df1, pvalue_VZ < 0.05), pvalue_VZ)$ID[1:top_n_term], value = T),
+       grep("GO", arrange(filter(df2, pvalue_SVZ < 0.05), pvalue_SVZ)$ID[1:top_n_term], value = T),
+       grep("GO", arrange(filter(df3, pvalue_MZ < 0.05), pvalue_MZ)$ID[1:top_n_term], value = T)
+      )
+
+
+
+sel_terms <- unique(unlist(sel_terms))
+
+### Respiration terms
+sel_terms1 <- filter(df1, pvalue_VZ < 0.05, Description %in% grep("respiration|metab", df1$Description, value = T))$ID
+sel_terms2 <- filter(df2, pvalue_SVZ < 0.05, Description %in% grep("respiration|metab", df2$Description, value = T))$ID
+sel_terms3 <- filter(df3, pvalue_MZ < 0.05, Description %in% grep("respiration|metab", df3$Description, value = T))$ID
+
+sel_terms <- unique(c(sel_terms1, sel_terms2, sel_terms3))
+
+heatmap_matrix <- filter(merged_GO2, ID %in% sel_terms)
+heatmap_matrix <- heatmap_matrix[,grep("enrichmentScore", colnames(merged_GO2), value = T)]
+rownames(heatmap_matrix) <- filter(merged_GO2, ID %in% sel_terms)$Description
+
+
+library(ComplexHeatmap)
+
+# Remove duplicated terms. This is a quick and dirty fix
+#heatmap_matrix <- heatmap_matrix[!duplicated(merged_GO$Term), ]
+#rownames(heatmap_matrix) <- merged_GO$Term[!duplicated(merged_GO$Term)]
+
+heatmap_matrix <- as.matrix(heatmap_matrix)
+heatmap_matrix[!is.finite(heatmap_matrix)] <- 0
+
+colnames(heatmap_matrix) <- c("VZ", "SVZ", "MZ")
+
+#Heatmap(heatmap_matrix)
+
+library(ComplexHeatmap)
+library(circlize)
+library(grid)
+library(gridExtra)
+
+col_fun <- colorRamp2(c(min(heatmap_matrix), 0, max(heatmap_matrix)), c("blue", "grey", "#B2182B"))
+
+
+
+ht <- Heatmap(heatmap_matrix,
+              cluster_columns = FALSE,
+              col = col_fun,
+              # top_annotation = column_annotation,
+              row_names_gp = gpar(fontsize = 8),
+              name = "Enrichment")
+
+
+ht
+
+
+
+
+row_order_vector <- rownames(heatmap_matrix)[row_order(ht)]
+print(row_order_vector)
+
+
+excluded_terms <- c("")
+
+
+
+# Cleaned heatmap
+ht <- Heatmap(heatmap_matrix[rownames(heatmap_matrix) %nin% excluded_terms,],
+              cluster_columns = FALSE,
+              col = col_fun,
+              # top_annotation = column_annotation,
+              row_names_gp = gpar(fontsize = 8),
+              name = "Enrichment")
+
+
+ht
+
+
+# Cleaned heatmap
+ht <- library(ComplexHeatmap)
+library(circlize)
+library(grid)
+
+library(ComplexHeatmap)
+library(circlize)
+library(grid)
+
+
+
+# Assuming heatmap_matrix and col_fun are already defined
+ht <- Heatmap(heatmap_matrix[rownames(heatmap_matrix) %nin% excluded_terms,],
+              cluster_columns = FALSE,
+              col = col_fun,
+              # top_annotation = column_annotation,
+              row_names_gp = gpar(fontsize = 10),
+              name = "Enrichment",
+              heatmap_legend_param = list(direction = "horizontal"),
+              width = unit(6, "cm"))  # Adjust the width as needed
+
+# Draw the heatmap with the legend below the plot
+draw(ht, heatmap_legend_side = "bottom", annotation_legend_side = "bottom")
+
+
+#row_order_vector <- rownames(heatmap_matrix[rownames(heatmap_matrix) %nin% excluded_terms,])[row_order(ht)]
+#print(row_order_vector)
+
+
+
+
+```
+
+
+```{r}
+
+# Sanity check
+
+# Negative terms
+
+# Term selection
+top_n_term = 50
+
+sel_terms <- list(
+
+       grep("GO", arrange(filter(df1, NES_VZ > 0, pvalue_VZ < 0.05), pvalue_VZ)$ID[1:top_n_term], value = T),
+       grep("GO", arrange(filter(df2, NES_SVZ > 0, pvalue_SVZ < 0.05), pvalue_SVZ)$ID[1:top_n_term], value = T),
+       grep("GO", arrange(filter(df3, NES_MZ > 0, pvalue_MZ < 0.05), pvalue_MZ)$ID[1:top_n_term], value = T)
+      )
+
+
+sel_terms <- unique(unlist(sel_terms))
+
+
+# Find genes
+genes <- filter(df1, ID %in% sel_terms)$core_enrichment_VZ[1]
+genes <- as.character(unlist(sapply(genes, function(x) strsplit(x, "/"))))
+
+genes
+
+
+DefaultAssay(pbmc) <- "SCT"
+FeaturePlot(pbmc, features = genes[1:5], split.by = "age", pt.size = 1.1)
+FeaturePlot(pbmc, features = genes[6:10], split.by = "age", pt.size = 1.1)
+FeaturePlot(pbmc, features = genes[11:15], split.by = "age", pt.size = 1.1)
+FeaturePlot(pbmc, features = genes[16:20], split.by = "age", pt.size = 1.1)
+FeaturePlot(pbmc, features = genes[62:66], split.by = "age", pt.size = 1.1)
+
+VlnPlot(pbmc, features = genes[62:66], split.by = "age", pt.size = 1.1)
+
+
+
+```
+
+
+
+```{r}
+
+#marker_DE, dev_class_int
+
+marker_heatmap <- function(marker_DE, dev_class_int, title){
+
+# Cluster genes
+d <- subset(pbmc, dataset %in% c("1538TE10H11", "1538TE10H13", "JH4327_01_TE10H13"))@assays$SCT@counts
+
+wl_genes <- marker_DE$gene_name[!grepl("mt-|Rps|Rpl", marker_DE$gene_name)]
+
+top_positive <- filter(marker_DE, gene_name %in% wl_genes, avg_log2FC > 0)$gene_name[1:50]
+top_negative <- filter(marker_DE, gene_name %in% wl_genes, avg_log2FC < 0)$gene_name[1:50]
+
+d <- d[rownames(d) %in% c(top_positive, top_negative), ]
+d <- as.matrix(d)
+
+
+paletteLength <- 100
+test <- as.matrix(d)
+
+myBreaks <- c(seq(min(test), 0, length.out=ceiling(paletteLength/2) + 1),
+              seq(max(test)/paletteLength, max(test), length.out=floor(paletteLength/2)))
+
+myColor <- colorRampPalette(c("#9E0041", "#fea11d","#fea11d",
+                              "white",
+                              "#43abea", "#0a48aa", "#13008e"))(paletteLength)
+
+# Cluster annotation
+anno <- subset(pbmc, dataset %in% c("1538TE10H11", "1538TE10H13", "JH4327_01_TE10H13"))@meta.data
+anno <- as.data.frame(anno[,c("dataset", "Dev_classes", "seurat_clusters", "age")])
+
+
+anno$seurat_clusters <- factor(anno$seurat_clusters, levels = 0:max(as.numeric(pbmc@meta.data$seurat_clusters)))
+
+
+d2 <- lapply(c("VZ", "SVZ", "MZ"), function(y){
+
+        lapply(c("1538TE10H11", "1538TE10H13", "JH4327_01_TE10H13"), function(x){
+
+    cells <- rownames(filter(anno, Dev_classes == y, dataset == x))
+    as.data.frame(d)[, cells]
+
+    })
+    })
+
+
+d21 <- do.call(cbind, c(d2[[dev_class_int]]))
+
+# Work Zone
+library(pheatmap)
+
+d3 <- t(scale(t(d21)))
+d3 <- ifelse(d3 > 3, 3, d3)
+d3 <- ifelse(d3 < -3, -3, d3)
+
+# VZ
+VZ_pheatmap <- pheatmap(d3,
+         fontsize = 8,
+         show_rownames = T,
+         show_colnames = F,
+         labels_col = F,
+         cluster_cols = F,
+         clustering_distance_rows = "correlation",
+         clustering_distance_cols = "correlation",
+         method = "average",
+         color = rev(myColor),
+         annotation_col = anno,
+         main = title)
+
+}
+
+```
+
+```{r}
+
+marker_heatmap(marker_DE = VZ_markers,
+               dev_class_int = 1,
+               title = "E11 vs E13 VZ markers. 100 most significant positive and negative markers")
+
+
+
+marker_heatmap(marker_DE = SVZ_markers,
+               dev_class_int = 2,
+               title = "E11 vs E13 SVZ markers. 100 most significant positive and negative markers")
+
+
+marker_heatmap(marker_DE = MZ_markers,
+               dev_class_int = 3,
+               title = "E11 vs E13 MZ markers. 100 most significant positive and negative markers")
+
+
+DimPlot(subset(pbmc, seurat_clusters %in% VZ_clusters), split.by = "dataset", ncol = 1)
+DimPlot(subset(pbmc, seurat_clusters %in% SVZ_clusters), split.by = "dataset", ncol = 1)
+DimPlot(subset(pbmc, seurat_clusters %in% MZ_clusters), split.by = "dataset", ncol = 1)
+
+```
+
+```{r}
+
+wl_genes <- VZ_markers$gene_name[!grepl("mt-|Rps|Rpl", VZ_markers$gene_name)]
+
+grep("mt-|Rps|Rpl", VZ_markers$gene_name, value = T)
+
+```
+
+Characterize the clusters
+
+```{r}
+
+pbmc <- PrepSCTFindMarkers(pbmc)
+
+DefaultAssay(pbmc) <- "SCT"
+plan("multisession", workers = 14)
+
+allmarkers_sct <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+
+write.csv(allmarkers_sct, file = paste0("./Jia_1st_paper_supp_tables/Cluster_markers_SCT.csv"))
+
+
+
+```
+
+
+
+Top cluster markers
+```{r}
+
+
+# Top 32 genes in each cluster, excluding mitochondrial genes
+genes <- sapply(unique(allmarkers_sct$cluster), function(x){
+
+  gsub("mt-", "", (filter(allmarkers_sct, cluster == x)$gene)[1:100])[1:32]
+  })
+
+genes <- as.data.frame(genes)
+
+colnames(genes) <- as.character(unique(allmarkers_sct$cluster))
+
+#############
+
+DimPlot(pbmc, label = T, split.by = "age", pt.size = 1.1, label.size = 8)
+
+DimPlot(pbmc, label = TRUE, split.by = "seurat_clusters", pt.size = 1.1, label.size = 8, ncol = 5)
+DimPlot(pbmc, label = F, group.by = "age", split.by = "seurat_clusters", pt.size = 1.1, label.size = 8, ncol = 5)
+
+# Order cell clusters
+ptime_axis <- c(2, 15, 7, 14, 5, 12, 9, 11, 1, 3, 0, 16, 4, 8, 6, 13, 10)
+
+
+
+####
+
+
+# Create a list of plots with titles
+library(ggplot2)
+library(patchwork)
+
+# Create and save plots
+plots <- lapply(ptime_axis, function(x) {
+  p <- FeaturePlot(pbmc, features = genes[[as.character(x)]][1:32]) &
+    NoLegend() &
+    plot_annotation(title = paste0("Cluster ", x),
+                    theme = theme(plot.title = element_text(hjust = 0.5, size = 18, face = "bold")))
+
+  # Save the plot
+  ggsave(filename = paste0("Jia_1st_paper_supp_figures/Cluster_", x, ".png"), plot = p, width = 12, height = 16)
+
+  return(p)
+})
+
+
+
+DimPlot(pbmc, label = T, label.size = 10)
+
+
+```
+
+
+```{r}
+
+ptime_axis <- c(2, 15, 7, 14, 5, 12, 9, 11, 1, 3, 0, 16, 4, 8, 6, 13, 10)
+
+DoHeatmap(pbmc, features = unique(as.vector(as.matrix(genes))))
+
+
+
+
+
+```
+
+```{r}
+
+# Assuming 'pbmc' is your Seurat object and 'genes' is your data frame of gene markers
+ptime_axis <- c(2, 15, 7, 14, 5, 12, 9, 11, 1, 3, 0, 16, 4, 8, 6, 13, 10)
+
+# Combine all genes into a single vector
+gene_vector <- unique(as.vector(as.matrix(genes)))
+
+# Filter gene_vector to include only genes present in the pbmc object
+gene_vector <- gene_vector[gene_vector %in% rownames(pbmc@assays$SCT@data)]
+
+# Extract the expression matrix from the Seurat object
+expression_matrix <- as.matrix(pbmc@assays$SCT@data[gene_vector, ])
+
+# Create a list to store reordered columns
+reordered_columns <- list()
+
+# Loop through each cluster in ptime_axis and cbind the cells
+for (cluster in ptime_axis) {
+    cluster_cells <- colnames(pbmc)[pbmc$seurat_clusters == cluster]
+    if (length(cluster_cells) > 0) {
+        reordered_columns[[as.character(cluster)]] <- expression_matrix[, cluster_cells, drop = FALSE]
+    }
+}
+
+# Combine all columns into a single matrix
+reordered_matrix <- do.call(cbind, reordered_columns)
+
+# Create the heatmap using ComplexHeatmap
+if (!requireNamespace("ComplexHeatmap", quietly = TRUE)) {
+    install.packages("ComplexHeatmap")
+}
+library(ComplexHeatmap)
+
+Heatmap(reordered_matrix,
+        name = "Expression",
+        show_row_names = TRUE,
+        show_column_names = TRUE,
+        cluster_rows = TRUE,
+        cluster_columns = FALSE,
+        column_names_gp = gpar(fontsize = 10),
+        row_names_gp = gpar(fontsize = 10))
+
+```
+
+
+
+
+## Recluster 1st round
+Reclustering
+
+Recluster the following MZ cells:
+-E11.5 cluster 3 alone
+-E11.5 cluster 8 alone
+-E13.5 clusters 3, 8, 13, 16, 0, 4 and 6 altogether
+-E11.5 clusters 3 and 8 altogether
+Do DE analysis between the two ages (E11.5 vs E13.5) for each individual VZ clusters: 2, 7, 5, and 14.
+Do DE analysis between the two ages (E11.5 vs E13.5) for each individual SVZ clusters: 9, 11, and 1.
+Do DE analysis between the two ages (E11.5 vs E13.5) for each individual MZ clusters: 3 and 8.
+
+```{r}
+
+pbmc <- readRDS("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/MGE_1538_E11_and_E13_with_new_E13.Rds")
+
+E11_c3_cells <- rownames(filter(pbmc@meta.data, seurat_clusters == 3, age == "E11"))
+E11_c8_cells <- rownames(filter(pbmc@meta.data, seurat_clusters == 8, age == "E11"))
+E13_c3_8_13_16_0_4_6_cells <- rownames(filter(pbmc@meta.data, seurat_clusters %in% c(3, 8, 13, 16, 0, 4, 6), age == "E13"))
+E11_c3_8 <- rownames(filter(pbmc@meta.data, seurat_clusters %in% c(3, 8), age == "E11"))
+
+### E11_cl3_cells ###
+
+pbmc_sub <- subset(pbmc, cells = E11_c3_cells)
+
+PCs = 15
+
+pbmc_sub <- RunPCA(pbmc_sub, verbose = FALSE, npcs = PCs)
+pbmc_sub <- RunUMAP(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+
+
+# Recluster
+pbmc_sub <- FindNeighbors(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+pbmc_sub <- FindClusters(pbmc_sub, verbose = FALSE, graph.name = "integrated_snn")
+
+
+
+DimPlot(pbmc_sub, split.by = "dataset", label = TRUE, label.size = 8, pt.size = 1.1)
+
+
+pbmc_sub <- PrepSCTFindMarkers(pbmc_sub)
+DefaultAssay(pbmc_sub) <- "SCT"
+
+pbmc_sub <- NormalizeData(pbmc_sub)
+pbmc_sub <- FindVariableFeatures(pbmc_sub)
+pbmc_sub <- ScaleData(pbmc_sub, features = rownames(pbmc_sub))
+
+
+#plan("multisession", workers = 14)
+
+allmarkers_sct_sub <- FindAllMarkers(pbmc_sub, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+
+write.csv(allmarkers_sct_sub, file = paste0("./Jia_1st_paper_supp_tables/Cluster_markers_SCT_E11_c3_cells.csv"))
+
+
+
+###
+
+genes_sub <- sapply(unique(allmarkers_sct_sub$cluster), function(x){
+
+  gsub("mt-", "", (filter(allmarkers_sct_sub, cluster == x)$gene)[1:100])[1:32]
+  })
+
+genes_sub <- as.data.frame(genes_sub)
+
+colnames(genes_sub) <- as.character(unique(allmarkers_sct_sub$cluster))
+
+DefaultAssay(pbmc_sub) <- "SCT"
+
+# Plot the heatmap
+DoHeatmap(pbmc_sub, features = as.character(unlist(genes_sub))) +
+  scale_fill_gradientn(colors = c("blue", "white", "red"))+
+    theme(axis.text.y = element_text(size = 8))+
+    ggtitle("E11_c3_cells")
+
+
+saveRDS(pbmc_sub, file="C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/E11_c3_cells_reclustered.RDS")
+
+```
+
+
+```{r}
+
+### E11_c8_cells ###
+
+
+pbmc_sub <- subset(pbmc, cells = E11_c8_cells)
+
+PCs = 15
+
+pbmc_sub <- RunPCA(pbmc_sub, verbose = FALSE, npcs = PCs)
+pbmc_sub <- RunUMAP(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+
+# Recluster
+pbmc_sub <- FindNeighbors(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+pbmc_sub <- FindClusters(pbmc_sub, verbose = FALSE, graph.name = "integrated_snn")
+
+
+
+DimPlot(pbmc_sub, split.by = "dataset", label = TRUE, label.size = 8, pt.size = 1.1)
+
+
+pbmc_sub <- PrepSCTFindMarkers(pbmc_sub)
+DefaultAssay(pbmc_sub) <- "SCT"
+
+pbmc_sub <- NormalizeData(pbmc_sub)
+pbmc_sub <- FindVariableFeatures(pbmc_sub)
+pbmc_sub <- ScaleData(pbmc_sub, features = rownames(pbmc_sub))
+
+
+#plan("multisession", workers = 14)
+
+allmarkers_sct_sub <- FindAllMarkers(pbmc_sub, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+
+write.csv(allmarkers_sct_sub, file = paste0("./Jia_1st_paper_supp_tables/Cluster_markers_SCT_E11_c8_cells.csv"))
+
+
+
+###
+
+genes_sub <- sapply(unique(allmarkers_sct_sub$cluster), function(x){
+
+  gsub("mt-", "", (filter(allmarkers_sct_sub, cluster == x)$gene)[1:100])[1:50]
+  })
+
+genes_sub <- as.data.frame(genes_sub)
+
+colnames(genes_sub) <- as.character(unique(allmarkers_sct_sub$cluster))
+
+DefaultAssay(pbmc_sub) <- "SCT"
+
+# Plot the heatmap
+DoHeatmap(pbmc_sub, features = as.character(unlist(genes_sub))) +
+  scale_fill_gradientn(colors = c("blue", "white", "red"))+
+    theme(axis.text.y = element_text(size = 8))+
+    ggtitle("E11_c8_cells")
+
+
+saveRDS(pbmc_sub, file="C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/E11_c8_cells_reclustered.RDS")
+
+```
+
+
+```{r}
+
+### E13_c3_8_13_16_0_4_6_cells ###
+
+
+pbmc_sub <- subset(pbmc, cells = E13_c3_8_13_16_0_4_6_cells)
+
+PCs = 15
+
+pbmc_sub <- RunPCA(pbmc_sub, verbose = FALSE, npcs = PCs)
+pbmc_sub <- RunUMAP(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+
+# Recluster
+pbmc_sub <- FindNeighbors(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+pbmc_sub <- FindClusters(pbmc_sub, verbose = FALSE, graph.name = "integrated_snn")
+
+
+
+DimPlot(pbmc_sub, split.by = "age", label = TRUE, label.size = 8, pt.size = 1.1)
+
+
+pbmc_sub <- PrepSCTFindMarkers(pbmc_sub)
+DefaultAssay(pbmc_sub) <- "SCT"
+
+pbmc_sub <- NormalizeData(pbmc_sub)
+VariableFeatures(pbmc_sub) <- VariableFeatures(pbmc_sub[["SCT"]], assay = "SCT", slot = "scale.data")
+#pbmc_sub <- FindVariableFeatures(pbmc_sub)
+pbmc_sub <- ScaleData(pbmc_sub, features = rownames(pbmc_sub))
+
+
+#plan("multisession", workers = 14)
+DefaultAssay(pbmc_sub) <- "RNA"
+#pbmc_sub <- PrepSCTFindMarkers(pbmc_sub)
+allmarkers_sct_sub <- FindAllMarkers(pbmc_sub, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+
+write.csv(allmarkers_sct_sub, file = paste0("./Jia_1st_paper_supp_tables/Cluster_markers_SCT_E13_c3_8_13_16_0_4_6_cells.csv"))
+
+
+
+###
+
+genes_sub <- sapply(unique(allmarkers_sct_sub$cluster), function(x){
+
+  gsub("mt-", "", (filter(allmarkers_sct_sub, cluster == x)$gene)[1:100])[1:15]
+  })
+
+
+
+genes_sub <- as.data.frame(genes_sub)
+
+colnames(genes_sub) <- as.character(unique(allmarkers_sct_sub$cluster))
+
+DefaultAssay(pbmc_sub) <- "SCT"
+
+# Plot the heatmap
+DoHeatmap(pbmc_sub, features = as.character(unlist(genes_sub))) +
+  scale_fill_gradientn(colors = c("blue", "white", "red"))+
+    theme(axis.text.y = element_text(size = 8))+
+    ggtitle("E13_c3_8_13_16_0_4_6_cells")
+
+
+## Construct alluvial plot
+
+df1 <- data.frame("cells" = rownames(pbmc@meta.data),
+                  "seurat_clusters" = pbmc@meta.data$seurat_clusters)
+
+
+df2 <- data.frame("cells" = rownames(pbmc_sub@meta.data),
+                  "seurat_clusters_reclust" = pbmc_sub@meta.data$seurat_clusters)
+
+
+all_df <- merge(df1, df2)
+
+#install.packages("ggalluvial")
+library(ggalluvial)
+library(ggplot2)
+
+
+
+ggplot(data = all_df,
+       aes(axis1 = seurat_clusters, axis2 = seurat_clusters_reclust)) +
+  geom_alluvium(aes(fill = seurat_clusters)) +
+  geom_stratum() +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Original Clusters", "Reclustered Clusters")) +
+  theme_minimal() +
+  ggtitle("Alluvial Plot of Cell Clusters")
+
+
+saveRDS(pbmc_sub, file="C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/E13_c3_8_13_16_0_4_6_cells_reclustered.RDS")
+
+```
+
+
+
+```{r}
+
+# E11_c3_8
+
+
+pbmc_sub <- subset(pbmc, cells = E11_c3_8)
+
+PCs = 15
+
+pbmc_sub <- RunPCA(pbmc_sub, verbose = FALSE, npcs = PCs)
+pbmc_sub <- RunUMAP(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+
+# Recluster
+pbmc_sub <- FindNeighbors(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+pbmc_sub <- FindClusters(pbmc_sub, verbose = FALSE, graph.name = "integrated_snn")
+
+
+
+DimPlot(pbmc_sub, split.by = "age", label = TRUE, label.size = 8, pt.size = 1.1)
+
+
+pbmc_sub <- PrepSCTFindMarkers(pbmc_sub)
+DefaultAssay(pbmc_sub) <- "SCT"
+
+pbmc_sub <- NormalizeData(pbmc_sub)
+VariableFeatures(pbmc_sub) <- VariableFeatures(pbmc_sub[["SCT"]], assay = "SCT", slot = "scale.data")
+#pbmc_sub <- FindVariableFeatures(pbmc_sub)
+pbmc_sub <- ScaleData(pbmc_sub, features = rownames(pbmc_sub))
+
+
+#plan("multisession", workers = 14)
+DefaultAssay(pbmc_sub) <- "RNA"
+#pbmc_sub <- PrepSCTFindMarkers(pbmc_sub)
+allmarkers_sct_sub <- FindAllMarkers(pbmc_sub, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+
+write.csv(allmarkers_sct_sub, file = paste0("./Jia_1st_paper_supp_tables/Cluster_markers_SCT_E11_c3_8.csv"))
+
+
+
+###
+
+genes_sub <- sapply(unique(allmarkers_sct_sub$cluster), function(x){
+
+  gsub("mt-", "", (filter(allmarkers_sct_sub, cluster == x)$gene)[1:100])[1:20]
+  })
+
+
+
+genes_sub <- as.data.frame(genes_sub)
+
+colnames(genes_sub) <- as.character(unique(allmarkers_sct_sub$cluster))
+
+DefaultAssay(pbmc_sub) <- "SCT"
+
+# Plot the heatmap
+DoHeatmap(pbmc_sub, features = as.character(unlist(genes_sub))) +
+  scale_fill_gradientn(colors = c("blue", "white", "red"))+
+    theme(axis.text.y = element_text(size = 8))+
+    ggtitle("E11_c3_8")
+
+
+## Construct alluvial plot
+
+df1 <- data.frame("cells" = rownames(pbmc@meta.data),
+                  "seurat_clusters" = pbmc@meta.data$seurat_clusters)
+
+
+df2 <- data.frame("cells" = rownames(pbmc_sub@meta.data),
+                  "seurat_clusters_reclust" = pbmc_sub@meta.data$seurat_clusters)
+
+
+all_df <- merge(df1, df2)
+
+#install.packages("ggalluvial")
+library(ggalluvial)
+library(ggplot2)
+
+
+
+ggplot(data = all_df,
+       aes(axis1 = seurat_clusters, axis2 = seurat_clusters_reclust)) +
+  geom_alluvium(aes(fill = seurat_clusters)) +
+  geom_stratum() +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Original Clusters", "Reclustered Clusters")) +
+  theme_minimal() +
+  ggtitle("Alluvial Plot of Cell Clusters")
+
+
+saveRDS(pbmc_sub, file="C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/E11_c3_8_cells_reclustered.RDS")
+
+```
+
+
+DE results requested by Jia
+
+Do DE analysis between the two ages (E11.5 vs E13.5) for each individual VZ clusters: 2, 7, 5, and 14.
+Do DE analysis between the two ages (E11.5 vs E13.5) for each individual SVZ clusters: 9, 11, and 1.
+Do DE analysis between the two ages (E11.5 vs E13.5) for each individual MZ clusters: 3 and 8.
+
+
+```{r}
+
+#Do DE analysis between the two ages (E11.5 vs E13.5) for each individual VZ clusters: 2, 7, 5, and 14.
+
+
+
+DE_tables <- lapply(c(2, 7, 5, 14, 9, 11, 1, 3, 8), function(x){
+
+    DefaultAssay(pbmc) <- "SCT"
+    pbmc <- PrepSCTFindMarkers(pbmc)
+
+    df <- FindMarkers(pbmc, ident.1 = rownames(filter(pbmc@meta.data,
+                                              seurat_clusters == x, age == "E11")),
+                                ident.2 = rownames(filter(pbmc@meta.data,
+                                              seurat_clusters == x, age == "E13")),
+                                min.pct = 0.25,
+                                logfc.threshold = 0.25,
+                                only.pos = FALSE)
+
+
+    df$gene_name <- rownames(df)
+
+    df$DE_Dir <- ifelse(df$avg_log2FC > 0, "Up_at_E11", "Up_at_E13")
+
+    write.csv(df, paste0("./Jia_1st_paper_supp_tables/E11_vs_E13_cluster_", x, ".csv"), row.names = F)
+
+    df
+    })
+
+
+names(DE_tables) <- c(2, 7, 5, 14, 9, 11, 1, 3, 8)
+
+names(DE_tables)
+
+
+#### Sanity check for directionality of color annotation
+#VlnPlot(subset(pbmc, seurat_clusters == 11),
+#        features = rownames(filter(DE_tables[[6]], avg_log2FC > 0))[1:20], group.by = "age")
+
+
+
+library(ggrepel)
+
+
+volcano_plot_text <- function(x, title) {
+
+
+ggplot(x, aes(x = avg_log2FC, y=-log10(p_val), color = DE_Dir, label = gene_name)) +
+        geom_point(size=1, alpha=0.5, stroke = 0.5)+
+        theme_light()+
+        #geom_vline(xintercept = 1.5, linetype = 2)+
+        #geom_vline(xintercept = -1.5, linetype = 2)+
+        geom_text_repel(data = x[1:200,], show.legend = FALSE)+
+
+        labs(title= title, y="-log10(P)", x="logFC")+
+        theme(plot.title = element_text(size = rel(2), hjust=0.5))+
+        theme(axis.text=element_text(size=14))+
+        theme(legend.title=element_blank())+
+        theme(axis.text=element_text(size=14))+
+        theme(axis.title = element_text(size=14, face = "bold"))+
+       theme(legend.position = c(0.87, 0.08),
+          legend.background = element_rect(color = "black", size = 0, linetype = "solid"),
+          legend.key.size = unit(0.5, "lines"),
+          legend.key.height = unit(1.2, "lines"),
+          legend.key.width = unit(1.2, "lines"),
+          legend.margin = margin(1, 3, 1, 2)) +
+    guides(color = guide_legend(override.aes = list(size = 3)))
+
+}
+
+
+#FeaturePlot(pbmc, features = c("Fgf14", "Rpl41"), split.by = "age")
+
+# VZ
+volcano_plot_text(DE_tables[["2"]], "E11 vs E13. VZ cluster 2")
+volcano_plot_text(DE_tables[["7"]], "E11 vs E13. VZ cluster 7")
+volcano_plot_text(DE_tables[["5"]], "E11 vs E13. VZ cluster 5")
+volcano_plot_text(DE_tables[["14"]], "E11 vs E13. VZ cluster 14")
+
+#SVZ
+volcano_plot_text(DE_tables[["9"]], "E11 vs E13. SVZ cluster 9")
+volcano_plot_text(DE_tables[["11"]], "E11 vs E13. SVZ cluster 11")
+volcano_plot_text(DE_tables[["1"]], "E11 vs E13. SVZ cluster 1")
+
+#MZ
+volcano_plot_text(DE_tables[["3"]], "E11 vs E13. MZ cluster 3")
+volcano_plot_text(DE_tables[["8"]], "E11 vs E13. MZ cluster 8")
+
+
+
+
+#Do DE analysis between the two ages (E11.5 vs E13.5) for each individual VZ clusters: 2, 7, 5, and 14.
+#Do DE analysis between the two ages (E11.5 vs E13.5) for each individual SVZ clusters: 9, 11, and 1.
+#Do DE analysis between the two ages (E11.5 vs E13.5) for each individual MZ clusters: 3 and 8.
+
+
+
+```
+
+
+
+
+## Recluster 2nd round
+
+```{r}
+
+# Full UMAP
+#pbmc <- readRDS("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/MGE_1538_E11_and_E13_with_new_E13.Rds")
+
+pbmc_projN <- readRDS("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/E13_c3_8_13_16_0_4_6_cells_reclustered.RDS")
+
+
+pbmc_projN$cellID <- ifelse(colnames(pbmc_projN) %in%
+                         rownames(filter(pbmc_projN@meta.data, age == "E13", seurat_clusters %in% c(7, 10, 12, 8, 11, 3, 6, 5))), "Proj_neu", "")
+
+DimPlot(pbmc_projN, label = TRUE)
+DimPlot(pbmc_projN, split.by = "cellID")
+DimPlot(pbmc_projN, group.by = "cellID")
+DimPlot(pbmc_sub, label = T)
+
+### E11_cl3_cells ###
+
+pbmc_sub_pre_recl <- subset(pbmc_projN, cellID == "Proj_neu")
+pbmc_sub <- subset(pbmc_projN, cellID == "Proj_neu")
+
+
+DimPlot(pbmc_sub, group.by = "cellID")
+DimPlot(pbmc_sub, label = T, label.size = 12)
+
+
+####
+
+
+
+recluster_fun <- function(PCs, res, features, file_suffix){
+
+
+  #DefaultAssay(pbmc_sub) <- "RNA"
+
+  #pbmc_sub <- PrepSCTFindMarkers(pbmc_sub)
+  #pbmc_sub <- SCTransform(pbmc_sub)
+  # PCs = 15
+  # res = 0.8
+  # features <- proj_neu_genes
+
+
+  DefaultAssay(pbmc_sub) <- "integrated"
+
+  pbmc_sub <- RunPCA(pbmc_sub, verbose = FALSE, npcs = PCs, features = features)
+  pbmc_sub <- RunUMAP(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+
+
+  pbmc_sub <- FindNeighbors(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+  pbmc_sub <- FindClusters(pbmc_sub, verbose = FALSE, graph.name = "integrated_snn", resolution = res)
+
+
+  DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1)
+
+## "Note that the features must be present in the scaled data. Any requested features that are not scaled or have 0 variance will be dropped, and the PCA will be run using the remaining features.". I can imagine better, or at least different ways to executing this approach, e.g. by running the PCA and UMAP on the raw RNA assay.
+
+##############################################################
+
+
+df1 <- data.frame("cells" = rownames(pbmc_sub_pre_recl@meta.data),
+                  "seurat_clusters" = pbmc_sub_pre_recl@meta.data$seurat_clusters)
+
+
+df2 <- data.frame("cells" = rownames(pbmc_sub@meta.data),
+                  "seurat_clusters_reclust" = pbmc_sub@meta.data$seurat_clusters)
+
+
+all_df <- merge(df1, df2)
+
+#install.packages("ggalluvial")
+library(ggalluvial)
+library(ggplot2)
+
+
+###########################
+
+allmarkers_sct <- FindAllMarkers(pbmc_sub, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+
+genes <- sapply(unique(allmarkers_sct$cluster), function(x){
+  gsub("mt-", "", (filter(allmarkers_sct, cluster == x)$gene)[1:100])[1:20]})
+
+
+hp <- DoHeatmap(pbmc_sub, features = unique(as.vector(as.matrix(genes))))+ theme(axis.text.y = element_text(size = 6))
+
+
+
+ap <- ggplot(data = all_df,
+       aes(axis1 = seurat_clusters, axis2 = seurat_clusters_reclust)) +
+  geom_alluvium(aes(fill = seurat_clusters)) +
+  geom_stratum() +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Clustering_1", "Clustering_2")) +
+  theme_minimal() +
+  ggtitle(paste0("Reclustering at PC", PCs, " Resolution: ", res))
+
+dp <- DimPlot(pbmc_sub, label = T, label.size = 12)
+
+plots <- plot_grid(
+  plot_grid(ap, dp, ncol = 2),  hp,
+  ncol = 1
+)
+
+write.csv(allmarkers_sct, file = paste0("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/reclustered_objects/Cluster_markers_", file_suffix, ".csv"))
+saveRDS(pbmc_sub, file = paste0("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/reclustered_objects/Seurat_object_", file_suffix, ".RDS"))
+
+plots
+
+}
+
+proj_neu_genes <- c("Ascl1", "Asic2", "Calb1", "Chl1", "Cntnap3", "Cxcl14", "Dlx1", "Dmrtb1", "Erbb4", "Etv1", "Foxp1", "Foxp2", "Gbx1", "Gbx2", "Gria1", "Grik1", "Id4", "Isl1", "Kctd12", "Lhx8", "Maf", "Mafb", "Mef2c", "Nfia", "Nfib", "Nkx2-1", "Npas1", "Npy", "Nr2f1", "Nr2f2", "Ntrk1", "Nxph1", "Pam", "Pbx1", "Peg10", "Pnoc", "Pou3f1", "Ptprm", "Reln", "Shh", "Six3", "Slit2", "Sox6", "Sphkap", "Sst", "Tac1", "Tcf4", "Tgfb3", "Th", "Unc5c", "Zeb2", "Zic1")
+
+########################################################################
+
+recluster_fun(PCs = 20,
+              res = 0.7,
+              features = NULL,
+              file_suffix = "proj_neu_PC20_res0.7_PCA_on_var_genes")
+
+
+recluster_fun(PCs = 20,
+              res = 1.2,
+              features = NULL,
+              file_suffix = "proj_neu_PC20_res1.2_PCA_on_var_genes")
+
+########################################################################
+
+
+recluster_fun(PCs = 15,
+              res = 0.7,
+              features = NULL,
+              file_suffix = "proj_neu_PC15_res0.7_PCA_on_var_genes")
+
+
+recluster_fun(PCs = 15,
+              res = 1.2,
+              features = NULL,
+              file_suffix = "proj_neu_PC15_res1.2_PCA_on_var_genes")
+
+
+########################################################################
+
+
+recluster_fun(PCs = 10,
+              res = 0.7,
+              features = NULL,
+              file_suffix = "proj_neu_PC10_res0.7_PCA_on_var_genes")
+
+
+recluster_fun(PCs = 10,
+              res = 1.2,
+              features = NULL,
+              file_suffix = "proj_neu_PC10_res1.2_PCA_on_var_genes")
+
+
+########################################################################
+```
+
+
+```{r}
+
+########################################################################
+
+recluster_fun(PCs = 20,
+              res = 0.7,
+              features = proj_neu_genes,
+              file_suffix = "proj_neu_PC20_res0.7_PCA_on_proj_neu_genes")
+
+
+recluster_fun(PCs = 20,
+              res = 1.2,
+              features = proj_neu_genes,
+              file_suffix = "proj_neu_PC20_res1.2_PCA_on_proj_neu_genes")
+
+########################################################################
+
+
+recluster_fun(PCs = 15,
+              res = 0.7,
+              features = proj_neu_genes,
+              file_suffix = "proj_neu_PC15_res0.7_PCA_on_proj_neu_genes")
+
+
+recluster_fun(PCs = 15,
+              res = 1.2,
+              features = proj_neu_genes,
+              file_suffix = "proj_neu_PC15_res1.2_PCA_on_proj_neu_genes")
+
+########################################################################
+
+
+recluster_fun(PCs = 10,
+              res = 0.7,
+              features = proj_neu_genes,
+              file_suffix = "proj_neu_PC10_res0.7_PCA_on_proj_neu_genes")
+
+
+recluster_fun(PCs = 10,
+              res = 1.2,
+              features = proj_neu_genes,
+              file_suffix = "proj_neu_PC10_res1.2_PCA_on_proj_neu_genes")
+
+########################################################################
+
+```
+
+
+
+
+
+Workup of the Reclustered data, Feb 2025
+```{r}
+
+# Objective: Recluster projection neurons using TFs Starting from raw RNA reads, and not relying on 3k genes in the integrated assay.
+
+# https://cgs.csail.mit.edu/ReprogrammingRecovery/mouse_tf_list.html
+tfs <- read.table("mouse_ensemble_tfs_from_lambertetal_isyes.unique.txt")$V1
+my_gene <- readRDS("G:/Shared drives/Nord Lab - Computational Projects/Kdm6b_bulk_RNAseq/my_gene_annotation.RDS")
+tf_genes <- unique(filter(my_gene, gene_id %in% tfs)$gene_name)
+
+
+  # Reclustered MZ cells, in the original UMAP: E13 3, 8, 13, 16, 0, 4 and 6
+  DimPlot(pbmc_projN, group.by = "integrated_snn_res.0.8", reduction = "umap", label = T, label.size = 10)
+
+  #
+  pbmc_sub <- subset(pbmc_projN, cellID == "Proj_neu")
+
+  # Clear the object
+  DefaultAssay(pbmc_sub) <- "RNA"
+  pbmc_sub@assays$SCT <- NULL
+  #pbmc_sub@assays$integrated <- NULL
+
+  #pbmc_sub@graphs$integrated_nn <- NULL
+  #pbmc_sub@graphs$integrated_snn <- NULL
+  pbmc_sub@graphs$SCT_nn <- NULL
+  pbmc_sub@graphs$SCT_snn <- NULL
+  pbmc_sub@graphs$RNA_nn <- NULL
+  pbmc_sub@graphs$RNA_snn <- NULL
+
+  featuresPN <- proj_neu_genes  # 52 genes
+  #features <- tf_genes # 1370
+  features <- proj_neu_genes
+
+  pbmc_sub <- subset(pbmc_sub, features = features)
+
+
+  # 2nd round of reclustering
+  DimPlot(pbmc_sub, label = T, label.size = 12, group.by = "integrated_snn_res.0.8", reduction = "umap")
+
+
+
+
+
+  # SCT transform
+  pbmc_sub <- SCTransform(pbmc_sub)  #This is ignoring technical replicates: 1538TE10H13: 290 cells and JH4327_01_TE10H13 1114 cells
+  pbmc_sub <- PrepSCTFindMarkers(pbmc_sub) # Not needed since only one SCT model is present
+
+  PCs = 15
+  res = 0.8
+
+  #DefaultAssay(pbmc_sub) <- "RNA"
+  #pbmc_sub <- NormalizeData(pbmc_sub)
+  #pbmc_sub <- ScaleData(pbmc_sub)
+  #pbmc_sub <- FindVariableFeatures(pbmc_sub)
+
+  #VariableFeatures(pbmc_sub) <- VariableFeatures(pbmc_sub[["SCT"]], assay = "SCT", slot = "scale.data")
+  #pbmc_sub <- FindVariableFeatures(pbmc_sub)
+  #pbmc_sub <- ScaleData(pbmc_sub, features = rownames(pbmc_sub))
+
+  DefaultAssay(pbmc_sub) <- "SCT"
+  pbmc_sub <- RunPCA(pbmc_sub, verbose = FALSE, npcs = PCs, features = features)
+  #pbmc_sub <- RunPCA(pbmc_sub, verbose = FALSE, npcs = PCs)
+  pbmc_sub <- RunUMAP(pbmc_sub, dims = 1:PCs, verbose = FALSE,
+                      reduction.name = "UMAP_SCT", reduction.key = "UMAP_SCT_")
+
+
+  pbmc_sub <- FindNeighbors(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+  pbmc_sub <- FindClusters(pbmc_sub, verbose = FALSE, graph.name = "SCT_snn", resolution = res, cluster.name = "clusters_SCT")
+
+  DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1, group.by = "clusters_SCT")
+  DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1, split.by = "dataset", ncol = 1)
+
+
+  ### Alternative using integrated assay
+
+  PCs = 25
+
+  DefaultAssay(pbmc_sub) <- "integrated"
+  pbmc_sub <- RunPCA(pbmc_sub, verbose = FALSE, npcs = PCs, features = features)
+  #pbmc_sub <- RunPCA(pbmc_sub, verbose = FALSE, npcs = PCs)
+  pbmc_sub <- RunUMAP(pbmc_sub, dims = 1:PCs, verbose = FALSE, min.dist = 0.01,
+                      reduction.name = "UMAP_integrated", reduction.key = "UMAP_integrated_")
+
+  pbmc_sub <- FindNeighbors(pbmc_sub, dims = 1:PCs, verbose = FALSE)
+  pbmc_sub <- FindClusters(pbmc_sub, verbose = FALSE, graph.name = "integrated_snn", resolution = 0.7, cluster.name = "clusters_integrated")
+
+
+  DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1)
+  DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1, split.by = "dataset", ncol = 1)
+
+
+
+  #######
+
+  #pbmc_sub@meta.data$seurat_clusters
+
+
+
+  # Reclustered MZ cells, in the original UMAP: E13 3, 8, 13, 16, 0, 4 and 6
+  DimPlot(pbmc_projN, group.by = "integrated_snn_res.0.8", reduction = "umap", label = T, label.size = 10)
+
+
+  DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1, group.by = "clusters_SCT", reduction = "UMAP_SCT")
+  DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1, group.by = "clusters_integrated", reduction = "UMAP_integrated")
+
+  # UMAPS ordered
+
+  # Original UMAP
+  DimPlot(pbmc, label = TRUE, label.size = 8, group.by = "seurat_clusters")
+
+  # E13 MZ clusters subsetted and reclustered E13 c3, 8, 13, 16, 0, 4 and 6
+  DimPlot(pbmc_projN, group.by = "integrated_snn_res.0.8", reduction = "umap", label = T, label.size = 10)
+
+
+  # 2nd round of reclustering. Subsetted proj. neurons.  clusters 7, 10, 12, 8, 11, 3, 6, and 5
+  DimPlot(pbmc_sub, label = T, label.size = 12, group.by = "integrated_snn_res.0.8", reduction = "umap")
+
+  # Reclustered again using 52 proj neuron markers only
+  DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1, group.by = "clusters_SCT", reduction = "UMAP_SCT")
+  DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1, group.by = "clusters_integrated", reduction = "UMAP_integrated")
+
+
+##############################################################
+# Original
+df1 <- data.frame("cells" = rownames(pbmc@meta.data),
+                  "Original" = pbmc@meta.data$seurat_clusters)
+
+
+# E13 MZ cells
+df2 <- data.frame("cells" = rownames(pbmc_projN@meta.data),
+                  "E13.5_MZ" = pbmc_projN@meta.data$integrated_snn_res.0.8)
+
+# E13 MZ cells proj neurons
+df3 <- data.frame("cells" = rownames(pbmc_sub@meta.data),
+                  "E13.5_MZ_proj_neu." = pbmc_sub@meta.data$integrated_snn_res.0.8)
+
+
+# E13 MZ cells Reclust on SCT
+df4 <- data.frame("cells" = rownames(pbmc_sub@meta.data),
+                  "E13.5_MZ_proj_neu_rec_on_SCT" = pbmc_sub@meta.data$clusters_SCT)
+
+
+# E13 MZ cellsReclust on integrated
+df5 <- data.frame("cells" = rownames(pbmc_sub@meta.data),
+                  "E13.5_MZ_proj_neu_rec_on_integrated" = pbmc_sub@meta.data$clusters_integrated)
+
+
+
+all_df <- merge(df1, df2, all = F)
+all_df <- merge(all_df, df3, all = F)
+all_df <- merge(all_df, df4, all = T)
+all_df <- merge(all_df, df5, all = T)
+
+
+library(ggplot2)
+library(ggalluvial)
+
+ap <- ggplot(data = all_df,
+       aes(axis1 = Original,
+           axis2 = E13.5_MZ,
+           axis3 = E13.5_MZ_proj_neu.,
+           axis4 = E13.5_MZ_proj_neu_rec_on_SCT,
+           axis5 = E13.5_MZ_proj_neu_rec_on_integrated)) +
+  geom_alluvium(aes(fill = Original)) +
+  geom_stratum() +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+  scale_x_discrete(limits = c("Original UMAP", "E13.5 MZ", "E13.5 MZ\n proj. neu.", "E13.5 MZ \nproj. neu. rec_on_SCT", "E13.5 MZ \nproj. neu. rec_on_integrated")) +
+  theme_minimal()+
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 16))
+
+
+ap
+
+
+
+## Apply cluster labels from SCT and integrated clustered cells and run AllMarkers
+
+# Generate object containing proj neurons only, but all genes.
+pbmc_projN_only <- subset(pbmc_projN, cellID == "Proj_neu")
+
+# Ensure compatibility
+all(rownames(pbmc_projN_only@meta.data) == rownames(pbmc_sub@meta.data))
+
+# Transfer cluster labels
+pbmc_projN_only@meta.data$clusters_SCT <- pbmc_sub@meta.data$clusters_SCT
+pbmc_projN_only@meta.data$clusters_integrated <- pbmc_sub@meta.data$clusters_integrated
+
+pbmc_projN_only$clusters_SCT <- pbmc_projN_only@meta.data$clusters_SCT
+pbmc_projN_only$clusters_integrated <- pbmc_projN_only@meta.data$clusters_integrated
+
+
+# Run DE
+
+pbmc_projN_only <- SCTransform(pbmc_projN_only)
+pbmc_projN_only <- PrepSCTFindMarkers(pbmc_projN_only)
+
+
+Idents(pbmc_projN_only) <- pbmc_projN_only$clusters_SCT
+markers_SCT <- FindAllMarkers(pbmc_projN_only, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+
+
+
+
+Idents(pbmc_projN_only) <- pbmc_projN_only$clusters_integrated
+DefaultAssay(pbmc_projN_only) <- "integrated"
+markers_integrated <- FindAllMarkers(pbmc_projN_only, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+
+
+
+
+
+### Heatmaps of SCT and integrated data
+
+
+genes_SCT <- sapply(unique(markers_SCT$cluster), function(x){
+  gsub("mt-", "", (filter(markers_SCT, cluster == x)$gene)[1:100])[1:20]})
+
+
+genes_integrated <- sapply(unique(markers_integrated$cluster), function(x){
+  gsub("mt-", "", (filter(markers_integrated, cluster == x)$gene)[1:100])[1:20]})
+
+
+DefaultAssay(pbmc_projN_only) <- "SCT"
+Idents(pbmc_projN_only) <- pbmc_projN_only$clusters_SCT
+hp_SCT <- DoHeatmap(pbmc_projN_only, features = unique(as.vector(as.matrix(genes_SCT))))+ theme(axis.text.y = element_text(size = 7))
+
+hp_SCT
+
+
+DefaultAssay(pbmc_projN_only) <- "SCT"
+Idents(pbmc_projN_only) <- pbmc_projN_only$clusters_integrated
+hp_integrated <- DoHeatmap(pbmc_projN_only, features = unique(as.vector(as.matrix(genes_integrated))))+ theme(axis.text.y = element_text(size = 7))
+
+hp_integrated
+
+
+
+ggsave(hp_SCT, file = "E13_PN_on_52_proj_markers_all_genes_heatmap_SCT.png", device = "png", dpi = 600, width = 7, height = 18)
+ggsave(hp_integrated, file = "E13_PN_on_52_proj_markers_all_genes_heatmap_integrated.png", device = "png", dpi = 600, width = 7, height = 12)
+
+
+###
+
+DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1, group.by = "clusters_SCT", reduction = "UMAP_SCT")
+DimPlot(pbmc_sub, label = TRUE, label.size = 8, pt.size = 1.1, group.by = "clusters_integrated", reduction = "UMAP_integrated")
+
+DimPlot(pbmc_sub)
+
+
+# Transfer reductions
+pbmc_projN_only@reductions$UMAP_SCT <- pbmc_sub@reductions$UMAP_SCT
+pbmc_projN_only@reductions$UMAP_integrated <- pbmc_sub@reductions$UMAP_integrated
+
+
+FeaturePlot(pbmc_projN_only, features = c("Erbb4", "Th"), reduction = "UMAP_SCT", split.by = "dataset")
+FeaturePlot(pbmc_projN_only, features = c("Tcf4", "Bcl11b"), reduction = "UMAP_integrated", split.by = "dataset")
+
+
+
+FeaturePlot(pbmc_projN_only, features = c("Xist"), reduction = "UMAP_SCT", split.by = "dataset", ncol = 1)
+FeaturePlot(pbmc_projN_only, features = c("Xist"), reduction = "UMAP_integrated", split.by = "dataset", ncol = 1)
+
+
+
+
+file_suffix = "clustered_on_52_genes_included_all_genes_integrated_clustering"
+write.csv(markers_integrated, file = paste0("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/reclustered_objects/Cluster_markers_", file_suffix, ".csv"))
+
+file_suffix = "clustered_on_52_genes_included_all_genes_SCT_clustering"
+write.csv(markers_SCT, file = paste0("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/reclustered_objects/Cluster_markers_", file_suffix, ".csv"))
+
+
+
+###########################
+
+
+saveRDS(pbmc_projN_only, file = paste0("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/reclustered_objects/Seurat_object_", file_suffix, ".RDS"))
+
+
+# save.image("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/Session_dump_2_24_2025.RData")
+
+
+
+```
+
+
+
+
+
+
+
+Top cluster markers
+```{r}
+
+
+* Transcription factors such as Gsx2 and Nkx2-1 mark VZ progenitor cells of the LGE/CGE/septum and MGE/POA, respectively (Guillemot, 2005, Sussel et al., 1999, Toresson et al., 2000a, Toresson et al., 2000b, Waclaw et al., 2009, Yun et al., 2003).
+
+* As cells mature within the VZ, they express transcription factors such as Ascl1 (Mash1), and then Dlx2 (Yun et al., 2002). Dlx2+ cells form “radial” columns within the VZ that connect with the underlying SVZ that has homogeneous Dlx2 expression (see below; Eisenstat et al., 1999, Porteus et al., 1994).
+
+
+* The VZ primary progenitors generate a secondary progenitor zone, the SVZ, which is particularly large in the basal ganglia anlage. There are at least two parts of the SVZ (SVZ1 and SVZ2) based on the density of mitotically active cells and the expression of Ascl1, Dlx2, Gsx2, and Olig2 transcription factors, and markers of neuronal maturation (Eisenstat et al., 1999, Petryniak et al., 2007, Yun et al., 2002). It is likely that SVZ1 and SVZ2 represent progressive states in maturation. The SVZ1 consists of a thin layer of proliferative cells immediately below the VZ; it shows strong expression of Dlx2 and often expresses genes that are markers of the VZ (e.g., Ascl1, Gsx2, and Olig2) (Petryniak et al., 2007, Wang et al., 2011, Yun et al., 2002). The SVZ2 forms later than SVZ1 (Yun et al., 2002) and is a larger and more differentiated zone consisting of a mixture of mitotically active and postmitotic cells; this region continues to express Dlx2 but shows much lower expression of Gsx2 and Ascl1. Currently, it is unknown whether SVZ1 and SVZ2 progenitors have distinct cell biology.
+
+* The mantle zone (MZ) is the most superficial layer and consists primarily of neurons at various stages of migration and differentiation (it also contains oligodendrocytes, blood vessels, and later astrocytes)
+
+* For instance, the LGE generates olfactory bulb interneurons, the MGE and POA generate striatal interneurons, and the MGE, POA, and dCGE generate cortical interneurons.
+
+* The vast majority of neurons generated in the basal ganglia are GABAergic. Thus, the transcriptional code for generating these neurons has at its core the ability to express the enzymes that defines GABAergic neurons, such as GAD1, GAD2, and vGAT. As will be described more below, the Ascl1, Gsx2, and Dlx1,2,5,6 transcription factors have fundamental roles in specifying GABAergic properties of basal ganglia neurons. Dlx genes are implicated in directly regulating GAD1, GAD2, and vGAT (Le et al., 2017, Long et al., 2007, Long et al., 2009a, Pla et al., 2017). The basal ganglia also generate cholinergic neurons under the control of Islet1, Lhx8, and Nkx2-1, and dopaminergic neurons under the control of Dlx1&2 and Pax6.
+
+
+* The GEs also generate oligodendrocytes and astrocytes that contribute to the cellular organization of the basal ganglia (and overlying cerebral cortex). Oligodendrogenesis requires the function of the Olig transcription factors and is repressed by the Dlx transcription factors. Conversely, Olig1&2 repress Dlx expression (Silbereis et al., 2014). Ascl1 interacts with these fate decisions by repressing Dlx expression noncell autonomously through Notch signaling (Petryniak et al., 2007). Gsx1&2 factors also serve as negative regulators of oligodendrocyte specification within VZ progenitors, thus promoting a neuronal fate in their subsequent progeny (Chapman et al., 2013, Chapman et al., 2018).

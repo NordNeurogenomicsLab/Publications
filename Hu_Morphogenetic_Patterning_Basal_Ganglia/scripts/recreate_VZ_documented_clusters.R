@@ -1,0 +1,6 @@
+suppressPackageStartupMessages(library(Seurat));suppressPackageStartupMessages(library(ggplot2))
+w<-Sys.getenv('JIA_WORK_DIR', unset='/mnt/disks/data1/Jia_GEO_submission/codex_review')
+x<-readRDS(file.path(w,'inputs/seurat_objects/MGE_1538_E11_and_E13_with_new_E13.Rds'))
+cat('Original annotation cross-table\n');print(table(x$seurat_clusters,x$Dev_classes,useNA='ifany'))
+vz<-subset(x,cells=rownames(x@meta.data)[x$seurat_clusters %in% c('2','7','5','14')]);DefaultAssay(vz)<-'SCT';print(table(vz$age))
+for(g in c('Id4','Mest','Dlx2','Nfib'))ggsave(file.path(w,'figures',paste0('Fig3_split_',g,'.png')),FeaturePlot(vz,features=g,split.by='age',cols=c('lightgrey','#7561A8')),width=10,height=4,dpi=220,bg='white')

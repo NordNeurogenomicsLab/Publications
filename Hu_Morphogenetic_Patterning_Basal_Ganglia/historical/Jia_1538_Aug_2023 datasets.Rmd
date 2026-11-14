@@ -1,0 +1,528 @@
+---
+title: "Jia_1538_new_datasets_Aud_2023"
+author: "Karol Cichewicz"
+date: "2023-09-08"
+output: html_document
+editor_options:
+  chunk_output_type: console
+---
+
+
+Communications with Jia on August 28 2023
+
+"That's correct. My dataset is in the gi_JH4327 directory; it should contain JH4318 and JH4327.
+
+JH4318 and JH4327 are not replicates. JH4318 contains four different datasets that were done on July 11, 2023. JH4327 contains another three unique datasets that were done on July 26, 2023. In total, there should be seven (4+3) datasets that were sequenced. I updated the metafile on Google drive detailing each dataset. Plese download all of them.
+
+Out of these seven datasets, JH4327_01 is the most important one because it is the replicate for the 1538Cre TE10 HE13 dataset. The 1538Cre TE10 HE13 dataset that you have been analyzing has MGE, POA, and Septum mixed together (which you computationally filtered) and were done with the MULTIseq method. This JH4327_01 dataset contains only MGE cells and was done with just the 10x scRNAseq method (not MULTIseq).
+"
+
+```{r}
+
+# Load previously QCed dataset containing 4438 MGE cells, 3064 at H11 + 1374 at H13
+
+library(Seurat)
+library(Signac)
+library(GenomicRanges)
+library(EnsDb.Mmusculus.v79)
+library(BSgenome.Mmusculus.UCSC.mm10)
+library(patchwork)
+library(ggplot2)
+library(cowplot)
+library(DT)
+library(tidyverse)
+library(glmGamPoi)
+library(future)
+library(scCustomize)
+library(SeuratWrappers)
+library(monocle3)
+
+# Loading 4438 MGE cells without POA and Septum cells.
+# The first part of this analysis is in "VZ H11 vz H13 1538TE10H11.... Rmd" file.
+
+pbmc_old <- readRDS("G:/Shared drives/Nord Lab - Computational Projects2/Jia_1056_1538_CreER/Seurat_objects/MGE_without_POA_and_Septum_H11_and_H13_8_18_2023.Rds")
+
+```
+
+
+
+```{r}
+# Load new datasets H13 dataset JH4327_01 containing 3525 cells (QCed by cell ranger) and perform basic QC
+
+
+
+ # Load RNA counts
+counts <- Read10X("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/JH4327_01/outs/filtered_feature_bc_matrix")
+
+sample = "JH4327_01"
+
+    # Create a Seurat object containing the RNA data
+    pbmc <- CreateSeuratObject(
+        counts = counts,
+        assay = "RNA"
+    )
+
+    # Check names of the mitochondrial genes
+    # rownames(pbmc)[grepl("^mt-", rownames(pbmc), ignore.case = TRUE)]
+
+    # Mitochondrial genes:
+    DefaultAssay(pbmc) <- "RNA"
+    pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
+
+    # Violin plot - pre-filtering
+    p1 <- VlnPlot(
+        object = pbmc,
+        features = c("nCount_RNA", "nFeature_RNA", "percent.mt"),
+        ncol = 3,
+        pt.size = 0.1)&
+        theme(axis.text.x = element_blank())&
+        plot_annotation(title = paste0(sample, ", Cellranger filtered cells.", " Features: ", nrow(pbmc),
+                                       " Cells: ", ncol(pbmc)),
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+    p3 <- ggplot(pbmc@meta.data, aes(x = log2(nFeature_RNA),  y = log(nCount_RNA)))+
+        geom_point(alpha = 0.1)+
+        theme_bw()+
+        labs(title = "Cellranger filtered cells")
+
+
+
+
+    # Define QC filtering thresholds using 3 median absolute deviations.
+    # This idea borrowed from the scater package
+
+    #count_threshold_high <- median(pbmc@meta.data$nCount_RNA) + mad_distance*mad(pbmc@meta.data$nCount_RNA)
+    #features_threshold_high <- median(pbmc@meta.data$nFeature_RNA) + mad_distance*mad(pbmc@meta.data$nFeature_RNA)
+    #mito_threshold_high <- median(pbmc@meta.data$percent.mt) + mad_distance*mad(pbmc@meta.data$percent.mt)
+
+    # This approach to filtering is not used here. To keep consistent criteria across multiple datasets
+    # we decided to keep cells with > 1000 reads and < 20% mito reads
+    mad_distance = 5
+
+    pbmc[["nCount_RNA_abv_1000"]] <- pbmc@meta.data$nCount_RNA > 1000
+    pbmc[["nCount_RNA_less_than_5_MADs"]] <- pbmc@meta.data$nCount_RNA <
+                                             median(pbmc@meta.data$nCount_RNA) + mad_distance*mad(pbmc@meta.data$nCount_RNA)
+
+    pbmc[["nCount_RNA_abv_1000_and_less_than_5_MADs"]] <- pbmc[["nCount_RNA_abv_1000"]] &
+                                                          pbmc[["nCount_RNA_less_than_5_MADs"]]
+
+
+    pbmc[["nFeature_RNA_abv_200"]] <- pbmc@meta.data$nFeature_RNA > 200
+    pbmc[["nFeature_RNA_less_than_5_MADs"]] <- pbmc@meta.data$nFeature_RNA <
+                                               median(pbmc@meta.data$nFeature_RNA) + mad_distance*mad(pbmc@meta.data$nFeature_RNA)
+
+    pbmc[["nFeature_RNA_abv_200_and_less_than_5_MADs"]] <- pbmc[["nFeature_RNA_abv_200"]] &
+                                                           pbmc[["nFeature_RNA_less_than_5_MADs"]]
+
+    pbmc[["percent.mt_less_than_15"]] <- pbmc@meta.data$percent.mt < 15
+
+
+    ######
+    pbmc[["Cell_passing_QC"]] <- pbmc[["nCount_RNA_abv_1000_and_less_than_5_MADs"]] &
+                                 pbmc[["nFeature_RNA_abv_200_and_less_than_5_MADs"]] &
+                                 pbmc[["percent.mt_less_than_15"]]
+
+
+    # Perform manual QC
+    ## Filter out low quality cells
+    pbmc <- subset(
+        x = pbmc,
+        subset =
+            #nCount_RNA < count_threshold_high &
+            nCount_RNA > 1000 &
+            #nFeature_RNA < features_threshold_high &
+            #nFeature_RNA > 200 &
+            percent.mt < 20
+    )
+
+
+    # Violin plot - post-filtering
+    p2 <- VlnPlot(
+        object = pbmc,
+        features = c("nCount_RNA", "nFeature_RNA", "percent.mt"),
+        ncol = 3,
+        pt.size = 0.1)&
+        theme(axis.text.x = element_blank())&
+        plot_annotation(title = paste0(sample, ", Quality filtered cells.", " Features: ", nrow(pbmc),
+                                       " Cells: ", ncol(pbmc)),
+                        theme = theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold")))
+
+
+    p4 <- ggplot(pbmc@meta.data, aes(x = log2(nFeature_RNA),  y = log(nCount_RNA)))+
+        geom_point(alpha = 0.1)+
+        theme_bw()+
+        labs(title = "Quality filtered cells")
+
+
+
+    # Save post filtering object
+    saveRDS(pbmc, file = paste0("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/", sample, "_QCed_Seurat_obj.rds"))
+
+
+   top <-  plot_grid(p1, p2, ncol = 1)
+
+   bottom <- plot_grid(p3, p4, ncol = 2)
+
+   plot_grid(top, bottom, ncol = 1)
+
+
+```
+
+Integrate and cluster data
+```{r}
+
+# Rerun the integration pipeline to insure that all object slots are updated
+
+
+# Add dataset IDs
+pbmc_old$age <- ifelse(pbmc_old$dataset == "1538TE10H11", "E11", "E13")
+
+pbmc$dataset <- "JH4327_01_TE10H13"
+pbmc$age <- "E13"
+
+
+# Initial clustering in the new data
+
+pbmc <- SCTransform(pbmc, method = "glmGamPoi", verbose = FALSE)
+pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+
+
+pbmc <- RunUMAP(pbmc, dims = 1:25, verbose = FALSE)
+pbmc <- FindNeighbors(pbmc, dims = 1:25, verbose = FALSE)
+pbmc <- FindClusters(pbmc, verbose = FALSE)
+
+DimPlot(pbmc)
+```
+
+
+
+
+```{r}
+# Create a list of objects and integrate
+ifnb.list <- list(pbmc_old, pbmc)
+ifnb.list <- lapply(X = ifnb.list, FUN = SCTransform)
+
+features <- SelectIntegrationFeatures(object.list = ifnb.list, nfeatures = 3000)
+ifnb.list <- PrepSCTIntegration(object.list = ifnb.list, anchor.features = features)
+
+
+gc()
+
+# Check the number of cells. If few cells are present adjust the k.weight parameter accordingly.
+sapply(ifnb.list, function(x) ncol(x)) # 4438 + 3347 cells
+
+
+plan("multicore", workers = 1) # Decrease the number of cores if running out of memory or "Error 2 (The system cannot find the file specified)" ?? I'm not sure what this error means, but it's triggered by FindIntegrationAnchors.
+options(future.globals.maxSize = 30000 * 1024^2) # for 30 Gb RAM
+
+RNA.anchors <- FindIntegrationAnchors(object.list = ifnb.list,
+                                         normalization.method = "SCT",
+                                         anchor.features = features)
+
+# k.weight adjustment: https://github.com/satijalab/seurat/issues/3930
+RNA_integrated <- IntegrateData(anchorset = RNA.anchors,
+                                normalization.method = "SCT",
+                                k.weight = 100)  # 100 is the default value
+
+RNA_integrated <- RunPCA(RNA_integrated, verbose = TRUE, npcs = 30)
+
+source("data_dims_simple.R")
+data_dims_scree(RNA_integrated)
+
+
+PCs = 25 # Determined empirically
+
+pbmc <- RNA_integrated
+rm(RNA_integrated)
+rm(pbmc_old)
+
+pbmc <- RunPCA(pbmc, verbose = FALSE, npcs = PCs)
+pbmc <- RunUMAP(pbmc, dims = 1:PCs, verbose = FALSE)
+
+# Recluster
+pbmc <- FindNeighbors(pbmc, dims = 1:PCs, verbose = FALSE)
+pbmc <- FindClusters(pbmc, verbose = FALSE, graph.name = "integrated_snn")
+
+DimPlot(pbmc)
+
+DimPlot(pbmc, split.by = "dataset", label = TRUE, label.size = 8, pt.size = 1.1)
+
+#saveRDS(pbmc, "C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/MGE_1538_E11_and_E13_with_new_E13.Rds")
+
+pbmc <- readRDS("C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/seurat_objects/MGE_1538_E11_and_E13_with_new_E13.Rds")
+```
+
+
+```{r}
+
+DimPlot(pbmc, split.by = "age", label = TRUE, label.size = 8, pt.size = 1.1)
+
+```
+
+
+
+```{r}
+# Orient reclustered UMAP
+
+DefaultAssay(pbmc) <- "SCT"
+
+diag_genes <- c("Hes1", "Ascl1", "Dcx")
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, pt.size = 1.1)&NoLegend()
+
+
+plot_grid(
+    FeaturePlot(pbmc, features = diag_genes, ncol = 3)&NoLegend(),
+    VlnPlot(pbmc, features = diag_genes,  ncol = 3),
+    plot_grid(DimPlot(pbmc, label = T, ncol = 3, label.size = 6)+NoLegend()),
+    nrow = 3
+    )
+
+
+DefaultAssay(pbmc) <- "SCT"
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, split.by = "age", max.cutoff = 3)
+
+
+DefaultAssay(pbmc) <- "RNA"
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, max.cutoff = 3, pt.size = 1.1)&NoLegend()
+
+
+
+cluster_split <- pbmc@meta.data %>%
+  group_by(seurat_clusters, age) %>%
+  summarize(n = n()) %>%
+  spread(age, n)
+
+knitr::kable(cluster_split)
+
+```
+
+
+```{r}
+
+VZ_clusters <- c(2, 15, 5, 12, 7, 14)
+SVZ_clusters <- c(9, 11, 1)
+MZ_clusters <- c(3, 8, 4, 0, 6, 16, 13, 10)
+
+
+pbmc@meta.data$seurat_clusters <- factor(pbmc@meta.data$seurat_clusters, levels = c(VZ_clusters, SVZ_clusters, MZ_clusters))
+
+
+pbmc@meta.data$Dev_classes <- ifelse(pbmc@meta.data$seurat_clusters %in% VZ_clusters, "VZ", "")
+pbmc@meta.data$Dev_classes <- ifelse(pbmc@meta.data$seurat_clusters %in% SVZ_clusters, "SVZ", pbmc@meta.data$Dev_classes)
+pbmc@meta.data$Dev_classes <- ifelse(pbmc@meta.data$seurat_clusters %in% MZ_clusters, "MZ", pbmc@meta.data$Dev_classes)
+
+pbmc@meta.data$Dev_classes <- factor(pbmc@meta.data$Dev_classes, levels = c("VZ", "SVZ", "MZ"))
+
+DefaultAssay(pbmc) <- "SCT"
+DimPlot(pbmc, ncol = 3, split.by = "Dev_classes", label = TRUE, label.size = 7)
+
+
+DefaultAssay(pbmc) <- "SCT"
+FeaturePlot(pbmc, features = diag_genes, ncol = 3, split.by = "Dev_classes", max.cutoff = 3)
+
+```
+
+H 11 vs H13 VZ cells
+
+```{r}
+
+pbmc <- PrepSCTFindMarkers(pbmc)
+
+VZ_markers <- FindMarkers(pbmc, ident.1 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "VZ", age == "E11")),
+                                ident.2 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "VZ", age == "E13")),
+                                    min.pct = 0.25,
+                                    logfc.threshold = 0.25,
+                                    only.pos = FALSE)
+
+
+SVZ_markers <- FindMarkers(pbmc, ident.1 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "SVZ", age == "E11")),
+                             ident.2 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "SVZ", age == "E13")),
+                                    min.pct = 0.25,
+                                    logfc.threshold = 0.25,
+                                    only.pos = FALSE)
+
+
+MZ_markers <- FindMarkers(pbmc, ident.1 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "MZ", age == "E11")),
+                             ident.2 = rownames(filter(pbmc@meta.data,
+                                              Dev_classes == "MZ", age == "E13")),
+                                    min.pct = 0.25,
+                                    logfc.threshold = 0.25,
+                                    only.pos = FALSE)
+
+VZ_markers$gene_name <- rownames(VZ_markers)
+SVZ_markers$gene_name <- rownames(SVZ_markers)
+MZ_markers$gene_name <- rownames(MZ_markers)
+
+
+VZ_markers <- VZ_markers[,c(6, 1:5)]
+SVZ_markers <- SVZ_markers[,c(6, 1:5)]
+MZ_markers <- MZ_markers[,c(6, 1:5)]
+
+rownames(VZ_markers) <- NULL
+rownames(SVZ_markers) <- NULL
+rownames(MZ_markers) <- NULL
+
+
+write.csv(VZ_markers, file = "C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/DE_tables/VZ_markers.csv", row.names = F)
+write.csv(SVZ_markers, file = "C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/DE_tables/SVZ_markers.csv", row.names = F)
+write.csv(MZ_markers, file = "C:/Users/karol/Box/Nord_Lab_Computational_Projects3/Jia_E13_1538_Aug_2023/DE_tables/MZ_markers.csv", row.names = F)
+
+```
+
+
+```{r}
+library(ggrepel)
+
+
+volcano_plot_text <- function(x, title) {
+
+
+ggplot(x, aes(x = avg_log2FC, y=-log10(p_val), label = gene_name)) +
+        geom_point(size=1, alpha=0.5, stroke = 0.5, color = "#5832a8")+
+        theme_light()+
+        #geom_vline(xintercept = 1.5, linetype = 2)+
+        #geom_vline(xintercept = -1.5, linetype = 2)+
+        geom_text_repel(data = VZ_markers[1:50,])+
+
+        labs(title= title, y="-log10(P)", x="logFC")+
+        theme(plot.title = element_text(size = rel(2), hjust=0.5))+
+        theme(legend.text=element_text(size=16))+
+        theme(axis.text=element_text(size=14))+
+        theme(legend.title=element_blank())+
+        theme(axis.text=element_text(size=14))+
+        theme(axis.title = element_text(size=14, face = "bold"))+
+        theme(legend.position="none")
+        #coord_cartesian(xlim = c(-1.6, 1.6))+
+        #geom_hline(yintercept = -log10(0.05), linetype=2)+
+        #scale_x_continuous(breaks=c(-1.5, -1, 0, 1, 1.5), labels=c("<-1.5","-1", "0", "1", ">1.5"))+
+        #theme(panel.grid.major = element_blank(),
+        #      panel.grid.minor = element_blank())
+
+
+
+}
+
+volcano_plot_text(VZ_markers, "H11 vs H13 VZ markers")
+
+volcano_plot_text(SVZ_markers, "H11 vs H13 SVZ markers")
+
+volcano_plot_text(MZ_markers, "H11 vs H13 MZ markers")
+
+```
+
+
+
+
+```{r}
+
+#marker_DE, dev_class_int
+
+marker_heatmap <- function(marker_DE, dev_class_int, title){
+
+# Cluster genes
+d <- subset(pbmc, dataset %in% c("1538TE10H11", "1538TE10H13", "JH4327_01_TE10H13"))@assays$SCT@counts
+
+wl_genes <- marker_DE$gene_name[!grepl("mt-|Rps|Rpl", marker_DE$gene_name)]
+
+top_positive <- filter(marker_DE, gene_name %in% wl_genes, avg_log2FC > 0)$gene_name[1:50]
+top_negative <- filter(marker_DE, gene_name %in% wl_genes, avg_log2FC < 0)$gene_name[1:50]
+
+d <- d[rownames(d) %in% c(top_positive, top_negative), ]
+d <- as.matrix(d)
+
+
+paletteLength <- 100
+test <- as.matrix(d)
+
+myBreaks <- c(seq(min(test), 0, length.out=ceiling(paletteLength/2) + 1),
+              seq(max(test)/paletteLength, max(test), length.out=floor(paletteLength/2)))
+
+myColor <- colorRampPalette(c("#9E0041", "#fea11d","#fea11d",
+                              "white",
+                              "#43abea", "#0a48aa", "#13008e"))(paletteLength)
+
+# Cluster annotation
+anno <- subset(pbmc, dataset %in% c("1538TE10H11", "1538TE10H13", "JH4327_01_TE10H13"))@meta.data
+anno <- as.data.frame(anno[,c("dataset", "Dev_classes", "seurat_clusters", "age")])
+
+
+anno$seurat_clusters <- factor(anno$seurat_clusters, levels = 0:max(as.numeric(pbmc@meta.data$seurat_clusters)))
+
+
+d2 <- lapply(c("VZ", "SVZ", "MZ"), function(y){
+
+        lapply(c("1538TE10H11", "1538TE10H13", "JH4327_01_TE10H13"), function(x){
+
+    cells <- rownames(filter(anno, Dev_classes == y, dataset == x))
+    as.data.frame(d)[, cells]
+
+    })
+    })
+
+
+d21 <- do.call(cbind, c(d2[[dev_class_int]]))
+
+# Work Zone
+library(pheatmap)
+
+d3 <- t(scale(t(d21)))
+d3 <- ifelse(d3 > 3, 3, d3)
+d3 <- ifelse(d3 < -3, -3, d3)
+
+# VZ
+VZ_pheatmap <- pheatmap(d3,
+         fontsize = 8,
+         show_rownames = T,
+         show_colnames = F,
+         labels_col = F,
+         cluster_cols = F,
+         clustering_distance_rows = "correlation",
+         clustering_distance_cols = "correlation",
+         method = "average",
+         color = rev(myColor),
+         annotation_col = anno,
+         main = title)
+
+}
+
+```
+
+```{r}
+
+marker_heatmap(marker_DE = VZ_markers,
+               dev_class_int = 1,
+               title = "E11 vs E13 VZ markers. 100 most significant positive and negative markers")
+
+
+
+marker_heatmap(marker_DE = SVZ_markers,
+               dev_class_int = 2,
+               title = "E11 vs E13 SVZ markers. 100 most significant positive and negative markers")
+
+
+marker_heatmap(marker_DE = MZ_markers,
+               dev_class_int = 3,
+               title = "E11 vs E13 MZ markers. 100 most significant positive and negative markers")
+
+
+DimPlot(subset(pbmc, seurat_clusters %in% VZ_clusters), split.by = "dataset", ncol = 1)
+DimPlot(subset(pbmc, seurat_clusters %in% SVZ_clusters), split.by = "dataset", ncol = 1)
+DimPlot(subset(pbmc, seurat_clusters %in% MZ_clusters), split.by = "dataset", ncol = 1)
+
+```
+
+
+
+```{r}
+
+wl_genes <- VZ_markers$gene_name[!grepl("mt-|Rps|Rpl", VZ_markers$gene_name)]
+
+grep("mt-|Rps|Rpl", VZ_markers$gene_name, value = T)
+
+```
