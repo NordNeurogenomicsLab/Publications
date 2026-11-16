@@ -9,7 +9,7 @@ python3 scripts/download_public_data.py --include data --output /path/to/jia_rel
 export JIA_DATA_DIR=/path/to/jia_release/data
 ```
 
-The [public data index](../docs/public_data.md) links count matrices, annotations, and saved objects individually. The release already includes the count manifests and curated annotations needed by scripts 00–05.
+The [public Box data release](https://ucdavis.box.com/s/2ij8dibr0u8djy93kis82okf42xfnjf4) provides the count matrices, annotations, and saved objects. The [data index](../docs/public_data.md) links individual files. Sequencing data are deposited under GEO accession [GSE354638](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE354638). The release already includes the count manifests and curated annotations needed by scripts 00–05.
 
 ## Saved-object entry point
 

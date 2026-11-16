@@ -4,7 +4,7 @@
 
 Correspondence: John L. Rubenstein (john.rubenstein@ucsf.edu).
 
-[Manuscript](https://doi.org/10.64898/2026.04.14.718571) · [Author affiliations](docs/authors.md)
+[Manuscript](https://doi.org/10.64898/2026.04.14.718571) · [Author affiliations](docs/authors.md) · [GEO: GSE354638](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE354638)
 
 ## Abstract
 
@@ -44,18 +44,18 @@ sessionInfo()
 
 ## Data availability
 
-The [public data release](docs/public_data.md) contains **46 files (4.41 GB)**: count matrices, cell annotations, manuscript Seurat objects, analysis checkpoints, result tables, and Tables S1–S4. Each file has a direct download URL and SHA-256 checksum in the [file manifest](config/PUBLIC_DATA_FILES.tsv). No sign-in is required.
+The [public Box data release](https://ucdavis.box.com/s/2ij8dibr0u8djy93kis82okf42xfnjf4) contains **46 files (4.41 GB)**: count matrices, cell annotations, manuscript Seurat objects, analysis checkpoints, result tables, and Tables S1–S4. Each file has a Box download URL and SHA-256 checksum in the [file manifest](config/PUBLIC_DATA_FILES.tsv). No sign-in is required.
 
 | Data | Download |
 | --- | --- |
-| Cell annotations: library, age, compartment, and cluster assignments | [Annotations](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/cell_annotations.tsv) |
-| 1538TE10H11 (E11.5), accepted MGE cells | [UMI count matrix](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/counts/1538TE10H11/matrix.mtx) |
-| 1538TE10H13 (E13.5), accepted MGE cells | [UMI count matrix](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/counts/1538TE10H13/matrix.mtx) |
-| JH4327_01_TE10H13 (E13.5), accepted MGE cells | [UMI count matrix](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/counts/JH4327_01_TE10H13/matrix.mtx) |
-| Global MGE Seurat object: 7,785 cells | [RDS](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/objects/MGE_1538_E11_and_E13_with_new_E13.Rds) |
-| MZ Seurat object: 4,047 cells | [RDS](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/objects/MZ_reintegrated_on_52_PN_genes_08_15_2025.rds) |
-| VZ/SVZ Seurat object: 3,294 cells | [RDS](https://storage.googleapis.com/hu-morphogenetic-patterning-306023/releases/2026-11-13/data/objects/VZ_SVZ_reintegrated_on_221_progenitor_genes_08_15_2025.rds) |
+| Cell annotations: library, age, compartment, and cluster assignments | [Annotations](https://ucdavis.box.com/s/sbwgo4aaimghmxr2betxg5ge75m5u9ol) |
+| 1538TE10H11 (E11.5), accepted MGE cells | [UMI count matrix](https://ucdavis.box.com/s/k985yqhof4aqzy0hmz6cl8hhxydi68ou) |
+| 1538TE10H13 (E13.5), accepted MGE cells | [UMI count matrix](https://ucdavis.box.com/s/enn3ivh9dtcpjrhxrov2bzw46v83wbxv) |
+| JH4327_01_TE10H13 (E13.5), accepted MGE cells | [UMI count matrix](https://ucdavis.box.com/s/ot7plh0hi910pahzoag35knu4cc2s7e5) |
+| Global MGE Seurat object: 7,785 cells | [RDS](https://ucdavis.box.com/s/lv3ph1bgx940fckm17ho223awepgt4bl) |
+| MZ Seurat object: 4,047 cells | [RDS](https://ucdavis.box.com/s/m1yc3nrivfuce626uoxq0b342p7mnde7) |
+| VZ/SVZ Seurat object: 3,294 cells | [RDS](https://ucdavis.box.com/s/5qr5qc7r5fr6onec8eg44trc97q3b4yq) |
 
 Count-matrix feature and barcode files, pre-exclusion matrices, differential-expression tables, supplementary tables, and calculated checkpoints are linked in the [complete data index](docs/public_data.md). [Download instructions](docs/public_data.md#download) preserve the directory layout used by the scripts.
 
-Raw sequencing reads will be linked through GEO/SRA once an accession is assigned.
+Sequencing data are deposited in GEO under accession **[GSE354638](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE354638)**, with public release scheduled for **November 18, 2026**.
